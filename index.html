@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VShark Solutions — 3D Scanning & 3D Design Services</title>
+  <meta name="description" content="VShark Solutions Private Limited — 3D scanning, reverse engineering, Scan to BIM, Class A surfacing, digital metrology, 3D printing and product rendering.">
+  <meta name="theme-color" content="#f5f6f8">
+  <link rel="icon" href="img/vshark-logo.png">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="css/style.css?v=8">
+</head>
+<body class="is-loading">
+
+  <!-- PRELOADER -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__grid"></div>
+    <div class="loader__inner">
+      <div class="loader__label mono">INITIALISING SCAN</div>
+      <div class="loader__count"><span id="loaderCount">000</span><small>%</small></div>
+      <div class="loader__bar"><span id="loaderBar"></span></div>
+      <div class="loader__label mono loader__label--r">VSHARK / 3D</div>
+    </div>
+  </div>
+
+  <!-- CURSOR -->
+  <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <a href="#top" class="header__logo" aria-label="VShark Solutions home">
+      <img src="img/vshark-logo.png" alt="VShark Solutions">
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#about" class="nav__link">About</a>
+      <a href="#services" class="nav__link">Services</a>
+      <a href="#industries" class="nav__link">Industries</a>
+      <a href="portfolio.php" class="nav__link">Portfolio</a>
+      <a href="#" class="nav__link">Blog</a>
+      <a href="#contact" class="nav__link">Contact</a>
+    </nav>
+    <a href="contact.php" class="btn btn--sm btn--accent header__cta magnetic"><span>Enquire Now</span></a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu__nav">
+      <a href="#about"><i class="mono">01</i>About</a>
+      <a href="#services"><i class="mono">02</i>Services</a>
+      <a href="#industries"><i class="mono">03</i>Industries</a>
+      <a href="portfolio.php"><i class="mono">04</i>Portfolio</a>
+      <a href="#"><i class="mono">05</i>Blog</a>
+      <a href="#contact"><i class="mono">06</i>Contact</a>
+    </nav>
+    <div class="menu__foot mono">
+      <a href="mailto:info@vsharksolutions.com">info@vsharksolutions.com</a>
+      <a href="tel:+919514248525">+91 95142 48525</a>
+      <a href="tel:+971522486238">+971 52 248 6238 (UAE)</a>
+    </div>
+  </div>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <canvas class="hero__canvas" id="heroCanvas"></canvas>
+      <div class="hero__vignette"></div>
+
+      <div class="hud mono" aria-hidden="true">
+        <div class="hud__tl"><span class="hud__live"></span>LIVE POINT CLOUD<br><span id="hudPts">PTS 00,000</span></div>
+        <div class="hud__tr">X <span id="hudX">+0.000</span><br>Y <span id="hudY">+0.000</span></div>
+        <div class="hud__bl">SCAN PLANE <span id="hudScan">+0.00</span><br>ACCURACY ±0.02 MM</div>
+        <div class="hud__br"><span id="hudIdx">01</span> / 04<br><span id="hudShape">POINT CLOUD</span></div>
+      </div>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow mono"><span class="line-mask"><span>VShark Solutions — 3D Scanning &amp; 3D Design</span></span></p>
+        <h1 class="hero__title">
+          <span class="line-mask"><span>We capture reality.</span></span>
+          <span class="line-mask"><span>Then we <em>engineer</em> it.</span></span>
+        </h1>
+        <div class="hero__spec">
+          <span class="line-mask"><span class="mono hero__spec-label">Specialized in</span></span>
+          <span class="line-mask"><span class="hero__word" id="heroWord">3D Scanning Solutions</span></span>
+        </div>
+        <div class="hero__actions">
+          <a href="contact.php" class="btn btn--accent magnetic" data-cursor="Go"><span>Start a project</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="#services" class="btn btn--ghost magnetic"><span>Explore services</span></a>
+        </div>
+      </div>
+
+      <a href="#about" class="hero__scroll mono" aria-label="Scroll to content"><span>Scroll</span><i></i></a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>3D Scanning</span><b>✦</b><span>Reverse Engineering</span><b>✦</b><span>Scan to BIM</span><b>✦</b><span>Class A Surfacing</span><b>✦</b><span>Digital Metrology</span><b>✦</b><span>3D Printing</span><b>✦</b><span>Product Rendering</span><b>✦</b>
+        <span>3D Scanning</span><b>✦</b><span>Reverse Engineering</span><b>✦</b><span>Scan to BIM</span><b>✦</b><span>Class A Surfacing</span><b>✦</b><span>Digital Metrology</span><b>✦</b><span>3D Printing</span><b>✦</b><span>Product Rendering</span><b>✦</b>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="about section" id="about">
+      <div class="section__head">
+        <span class="tag mono">( 01 ) — About</span>
+      </div>
+      <p class="about__statement" id="aboutStatement">
+        We prioritise staying ahead in technology. Our investment in the latest 3D scanning hardware and years of 3D design expertise let us turn physical objects into precise digital models — and digital ideas into real, manufacturable parts.
+      </p>
+
+      <div class="about__grid">
+        <figure class="about__media reveal-clip">
+          <img src="img/about/about.webp" alt="VShark engineer working with 3D scanning equipment" loading="lazy">
+          <figcaption class="mono">FIG. 01 — SCAN / MODEL / DELIVER</figcaption>
+        </figure>
+        <div class="about__body">
+          <p data-reveal>Whether you need rapid prototyping, production manufacturing or customised parts, our team delivers bespoke solutions tailored to your exact requirements — for businesses and individuals across the globe.</p>
+          <div class="stats">
+            <div class="stat" data-reveal><span class="stat__num"><span data-count="10">0</span><sup>+</sup></span><span class="stat__label mono">Years experience</span></div>
+            <div class="stat" data-reveal><span class="stat__num"><span data-count="1150">0</span><sup>+</sup></span><span class="stat__label mono">Happy customers</span></div>
+            <div class="stat" data-reveal><span class="stat__num"><span data-count="17">0</span></span><span class="stat__label mono">Countries</span></div>
+            <div class="stat" data-reveal><span class="stat__num"><span data-count="100">0</span><sup>+</sup></span><span class="stat__label mono">Industries catered</span></div>
+          </div>
+          <a href="about.php" class="link-arrow" data-reveal>More about us <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES (horizontal on desktop) -->
+    <section class="services" id="services">
+      <div class="services__pin">
+        <div class="services__intro">
+          <span class="tag mono">( 02 ) — Services</span>
+          <h2 class="h2">From physical<br>to <em>digital</em><br>and back.</h2>
+          <p class="muted">Precise 3D scanning and innovative 3D design that transform concepts into digital models and physical prototypes.</p>
+          <div class="services__progress mono"><span id="svcProgress">01</span> / 07<i><b id="svcBar"></b></i></div>
+        </div>
+        <div class="services__track" id="servicesTrack">
+          <article class="card" data-cursor="View">
+            <div class="card__media"><img src="img/services/01-scanning.webp" alt="" loading="lazy"></div>
+            <div class="card__body"><span class="card__num mono">01</span><h3>3D Scanning</h3><p>High-resolution capture of parts, products and spaces into accurate point clouds and meshes.</p></div>
+            <a href="3d-scanning.php" class="card__link" aria-label="3D Scanning"></a>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__media"><img src="img/services/02-reverse-engineering.webp" alt="" loading="lazy"></div>
+            <div class="card__body"><span class="card__num mono">02</span><h3>Reverse Engineering</h3><p>Scan data rebuilt into fully editable, dimensionally accurate CAD models.</p></div>
+            <a href="product-development.php" class="card__link" aria-label="Reverse Engineering"></a>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__media"><img src="img/services/bim.webp" alt="" loading="lazy"></div>
+            <div class="card__body"><span class="card__num mono">03</span><h3>Scan to BIM</h3><p>As-built buildings and sites converted into intelligent BIM models.</p></div>
+            <a href="contact.php" class="card__link" aria-label="Scan to BIM"></a>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__media"><img src="img/services/class-a.webp" alt="" loading="lazy"></div>
+            <div class="card__body"><span class="card__num mono">04</span><h3>Class A Surfacing</h3><p>Flawless, curvature-continuous surfaces for automotive and consumer products.</p></div>
+            <a href="contact.php" class="card__link" aria-label="Class A Surfacing"></a>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__media"><img src="img/services/digital.webp" alt="" loading="lazy"></div>
+            <div class="card__body"><span class="card__num mono">05</span><h3>Digital Metrology</h3><p>Inspection and deviation analysis that compares manufactured parts to their CAD.</p></div>
+            <a href="contact.php" class="card__link" aria-label="Digital Metrology"></a>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__media"><img src="img/services/printing.webp" alt="" loading="lazy"></div>
+            <div class="card__body"><span class="card__num mono">06</span><h3>3D Printing</h3><p>Rapid prototypes and functional parts, printed straight from your model.</p></div>
+            <a href="3d-printing.php" class="card__link" aria-label="3D Printing"></a>
+          </article>
+          <article class="card" data-cursor="View">
+            <div class="card__media"><img src="img/services/product-rendering.webp" alt="" loading="lazy"></div>
+            <div class="card__body"><span class="card__num mono">07</span><h3>Product Rendering</h3><p>Photoreal visuals that sell a product before it is ever made.</p></div>
+            <a href="contact.php" class="card__link" aria-label="Product Rendering"></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process section">
+      <div class="section__head">
+        <span class="tag mono">( 03 ) — Process</span>
+        <h2 class="h2" data-reveal>Precision, <em>step by step.</em></h2>
+      </div>
+      <ol class="process__list">
+        <li class="step" data-reveal><span class="step__n mono">01</span><h3>Capture</h3><p>We scan your part, product or site using the latest 3D scanning technology.</p><i class="step__line"></i></li>
+        <li class="step" data-reveal><span class="step__n mono">02</span><h3>Process</h3><p>Raw scan data is cleaned, aligned and converted into usable meshes.</p><i class="step__line"></i></li>
+        <li class="step" data-reveal><span class="step__n mono">03</span><h3>Engineer</h3><p>Our designers build CAD, BIM or Class A surfaces, ready for manufacture.</p><i class="step__line"></i></li>
+        <li class="step" data-reveal><span class="step__n mono">04</span><h3>Deliver</h3><p>Validated models, renders or printed parts, delivered on time.</p><i class="step__line"></i></li>
+      </ol>
+    </section>
+
+    <!-- INDUSTRIES -->
+    <section class="industries section" id="industries">
+      <div class="section__head">
+        <span class="tag mono">( 04 ) — Industries we serve</span>
+      </div>
+      <ul class="ind" id="industryList">
+        <li class="ind__row" data-img="img/industries/aerospace.webp"><span class="mono">01</span><h3>Aerospace</h3><img src="img/industries/aerospace.webp" alt="" loading="lazy"><i>→</i></li>
+        <li class="ind__row" data-img="img/industries/auto.webp"><span class="mono">02</span><h3>Automobile</h3><img src="img/industries/auto.webp" alt="" loading="lazy"><i>→</i></li>
+        <li class="ind__row" data-img="img/industries/construction.webp"><span class="mono">03</span><h3>Construction</h3><img src="img/industries/construction.webp" alt="" loading="lazy"><i>→</i></li>
+        <li class="ind__row" data-img="img/industries/hospital.webp"><span class="mono">04</span><h3>Healthcare</h3><img src="img/industries/hospital.webp" alt="" loading="lazy"><i>→</i></li>
+        <li class="ind__row" data-img="img/industries/institute.webp"><span class="mono">05</span><h3>Education</h3><img src="img/industries/institute.webp" alt="" loading="lazy"><i>→</i></li>
+        <li class="ind__row" data-img="img/industries/jewelery.webp"><span class="mono">06</span><h3>Jewellery</h3><img src="img/industries/jewelery.webp" alt="" loading="lazy"><i>→</i></li>
+      </ul>
+      <div class="ind__float" id="indFloat" aria-hidden="true"><div class="ind__float-inner"></div></div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testi section">
+      <div class="section__head">
+        <span class="tag mono">( 05 ) — Testimonials</span>
+        <span class="mono muted">Trusted in US · UK · Germany · Canada · UAE · Saudi Arabia</span>
+      </div>
+      <div class="testi__stage" id="testi">
+        <span class="testi__mark" aria-hidden="true">“</span>
+        <div class="testi__slides">
+          <blockquote class="testi__slide is-active"><p>VShark Solutions was able to take a relatively poorly scanned object and convert it to a solid model with very accurate dimensions. Their surfacing skills are amazing, and the accuracy is perfect for our needs.</p><cite class="mono">Rachel Labonte — Canada</cite></blockquote>
+          <blockquote class="testi__slide"><p>VSHARK provided the best engineering service we've ever experienced. Their attention to detail and quick responsiveness made working with them a pleasure. We've collaborated with them many times and will continue to do so.</p><cite class="mono">Mace Roper — United States</cite></blockquote>
+          <blockquote class="testi__slide"><p>Working with VSHARK on a reverse engineering and 3D modelling project was impressive; their professionalism, clear communication, and dedication to quality made the entire process smooth and efficient.</p><cite class="mono">Benedikt Klein — Germany</cite></blockquote>
+          <blockquote class="testi__slide"><p>Exceptional work and accuracy! I will be using VSHARK skills again; I highly recommend them if you need something converted accurately. No need to look further.</p><cite class="mono">Xander Elon — United Kingdom</cite></blockquote>
+          <blockquote class="testi__slide"><p>VShark Solutions delivered exceptional work beyond my expectations! Their attention to detail and professionalism made the entire process seamless. I highly recommend them for any project.</p><cite class="mono">Ahtisham Muhammad — Saudi Arabia</cite></blockquote>
+          <blockquote class="testi__slide"><p>Working with VSHARK Engineers was a fantastic experience. Their creative approach and attention to detail perfectly aligned with our brand, and they were always polite and cooperative throughout the project.</p><cite class="mono">Mariam Al-Ghayousi — Dubai</cite></blockquote>
+        </div>
+        <div class="testi__ctrl">
+          <button class="testi__btn magnetic" id="testiPrev" aria-label="Previous testimonial">←</button>
+          <div class="testi__count mono"><span id="testiIdx">01</span> / 06<i><b id="testiBar"></b></i></div>
+          <button class="testi__btn magnetic" id="testiNext" aria-label="Next testimonial">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA / CONTACT -->
+    <section class="cta" id="contact">
+      <canvas class="cta__canvas" id="ctaCanvas" aria-hidden="true"></canvas>
+      <span class="tag mono">( 06 ) — Contact</span>
+      <h2 class="cta__title">
+        <span class="line-mask"><span>Have a part,</span></span>
+        <span class="line-mask"><span>a building or</span></span>
+        <span class="line-mask"><span>an <em>idea?</em></span></span>
+      </h2>
+      <a href="contact.php" class="cta__btn magnetic" data-cursor="Hi!"><span>Let's scan it</span></a>
+      <div class="cta__info">
+        <div><span class="mono muted">Email</span><a href="mailto:info@vsharksolutions.com">info@vsharksolutions.com</a></div>
+        <div><span class="mono muted">India</span><a href="tel:+919514248525">+91 95142 48525</a></div>
+        <div><span class="mono muted">UAE</span><a href="tel:+971522486238">+971 52 248 6238</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <img class="footer__logo" src="img/vshark-logo.png" alt="VShark Solutions">
+      <p class="muted">Leading the way in advanced technology solutions — state-of-the-art 3D scanning and 3D design services for businesses and individuals.</p>
+      <div class="footer__social">
+        <a href="https://www.linkedin.com/in/vsharkenggsolns/" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+        <a href="https://www.instagram.com/vshark.in/" target="_blank" rel="noopener" aria-label="Instagram">ig</a>
+        <a href="https://www.facebook.com/vshark.india" target="_blank" rel="noopener" aria-label="Facebook">fb</a>
+        <a href="https://wa.me/919514248525" target="_blank" rel="noopener" aria-label="WhatsApp">wa</a>
+      </div>
+    </div>
+    <div class="footer__big" aria-hidden="true">VSHARK</div>
+    <div class="footer__bottom mono">
+      <span>© <span id="year">2026</span> VShark Solutions Private Limited</span>
+      <span>All rights reserved</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <a class="wa-float magnetic" href="https://wa.me/919514248525" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg>
+  </a>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="vendor/lenis.min.js"></script>
+  <script src="js/hero.js?v=8"></script>
+  <script src="js/main.js?v=8"></script>
+</body>
+</html>

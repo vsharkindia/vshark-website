@@ -1,0 +1,5 @@
+# local tool settings / build artefacts
+.claude/
+*.zip
+.DS_Store
+Thumbs.db

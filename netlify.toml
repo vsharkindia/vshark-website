@@ -1,0 +1,10 @@
+# Static site — no build step, serve the repo root as-is.
+[build]
+  publish = "."
+
+# PREVIEW ONLY: keep the test site out of search engines.
+# Remove this block when the site goes live on vsharksolutions.com.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
