@@ -46,11 +46,6 @@
   });
 
   /* ---------- Text helpers ---------- */
-  function splitWords(el) {
-    const words = el.textContent.trim().split(/\s+/);
-    el.innerHTML = words.map((w) => `<span class="w">${w}</span>`).join(' ');
-    return $$('.w', el);
-  }
   const GLYPHS = '!<>-_\\/[]{}—=+*^?#01ABCDEFXYZ';
   function scramble(el, text, dur = 0.9) {
     const from = el.textContent;
@@ -196,67 +191,70 @@
     },
   });
 
-  /* ---------- About statement: word-by-word light-up ---------- */
-  const stmt = $('#aboutStatement');
-  if (stmt && !reduceMotion) {
-    const words = splitWords(stmt);
-    gsap.to(words, {
-      opacity: 1, stagger: 0.1, ease: 'none',
-      scrollTrigger: { trigger: stmt, start: 'top 80%', end: 'bottom 45%', scrub: true },
-    });
-  }
+  /* ---------- Carousels (services, industries) ----------
+     Native horizontal scroll with snap (touch swipe for free), plus
+     arrows, mouse drag, a progress bar and gentle autoplay. */
+  $$('[data-carousel]').forEach((car) => {
+    const id = car.dataset.carousel;
+    const track = $('.car__track', car);
+    const bar = $('.car__bar b', car);
+    const slides = $$('.car__slide', track);
+    const step = () => (slides[1] ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth);
+    const maxX = () => track.scrollWidth - track.clientWidth;
+    const go = (dir) => {
+      const x = track.scrollLeft;
+      if (dir > 0 && x >= maxX() - 4) track.scrollTo({ left: 0 });
+      else if (dir < 0 && x <= 4) track.scrollTo({ left: maxX() });
+      else track.scrollBy({ left: dir * step() });
+    };
+    $(`[data-car-next="${id}"]`)?.addEventListener('click', () => { go(1); hold(); });
+    $(`[data-car-prev="${id}"]`)?.addEventListener('click', () => { go(-1); hold(); });
 
-  /* ---------- Image clip reveal ---------- */
-  $$('.reveal-clip').forEach((fig) => {
-    const img = $('img', fig);
-    gsap.fromTo(fig, { clipPath: 'inset(100% 0 0 0)' }, {
-      clipPath: 'inset(0% 0 0 0)', duration: 1.6, ease: 'expo.inOut',
-      scrollTrigger: { trigger: fig, start: 'top 80%' },
+    const updateBar = () => {
+      const vis = track.clientWidth / track.scrollWidth;
+      const p = maxX() > 0 ? track.scrollLeft / maxX() : 1;
+      bar.style.transform = `scaleX(${(vis + (1 - vis) * p).toFixed(3)})`;
+    };
+    track.addEventListener('scroll', updateBar, { passive: true });
+    window.addEventListener('resize', updateBar);
+    updateBar();
+
+    // autoplay: pauses on hover, touch/drag, when off-screen, and for 6 s after any interaction
+    let hovering = false, onScreen = false, heldUntil = 0;
+    const hold = () => { heldUntil = Date.now() + 6000; };
+    car.addEventListener('pointerenter', () => { hovering = true; });
+    car.addEventListener('pointerleave', () => { hovering = false; });
+    track.addEventListener('touchstart', hold, { passive: true });
+    new IntersectionObserver(([en]) => { onScreen = en.isIntersecting; }).observe(car);
+    if (!reduceMotion) {
+      setInterval(() => {
+        if (onScreen && !hovering && !document.hidden && Date.now() > heldUntil) go(1);
+      }, 3500);
+    }
+
+    // mouse drag (touch uses native scrolling)
+    let down = null, dragged = false;
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      down = { x: e.clientX, left: track.scrollLeft };
+      dragged = false;
     });
-    gsap.to(img, { scale: 1, ease: 'none', scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } });
+    window.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - down.x;
+      if (!dragged && Math.abs(dx) > 6) { dragged = true; track.classList.add('is-drag'); }
+      if (dragged) track.scrollLeft = down.left - dx;
+    });
+    window.addEventListener('pointerup', () => {
+      if (!down) return;
+      down = null;
+      if (dragged) { track.classList.remove('is-drag'); hold(); }
+    });
+    // a drag should not also count as a click on the card link
+    track.addEventListener('click', (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
   });
 
-  /* ---------- Counters ---------- */
-  $$('[data-count]').forEach((el) => {
-    const end = +el.dataset.count;
-    const o = { v: 0 };
-    ScrollTrigger.create({
-      trigger: el, start: 'top 90%', once: true,
-      onEnter: () => gsap.to(o, { v: end, duration: 2.2, ease: 'power3.out', onUpdate: () => { el.textContent = Math.round(o.v).toLocaleString('en-US'); } }),
-    });
-  });
-
-  /* ---------- Services: pinned horizontal scroll (desktop) ---------- */
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 901px)', () => {
-    const track = $('#servicesTrack');
-    const pinEl = $('.services__pin');
-    const cards = $$('.card', track);
-    const progEl = $('#svcProgress'), bar = $('#svcBar');
-    const distance = () => track.scrollWidth - (pinEl.clientWidth - track.offsetLeft) + 56;
-    const tween = gsap.to(track, {
-      x: () => -distance(), ease: 'none',
-      scrollTrigger: {
-        trigger: '.services', pin: pinEl, start: 'top top', end: () => '+=' + distance(),
-        scrub: 1, invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const i = Math.min(cards.length, Math.floor(self.progress * cards.length) + 1);
-          progEl.textContent = String(i).padStart(2, '0');
-          bar.style.transform = `scaleX(${Math.max(1 / cards.length, self.progress)})`;
-        },
-      },
-    });
-    // subtle 3D tilt per card while moving
-    cards.forEach((card) => {
-      gsap.fromTo(card, { rotateY: -14, z: -80 }, {
-        rotateY: 0, z: 0, ease: 'none',
-        scrollTrigger: { trigger: card, containerAnimation: tween, start: 'left right', end: 'left 55%', scrub: true },
-      });
-    });
-    return () => gsap.set(track, { clearProps: 'transform' });
-  });
-
-  /* card hover tilt */
+  /* card hover: image drifts with the pointer */
   if (finePointer) {
     $$('.card').forEach((card) => {
       const media = $('.card__media img', card);
@@ -269,121 +267,30 @@
     });
   }
 
-  /* ---------- Industries: floating image follower ---------- */
-  const float = $('#indFloat'), floatInner = $('.ind__float-inner', float);
-  if (finePointer && float) {
-    const xTo = gsap.quickTo(float, 'x', { duration: 0.6, ease: 'power3' });
-    const yTo = gsap.quickTo(float, 'y', { duration: 0.6, ease: 'power3' });
-    let lastX = 0, px = -1, py = -1, current = null;
-    // hit-test rather than enter/leave events, so scrolling under a still pointer also updates
-    function hitTest() {
-      if (px < 0) return;
-      const el = document.elementFromPoint(px, py);
-      const row = el && el.closest('.ind__row');
-      if (row === current) return;
-      current = row;
-      if (row) {
-        floatInner.style.backgroundImage = `url("${row.dataset.img}")`;
-        gsap.to(float, { opacity: 1, scale: 1, duration: 0.5, ease: 'expo.out' });
-      } else {
-        gsap.to(float, { opacity: 0, scale: 0.6, duration: 0.4, ease: 'power3.out' });
-      }
-    }
-    window.addEventListener('pointermove', (e) => {
-      px = e.clientX; py = e.clientY;
-      xTo(px); yTo(py);
-      const vx = px - lastX; lastX = px;
-      gsap.to(float, { rotate: gsap.utils.clamp(-12, 12, vx * 0.6), duration: 0.6, ease: 'power3' });
-      hitTest();
-    }, { passive: true });
-    window.addEventListener('scroll', hitTest, { passive: true });
-    // safety net for programmatic/smooth scrolls: re-check while the preview is showing
-    gsap.ticker.add(() => { if (current) hitTest(); });
-    gsap.set(float, { xPercent: -50, yPercent: -50, scale: 0.6 });
+  /* ---------- Testimonials: duplicate cards for a seamless loop ---------- */
+  const testiTrack = $('#testiTrack');
+  if (testiTrack && !reduceMotion) {
+    $$('.tcard', testiTrack).forEach((c) => {
+      const clone = c.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      testiTrack.appendChild(clone);
+    });
   }
-  gsap.from('.ind__row', {
-    y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: 0.08,
-    scrollTrigger: { trigger: '#industryList', start: 'top 85%' },
-  });
 
-  /* ---------- Testimonials ---------- */
-  const slides = $$('.testi__slide');
-  const tIdx = $('#testiIdx'), tBar = $('#testiBar');
-  let ti = 0, tTimer = null, barTween = null;
-  slides.forEach((s) => splitWords($('p', s)));
-  function showSlide(n, dir = 1) {
-    const prev = slides[ti];
-    ti = (n + slides.length) % slides.length;
-    const next = slides[ti];
-    if (prev !== next) {
-      gsap.to($$('.w', prev), { y: -30 * dir, opacity: 0, duration: 0.5, ease: 'power3.in', stagger: 0.006, onComplete: () => prev.classList.remove('is-active') });
-      gsap.to($('cite', prev), { opacity: 0, duration: 0.4 });
-    }
-    next.classList.add('is-active');
-    gsap.fromTo($$('.w', next), { y: 40 * dir, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'expo.out', stagger: 0.012, delay: prev !== next ? 0.45 : 0 });
-    gsap.fromTo($('cite', next), { opacity: 0 }, { opacity: 1, duration: 0.8, delay: 0.9 });
-    tIdx.textContent = String(ti + 1).padStart(2, '0');
-    barTween?.kill();
-    barTween = gsap.fromTo(tBar, { scaleX: 0 }, { scaleX: 1, duration: 7, ease: 'none' });
-    clearTimeout(tTimer);
-    tTimer = setTimeout(() => showSlide(ti + 1), 7000);
+  /* ---------- Contact rail: phone numbers fly-out (tap on touch screens) ---------- */
+  const phoneItem = $('.rail__item--phone');
+  if (phoneItem) {
+    const btn = $('.rail__btn', phoneItem);
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = phoneItem.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', (e) => {
+      if (!phoneItem.contains(e.target)) { phoneItem.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
+    });
   }
-  $('#testiNext')?.addEventListener('click', () => showSlide(ti + 1, 1));
-  $('#testiPrev')?.addEventListener('click', () => showSlide(ti - 1, -1));
-  // swipe
-  let sx = null;
-  const stage = $('#testi');
-  stage?.addEventListener('pointerdown', (e) => { sx = e.clientX; });
-  stage?.addEventListener('pointerup', (e) => {
-    if (sx === null) return; const dx = e.clientX - sx; sx = null;
-    if (Math.abs(dx) > 50) showSlide(ti + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
-  });
-  ScrollTrigger.create({ trigger: '.testi', start: 'top 70%', once: true, onEnter: () => showSlide(0) });
-
-  /* ---------- CTA title ---------- */
-  gsap.from('.cta__title .line-mask > span', {
-    yPercent: 110, duration: 1.4, ease: 'expo.out', stagger: 0.1,
-    scrollTrigger: { trigger: '.cta', start: 'top 70%' },
-  });
-  gsap.from('.cta__btn', { scale: 0, rotate: -90, duration: 1.4, ease: 'elastic.out(1, 0.6)', scrollTrigger: { trigger: '.cta__btn', start: 'top 90%' } });
-
-  /* ---------- CTA background: interactive dot field ---------- */
-  (function dotField() {
-    const c = $('#ctaCanvas'); if (!c) return;
-    const ctx = c.getContext('2d');
-    let w, h, dpr, dots = [], active = false;
-    const m = { x: -9999, y: -9999 };
-    function build() {
-      dpr = Math.min(devicePixelRatio || 1, 2);
-      w = c.clientWidth; h = c.clientHeight;
-      c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      dots = [];
-      const gap = w < 700 ? 26 : 32;
-      for (let y = gap / 2; y < h; y += gap) for (let x = gap / 2; x < w; x += gap) dots.push({ x, y });
-    }
-    c.parentElement.addEventListener('pointermove', (e) => { const r = c.getBoundingClientRect(); m.x = e.clientX - r.left; m.y = e.clientY - r.top; });
-    c.parentElement.addEventListener('pointerleave', () => { m.x = m.y = -9999; });
-    new IntersectionObserver(([en]) => { active = en.isIntersecting; }).observe(c);
-    window.addEventListener('resize', build);
-    build();
-    let t = 0;
-    (function draw() {
-      requestAnimationFrame(draw);
-      if (!active) return;
-      t += 0.016;
-      ctx.clearRect(0, 0, w, h);
-      const R = 180;
-      for (const d of dots) {
-        const dx = d.x - m.x, dy = d.y - m.y, dist = Math.hypot(dx, dy);
-        const wave = Math.sin(d.x * 0.012 + d.y * 0.008 + t * 1.4) * 0.5 + 0.5;
-        let ox = 0, oy = 0, glow = 0;
-        if (dist < R) { const f = 1 - dist / R; ox = (dx / (dist || 1)) * f * 22; oy = (dy / (dist || 1)) * f * 22; glow = f; }
-        const r = 0.9 + wave * 0.6 + glow * 2.2;
-        ctx.fillStyle = glow > 0.02 ? `rgba(153,27,46,${0.25 + glow * 0.75})` : `rgba(28,33,37,${0.07 + wave * 0.1})`;
-        ctx.beginPath(); ctx.arc(d.x + ox, d.y + oy, r, 0, 6.283); ctx.fill();
-      }
-    })();
-  })();
+  gsap.from('.rail', { xPercent: 120, opacity: 0, duration: 1.1, ease: 'expo.out', delay: 2.4, clearProps: 'transform' });
 
   /* ---------- Footer big text ---------- */
   gsap.from('.footer__big', { yPercent: 40, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
@@ -407,7 +314,7 @@
     }, { passive: true });
     document.addEventListener('pointerover', (e) => {
       const l = e.target.closest('[data-cursor]');
-      const h = e.target.closest('a, button, .ind__row');
+      const h = e.target.closest('a, button, .icard');
       cur.classList.toggle('is-label', !!l);
       cur.classList.toggle('is-hover', !l && !!h);
       label.textContent = l ? l.dataset.cursor : '';
@@ -431,6 +338,6 @@
     });
   }
 
-  /* refresh after images load (layout shifts affect pin distances) */
+  /* refresh after images load (layout shifts move trigger positions) */
   window.addEventListener('load', () => ScrollTrigger.refresh());
 })();
