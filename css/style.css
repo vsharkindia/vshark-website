@@ -183,9 +183,10 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 }
 .hero__content { position: relative; z-index: 2; padding: 0 var(--gutter) clamp(64px, 11vh, 120px); max-width: 1240px; }
 .hero__eyebrow { color: var(--muted); margin-bottom: 22px; }
+/* headline uses the logo typeface (all caps, wide → set smaller than the other display text) */
 .hero__title {
-  font-family: var(--display); font-weight: 500;
-  font-size: clamp(40px, min(6.6vw, 10.5vh), 120px); line-height: .94; letter-spacing: -0.045em;
+  font-family: "Singapore Sling Bold", var(--display); font-weight: 400; font-synthesis: none;
+  font-size: clamp(27px, min(4.5vw, 7.15vh), 82px); line-height: 1.02; letter-spacing: 0.01em;
 }
 .hero__title em { text-shadow: none; }
 .hero__spec { margin-top: 30px; display: flex; flex-direction: column; gap: 12px; }
