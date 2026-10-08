@@ -574,8 +574,23 @@
     shapeCbs.forEach((cb) => cb(i, shapes[i]));
   }
 
-  // queue a specific scene (0–3); it starts at the bottom of the current pass
-  api.goTo = (i) => { queued = i; };
+  // Visitor picks a service: the laser makes a quick return to the bottom
+  // (REWIND s), then the chosen scene starts its normal constant-speed pass.
+  const REWIND = 0.5;
+  let rewind = null;
+  let lastScanY = 0;
+  api.select = (i) => {
+    if (i < 0 || i >= shapes.length) return;
+    if (reduceMotion) { if (i !== current) beginScene(i); return; }
+    if (!started) { queued = i; return; }
+    if (rewind) { rewind.target = i; return; }
+    if (i === current) return;
+    rewind = { from: lastScanY, t: 0, target: i, up: passT < STROKE, sweep: uniforms.uSweepUp.value };
+  };
+  api.goTo = api.select;
+  // progress of the active scene's pass, 0 → 1 (drives the tab progress bar)
+  api.progress = () => (rewind ? 0 : passT / (STROKE * 2));
+  api.current = () => current;
 
   /* ---------- Visibility & scroll fade ---------- */
   let visible = true;
@@ -622,31 +637,52 @@
     group.rotation.x = mouse.y * 0.25 + 0.12;
 
     /* --- laser: constant-speed up/down pass --- */
-    if (started && !reduceMotion) passT += dt;
-    if (passT >= STROKE * 2) {
-      passT -= STROKE * 2;
-      const next = queued !== null ? queued : (current + 1) % shapes.length;
-      queued = null;
-      beginScene(next);
-    }
-    const up = passT < STROKE;
-    const f = up ? passT / STROKE : 1 - (passT - STROKE) / STROKE; // 0 = bottom, 1 = top
     const bottom = group.position.y - RANGE * group.scale.y;
     const top = group.position.y + RANGE * group.scale.y;
-    const scanY = reduceMotion ? group.position.y : bottom + (top - bottom) * f;
+    const cur = shapes[current];
+    let scanY;
+
+    if (rewind) {
+      // quick return to the bottom, then start the chosen scene
+      rewind.t += dt;
+      const k = Math.min(1, rewind.t / REWIND);
+      scanY = rewind.from + (bottom - rewind.from) * (k * k * (3 - 2 * k));
+      if (!rewind.up) {
+        // was revealing on the way down: keep revealing as the laser drops
+        uniforms.uReveal.value = scanY;
+        if (cur.root) cur.plane.constant = -scanY;
+      }
+      if (k >= 1) {
+        const target = rewind.target;
+        rewind = null;
+        passT = 0;
+        if (target !== current) beginScene(target);
+      }
+    } else {
+      if (started && !reduceMotion) passT += dt;
+      if (passT >= STROKE * 2) {
+        passT -= STROKE * 2;
+        const next = queued !== null ? queued : (current + 1) % shapes.length;
+        queued = null;
+        beginScene(next);
+      }
+      const up = passT < STROKE;
+      const f = up ? passT / STROKE : 1 - (passT - STROKE) / STROKE; // 0 = bottom, 1 = top
+      scanY = reduceMotion ? group.position.y : bottom + (top - bottom) * f;
+      uniforms.uSweepUp.value = reduceMotion || !up ? 1e3 : scanY;
+      uniforms.uReveal.value = reduceMotion ? -1e3 : up ? 1e3 : scanY;
+      const c = shapes[current];
+      const o = prev >= 0 && prev !== current ? shapes[prev] : null;
+      if (c.root) c.plane.constant = reduceMotion ? 1e3 : up ? -1e3 : -scanY; // revealed above the laser on the way down
+      if (o && o.root) {
+        if (up && !reduceMotion) o.plane.constant = -scanY; // erased below the laser on the way up
+        else o.root.visible = false;
+      }
+    }
+    lastScanY = scanY;
     uniforms.uScan.value = scanY;
-    uniforms.uSweepUp.value = reduceMotion || !up ? 1e3 : scanY;
-    uniforms.uReveal.value = reduceMotion ? -1e3 : up ? 1e3 : scanY;
     scanGroup.position.y = scanY;
     ringMat.opacity = 0.6 * (1 - uniforms.uFade.value);
-
-    const cur = shapes[current];
-    const old = prev >= 0 && prev !== current ? shapes[prev] : null;
-    if (cur.root) cur.plane.constant = reduceMotion ? 1e3 : up ? -1e3 : -scanY; // revealed above the laser on the way down
-    if (old && old.root) {
-      if (up) old.plane.constant = -scanY; // erased below the laser on the way up
-      else old.root.visible = false;
-    }
 
     shapes.forEach((s) => {
       if (!s.root || !s.root.visible) return;

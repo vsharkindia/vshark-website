@@ -188,11 +188,29 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
   font-size: clamp(40px, min(6.6vw, 10.5vh), 120px); line-height: .94; letter-spacing: -0.045em;
 }
 .hero__title em { text-shadow: none; }
-.hero__spec { margin-top: 32px; display: flex; flex-direction: column; gap: 4px; }
-.hero__spec-label { color: var(--muted); }
-.hero__word { font-family: var(--mono); font-size: clamp(16px, 2vw, 22px); letter-spacing: 0.02em; color: var(--fg); min-height: 1.3em; }
-.hero__word::before { content: "› "; color: var(--accent); }
-.hero__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+.hero__spec { margin-top: 30px; display: flex; flex-direction: column; gap: 12px; }
+.hero__spec-label { color: var(--accent); font-weight: 500; display: inline-flex; align-items: center; gap: 10px; }
+.hero__spec-label::before { content: ""; width: 26px; height: 1.5px; background: var(--accent); }
+
+/* service selector: pick which animation plays; active tab shows its scan-pass progress */
+.svc-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.svc-tab {
+  position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 10px;
+  height: 48px; padding: 0 20px; border-radius: 100px;
+  background: rgba(255,255,255,.78); border: 1px solid rgba(28,33,37,.14);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  font-family: var(--display); font-size: 15.5px; font-weight: 500; letter-spacing: -0.01em; color: var(--fg);
+  transition: background .35s var(--ease), color .35s, border-color .35s, box-shadow .35s, transform .35s var(--ease);
+}
+.svc-tab i { font-style: normal; font-size: 10px; color: var(--accent); transition: color .35s; }
+.svc-tab:hover { border-color: var(--accent); transform: translateY(-2px); }
+.svc-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.svc-tab.is-active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 12px 30px -12px rgba(153,27,46,.55); }
+.svc-tab.is-active i { color: rgba(255,255,255,.7); }
+.svc-tab__bar { position: absolute; left: 0; bottom: 0; width: 100%; height: 3px; background: rgba(255,255,255,.9); transform-origin: left; transform: scaleX(var(--p, 0)); opacity: 0; }
+.svc-tab.is-active .svc-tab__bar { opacity: 1; }
+
+.hero__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
 
 .hud { position: absolute; inset: 0; pointer-events: none; z-index: 1; color: var(--muted); line-height: 1.8; }
 .hud > div { position: absolute; }
@@ -222,6 +240,11 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
   .hud__br { display: none; }
   .hero__content { padding-bottom: 48px; }
   .hero__actions .btn { flex: 1 1 auto; justify-content: center; }
+  .svc-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .svc-tab { height: 42px; padding: 0 10px; font-size: 13.5px; gap: 7px; justify-content: center; }
+  .svc-tab i { display: none; }
+  .hero__spec { margin-top: 22px; }
+  .hero__actions { margin-top: 22px; }
 }
 
 /* ---------- Marquee ---------- */

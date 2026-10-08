@@ -75,24 +75,36 @@
 
   /* ---------- Hero ---------- */
   const hero = window.VSharkHero;
-  const heroWord = $('#heroWord');
+  const tabs = $$('.svc-tab');
   const hudIdx = $('#hudIdx'), hudShape = $('#hudShape'), hudPts = $('#hudPts');
+  let activeTab = tabs[0];
+  function setActiveTab(i) {
+    tabs.forEach((b, k) => {
+      const on = k === i;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (!on) b.style.setProperty('--p', 0);
+    });
+    activeTab = tabs[i];
+  }
   if (hero && hero.ok) {
     if (hudPts) hudPts.textContent = 'PTS ' + hero.count.toLocaleString('en-US').padStart(6, '0');
     hero.onShape((i, s) => {
-      if (heroWord) scramble(heroWord, s.word);
+      setActiveTab(i);
       if (hudIdx) hudIdx.textContent = String(i + 1).padStart(2, '0');
       if (hudShape) scramble(hudShape, s.name, 0.6);
     });
+    tabs.forEach((b) => b.addEventListener('click', () => hero.select(+b.dataset.scene)));
+    gsap.ticker.add(() => { if (activeTab) activeTab.style.setProperty('--p', hero.progress().toFixed(3)); });
     ScrollTrigger.create({
       trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true,
       onUpdate: (self) => hero.setScrollProgress(self.progress),
     });
-  } else if (heroWord) {
-    // no WebGL — still cycle words
-    const words = ['3D Scanning Solutions', 'Reverse Engineering', 'Scan to BIM Modelling', 'Class A Surfacing'];
-    let wi = 0;
-    setInterval(() => { wi = (wi + 1) % words.length; scramble(heroWord, words[wi]); }, 3500);
+  } else if (tabs.length) {
+    // no WebGL: tabs still highlight on click and auto-cycle
+    let ti = 0;
+    tabs.forEach((b, k) => b.addEventListener('click', () => { ti = k; setActiveTab(k); }));
+    setInterval(() => { ti = (ti + 1) % tabs.length; setActiveTab(ti); }, 4000);
   }
   gsap.to('.hero__content', {
     yPercent: -25, opacity: 0, ease: 'none',
@@ -107,6 +119,7 @@
     .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut' })
     .add(() => { document.body.classList.remove('is-loading'); lenis?.start(); hero?.start(); }, '-=0.7')
     .from('.hero .line-mask > span', { yPercent: 110, duration: 1.3, ease: 'expo.out', stagger: 0.08 }, '-=0.5')
+    .from('.svc-tab', { y: 24, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.06 }, '-=1.1')
     .from('.hero__actions .btn', { y: 30, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.08 }, '-=1')
     .from('.header > *', { y: -40, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.06 }, '-=1')
     .from('.hud > div', { opacity: 0, duration: 1.2, stagger: 0.1 }, '-=0.9')
