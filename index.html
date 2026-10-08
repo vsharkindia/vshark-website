@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#f5f6f8">
   <link rel="icon" href="img/vshark-logo.png">
   <link rel="stylesheet" href="fonts/fonts.css?v=2">
-  <link rel="stylesheet" href="css/style.css?v=23">
+  <link rel="stylesheet" href="css/style.css?v=25">
 </head>
 <body class="is-loading">
 
@@ -224,47 +224,64 @@
       </div>
     </section>
 
-    <!-- INDUSTRIES — swipe carousel -->
+    <!-- INDUSTRIES — expanding panels: the active sector opens wide, the rest stay as narrow strips -->
     <section class="industries section" id="industries">
       <div class="sec-head">
         <div>
           <span class="tag mono">( 03 ) — Industries</span>
           <h2 class="h2" data-reveal>Industries <em>we serve.</em></h2>
-          
-        </div>
-        <div class="car__nav" data-reveal>
-          <button class="car__btn" type="button" data-car-prev="ind" aria-label="Previous"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
-          <button class="car__btn" type="button" data-car-next="ind" aria-label="Next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <p class="sec-head__sub muted" data-reveal>Six sectors, one standard of precision.</p>
         </div>
       </div>
-      <div class="car" data-carousel="ind">
-        <div class="car__track">
-          <article class="icard car__slide">
-            <img src="img/industries/aerospace.webp" alt="" loading="lazy" draggable="false">
-            <div class="icard__body"><span class="mono">01</span><h3>Aerospace</h3></div>
-          </article>
-          <article class="icard car__slide">
-            <img src="img/industries/auto.webp" alt="" loading="lazy" draggable="false">
-            <div class="icard__body"><span class="mono">02</span><h3>Automobile</h3></div>
-          </article>
-          <article class="icard car__slide">
-            <img src="img/industries/construction.webp" alt="" loading="lazy" draggable="false">
-            <div class="icard__body"><span class="mono">03</span><h3>Construction</h3></div>
-          </article>
-          <article class="icard car__slide">
-            <img src="img/industries/hospital.webp" alt="" loading="lazy" draggable="false">
-            <div class="icard__body"><span class="mono">04</span><h3>Healthcare</h3></div>
-          </article>
-          <article class="icard car__slide">
-            <img src="img/industries/institute.webp" alt="" loading="lazy" draggable="false">
-            <div class="icard__body"><span class="mono">05</span><h3>Education</h3></div>
-          </article>
-          <article class="icard car__slide">
-            <img src="img/industries/jewelery.webp" alt="" loading="lazy" draggable="false">
-            <div class="icard__body"><span class="mono">06</span><h3>Jewellery</h3></div>
-          </article>
-        </div>
-        <div class="car__bar"><b></b></div>
+      <div class="ind-acc" id="indAcc" role="group" aria-label="Industries">
+        <button class="ip is-active" type="button" aria-pressed="true" aria-label="Aerospace">
+          <img src="img/industries/aerospace.webp" alt="" loading="lazy" draggable="false">
+          <span class="ip__num mono">01</span>
+          <span class="ip__label">Aerospace</span>
+          <span class="ip__body"><b>Aerospace</b><span>Inspection and reverse engineering of high-precision aircraft components.</span></span>
+          <i class="ip__scan" aria-hidden="true"></i>
+          <i class="ip__bar" aria-hidden="true"></i>
+        </button>
+        <button class="ip" type="button" aria-pressed="false" aria-label="Automobile">
+          <img src="img/industries/auto.webp" alt="" loading="lazy" draggable="false">
+          <span class="ip__num mono">02</span>
+          <span class="ip__label">Automobile</span>
+          <span class="ip__body"><b>Automobile</b><span>Body surfacing, part digitising and fixture design for vehicles.</span></span>
+          <i class="ip__scan" aria-hidden="true"></i>
+          <i class="ip__bar" aria-hidden="true"></i>
+        </button>
+        <button class="ip" type="button" aria-pressed="false" aria-label="Construction">
+          <img src="img/industries/construction.webp" alt="" loading="lazy" draggable="false">
+          <span class="ip__num mono">03</span>
+          <span class="ip__label">Construction</span>
+          <span class="ip__body"><b>Construction</b><span>As-built scanning and BIM models for buildings and sites.</span></span>
+          <i class="ip__scan" aria-hidden="true"></i>
+          <i class="ip__bar" aria-hidden="true"></i>
+        </button>
+        <button class="ip" type="button" aria-pressed="false" aria-label="Healthcare">
+          <img src="img/industries/hospital.webp" alt="" loading="lazy" draggable="false">
+          <span class="ip__num mono">04</span>
+          <span class="ip__label">Healthcare</span>
+          <span class="ip__body"><b>Healthcare</b><span>Medical devices and custom-fit parts captured and modelled in 3D.</span></span>
+          <i class="ip__scan" aria-hidden="true"></i>
+          <i class="ip__bar" aria-hidden="true"></i>
+        </button>
+        <button class="ip" type="button" aria-pressed="false" aria-label="Education">
+          <img src="img/industries/institute.webp" alt="" loading="lazy" draggable="false">
+          <span class="ip__num mono">05</span>
+          <span class="ip__label">Education</span>
+          <span class="ip__body"><b>Education</b><span>Scanning and 3D printing support for labs, research and teaching.</span></span>
+          <i class="ip__scan" aria-hidden="true"></i>
+          <i class="ip__bar" aria-hidden="true"></i>
+        </button>
+        <button class="ip" type="button" aria-pressed="false" aria-label="Jewellery">
+          <img src="img/industries/jewelery.webp" alt="" loading="lazy" draggable="false">
+          <span class="ip__num mono">06</span>
+          <span class="ip__label">Jewellery</span>
+          <span class="ip__body"><b>Jewellery</b><span>Fine-detail scanning and printing for jewellery design and casting.</span></span>
+          <i class="ip__scan" aria-hidden="true"></i>
+          <i class="ip__bar" aria-hidden="true"></i>
+        </button>
       </div>
     </section>
 
@@ -334,8 +351,8 @@
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="vendor/lenis.min.js"></script>
-  <script src="js/products.js?v=23"></script>
-  <script src="js/hero.js?v=23"></script>
-  <script src="js/main.js?v=23"></script>
+  <script src="js/products.js?v=25"></script>
+  <script src="js/hero.js?v=25"></script>
+  <script src="js/main.js?v=25"></script>
 </body>
 </html>

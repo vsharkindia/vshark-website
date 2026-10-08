@@ -191,68 +191,42 @@
     },
   });
 
-  /* ---------- Carousels (services, industries) ----------
-     Native horizontal scroll with snap (touch swipe for free), plus
-     arrows, mouse drag, a progress bar and gentle autoplay. */
-  $$('[data-carousel]').forEach((car) => {
-    const id = car.dataset.carousel;
-    const track = $('.car__track', car);
-    const bar = $('.car__bar b', car);
-    const slides = $$('.car__slide', track);
-    const step = () => (slides[1] ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth);
-    const maxX = () => track.scrollWidth - track.clientWidth;
-    const go = (dir) => {
-      const x = track.scrollLeft;
-      if (dir > 0 && x >= maxX() - 4) track.scrollTo({ left: 0 });
-      else if (dir < 0 && x <= 4) track.scrollTo({ left: maxX() });
-      else track.scrollBy({ left: dir * step() });
+  /* ---------- Industries: expanding panels ---------- */
+  const indAcc = $('#indAcc');
+  if (indAcc) {
+    const panels = $$('.ip', indAcc);
+    const narrowInd = window.matchMedia('(max-width: 760px)');
+    const AUTO = 4200;
+    let act = 0, t0 = performance.now(), holdTill = 0, over = false, seen = false;
+    const activate = (i, byUser) => {
+      if (byUser) holdTill = Date.now() + 9000;
+      t0 = performance.now();
+      if (i === act) return;
+      act = i;
+      panels.forEach((p, k) => {
+        p.classList.toggle('is-active', k === i);
+        p.setAttribute('aria-pressed', k === i ? 'true' : 'false');
+        p.style.setProperty('--p', 0);
+      });
     };
-    $(`[data-car-next="${id}"]`)?.addEventListener('click', () => { go(1); hold(); });
-    $(`[data-car-prev="${id}"]`)?.addEventListener('click', () => { go(-1); hold(); });
-
-    const updateBar = () => {
-      const vis = track.clientWidth / track.scrollWidth;
-      const p = maxX() > 0 ? track.scrollLeft / maxX() : 1;
-      bar.style.transform = `scaleX(${(vis + (1 - vis) * p).toFixed(3)})`;
-    };
-    track.addEventListener('scroll', updateBar, { passive: true });
-    window.addEventListener('resize', updateBar);
-    updateBar();
-
-    // autoplay: pauses on hover, touch/drag, when off-screen, and for 6 s after any interaction
-    let hovering = false, onScreen = false, heldUntil = 0;
-    const hold = () => { heldUntil = Date.now() + 6000; };
-    car.addEventListener('pointerenter', () => { hovering = true; });
-    car.addEventListener('pointerleave', () => { hovering = false; });
-    track.addEventListener('touchstart', hold, { passive: true });
-    new IntersectionObserver(([en]) => { onScreen = en.isIntersecting; }).observe(car);
+    panels.forEach((p, i) => {
+      p.addEventListener('click', () => activate(i, true));
+      p.addEventListener('pointerenter', (ev) => { if (ev.pointerType === 'mouse' && !narrowInd.matches) activate(i, true); });
+      p.addEventListener('focus', () => activate(i, true));
+    });
+    indAcc.addEventListener('pointerenter', () => { over = true; });
+    indAcc.addEventListener('pointerleave', () => { over = false; t0 = performance.now(); });
+    new IntersectionObserver(([en]) => { seen = en.isIntersecting; if (seen) t0 = performance.now(); }).observe(indAcc);
     if (!reduceMotion) {
-      setInterval(() => {
-        if (onScreen && !hovering && !document.hidden && Date.now() > heldUntil) go(1);
-      }, 3500);
+      gsap.ticker.add(() => {
+        const paused = !seen || over || Date.now() < holdTill || document.hidden;
+        if (paused) { t0 = performance.now() - (parseFloat(panels[act].style.getPropertyValue('--p')) || 0) * AUTO; return; }
+        const prog = Math.min(1, (performance.now() - t0) / AUTO);
+        panels[act].style.setProperty('--p', prog.toFixed(3));
+        if (prog >= 1) activate((act + 1) % panels.length, false);
+      });
     }
-
-    // mouse drag (touch uses native scrolling)
-    let down = null, dragged = false;
-    track.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      down = { x: e.clientX, left: track.scrollLeft };
-      dragged = false;
-    });
-    window.addEventListener('pointermove', (e) => {
-      if (!down) return;
-      const dx = e.clientX - down.x;
-      if (!dragged && Math.abs(dx) > 6) { dragged = true; track.classList.add('is-drag'); }
-      if (dragged) track.scrollLeft = down.left - dx;
-    });
-    window.addEventListener('pointerup', () => {
-      if (!down) return;
-      down = null;
-      if (dragged) { track.classList.remove('is-drag'); hold(); }
-    });
-    // a drag should not also count as a click on the card link
-    track.addEventListener('click', (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
-  });
+  }
 
   /* ---------- Services: split view (desktop) / accordion (phones) ---------- */
   const svx = $('#svx');
@@ -375,7 +349,7 @@
     }, { passive: true });
     document.addEventListener('pointerover', (e) => {
       const l = e.target.closest('[data-cursor]');
-      const h = e.target.closest('a, button, .icard');
+      const h = e.target.closest('a, button');
       cur.classList.toggle('is-label', !!l);
       cur.classList.toggle('is-hover', !l && !!h);
       label.textContent = l ? l.dataset.cursor : '';
