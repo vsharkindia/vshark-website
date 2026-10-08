@@ -254,17 +254,78 @@
     track.addEventListener('click', (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
   });
 
-  /* card hover: image drifts with the pointer */
-  if (finePointer) {
-    $$('.card').forEach((card) => {
-      const media = $('.card__media img', card);
-      card.addEventListener('pointermove', (e) => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
-        gsap.to(media, { xPercent: -px * 4, yPercent: -py * 4, duration: 0.6, ease: 'power3.out' });
+  /* ---------- Services: split view (desktop) / accordion (phones) ---------- */
+  const svx = $('#svx');
+  if (svx) {
+    const items = $$('.svx__item', svx);
+    const rows = $$('.svx__row', svx);
+    const imgs = $$('.svx__img', svx);
+    const scan = $('.svx__scan', svx);
+    const info = $('.svx__info', svx);
+    const countEl = $('.svx__count b', svx), titleEl = $('.svx__title', svx), descEl = $('.svx__desc', svx), moreEl = $('.svx__more', svx);
+    const panel = $('#svxPanel');
+    const narrow = window.matchMedia('(max-width: 860px)');
+    const AUTOPLAY = 5000;
+    let cur = 0, z = 1, startedAt = performance.now(), heldUntil = 0, hovering = false, onScreen = false;
+
+    function show(i, byUser) {
+      if (byUser) heldUntil = Date.now() + 9000;
+      startedAt = performance.now();
+      if (i === cur) return;
+      cur = i;
+      items.forEach((b, k) => {
+        b.classList.toggle('is-active', k === i);
+        b.setAttribute('aria-selected', k === i ? 'true' : 'false');
+        if (k !== i) b.style.setProperty('--p', 0);
       });
-      card.addEventListener('pointerleave', () => gsap.to(media, { xPercent: 0, yPercent: 0, duration: 0.8, ease: 'power3.out' }));
+      panel.setAttribute('aria-labelledby', items[i].id);
+      // new image wipes in from the top behind the laser line
+      const img = imgs[i];
+      img.style.zIndex = ++z;
+      imgs.forEach((im) => im.classList.toggle('is-on', im === img));
+      gsap.killTweensOf([img, scan]);
+      gsap.fromTo(img, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'power2.inOut' });
+      gsap.fromTo(scan, { top: '0%', opacity: 1 }, { top: '100%', duration: 0.9, ease: 'power2.inOut', onComplete: () => gsap.to(scan, { opacity: 0, duration: 0.25 }) });
+      // details swap
+      const d = items[i].dataset;
+      gsap.to(info, {
+        opacity: 0, y: -8, duration: 0.18, ease: 'power1.in',
+        onComplete: () => {
+          countEl.textContent = String(i + 1).padStart(2, '0');
+          titleEl.textContent = d.name; descEl.textContent = d.desc; moreEl.setAttribute('href', d.href);
+          gsap.fromTo(info, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out' });
+        },
+      });
+    }
+
+    items.forEach((b, i) => {
+      b.addEventListener('click', () => {
+        if (narrow.matches) {                      // phones: accordion
+          const row = rows[i];
+          const open = !row.classList.contains('is-open');
+          rows.forEach((r, k) => { r.classList.toggle('is-open', open && k === i); items[k].classList.toggle('is-open', open && k === i); });
+          return;
+        }
+        show(i, true);
+      });
+      b.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && !narrow.matches) show(i, true); });
+      b.addEventListener('focus', () => { if (!narrow.matches) show(i, true); });
     });
+    svx.addEventListener('pointerenter', () => { hovering = true; });
+    svx.addEventListener('pointerleave', () => { hovering = false; startedAt = performance.now(); });
+    new IntersectionObserver(([en]) => { onScreen = en.isIntersecting; if (onScreen) startedAt = performance.now(); }).observe(svx);
+
+    // autoplay with a progress bar on the active row (desktop only)
+    if (!reduceMotion) {
+      gsap.ticker.add(() => {
+        if (narrow.matches) return;
+        const paused = !onScreen || hovering || Date.now() < heldUntil || document.hidden;
+        if (paused) { startedAt = performance.now() - (parseFloat(items[cur].style.getPropertyValue('--p')) || 0) * AUTOPLAY; return; }
+        const p = Math.min(1, (performance.now() - startedAt) / AUTOPLAY);
+        items[cur].style.setProperty('--p', p.toFixed(3));
+        if (p >= 1) show((cur + 1) % items.length, false);
+      });
+    }
   }
 
   /* ---------- Testimonials: duplicate cards for a seamless loop ---------- */

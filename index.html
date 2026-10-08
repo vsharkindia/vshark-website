@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#f5f6f8">
   <link rel="icon" href="img/vshark-logo.png">
   <link rel="stylesheet" href="fonts/fonts.css?v=2">
-  <link rel="stylesheet" href="css/style.css?v=20">
+  <link rel="stylesheet" href="css/style.css?v=22">
 </head>
 <body class="is-loading">
 
@@ -113,7 +113,7 @@
       <div class="prod-grid" id="productGrid"></div>
     </section>
 
-    <!-- SERVICES — swipe carousel -->
+    <!-- SERVICES — interactive split view: list (left) drives the image/details (right) -->
     <section class="services section" id="services">
       <div class="sec-head">
         <div>
@@ -121,50 +121,106 @@
           <h2 class="h2" data-reveal>From physical to <em>digital</em> and back.</h2>
           <p class="sec-head__sub muted" data-reveal>Precise 3D scanning and innovative 3D design that transform concepts into digital models and physical prototypes.</p>
         </div>
-        <div class="car__nav" data-reveal>
-          <button class="car__btn" type="button" data-car-prev="svc" aria-label="Previous"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
-          <button class="car__btn" type="button" data-car-next="svc" aria-label="Next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
       </div>
-      <div class="car" data-carousel="svc">
-        <div class="car__track">
-          <article class="card car__slide" data-cursor="View">
-            <div class="card__media"><img src="img/services/01-scanning.webp" alt="" loading="lazy" draggable="false"></div>
-            <div class="card__body"><span class="card__num mono">01</span><h3>3D Scanning</h3><p>High-resolution capture of parts, products and spaces into accurate point clouds and meshes.</p></div>
-            <a href="3d-scanning.php" class="card__link" aria-label="3D Scanning" draggable="false"></a>
-          </article>
-          <article class="card car__slide" data-cursor="View">
-            <div class="card__media"><img src="img/services/02-reverse-engineering.webp" alt="" loading="lazy" draggable="false"></div>
-            <div class="card__body"><span class="card__num mono">02</span><h3>Reverse Engineering</h3><p>Scan data rebuilt into fully editable, dimensionally accurate CAD models.</p></div>
-            <a href="product-development.php" class="card__link" aria-label="Reverse Engineering" draggable="false"></a>
-          </article>
-          <article class="card car__slide" data-cursor="View">
-            <div class="card__media"><img src="img/services/bim.webp" alt="" loading="lazy" draggable="false"></div>
-            <div class="card__body"><span class="card__num mono">03</span><h3>Scan to BIM</h3><p>As-built buildings and sites converted into intelligent BIM models.</p></div>
-            <a href="contact.php" class="card__link" aria-label="Scan to BIM" draggable="false"></a>
-          </article>
-          <article class="card car__slide" data-cursor="View">
-            <div class="card__media"><img src="img/services/class-a.webp" alt="" loading="lazy" draggable="false"></div>
-            <div class="card__body"><span class="card__num mono">04</span><h3>Class A Surfacing</h3><p>Flawless, curvature-continuous surfaces for automotive and consumer products.</p></div>
-            <a href="contact.php" class="card__link" aria-label="Class A Surfacing" draggable="false"></a>
-          </article>
-          <article class="card car__slide" data-cursor="View">
-            <div class="card__media"><img src="img/services/digital.webp" alt="" loading="lazy" draggable="false"></div>
-            <div class="card__body"><span class="card__num mono">05</span><h3>Digital Metrology</h3><p>Inspection and deviation analysis that compares manufactured parts to their CAD.</p></div>
-            <a href="contact.php" class="card__link" aria-label="Digital Metrology" draggable="false"></a>
-          </article>
-          <article class="card car__slide" data-cursor="View">
-            <div class="card__media"><img src="img/services/printing.webp" alt="" loading="lazy" draggable="false"></div>
-            <div class="card__body"><span class="card__num mono">06</span><h3>3D Printing</h3><p>Rapid prototypes and functional parts, printed straight from your model.</p></div>
-            <a href="3d-printing.php" class="card__link" aria-label="3D Printing" draggable="false"></a>
-          </article>
-          <article class="card car__slide" data-cursor="View">
-            <div class="card__media"><img src="img/services/product-rendering.webp" alt="" loading="lazy" draggable="false"></div>
-            <div class="card__body"><span class="card__num mono">07</span><h3>Product Rendering</h3><p>Photoreal visuals that sell a product before it is ever made.</p></div>
-            <a href="contact.php" class="card__link" aria-label="Product Rendering" draggable="false"></a>
-          </article>
+      <div class="svx" id="svx">
+        <ol class="svx__list" role="tablist" aria-label="Services">
+          <li class="svx__row">
+            <button class="svx__item is-active" type="button" role="tab" id="svxTab0" aria-selected="true" aria-controls="svxPanel"
+              data-name="3D Scanning" data-desc="High-resolution capture of parts, products and spaces into accurate point clouds and meshes." data-href="3d-scanning.php">
+              <span class="svx__n mono">01</span><b>3D Scanning</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
+            </button>
+            <div class="svx__drop">
+              <img src="img/services/01-scanning.webp" alt="" loading="lazy">
+              <p>High-resolution capture of parts, products and spaces into accurate point clouds and meshes.</p>
+              <a href="3d-scanning.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="svx__row">
+            <button class="svx__item" type="button" role="tab" id="svxTab1" aria-selected="false" aria-controls="svxPanel"
+              data-name="Reverse Engineering" data-desc="Scan data rebuilt into fully editable, dimensionally accurate CAD models." data-href="product-development.php">
+              <span class="svx__n mono">02</span><b>Reverse Engineering</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
+            </button>
+            <div class="svx__drop">
+              <img src="img/services/02-reverse-engineering.webp" alt="" loading="lazy">
+              <p>Scan data rebuilt into fully editable, dimensionally accurate CAD models.</p>
+              <a href="product-development.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="svx__row">
+            <button class="svx__item" type="button" role="tab" id="svxTab2" aria-selected="false" aria-controls="svxPanel"
+              data-name="Scan to BIM" data-desc="As-built buildings and sites converted into intelligent BIM models." data-href="contact.php">
+              <span class="svx__n mono">03</span><b>Scan to BIM</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
+            </button>
+            <div class="svx__drop">
+              <img src="img/services/bim.webp" alt="" loading="lazy">
+              <p>As-built buildings and sites converted into intelligent BIM models.</p>
+              <a href="contact.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="svx__row">
+            <button class="svx__item" type="button" role="tab" id="svxTab3" aria-selected="false" aria-controls="svxPanel"
+              data-name="Class A Surfacing" data-desc="Flawless, curvature-continuous surfaces for automotive and consumer products." data-href="contact.php">
+              <span class="svx__n mono">04</span><b>Class A Surfacing</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
+            </button>
+            <div class="svx__drop">
+              <img src="img/services/class-a.webp" alt="" loading="lazy">
+              <p>Flawless, curvature-continuous surfaces for automotive and consumer products.</p>
+              <a href="contact.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="svx__row">
+            <button class="svx__item" type="button" role="tab" id="svxTab4" aria-selected="false" aria-controls="svxPanel"
+              data-name="Digital Metrology" data-desc="Inspection and deviation analysis that compares manufactured parts to their CAD." data-href="contact.php">
+              <span class="svx__n mono">05</span><b>Digital Metrology</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
+            </button>
+            <div class="svx__drop">
+              <img src="img/services/digital.webp" alt="" loading="lazy">
+              <p>Inspection and deviation analysis that compares manufactured parts to their CAD.</p>
+              <a href="contact.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="svx__row">
+            <button class="svx__item" type="button" role="tab" id="svxTab5" aria-selected="false" aria-controls="svxPanel"
+              data-name="3D Printing" data-desc="Rapid prototypes and functional parts, printed straight from your model." data-href="3d-printing.php">
+              <span class="svx__n mono">06</span><b>3D Printing</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
+            </button>
+            <div class="svx__drop">
+              <img src="img/services/printing.webp" alt="" loading="lazy">
+              <p>Rapid prototypes and functional parts, printed straight from your model.</p>
+              <a href="3d-printing.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+          <li class="svx__row">
+            <button class="svx__item" type="button" role="tab" id="svxTab6" aria-selected="false" aria-controls="svxPanel"
+              data-name="Product Rendering" data-desc="Photoreal visuals that sell a product before it is ever made." data-href="contact.php">
+              <span class="svx__n mono">07</span><b>Product Rendering</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
+            </button>
+            <div class="svx__drop">
+              <img src="img/services/product-rendering.webp" alt="" loading="lazy">
+              <p>Photoreal visuals that sell a product before it is ever made.</p>
+              <a href="contact.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </li>
+        </ol>
+        <div class="svx__stage" id="svxPanel" role="tabpanel" aria-labelledby="svxTab0">
+          <div class="svx__media">
+          <img class="svx__img is-on" src="img/services/01-scanning.webp" alt="3D Scanning" loading="lazy">
+          <img class="svx__img" src="img/services/02-reverse-engineering.webp" alt="Reverse Engineering" loading="lazy">
+          <img class="svx__img" src="img/services/bim.webp" alt="Scan to BIM" loading="lazy">
+          <img class="svx__img" src="img/services/class-a.webp" alt="Class A Surfacing" loading="lazy">
+          <img class="svx__img" src="img/services/digital.webp" alt="Digital Metrology" loading="lazy">
+          <img class="svx__img" src="img/services/printing.webp" alt="3D Printing" loading="lazy">
+          <img class="svx__img" src="img/services/product-rendering.webp" alt="Product Rendering" loading="lazy">
+            <span class="svx__scan" aria-hidden="true"></span>
+            <i class="svx__slash" aria-hidden="true"></i>
+          </div>
+          <div class="svx__info">
+            <span class="svx__count mono"><b>01</b> / 07</span>
+            <h3 class="svx__title">3D Scanning</h3>
+            <p class="svx__desc">High-resolution capture of parts, products and spaces into accurate point clouds and meshes.</p>
+            <a class="svx__link svx__more" href="3d-scanning.php">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
         </div>
-        <div class="car__bar"><b></b></div>
       </div>
     </section>
 
@@ -278,8 +334,8 @@
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="vendor/lenis.min.js"></script>
-  <script src="js/products.js?v=20"></script>
-  <script src="js/hero.js?v=20"></script>
-  <script src="js/main.js?v=20"></script>
+  <script src="js/products.js?v=22"></script>
+  <script src="js/hero.js?v=22"></script>
+  <script src="js/main.js?v=22"></script>
 </body>
 </html>

@@ -329,27 +329,66 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .car__bar { height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; max-width: 260px; }
 .car__bar b { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(.2); transition: transform .3s; }
 
-/* service cards */
+/* services: interactive split view — list (left) drives image + details (right) */
 .services { background: var(--bg-2); border-block: 1px solid var(--line); }
-.card {
-  position: relative; width: clamp(270px, 26vw, 360px); height: clamp(400px, 34vw, 470px);
-  border-radius: 18px; overflow: hidden; background: var(--card); border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(28,33,37,.04), 0 12px 32px -20px rgba(28,33,37,.18);
-  display: flex; flex-direction: column; transition: border-color .4s, box-shadow .4s, transform .5s var(--ease);
+.svx { display: grid; grid-template-columns: minmax(300px, 0.9fr) 1.1fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
+.svx__list { border-top: 1px solid var(--line); }
+.svx__row { border-bottom: 1px solid var(--line); }
+.svx__item {
+  position: relative; width: 100%; display: grid; grid-template-columns: 44px 1fr 22px; align-items: center; gap: 12px;
+  padding: clamp(16px, 1.6vw, 22px) 6px; text-align: left; color: var(--fg); transition: color .35s, padding .45s var(--ease);
 }
-.card:hover { border-color: rgba(153,27,46,.45); box-shadow: 0 30px 60px -30px rgba(28,33,37,.3); transform: translateY(-4px); }
-.card__media { position: relative; flex: 1; overflow: hidden; }
-.card__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 1.2s var(--ease), filter .6s; filter: saturate(.9); pointer-events: none; }
-.card:hover .card__media img { transform: scale(1.14); filter: saturate(1.05); }
-.card__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, var(--card) 0, transparent 50%); }
-.card__body { position: relative; padding: 0 24px 26px; margin-top: -40px; }
-.card__num { color: var(--accent); }
-.card h3 { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.03em; margin: 8px 0; }
-.card p { color: var(--muted); font-size: 15px; line-height: 1.5; }
-.card__link { position: absolute; inset: 0; z-index: 3; }
-.card::before { content: ""; position: absolute; left: 0; right: 0; top: -10%; height: 2px; z-index: 2; pointer-events: none; background: var(--accent); box-shadow: 0 0 18px 4px var(--accent-glow); opacity: 0; }
-.card:hover::before { animation: sweep 1.4s var(--ease) forwards; }
-@keyframes sweep { 0% { top: 0; opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+.svx__n { color: var(--muted); transition: color .35s; }
+.svx__item b { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 2vw, 30px); letter-spacing: -0.03em; line-height: 1.15; }
+.svx__item svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; opacity: 0; transform: translateX(-10px); transition: opacity .35s, transform .45s var(--ease); }
+.svx__item:hover { padding-left: 14px; }
+.svx__item.is-active { color: var(--accent); padding-left: 18px; }
+.svx__item.is-active .svx__n { color: var(--accent); }
+.svx__item.is-active svg { opacity: 1; transform: none; }
+.svx__item::before { content: ""; position: absolute; left: 0; top: 22%; bottom: 22%; width: 3px; background: var(--accent); transform: scaleY(0); transition: transform .45s var(--ease); }
+.svx__item.is-active::before { transform: scaleY(1); }
+.svx__item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.svx__bar { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); transform-origin: left; transform: scaleX(var(--p, 0)); opacity: 0; }
+.svx__item.is-active .svx__bar { opacity: 1; }
+.svx__drop { display: none; }
+
+.svx__stage { position: sticky; top: 100px; --cut: 34px; filter: drop-shadow(0 22px 34px rgba(28,33,37,.14)); }
+.svx__media {
+  position: relative; aspect-ratio: 16 / 10.5; overflow: hidden; background: var(--bg);
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut));
+}
+.svx__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; clip-path: inset(0 0 100% 0); }
+.svx__img.is-on { clip-path: inset(0 0 0 0); }
+.svx__scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 30; opacity: 0; background: var(--accent); box-shadow: 0 0 18px 4px var(--accent-glow); pointer-events: none; }
+.svx__slash { position: absolute; right: -2%; bottom: 0; width: 34%; height: 46%; z-index: 25; pointer-events: none; background: linear-gradient(180deg, rgba(153,27,46,0), rgba(153,27,46,.85)); clip-path: polygon(55% 0, 100% 0, 45% 100%, 0 100%); mix-blend-mode: multiply; }
+.svx__info {
+  background: var(--card); padding: 24px 28px 28px;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+}
+.svx__count { color: var(--muted); }
+.svx__count b { color: var(--accent); font-weight: 500; }
+.svx__title { font-family: var(--display); font-weight: 600; font-size: clamp(26px, 2.4vw, 36px); letter-spacing: -0.03em; margin: 6px 0 8px; }
+.svx__desc { color: var(--fg-2); max-width: 520px; }
+.svx__link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-family: var(--display); font-weight: 500; color: var(--fg); transition: gap .4s var(--ease), color .3s; }
+.svx__link svg { width: 18px; height: 18px; fill: none; stroke: var(--accent); stroke-width: 1.8; }
+.svx__link:hover { gap: 14px; color: var(--accent); }
+
+/* phones / small tablets: accordion — tap a service to open its image + text in place */
+@media (max-width: 860px) {
+  .svx { display: block; }
+  .svx__stage { display: none; }
+  .svx__item svg { opacity: 1; transform: rotate(90deg); transition: transform .45s var(--ease); }
+  .svx__item.is-open svg { transform: rotate(-90deg); }
+  .svx__item.is-active:not(.is-open) { color: var(--fg); padding-left: 6px; }
+  .svx__item.is-active:not(.is-open) .svx__n { color: var(--muted); }
+  .svx__item.is-active:not(.is-open)::before, .svx__bar { display: none; }
+  .svx__item.is-active:not(.is-open) svg { transform: rotate(90deg); }
+  .svx__drop { display: block; max-height: 0; overflow: hidden; transition: max-height .6s var(--ease); }
+  .svx__row.is-open .svx__drop { max-height: 640px; }
+  .svx__drop img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 12px; }
+  .svx__drop p { color: var(--fg-2); padding-top: 12px; }
+  .svx__drop .svx__link { margin: 4px 0 18px; }
+}
 
 /* industry cards */
 .icard { position: relative; width: clamp(230px, 22vw, 300px); aspect-ratio: 3 / 4; border-radius: 18px; overflow: hidden; background: var(--bg-2); }
