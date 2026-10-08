@@ -96,30 +96,25 @@
   const std = (color, extra) => new THREE.MeshStandardMaterial(Object.assign({ color, roughness: 0.5, metalness: 0.15, side: THREE.DoubleSide }, extra));
 
   /* =========================================================
-     01 — 3D Scanning: freeform scanned object (points only)
+     01 — 3D Scanning: freeform object → triangulated scan mesh
      ========================================================= */
-  function torusKnot() {
-    const a = new Float32Array(N * 3);
+  function buildScanMesh() {
+    const root = new THREE.Group();
     const P = 2, Q = 3, s = 0.62;
-    const c = (t) => {
-      const r = Math.cos(Q * t) + 2.2;
-      return [r * Math.cos(P * t), -Math.sin(Q * t) * 1.1, r * Math.sin(P * t)];
-    };
-    for (let i = 0; i < N; i++) {
-      const t = rand() * TAU;
-      const p0 = c(t), p1 = c(t + 0.001);
-      let T = [p1[0] - p0[0], p1[1] - p0[1], p1[2] - p0[2]];
-      const tl = Math.hypot(T[0], T[1], T[2]); T = T.map((v) => v / tl);
-      let v = [rand() - 0.5, rand() - 0.5, rand() - 0.5];
-      const d = v[0] * T[0] + v[1] * T[1] + v[2] * T[2];
-      v = [v[0] - T[0] * d, v[1] - T[1] * d, v[2] - T[2] * d];
-      const vl = Math.hypot(v[0], v[1], v[2]) || 1;
-      const tube = 0.52;
-      a[i * 3]     = (p0[0] + (v[0] / vl) * tube) * s;
-      a[i * 3 + 1] = (p0[1] + (v[1] / vl) * tube) * s;
-      a[i * 3 + 2] = (p0[2] + (v[2] / vl) * tube) * s;
+    class KnotCurve extends THREE.Curve {
+      getPoint(u, target = new V3()) {
+        const t = u * TAU;
+        const r = Math.cos(Q * t) + 2.2;
+        return target.set(r * Math.cos(P * t) * s, -Math.sin(Q * t) * 1.1 * s, r * Math.sin(P * t) * s);
+      }
     }
-    return a;
+    // deliberately coarse, flat-shaded triangles: reads as a raw scan mesh (STL)
+    const geo = new THREE.TubeGeometry(new KnotCurve(), isMobile ? 120 : 170, 0.52 * s, isMobile ? 10 : 13, true);
+    const surface = new THREE.Mesh(geo, std(0xcfd4d8, { flatShading: true, roughness: 0.62, metalness: 0.1 }));
+    const wire = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: COL.slate, wireframe: true, transparent: true, opacity: 0.32 }));
+    wire.userData.noSample = true;
+    root.add(surface, wire);
+    return { root, spin: true };
   }
 
   /* =========================================================
@@ -222,58 +217,10 @@
   }
 
   /* =========================================================
-     04 — Class A Surfacing: car body with zebra analysis
+     04 — Class A Surfacing: airliner with zebra analysis
      ========================================================= */
-  function buildCar() {
-    const root = new THREE.Group();
-    const L = 4.1;
-    // side silhouette: (position along car 0=front … 1=rear, roof height)
-    const silhouette = new THREE.SplineCurve([
-      [0.0, 0.56], [0.05, 0.7], [0.16, 0.79], [0.32, 0.86], [0.46, 1.3],
-      [0.64, 1.33], [0.8, 1.04], [0.92, 0.97], [1.0, 0.7],
-    ].map(([u, h]) => new THREE.Vector2(u, h)));
-    const lut = silhouette.getSpacedPoints(400);
-    const heightAt = (u) => {
-      for (let i = 1; i < lut.length; i++) {
-        if (lut[i].x >= u) {
-          const p = lut[i - 1], q = lut[i];
-          return p.y + (q.y - p.y) * ((u - p.x) / (q.x - p.x || 1));
-        }
-      }
-      return lut[lut.length - 1].y;
-    };
-
-    const NU = isMobile ? 90 : 140, NV = isMobile ? 40 : 60;
-    const pos = [];
-    const idx = [];
-    for (let i = 0; i <= NU; i++) {
-      const u = i / NU;
-      const x = (0.5 - u) * L;
-      const top = heightAt(u);
-      const bottom = 0.3;
-      const halfW = 0.94 * Math.pow(Math.sin(Math.PI * Math.min(Math.max(u, 0.001), 0.999)), 0.28);
-      for (let j = 0; j <= NV; j++) {
-        const v = (j / NV) * Math.PI;
-        const s = Math.sin(v), c = Math.cos(v);
-        const y = bottom + (top - bottom) * Math.pow(s, 0.42);
-        let z = halfW * Math.sign(c) * Math.pow(Math.abs(c), 0.6);
-        const belt = 0.9;
-        if (y > belt) z *= 1 - 0.3 * Math.min(1, (y - belt) / 0.42); // narrower greenhouse
-        pos.push(x, y, z);
-      }
-    }
-    for (let i = 0; i < NU; i++) {
-      for (let j = 0; j < NV; j++) {
-        const a = i * (NV + 1) + j, b = a + NV + 1;
-        idx.push(a, b, a + 1, b, b + 1, a + 1);
-      }
-    }
-    const bodyGeo = new THREE.BufferGeometry();
-    bodyGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    bodyGeo.setIndex(idx);
-    bodyGeo.computeVertexNormals();
-
-    const zebra = new THREE.ShaderMaterial({
+  function zebraMaterial() {
+    const m = new THREE.ShaderMaterial({
       uniforms: { uTime: { value: 0 }, uOpacity: { value: 1 } },
       side: THREE.DoubleSide,
       transparent: true,
@@ -309,27 +256,109 @@
           gl_FragColor = vec4(col, uOpacity);
         }`,
     });
-    zebra.userData.base = 1;
-    const body = new THREE.Mesh(bodyGeo, zebra);
-    root.add(body);
+    m.userData.base = 1;
+    return m;
+  }
 
-    const tyre = std(0x2a3034, { roughness: 0.85 });
-    const rim = std(COL.steel, { metalness: 0.6, roughness: 0.3 });
-    [[1.28, 0.86], [1.28, -0.86], [-1.3, 0.86], [-1.3, -0.86]].forEach(([x, z]) => {
-      const w = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.34, 0.22, 40), tyre);
-      w.rotation.x = Math.PI / 2;
-      w.position.set(x, 0.34, z);
-      const r = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.235, 24), rim);
-      r.rotation.x = Math.PI / 2;
-      r.position.copy(w.position);
-      r.userData.noSample = true;
-      w.userData.sampleWeight = 0.6;
-      root.add(w, r);
+  // Swept, tapered lifting surface with a symmetric NACA 00xx section.
+  // Local axes: chord runs toward -x from the leading edge, span along +z, thickness along y.
+  function liftingSurface({ root, tip, span, sweep, dihedral = 0, thick = 0.12 }) {
+    const NX = 22, NZ = isMobile ? 10 : 16;
+    const pos = [], idx = [];
+    const naca = (u) => 5 * thick * (0.2969 * Math.sqrt(u) - 0.126 * u - 0.3516 * u * u + 0.2843 * u ** 3 - 0.1036 * u ** 4);
+    [1, -1].forEach((side) => {
+      const base = pos.length / 3;
+      for (let j = 0; j <= NZ; j++) {
+        const t = j / NZ;
+        const c = root + (tip - root) * t;
+        const le = -sweep * t;
+        for (let i = 0; i <= NX; i++) {
+          const u = (1 - Math.cos((i / NX) * Math.PI)) / 2; // cluster points at the leading edge
+          pos.push(le - u * c, dihedral * t + side * naca(u) * c, span * t);
+        }
+      }
+      for (let j = 0; j < NZ; j++) {
+        for (let i = 0; i < NX; i++) {
+          const a = base + j * (NX + 1) + i, b = a + NX + 1;
+          if (side > 0) idx.push(a, a + 1, b, b, a + 1, b + 1);
+          else idx.push(a, b, a + 1, b, b + 1, a + 1);
+        }
+      }
+    });
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setIndex(idx);
+    g.computeVertexNormals();
+    return g;
+  }
+
+  function buildAirplane() {
+    const root = new THREE.Group();
+    const skin = zebraMaterial();
+    const L = 4.5, R = 0.3;
+
+    // fuselage: lathe profile (radius, station from tail 0 → nose L)
+    const prof = [];
+    const NS = 64;
+    for (let i = 0; i <= NS; i++) {
+      const h = (i / NS) * L;
+      let r = R;
+      if (h < 1.25) r = R * Math.pow(Math.max(h, 0.02) / 1.25, 0.75);                       // tail cone
+      if (h > L - 0.75) r = R * Math.sqrt(Math.max(0, 1 - ((h - (L - 0.75)) / 0.75) ** 2)); // nose
+      prof.push(new THREE.Vector2(Math.max(r, 0.004), h));
+    }
+    const fus = new THREE.LatheGeometry(prof, isMobile ? 28 : 40);
+    fus.rotateZ(-Math.PI / 2); // lathe axis Y → X (nose toward +x)
+    fus.translate(-L / 2, 0, 0);
+    // upswept tail
+    const fp = fus.attributes.position;
+    for (let i = 0; i < fp.count; i++) {
+      const x = fp.getX(i), k = (-L / 2 + 1.25 - x) / 1.25;
+      if (k > 0) fp.setY(i, fp.getY(i) + 0.24 * k ** 1.6);
+    }
+    fus.computeVertexNormals();
+    root.add(new THREE.Mesh(fus, skin));
+
+    [1, -1].forEach((s) => {
+      // main wings (low wing, swept, dihedral)
+      const w = new THREE.Mesh(liftingSurface({ root: 1.15, tip: 0.32, span: 2.1, sweep: 0.95, dihedral: 0.2, thick: 0.13 }), skin);
+      w.position.set(0.4, -0.13, 0);
+      w.scale.z = s;
+      root.add(w);
+
+      // horizontal stabilisers
+      const st = new THREE.Mesh(liftingSurface({ root: 0.52, tip: 0.2, span: 0.82, sweep: 0.42, dihedral: 0.06, thick: 0.1 }), skin);
+      st.position.set(-1.62, 0.2, 0);
+      st.scale.z = s;
+      root.add(st);
+
+      // engine nacelle under each wing
+      const nac = new THREE.LatheGeometry([
+        new THREE.Vector2(0.1, 0), new THREE.Vector2(0.15, 0.08), new THREE.Vector2(0.16, 0.3),
+        new THREE.Vector2(0.15, 0.55), new THREE.Vector2(0.13, 0.62), new THREE.Vector2(0.12, 0.6),
+      ], 28);
+      nac.rotateZ(Math.PI / 2); // axis Y → -X: intake (station 0) faces forward
+      const n = new THREE.Mesh(nac, skin);
+      n.position.set(0.72, -0.21, s * 0.78);
+      root.add(n);
+
+      // pylon joining nacelle to wing
+      const py = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.12, 0.035), skin);
+      py.position.set(0.42, -0.08, s * 0.78);
+      py.userData.sampleWeight = 0.4;
+      root.add(py);
     });
 
-    root.position.y = -0.72;
-    root.rotation.y = 0.35;
-    return { root, tick: (t) => { zebra.uniforms.uTime.value = t; } };
+    // vertical fin
+    const fin = new THREE.Mesh(liftingSurface({ root: 0.85, tip: 0.3, span: 0.9, sweep: 0.62, thick: 0.1 }), skin);
+    fin.rotation.x = -Math.PI / 2; // span +z → +y
+    fin.position.set(-1.38, 0.22, 0);
+    root.add(fin);
+
+    root.rotation.set(0.42, -0.55, 0.08); // three-quarter view from above
+    root.position.y = 0.05;
+    root.scale.setScalar(1.02);
+    return { root, tick: (t) => { skin.uniforms.uTime.value = t; } };
   }
 
   /* =========================================================
@@ -365,10 +394,10 @@
   }
 
   const shapes = [
-    { name: 'POINT CLOUD', word: '3D Scanning Solutions', data: torusKnot() },
+    modelScene('POINTS → MESH', '3D Scanning Solutions', buildScanMesh()),
     modelScene('MESH → CAD', 'Reverse Engineering', buildFlange()),
     modelScene('POINTS → BIM', 'Scan to BIM Modelling', buildBIM()),
-    modelScene('ZEBRA · G2 SURFACE', 'Class A Surfacing', buildCar()),
+    modelScene('ZEBRA · G2 SURFACE', 'Class A Surfacing', buildAirplane()),
   ];
 
   /* =========================================================
@@ -581,7 +610,7 @@
     mouse.y += (mouse.ty - mouse.y) * 0.05;
 
     const speed = reduceMotion ? 0 : 1;
-    if (shapes[current].root) {
+    if (shapes[current].root && !shapes[current].spin) {
       // solid models: sway around the nearest "front" angle so the good side stays visible
       const front = Math.round(yaw / TAU) * TAU;
       const target = front + Math.sin(t * 0.35) * 0.55 * speed;
@@ -649,6 +678,8 @@
     }
     geo.attributes.position.needsUpdate = true;
     uniforms.uOldVis.value = 0; // scattered points stay invisible until the laser reaches them
+    uniforms.uHasSolid.value = shapes[0].root ? 1 : 0;
+    if (shapes[0].root) shapes[0].root.visible = true;
     passT = 0;
     started = true;
     shapeCbs.forEach((cb) => cb(0, shapes[0]));
