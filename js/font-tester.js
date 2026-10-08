@@ -17,6 +17,9 @@
     { key: 'archivo', name: 'Archivo', note: 'industrial · strong', family: '"Archivo"', weight: 600, track: '-0.04em', size: 1 },
     { key: 'manrope', name: 'Manrope', note: 'modern · friendly', family: '"Manrope"', weight: 700, track: '-0.05em', size: 0.97 },
     { key: 'instrument', name: 'Instrument Serif', note: 'editorial · premium', family: '"Instrument Serif"', weight: 400, track: '-0.02em', size: 1.12 },
+    // logo typeface — all caps and very wide, so set smaller; non-commercial licence (see fonts-candidates.css)
+    { key: 'sling', name: 'Singapore Sling', note: 'logo font · regular', family: '"Singapore Sling"', weight: 400, track: '0.01em', size: 0.7 },
+    { key: 'slingbold', name: 'Singapore Sling Bold', note: 'logo font · bold', family: '"Singapore Sling Bold"', weight: 400, track: '0.01em', size: 0.68 },
   ];
   const STORE = 'vshark-font-test';
   const read = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
@@ -24,7 +27,7 @@
 
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = 'fonts/fonts-candidates.css';
+  link.href = 'fonts/fonts-candidates.css?v=2';
   document.head.appendChild(link);
 
   const css = document.createElement('style');
