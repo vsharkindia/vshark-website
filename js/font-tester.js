@@ -37,7 +37,7 @@
     html[data-font-scope] .hero__title em { font-style: var(--ft-em, normal); }
     html[data-font-scope="all"] { --display: var(--ft-family), system-ui, sans-serif; }
 
-    .ft { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 950; display: flex; align-items: center; gap: 6px;
+    .ft { position: fixed; left: 50%; top: 84px; transform: translateX(-50%); z-index: 950; display: flex; align-items: center; gap: 6px;
       padding: 6px; border-radius: 14px; background: rgba(255,255,255,.95); border: 1px solid rgba(28,33,37,.14);
       box-shadow: 0 16px 40px -18px rgba(28,33,37,.4); backdrop-filter: blur(10px); color: #1c2125; font-family: "Inter", system-ui, sans-serif; }
     .ft__label { padding: 0 8px 0 6px; min-width: 132px; line-height: 1.25; }
@@ -50,7 +50,6 @@
     .ft__sep { width: 1px; height: 28px; background: rgba(28,33,37,.12); margin: 0 2px; }
     .ft__scope { font: 500 11px "Inter", sans-serif; height: 42px; padding: 0 10px; border-radius: 10px; border: 1px solid rgba(28,33,37,.14); background: #fff; cursor: pointer; color: #1c2125; }
     .ft__scope.is-on { background: #1c2125; color: #fff; border-color: #1c2125; }
-    body.has-ft .hero__scroll { display: none; }
     @media (max-width: 760px) {
       .ft { left: 8px; right: 8px; top: 74px; bottom: auto; transform: none; overflow-x: auto; gap: 4px; padding: 5px; }
       .ft__label { display: none; }
