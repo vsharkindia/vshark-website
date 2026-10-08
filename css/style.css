@@ -147,6 +147,18 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 }
 .nav__link { position: relative; padding: 8px 16px; border-radius: 100px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); transition: color .3s, background .3s; }
 .nav__link:hover, .nav__link.is-active { color: var(--fg); background: rgba(28,33,37,.06); }
+.nav__link.is-current { color: var(--accent); background: rgba(153,27,46,.07); }
+.nav__link svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; vertical-align: -1px; margin-left: 4px; transition: transform .3s; }
+.nav__item--drop { position: relative; }
+.nav__item--drop:hover .nav__link svg, .nav__item--drop:focus-within .nav__link svg { transform: rotate(180deg); }
+.nav__drop { position: absolute; left: 50%; top: 100%; padding-top: 14px; transform: translate(-50%, 8px); opacity: 0; visibility: hidden; transition: opacity .25s, transform .35s var(--ease), visibility .25s; }
+.nav__item--drop:hover .nav__drop, .nav__item--drop:focus-within .nav__drop { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+.nav__drop-inner { min-width: 250px; padding: 8px; border-radius: 16px; background: rgba(255,255,255,.97); border: 1px solid var(--line); box-shadow: 0 24px 50px -24px rgba(28,33,37,.35); display: flex; flex-direction: column; }
+.nav__drop-inner a { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; font-family: var(--display); font-size: 15px; color: var(--fg); transition: background .2s, color .2s; }
+.nav__drop-inner a i { font-style: normal; font-size: 10px; color: var(--accent); }
+.nav__drop-inner a:hover { background: rgba(153,27,46,.07); color: var(--accent); }
+.nav__drop-inner .nav__drop-all { margin-top: 4px; border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; font-size: 13px; color: var(--muted); justify-content: space-between; }
+.nav__drop-all svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 .burger { display: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.75); backdrop-filter: blur(10px); position: relative; z-index: 1001; }
 .burger span { position: absolute; left: 14px; right: 14px; height: 1.5px; background: var(--fg); transition: transform .5s var(--ease), top .5s var(--ease); }
 .burger span:nth-child(1) { top: 19px; }
@@ -400,6 +412,10 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .ip.is-active .ip__body { opacity: 1; transform: none; transition-delay: .3s; }
 .ip__body b { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 3vw, 44px); letter-spacing: -0.03em; line-height: 1; }
 .ip__body span { max-width: 420px; font-size: 15px; color: rgba(255,255,255,.85); }
+.ip__go { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; font-family: var(--display); font-weight: 500; color: #fff; border-bottom: 1px solid rgba(255,255,255,.5); padding-bottom: 2px; align-self: flex-start; transition: gap .3s var(--ease), border-color .3s; }
+.ip__go svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.ip__go:hover { gap: 14px; border-color: #fff; }
+.ip.is-active .ip__body { pointer-events: auto; }
 .ip__body::before { content: ""; width: 38px; height: 4px; background: var(--accent); transform: skewX(-30deg); margin-bottom: 4px; }
 .ip__scan { left: 0; right: 0; top: 0; height: 2px; background: #ff5a72; box-shadow: 0 0 18px 4px rgba(153,27,46,.6); opacity: 0; }
 .ip.is-active .ip__scan { animation: ipScan 1.1s var(--ease) forwards; }
@@ -465,7 +481,12 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--line); padding: 64px var(--gutter) 28px; overflow: hidden; }
-.footer__top { display: grid; grid-template-columns: 1.3fr 1fr auto; gap: 40px; align-items: start; }
+.footer__top { display: grid; grid-template-columns: 1.3fr 0.8fr 1fr; gap: 40px; align-items: start; }
+.footer__col { display: flex; flex-direction: column; gap: 8px; }
+.footer__col > span { margin-bottom: 4px; }
+.footer__col a { color: var(--fg-2); transition: color .3s; }
+.footer__col a:hover { color: var(--accent); }
+.footer__contact .footer__social { margin-top: 8px; }
 .footer__logo { height: 40px; width: auto; margin-bottom: 16px; }
 .footer__brand p { max-width: 420px; font-size: 15px; }
 .footer__contact { display: flex; flex-direction: column; gap: 10px; }

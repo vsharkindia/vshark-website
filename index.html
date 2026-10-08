@@ -7,8 +7,8 @@
   <meta name="description" content="VShark Solutions Private Limited — 3D scanning, reverse engineering, Scan to BIM, Class A surfacing, digital metrology, 3D printing and product rendering.">
   <meta name="theme-color" content="#f5f6f8">
   <link rel="icon" href="img/vshark-logo.png">
-  <link rel="stylesheet" href="fonts/fonts.css?v=2">
-  <link rel="stylesheet" href="css/style.css?v=25">
+  <link rel="stylesheet" href="fonts/fonts.css?v=3ef5b0da">
+  <link rel="stylesheet" href="css/style.css?v=1ec8151d">
 </head>
 <body class="is-loading">
 
@@ -26,41 +26,39 @@
   <!-- CURSOR -->
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
 
-  <!-- HEADER -->
+  <!-- @header -->
   <header class="header" id="header">
-    <a href="#top" class="header__logo" aria-label="VShark Solutions home">
+    <a href="index.html" class="header__logo" aria-label="VShark Solutions home">
       <img src="img/vshark-logo.png" alt="VShark Solutions">
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="about.php" class="nav__link">About</a>
-      <a href="#products" class="nav__link">Products</a>
-      <a href="#services" class="nav__link">Services</a>
-      <a href="#industries" class="nav__link">Industries</a>
-      <a href="portfolio.php" class="nav__link">Portfolio</a>
+      <a href="products/index.html" class="nav__link">Products</a>
+      <div class="nav__item nav__item--drop"><a href="services/index.html" class="nav__link" aria-haspopup="true">Services<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav__drop"><div class="nav__drop-inner"><a href="services/3d-scanning.html"><i class="mono">01</i>3D Scanning</a><a href="services/reverse-engineering.html"><i class="mono">02</i>Reverse Engineering</a><a href="services/scan-to-bim.html"><i class="mono">03</i>Scan to BIM</a><a href="services/class-a-surfacing.html"><i class="mono">04</i>Class A Surfacing</a><a href="services/digital-metrology.html"><i class="mono">05</i>Digital Metrology</a><a href="services/3d-printing.html"><i class="mono">06</i>3D Printing</a><a href="services/product-rendering.html"><i class="mono">07</i>Product Rendering</a><a class="nav__drop-all" href="services/index.html">All services <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></div>
+      <div class="nav__item nav__item--drop"><a href="industries/index.html" class="nav__link" aria-haspopup="true">Industries<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav__drop"><div class="nav__drop-inner"><a href="industries/aerospace.html"><i class="mono">01</i>Aerospace</a><a href="industries/automobile.html"><i class="mono">02</i>Automobile</a><a href="industries/construction.html"><i class="mono">03</i>Construction</a><a href="industries/healthcare.html"><i class="mono">04</i>Healthcare</a><a href="industries/education.html"><i class="mono">05</i>Education</a><a href="industries/jewellery.html"><i class="mono">06</i>Jewellery</a><a class="nav__drop-all" href="industries/index.html">All industries <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></div>
+      <a href="portfolio/index.html" class="nav__link">Portfolio</a>
       <a href="#" class="nav__link">Blog</a>
-      <a href="contact.php" class="nav__link">Contact</a>
+      <a href="contact.html" class="nav__link">Contact</a>
     </nav>
-    <a href="contact.php" class="btn btn--sm btn--accent header__cta magnetic"><span>Enquire Now</span></a>
+    <a href="contact.html" class="btn btn--sm btn--accent header__cta magnetic"><span>Enquire Now</span></a>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
   </header>
 
   <!-- MOBILE MENU -->
   <div class="menu" id="menu" aria-hidden="true">
     <nav class="menu__nav">
-      <a href="about.php"><i class="mono">01</i>About</a>
-      <a href="#products"><i class="mono">02</i>Products</a>
-      <a href="#services"><i class="mono">03</i>Services</a>
-      <a href="#industries"><i class="mono">04</i>Industries</a>
-      <a href="portfolio.php"><i class="mono">05</i>Portfolio</a>
-      <a href="#"><i class="mono">06</i>Blog</a>
-      <a href="contact.php"><i class="mono">07</i>Contact</a>
+      <a href="products/index.html"><i class="mono">01</i>Products</a>
+      <a href="services/index.html"><i class="mono">02</i>Services</a>
+      <a href="industries/index.html"><i class="mono">03</i>Industries</a>
+      <a href="portfolio/index.html"><i class="mono">04</i>Portfolio</a>
+      <a href="#"><i class="mono">05</i>Blog</a>
+      <a href="contact.html"><i class="mono">06</i>Contact</a>
     </nav>
     <div class="menu__foot mono">
       <a href="mailto:info@vsharksolutions.com">info@vsharksolutions.com</a>
-      <a href="tel:+919514248525">+91 95142 48525</a>
-      <a href="tel:+971522486238">+971 52 248 6238 (UAE)</a>
+      <a href="tel:+919514248525">+91 95142 48525 (India)</a><a href="tel:+971522486238">+971 52 248 6238 (UAE)</a>
     </div>
   </div>
+  <!-- /@header -->
 
   <main id="top">
 
@@ -92,15 +90,15 @@
           </div>
         </div>
         <div class="hero__actions">
-          <a href="contact.php" class="btn btn--accent magnetic" data-cursor="Go"><span>Start a project</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="contact.html" class="btn btn--accent magnetic" data-cursor="Go"><span>Start a project</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a href="#services" class="btn btn--ghost magnetic"><span>Explore services</span></a>
         </div>
       </div>
 
-      <a href="#about" class="hero__scroll mono" aria-label="Scroll to content"><span>Scroll</span><i></i></a>
+      <a href="#products" class="hero__scroll mono" aria-label="Scroll to content"><span>Scroll</span><i></i></a>
     </section>
 
-    <!-- PRODUCTS — cards are rendered from js/products.js -->
+    <!-- PRODUCTS — tiles generated by build/build.py from data/site.json -->
     <section class="products section" id="products">
       <div class="sec-head">
         <div>
@@ -108,9 +106,66 @@
           <h2 class="h2" data-reveal>Professional <em>3D scanners.</em></h2>
           <p class="sec-head__sub muted" data-reveal>Vertex blue-laser and optical-tracking scanners, now available from VShark.</p>
         </div>
-        <a class="sec-head__link" href="products.php" data-reveal>All products <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="sec-head__link" href="products/index.html" data-reveal>All products <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
-      <div class="prod-grid" id="productGrid"></div>
+      <!-- @products -->
+      <div class="prod-grid" id="productGrid">
+    <article class="prod" data-reveal>
+      <div class="prod__tile">
+        <div class="prod__stage" aria-hidden="true">
+          <span class="prod__num">01</span>
+          <i class="prod__slash prod__slash--grey"></i>
+          <i class="prod__slash prod__slash--red"></i>
+        </div>
+        <div class="prod__body">
+          <h3>Vertex3D</h3>
+          <p class="prod__type">Handheld blue-laser 3D scanner</p>
+          <div class="prod__fig"><b>0.020</b><span class="mono">mm precision</span></div>
+          <span class="prod__more">View product <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+      <img class="prod__img" src="img/products/vertex3d.png" alt="Vertex3D 3D scanner" loading="lazy" draggable="false">
+      <span class="prod__scan" aria-hidden="true"></span>
+      <a class="prod__link" href="products/index.html#vertex3d" aria-label="Vertex3D — view product"></a>
+    </article>
+    <article class="prod" data-reveal>
+      <div class="prod__tile">
+        <div class="prod__stage" aria-hidden="true">
+          <span class="prod__num">02</span>
+          <i class="prod__slash prod__slash--grey"></i>
+          <i class="prod__slash prod__slash--red"></i>
+        </div>
+        <div class="prod__body">
+          <h3>Vertex3D Pro</h3>
+          <p class="prod__type">Handheld blue-laser 3D scanner</p>
+          <div class="prod__fig"><b>0.020</b><span class="mono">mm precision</span></div>
+          <span class="prod__more">View product <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+      <img class="prod__img" src="img/products/vertex3d-pro.png" alt="Vertex3D Pro 3D scanner" loading="lazy" draggable="false">
+      <span class="prod__scan" aria-hidden="true"></span>
+      <a class="prod__link" href="products/index.html#vertex3d-pro" aria-label="Vertex3D Pro — view product"></a>
+    </article>
+    <article class="prod" data-reveal>
+      <div class="prod__tile">
+        <div class="prod__stage" aria-hidden="true">
+          <span class="prod__num">03</span>
+          <i class="prod__slash prod__slash--grey"></i>
+          <i class="prod__slash prod__slash--red"></i>
+        </div>
+        <div class="prod__body">
+          <h3>Vertex Tracker</h3>
+          <p class="prod__type">Optical-tracking 3D scanning system</p>
+          <div class="prod__fig"><b>0.025</b><span class="mono">mm precision</span></div>
+          <span class="prod__more">View product <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+      <img class="prod__img" src="img/products/vertex-tracker.png" alt="Vertex Tracker 3D scanner" loading="lazy" draggable="false">
+      <span class="prod__scan" aria-hidden="true"></span>
+      <a class="prod__link" href="products/index.html#vertex-tracker" aria-label="Vertex Tracker — view product"></a>
+    </article>
+      </div>
+      <!-- /@products -->
     </section>
 
     <!-- SERVICES — interactive split view: list (left) drives the image/details (right) -->
@@ -122,83 +177,84 @@
           <p class="sec-head__sub muted" data-reveal>Precise 3D scanning and innovative 3D design that transform concepts into digital models and physical prototypes.</p>
         </div>
       </div>
+      <!-- @services -->
       <div class="svx" id="svx">
         <ol class="svx__list" role="tablist" aria-label="Services">
           <li class="svx__row">
             <button class="svx__item is-active" type="button" role="tab" id="svxTab0" aria-selected="true" aria-controls="svxPanel"
-              data-name="3D Scanning" data-desc="High-resolution capture of parts, products and spaces into accurate point clouds and meshes." data-href="3d-scanning.php">
+              data-name="3D Scanning" data-desc="Capture any part, product or space as an accurate digital model." data-href="services/3d-scanning.html">
               <span class="svx__n mono">01</span><b>3D Scanning</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
             </button>
             <div class="svx__drop">
               <img src="img/services/01-scanning.webp" alt="" loading="lazy">
-              <p>High-resolution capture of parts, products and spaces into accurate point clouds and meshes.</p>
-              <a href="3d-scanning.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <p>Capture any part, product or space as an accurate digital model.</p>
+              <a href="services/3d-scanning.html" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </li>
           <li class="svx__row">
             <button class="svx__item" type="button" role="tab" id="svxTab1" aria-selected="false" aria-controls="svxPanel"
-              data-name="Reverse Engineering" data-desc="Scan data rebuilt into fully editable, dimensionally accurate CAD models." data-href="product-development.php">
+              data-name="Reverse Engineering" data-desc="Turn scan data into fully editable, manufacturable CAD." data-href="services/reverse-engineering.html">
               <span class="svx__n mono">02</span><b>Reverse Engineering</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
             </button>
             <div class="svx__drop">
               <img src="img/services/02-reverse-engineering.webp" alt="" loading="lazy">
-              <p>Scan data rebuilt into fully editable, dimensionally accurate CAD models.</p>
-              <a href="product-development.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <p>Turn scan data into fully editable, manufacturable CAD.</p>
+              <a href="services/reverse-engineering.html" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </li>
           <li class="svx__row">
             <button class="svx__item" type="button" role="tab" id="svxTab2" aria-selected="false" aria-controls="svxPanel"
-              data-name="Scan to BIM" data-desc="As-built buildings and sites converted into intelligent BIM models." data-href="contact.php">
+              data-name="Scan to BIM" data-desc="Existing buildings captured as accurate, intelligent BIM models." data-href="services/scan-to-bim.html">
               <span class="svx__n mono">03</span><b>Scan to BIM</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
             </button>
             <div class="svx__drop">
               <img src="img/services/bim.webp" alt="" loading="lazy">
-              <p>As-built buildings and sites converted into intelligent BIM models.</p>
-              <a href="contact.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <p>Existing buildings captured as accurate, intelligent BIM models.</p>
+              <a href="services/scan-to-bim.html" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </li>
           <li class="svx__row">
             <button class="svx__item" type="button" role="tab" id="svxTab3" aria-selected="false" aria-controls="svxPanel"
-              data-name="Class A Surfacing" data-desc="Flawless, curvature-continuous surfaces for automotive and consumer products." data-href="contact.php">
+              data-name="Class A Surfacing" data-desc="Flawless, curvature-continuous surfaces for visible parts." data-href="services/class-a-surfacing.html">
               <span class="svx__n mono">04</span><b>Class A Surfacing</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
             </button>
             <div class="svx__drop">
               <img src="img/services/class-a.webp" alt="" loading="lazy">
-              <p>Flawless, curvature-continuous surfaces for automotive and consumer products.</p>
-              <a href="contact.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <p>Flawless, curvature-continuous surfaces for visible parts.</p>
+              <a href="services/class-a-surfacing.html" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </li>
           <li class="svx__row">
             <button class="svx__item" type="button" role="tab" id="svxTab4" aria-selected="false" aria-controls="svxPanel"
-              data-name="Digital Metrology" data-desc="Inspection and deviation analysis that compares manufactured parts to their CAD." data-href="contact.php">
+              data-name="Digital Metrology" data-desc="Compare manufactured parts to their CAD — to the micron." data-href="services/digital-metrology.html">
               <span class="svx__n mono">05</span><b>Digital Metrology</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
             </button>
             <div class="svx__drop">
               <img src="img/services/digital.webp" alt="" loading="lazy">
-              <p>Inspection and deviation analysis that compares manufactured parts to their CAD.</p>
-              <a href="contact.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <p>Compare manufactured parts to their CAD — to the micron.</p>
+              <a href="services/digital-metrology.html" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </li>
           <li class="svx__row">
             <button class="svx__item" type="button" role="tab" id="svxTab5" aria-selected="false" aria-controls="svxPanel"
-              data-name="3D Printing" data-desc="Rapid prototypes and functional parts, printed straight from your model." data-href="3d-printing.php">
+              data-name="3D Printing" data-desc="Rapid prototypes and functional parts, straight from your model." data-href="services/3d-printing.html">
               <span class="svx__n mono">06</span><b>3D Printing</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
             </button>
             <div class="svx__drop">
               <img src="img/services/printing.webp" alt="" loading="lazy">
-              <p>Rapid prototypes and functional parts, printed straight from your model.</p>
-              <a href="3d-printing.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <p>Rapid prototypes and functional parts, straight from your model.</p>
+              <a href="services/3d-printing.html" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </li>
           <li class="svx__row">
             <button class="svx__item" type="button" role="tab" id="svxTab6" aria-selected="false" aria-controls="svxPanel"
-              data-name="Product Rendering" data-desc="Photoreal visuals that sell a product before it is ever made." data-href="contact.php">
+              data-name="Product Rendering" data-desc="Photoreal visuals that sell a product before it is ever made." data-href="services/product-rendering.html">
               <span class="svx__n mono">07</span><b>Product Rendering</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><i class="svx__bar"></i>
             </button>
             <div class="svx__drop">
               <img src="img/services/product-rendering.webp" alt="" loading="lazy">
               <p>Photoreal visuals that sell a product before it is ever made.</p>
-              <a href="contact.php" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a href="services/product-rendering.html" class="svx__link">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </li>
         </ol>
@@ -217,11 +273,12 @@
           <div class="svx__info">
             <span class="svx__count mono"><b>01</b> / 07</span>
             <h3 class="svx__title">3D Scanning</h3>
-            <p class="svx__desc">High-resolution capture of parts, products and spaces into accurate point clouds and meshes.</p>
-            <a class="svx__link svx__more" href="3d-scanning.php">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <p class="svx__desc">Capture any part, product or space as an accurate digital model.</p>
+            <a class="svx__link svx__more" href="services/3d-scanning.html">Learn more <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
         </div>
       </div>
+      <!-- /@services -->
     </section>
 
     <!-- INDUSTRIES — expanding panels: the active sector opens wide, the rest stay as narrow strips -->
@@ -233,56 +290,58 @@
           <p class="sec-head__sub muted" data-reveal>Six sectors, one standard of precision.</p>
         </div>
       </div>
+      <!-- @industries -->
       <div class="ind-acc" id="indAcc" role="group" aria-label="Industries">
-        <button class="ip is-active" type="button" aria-pressed="true" aria-label="Aerospace">
+        <div class="ip is-active" role="button" tabindex="0" aria-pressed="true" aria-label="Aerospace">
           <img src="img/industries/aerospace.webp" alt="" loading="lazy" draggable="false">
           <span class="ip__num mono">01</span>
           <span class="ip__label">Aerospace</span>
-          <span class="ip__body"><b>Aerospace</b><span>Inspection and reverse engineering of high-precision aircraft components.</span></span>
+          <span class="ip__body"><b>Aerospace</b><span>Inspection and reverse engineering of high-precision aircraft components.</span><a class="ip__go" href="industries/aerospace.html">Explore aerospace <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
           <i class="ip__scan" aria-hidden="true"></i>
           <i class="ip__bar" aria-hidden="true"></i>
-        </button>
-        <button class="ip" type="button" aria-pressed="false" aria-label="Automobile">
+        </div>
+        <div class="ip" role="button" tabindex="0" aria-pressed="false" aria-label="Automobile">
           <img src="img/industries/auto.webp" alt="" loading="lazy" draggable="false">
           <span class="ip__num mono">02</span>
           <span class="ip__label">Automobile</span>
-          <span class="ip__body"><b>Automobile</b><span>Body surfacing, part digitising and fixture design for vehicles.</span></span>
+          <span class="ip__body"><b>Automobile</b><span>Body surfacing, part digitising and fixture design for vehicles.</span><a class="ip__go" href="industries/automobile.html">Explore automobile <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
           <i class="ip__scan" aria-hidden="true"></i>
           <i class="ip__bar" aria-hidden="true"></i>
-        </button>
-        <button class="ip" type="button" aria-pressed="false" aria-label="Construction">
+        </div>
+        <div class="ip" role="button" tabindex="0" aria-pressed="false" aria-label="Construction">
           <img src="img/industries/construction.webp" alt="" loading="lazy" draggable="false">
           <span class="ip__num mono">03</span>
           <span class="ip__label">Construction</span>
-          <span class="ip__body"><b>Construction</b><span>As-built scanning and BIM models for buildings and sites.</span></span>
+          <span class="ip__body"><b>Construction</b><span>As-built scanning and BIM models for buildings and sites.</span><a class="ip__go" href="industries/construction.html">Explore construction <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
           <i class="ip__scan" aria-hidden="true"></i>
           <i class="ip__bar" aria-hidden="true"></i>
-        </button>
-        <button class="ip" type="button" aria-pressed="false" aria-label="Healthcare">
+        </div>
+        <div class="ip" role="button" tabindex="0" aria-pressed="false" aria-label="Healthcare">
           <img src="img/industries/hospital.webp" alt="" loading="lazy" draggable="false">
           <span class="ip__num mono">04</span>
           <span class="ip__label">Healthcare</span>
-          <span class="ip__body"><b>Healthcare</b><span>Medical devices and custom-fit parts captured and modelled in 3D.</span></span>
+          <span class="ip__body"><b>Healthcare</b><span>Medical devices and custom-fit parts captured and modelled in 3D.</span><a class="ip__go" href="industries/healthcare.html">Explore healthcare <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
           <i class="ip__scan" aria-hidden="true"></i>
           <i class="ip__bar" aria-hidden="true"></i>
-        </button>
-        <button class="ip" type="button" aria-pressed="false" aria-label="Education">
+        </div>
+        <div class="ip" role="button" tabindex="0" aria-pressed="false" aria-label="Education">
           <img src="img/industries/institute.webp" alt="" loading="lazy" draggable="false">
           <span class="ip__num mono">05</span>
           <span class="ip__label">Education</span>
-          <span class="ip__body"><b>Education</b><span>Scanning and 3D printing support for labs, research and teaching.</span></span>
+          <span class="ip__body"><b>Education</b><span>Scanning and 3D printing support for labs, research and teaching.</span><a class="ip__go" href="industries/education.html">Explore education <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
           <i class="ip__scan" aria-hidden="true"></i>
           <i class="ip__bar" aria-hidden="true"></i>
-        </button>
-        <button class="ip" type="button" aria-pressed="false" aria-label="Jewellery">
+        </div>
+        <div class="ip" role="button" tabindex="0" aria-pressed="false" aria-label="Jewellery">
           <img src="img/industries/jewelery.webp" alt="" loading="lazy" draggable="false">
           <span class="ip__num mono">06</span>
           <span class="ip__label">Jewellery</span>
-          <span class="ip__body"><b>Jewellery</b><span>Fine-detail scanning and printing for jewellery design and casting.</span></span>
+          <span class="ip__body"><b>Jewellery</b><span>Fine-detail scanning and printing for jewellery design and casting.</span><a class="ip__go" href="industries/jewellery.html">Explore jewellery <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
           <i class="ip__scan" aria-hidden="true"></i>
           <i class="ip__bar" aria-hidden="true"></i>
-        </button>
+        </div>
       </div>
+      <!-- /@industries -->
     </section>
 
     <!-- TESTIMONIALS — slim auto-scrolling strip -->
@@ -304,23 +363,27 @@
     </section>
   </main>
 
+  <!-- @footer -->
   <footer class="footer" id="contact">
     <div class="footer__top">
       <div class="footer__brand">
         <img class="footer__logo" src="img/vshark-logo.png" alt="VShark Solutions">
         <p class="muted">Leading the way in advanced technology solutions — state-of-the-art 3D scanning and 3D design services for businesses and individuals.</p>
       </div>
+      <div class="footer__col">
+        <span class="mono muted">Services</span>
+        <a href="services/3d-scanning.html">3D Scanning</a><a href="services/reverse-engineering.html">Reverse Engineering</a><a href="services/scan-to-bim.html">Scan to BIM</a><a href="services/class-a-surfacing.html">Class A Surfacing</a><a href="services/digital-metrology.html">Digital Metrology</a><a href="services/3d-printing.html">3D Printing</a><a href="services/product-rendering.html">Product Rendering</a>
+      </div>
       <div class="footer__contact">
         <span class="mono muted">Contact</span>
         <a href="mailto:info@vsharksolutions.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>info@vsharksolutions.com</a>
-        <a href="tel:+919514248525"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+91 95142 48525 <small class="mono">India</small></a>
-        <a href="tel:+971522486238"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+971 52 248 6238 <small class="mono">UAE</small></a>
-      </div>
-      <div class="footer__social">
-        <a href="https://wa.me/919514248525" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg></a>
-        <a href="https://www.instagram.com/vshark.in/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8a4 4 0 0 1 3.4 3.4z"/><path d="M17.5 6.5h.01"/></svg></a>
-        <a href="https://www.facebook.com/vshark.india" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-        <a href="https://www.linkedin.com/in/vsharkenggsolns/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="tel:+919514248525"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+91 95142 48525 <small class="mono">India</small></a><a href="tel:+971522486238"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+971 52 248 6238 <small class="mono">UAE</small></a>
+        <div class="footer__social">
+          <a href="https://wa.me/919514248525" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg></a>
+          <a href="https://www.instagram.com/vshark.in/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8a4 4 0 0 1 3.4 3.4z"/><path d="M17.5 6.5h.01"/></svg></a>
+          <a href="https://www.facebook.com/vshark.india" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.linkedin.com/in/vsharkenggsolns/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
       </div>
     </div>
     <div class="footer__big" aria-hidden="true">VSHARK</div>
@@ -335,10 +398,7 @@
   <aside class="rail" aria-label="Contact VShark">
     <div class="rail__item rail__item--phone">
       <button type="button" class="rail__btn" aria-label="Call us" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></button>
-      <div class="rail__flyout">
-        <a href="tel:+919514248525"><small class="mono">India</small>+91 95142 48525</a>
-        <a href="tel:+971522486238"><small class="mono">UAE</small>+971 52 248 6238</a>
-      </div>
+      <div class="rail__flyout"><a href="tel:+919514248525"><small class="mono">India</small>+91 95142 48525</a><a href="tel:+971522486238"><small class="mono">UAE</small>+971 52 248 6238</a></div>
     </div>
     <a class="rail__item rail__btn" href="https://wa.me/919514248525" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg><span class="rail__label">WhatsApp</span></a>
     <a class="rail__item rail__btn" href="mailto:info@vsharksolutions.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg><span class="rail__label">info@vsharksolutions.com</span></a>
@@ -346,13 +406,13 @@
     <a class="rail__item rail__btn" href="https://www.facebook.com/vshark.india" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg><span class="rail__label">Facebook</span></a>
     <a class="rail__item rail__btn" href="https://www.linkedin.com/in/vsharkenggsolns/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="rail__label">LinkedIn</span></a>
   </aside>
+  <!-- /@footer -->
 
   <script src="vendor/three.min.js"></script>
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="vendor/lenis.min.js"></script>
-  <script src="js/products.js?v=25"></script>
-  <script src="js/hero.js?v=25"></script>
-  <script src="js/main.js?v=25"></script>
+  <script src="js/hero.js?v=36c22fce"></script>
+  <script src="js/main.js?v=fb62a11f"></script>
 </body>
 </html>
