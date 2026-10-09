@@ -146,7 +146,9 @@ def page(P, title, desc, active, body, scripts=()):
   <title>{E(title)} — VShark Solutions</title>
   <meta name="description" content="{E(desc)}">
   <meta name="theme-color" content="#f5f6f8">
-  <link rel="icon" href="{P}img/vshark-logo.png">
+  <link rel="icon" href="{P}favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="{P}img/favicon-32.png">
+  <link rel="apple-touch-icon" href="{P}img/apple-touch-icon.png">
   <link rel="stylesheet" href="{asset('fonts/fonts.css', P)}">
   <link rel="stylesheet" href="{asset('css/style.css', P)}">
   <link rel="stylesheet" href="{asset('css/pages.css', P)}">
