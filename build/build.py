@@ -228,17 +228,15 @@ def proj_section(P, projects, title_html, link_qs):
       <a class="sec-head__link" href="{P}portfolio/index.html">Full portfolio {A}</a></div>
     </section>'''
     cards = '\n'.join(proj_card(P, p, False) for p in projects)
-    arrows = '' if len(projects) < 2 else ('<div class="pcar__nav">'
-              '<button class="car-btn" type="button" data-pcar="-1" aria-label="Previous projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>'
-              f'<button class="car-btn" type="button" data-pcar="1" aria-label="Next projects">{A}</button></div>')
     n = len(projects)
     return f'''    <section class="section blk">
       <div class="sec-head"><div><span class="tag mono">Portfolio · {n} project{'s' if n != 1 else ''}</span><h2 class="h2" data-reveal>{title_html}</h2></div>
-        <div class="pcar__head" data-reveal>{arrows}<a class="sec-head__link" href="{P}portfolio/index.html?{link_qs}">See all {A}</a></div></div>
+        <div class="pcar__head" data-reveal><a class="sec-head__link" href="{P}portfolio/index.html?{link_qs}">See all {A}</a></div></div>
       <div class="pcar">
         <div class="pcar__track">
 {cards}
         </div>
+        <div class="pcar__bar" aria-hidden="true"><b></b></div>
       </div>
     </section>'''
 

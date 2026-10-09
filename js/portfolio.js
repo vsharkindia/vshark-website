@@ -59,23 +59,40 @@
     });
   }
 
-  /* ---------- project carousel arrows (service & industry pages) ---------- */
+  /* ---------- project row (service & industry pages) ----------
+     Desktop: the section pins and page scroll moves the row sideways.
+     Phones / reduced motion: native swipe. A bar shows progress in both. */
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
   $$('.pcar').forEach((car) => {
-    const track = $('.pcar__track', car);
-    const sec = car.closest('section');
-    const prev = $('[data-pcar="-1"]', sec), next = $('[data-pcar="1"]', sec);
-    if (!prev) return;
-    const step = () => { const c = $('.proj', track); return c ? c.getBoundingClientRect().width + 20 : track.clientWidth; };
-    const update = () => {
-      prev.disabled = track.scrollLeft <= 4;
-      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-    };
-    prev.addEventListener('click', () => track.scrollBy({ left: -step() }));
-    next.addEventListener('click', () => track.scrollBy({ left: step() }));
-    track.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+    const track = $('.pcar__track', car), bar = $('.pcar__bar b', car), sec = car.closest('section');
+    sec.classList.add('has-pcar');
+    const setBar = (p) => { bar.style.transform = `scaleX(${Math.max(0.08, p).toFixed(3)})`; };
+    const onSwipe = () => { const max = track.scrollWidth - track.clientWidth; setBar(max > 0 ? track.scrollLeft / max : 1); };
+    track.addEventListener('scroll', onSwipe, { passive: true });
+    onSwipe();
+    if (!window.gsap || !window.ScrollTrigger || reduce) return;
+    gsap.matchMedia().add('(min-width: 901px)', () => {
+      car.classList.add('is-pinned');
+      track.scrollLeft = 0;
+      // last card's right edge + the page gutter (padding isn't counted in scrollWidth while overflow is visible)
+      const dist = () => {
+        const last = track.lastElementChild;
+        const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+        return Math.max(0, last.offsetLeft + last.offsetWidth + pad - track.clientWidth);
+      };
+      if (dist() < 10) { setBar(1); return () => car.classList.remove('is-pinned'); }
+      const tween = gsap.to(track, {
+        x: () => -dist(), ease: 'none',
+        scrollTrigger: {
+          trigger: sec, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6,
+          invalidateOnRefresh: true, onUpdate: (st) => setBar(st.progress),
+        },
+      });
+      return () => { tween.scrollTrigger?.kill(); tween.kill(); gsap.set(track, { clearProps: 'transform' }); car.classList.remove('is-pinned'); };
+    });
   });
+  window.addEventListener('load', () => window.ScrollTrigger && ScrollTrigger.refresh());
 
   /* ---------- lightbox ---------- */
   const lb = $('#lb');

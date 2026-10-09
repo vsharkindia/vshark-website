@@ -187,15 +187,15 @@
 
 /* ---------- project carousel (service & industry pages) ---------- */
 .pcar__head { display: flex; align-items: center; gap: 12px; }
-.pcar__nav { display: flex; gap: 8px; }
-.car-btn { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); display: grid; place-items: center; transition: background .3s, color .3s, border-color .3s, opacity .3s; }
-.car-btn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; }
-.car-btn:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: #fff; }
-.car-btn:disabled { opacity: .35; cursor: default; }
 .pcar__track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain;
   margin: 0 calc(var(--gutter) * -1); padding: 4px var(--gutter) 18px; scroll-padding: 0 var(--gutter); scrollbar-width: none; }
 .pcar__track::-webkit-scrollbar { display: none; }
 .pcar__track .proj { flex: 0 0 clamp(280px, 30vw, 420px); scroll-snap-align: start; }
+.pcar__bar { height: 2px; max-width: 280px; background: var(--line); overflow: hidden; margin-top: 6px; }
+.pcar__bar b { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+/* desktop: section pins and the row is moved by page scroll (js/portfolio.js) */
+.pcar.is-pinned .pcar__track { overflow: visible; scroll-snap-type: none; will-change: transform; }
+.blk.has-pcar { overflow: hidden; }
 @media (max-width: 600px) { .pcar__track .proj { flex-basis: 84%; } .pcar__head .sec-head__link { display: none; } }
 
 /* ---------- all services / industries row ---------- */
