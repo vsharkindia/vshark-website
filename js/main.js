@@ -208,7 +208,7 @@
     const AUTO = 4200;
     let act = 0, t0 = performance.now(), holdTill = 0, over = false, seen = false;
     const activate = (i, byUser) => {
-      if (byUser) holdTill = Date.now() + 9000;
+      if (byUser) holdTill = Date.now() + 6000;
       t0 = performance.now();
       if (i === act) return;
       act = i;
@@ -219,13 +219,13 @@
       });
     };
     panels.forEach((p, i) => {
-      p.addEventListener('click', () => activate(i, true));
+      p.addEventListener('click', () => activate(i, narrowInd.matches)); // phones have no hover-pause: hold after a tap
       p.addEventListener('keydown', (ev) => { if ((ev.key === 'Enter' || ev.key === ' ') && ev.target === p) { ev.preventDefault(); activate(i, true); } });
-      p.addEventListener('pointerenter', (ev) => { if (ev.pointerType === 'mouse' && !narrowInd.matches) activate(i, true); });
-      p.addEventListener('focus', () => activate(i, true));
+      p.addEventListener('pointerenter', (ev) => { if (ev.pointerType === 'mouse' && !narrowInd.matches) activate(i, false); });
+      p.addEventListener('focus', () => activate(i, p.matches(':focus-visible')));
     });
     indAcc.addEventListener('pointerenter', () => { over = true; });
-    indAcc.addEventListener('pointerleave', () => { over = false; t0 = performance.now(); });
+    indAcc.addEventListener('pointerleave', () => { over = false; holdTill = 0; t0 = performance.now(); panels[act].style.setProperty('--p', 0); });
     new IntersectionObserver(([en]) => { seen = en.isIntersecting; if (seen) t0 = performance.now(); }).observe(indAcc);
     if (!reduceMotion) {
       gsap.ticker.add(() => {
@@ -253,7 +253,7 @@
     let cur = 0, z = 1, startedAt = performance.now(), heldUntil = 0, hovering = false, onScreen = false;
 
     function show(i, byUser) {
-      if (byUser) heldUntil = Date.now() + 9000;
+      if (byUser) heldUntil = Date.now() + 6000;
       startedAt = performance.now();
       if (i === cur) return;
       cur = i;
@@ -290,13 +290,14 @@
           rows.forEach((r, k) => { r.classList.toggle('is-open', open && k === i); items[k].classList.toggle('is-open', open && k === i); });
           return;
         }
-        show(i, true);
+        show(i, false);
       });
-      b.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && !narrow.matches) show(i, true); });
-      b.addEventListener('focus', () => { if (!narrow.matches) show(i, true); });
+      // hover just switches; autoplay is paused while the pointer is over the list and resumes from here on leave
+      b.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && !narrow.matches) show(i, false); });
+      b.addEventListener('focus', () => { if (!narrow.matches) show(i, b.matches(':focus-visible')); }); // keyboard: short hold
     });
     svx.addEventListener('pointerenter', () => { hovering = true; });
-    svx.addEventListener('pointerleave', () => { hovering = false; startedAt = performance.now(); });
+    svx.addEventListener('pointerleave', () => { hovering = false; heldUntil = 0; startedAt = performance.now(); items[cur].style.setProperty('--p', 0); });
     new IntersectionObserver(([en]) => { onScreen = en.isIntersecting; if (onScreen) startedAt = performance.now(); }).observe(svx);
 
     // autoplay with a progress bar on the active row (desktop only)

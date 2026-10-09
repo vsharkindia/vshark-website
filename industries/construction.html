@@ -9,7 +9,7 @@
   <link rel="icon" href="../img/vshark-logo.png">
   <link rel="stylesheet" href="../fonts/fonts.css?v=3ef5b0da">
   <link rel="stylesheet" href="../css/style.css?v=1ec8151d">
-  <link rel="stylesheet" href="../css/pages.css?v=8884ca63">
+  <link rel="stylesheet" href="../css/pages.css?v=6692542a">
 </head>
 <body class="inner">
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
@@ -75,9 +75,10 @@
       </div>
     </section>
     <section class="section blk">
-      <div class="sec-head"><div><span class="tag mono">Portfolio</span><h2 class="h2" data-reveal>Construction <em>projects.</em></h2></div>
-        <a class="sec-head__link" href="../portfolio/index.html?industry=construction" data-reveal>See all <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-      <div class="proj-grid">
+      <div class="sec-head"><div><span class="tag mono">Portfolio · 1 project</span><h2 class="h2" data-reveal>Construction <em>projects.</em></h2></div>
+        <div class="pcar__head" data-reveal><a class="sec-head__link" href="../portfolio/index.html?industry=construction">See all <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
+      <div class="pcar">
+        <div class="pcar__track">
         <article class="proj" data-services="product-rendering" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/rendering1.webp|../img/portfolio/rendeing3.webp" data-title="Spaces &amp; Exhibitions" data-summary="Exhibition stands and interiors visualised before they are built.">
           <button class="proj__open" type="button" aria-label="Open Spaces &amp; Exhibitions">
             <div class="proj__media"><img src="../img/portfolio/rendering1.webp" alt="" loading="lazy"></div>
@@ -85,9 +86,32 @@
             <span class="proj__body"><b>Spaces &amp; Exhibitions</b><span>Exhibition stands and interiors visualised before they are built.</span></span>
           </button>
         </article>
+        </div>
       </div>
     </section>
-    <section class="section blk"><div class="ind-chips"><span class="mono muted">Other industries</span><div><a class="chip" href="../industries/aerospace.html">Aerospace</a><a class="chip" href="../industries/automobile.html">Automobile</a><a class="chip is-on" href="../industries/construction.html">Construction</a><a class="chip" href="../industries/healthcare.html">Healthcare</a><a class="chip" href="../industries/education.html">Education</a><a class="chip" href="../industries/jewellery.html">Jewellery</a></div></div></section>
+    <section class="section xnav" aria-label="All industries">
+      <div class="xnav__head"><span class="tag mono">All industries</span><a class="xnav__all mono" href="../industries/index.html">Overview <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <nav class="xnav__row">
+        <a class="xnav__item" href="../industries/aerospace.html">
+          <img src="../img/industries/aerospace.webp" alt="" loading="lazy"><span><i class="mono">01</i><b>Aerospace</b></span>
+        </a>
+        <a class="xnav__item" href="../industries/automobile.html">
+          <img src="../img/industries/auto.webp" alt="" loading="lazy"><span><i class="mono">02</i><b>Automobile</b></span>
+        </a>
+        <a class="xnav__item is-current" href="../industries/construction.html" aria-current="page">
+          <img src="../img/industries/construction.webp" alt="" loading="lazy"><span><i class="mono">03</i><b>Construction</b></span>
+        </a>
+        <a class="xnav__item" href="../industries/healthcare.html">
+          <img src="../img/industries/hospital.webp" alt="" loading="lazy"><span><i class="mono">04</i><b>Healthcare</b></span>
+        </a>
+        <a class="xnav__item" href="../industries/education.html">
+          <img src="../img/industries/institute.webp" alt="" loading="lazy"><span><i class="mono">05</i><b>Education</b></span>
+        </a>
+        <a class="xnav__item" href="../industries/jewellery.html">
+          <img src="../img/industries/jewelery.webp" alt="" loading="lazy"><span><i class="mono">06</i><b>Jewellery</b></span>
+        </a>
+      </nav>
+    </section>
     <section class="cta-band">
       <div class="cta-band__inner">
         <h2 class="h2">Have a part, a building or an idea?</h2>
@@ -155,7 +179,7 @@
   <script src="../vendor/gsap.min.js?v=47da594c"></script>
   <script src="../vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
   <script src="../vendor/lenis.min.js?v=79e3a064"></script>
-  <script src="../js/portfolio.js?v=b47f9fc9"></script>
-  <script src="../js/main.js?v=fb62a11f"></script>
+  <script src="../js/portfolio.js?v=dc1ef029"></script>
+  <script src="../js/main.js?v=67ca3024"></script>
 </body>
 </html>

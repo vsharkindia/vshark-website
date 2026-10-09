@@ -199,8 +199,9 @@ def cta(P, title='Have a part, a building or an idea?', text='Tell us what you n
 def proj_card(P, p, show_tags=True):
     svc = ' '.join(p['services']); ind = ' '.join(p['industries'])
     if p['kind'] == 'pair':
-        media = (f'<div class="proj__media proj__media--pair"><img src="{P}{p["before"]}" alt="" loading="lazy">'
-                 f'<img class="proj__after" src="{P}{p["after"]}" alt="" loading="lazy"><i class="proj__divider"></i></div>')
+        media = (f'<div class="proj__media proj__media--pair" data-cmp><img src="{P}{p["before"]}" alt="" loading="lazy">'
+                 f'<img class="proj__cad" src="{P}{p["after"]}" alt="" loading="lazy"><i class="proj__divider"></i>'
+                 f'<span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>')
         badge = 'Scan → CAD'
         data = f'data-kind="pair" data-before="{P}{p["before"]}" data-after="{P}{p["after"]}"'
     else:
@@ -226,13 +227,32 @@ def proj_section(P, projects, title_html, link_qs):
       <p class="sec-head__sub muted">Project case studies for this area are being added. Ask us for examples relevant to your work.</p></div>
       <a class="sec-head__link" href="{P}portfolio/index.html">Full portfolio {A}</a></div>
     </section>'''
-    cards = '\n'.join(proj_card(P, p, False) for p in projects[:6])
+    cards = '\n'.join(proj_card(P, p, False) for p in projects)
+    arrows = '' if len(projects) < 2 else ('<div class="pcar__nav">'
+              '<button class="car-btn" type="button" data-pcar="-1" aria-label="Previous projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>'
+              f'<button class="car-btn" type="button" data-pcar="1" aria-label="Next projects">{A}</button></div>')
+    n = len(projects)
     return f'''    <section class="section blk">
-      <div class="sec-head"><div><span class="tag mono">Portfolio</span><h2 class="h2" data-reveal>{title_html}</h2></div>
-        <a class="sec-head__link" href="{P}portfolio/index.html?{link_qs}" data-reveal>See all {A}</a></div>
-      <div class="proj-grid">
+      <div class="sec-head"><div><span class="tag mono">Portfolio · {n} project{'s' if n != 1 else ''}</span><h2 class="h2" data-reveal>{title_html}</h2></div>
+        <div class="pcar__head" data-reveal>{arrows}<a class="sec-head__link" href="{P}portfolio/index.html?{link_qs}">See all {A}</a></div></div>
+      <div class="pcar">
+        <div class="pcar__track">
 {cards}
+        </div>
       </div>
+    </section>'''
+
+def xnav(P, items, current, folder, label):
+    '''Row of every service / industry at the bottom of a detail page; the current one is highlighted.'''
+    links = '\n'.join(
+        f'''        <a class="xnav__item{' is-current' if o is current else ''}" href="{P}{folder}/{o['slug']}.html"{' aria-current="page"' if o is current else ''}>
+          <img src="{P}{o['image']}" alt="" loading="lazy"><span><i class="mono">{k+1:02d}</i><b>{E(o['name'])}</b></span>
+        </a>''' for k, o in enumerate(items))
+    return f'''    <section class="section xnav" aria-label="{label}">
+      <div class="xnav__head"><span class="tag mono">{label}</span><a class="xnav__all mono" href="{P}{folder}/index.html">Overview {A}</a></div>
+      <nav class="xnav__row">
+{links}
+      </nav>
     </section>'''
 
 LIGHTBOX = '''    <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project viewer">
@@ -297,7 +317,6 @@ def service_page(s):
 {chr(10).join(prod_tile(P, p, k, f"{P}products/index.html#{p['slug']}") for k, p in enumerate(D['products']))}
       </div>
     </section>'''
-    nxt = D['services'][(i + 1) % len(D['services'])]
     cur_attr = ' aria-current="page"'
     others = ''.join(f'<a href="{P}services/{o["slug"]}.html"{cur_attr if o is s else ""}>{E(o["name"])}</a>' for o in D['services'])
     body = f'''{page_hero(P, [("Services", P + "services/index.html"), (s["name"], None)], f"( {i+1:02d} ) — Service", E(s["name"]), E(s["tagline"]), s["image"])}
@@ -332,9 +351,7 @@ def service_page(s):
 
 {proj_section(P, projects, f'{E(s["name"])} <em>projects.</em>', f'service={s["slug"]}')}
 {prods}
-    <section class="section next-link">
-      <a href="{P}services/{nxt['slug']}.html" data-reveal><span class="mono muted">Next service</span><b>{E(nxt['name'])}</b>{A}</a>
-    </section>
+{xnav(P, D['services'], s, 'services', 'All services')}
 {cta(P, msg=f"Hi VShark, I'm interested in {s['name']}.")}
 {LIGHTBOX}'''
     return page(P, s['name'], f"{s['name']} — {s['tagline']} VShark Solutions.", 'services', body, ('js/portfolio.js',))
@@ -369,7 +386,6 @@ def industry_page(ind):
     svcs = [s for s in D['services'] if ind['slug'] in s['industries']]
     tiles = '\n'.join(svc_tile(P, s, D['services'].index(s)) for s in svcs)
     projects = [p for p in D['projects'] if ind['slug'] in p['industries']]
-    others = ''.join(f'<a class="chip{" is-on" if o is ind else ""}" href="{P}industries/{o["slug"]}.html">{E(o["name"])}</a>' for o in D['industries'])
     body = f'''{page_hero(P, [("Industries", P + "industries/index.html"), (ind["name"], None)], f"( {i+1:02d} ) — Industry", E(ind["name"]), E(ind["line"]), ind["image"])}
     <section class="section blk">
       <p class="lead-lg" data-reveal>{E(ind['intro'])}</p>
@@ -381,7 +397,7 @@ def industry_page(ind):
       </div>
     </section>
 {proj_section(P, projects, f'{E(ind["name"])} <em>projects.</em>', f'industry={ind["slug"]}')}
-    <section class="section blk"><div class="ind-chips"><span class="mono muted">Other industries</span><div>{others}</div></div></section>
+{xnav(P, D['industries'], ind, 'industries', 'All industries')}
 {cta(P, msg=f"Hi VShark, I work in {ind['name']} and would like to discuss a project.")}
 {LIGHTBOX}'''
     return page(P, ind['name'], f"3D scanning and design for {ind['name'].lower()} — {ind['line']}", 'industries', body, ('js/portfolio.js',))

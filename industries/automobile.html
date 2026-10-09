@@ -9,7 +9,7 @@
   <link rel="icon" href="../img/vshark-logo.png">
   <link rel="stylesheet" href="../fonts/fonts.css?v=3ef5b0da">
   <link rel="stylesheet" href="../css/style.css?v=1ec8151d">
-  <link rel="stylesheet" href="../css/pages.css?v=8884ca63">
+  <link rel="stylesheet" href="../css/pages.css?v=6692542a">
 </head>
 <body class="inner">
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
@@ -91,33 +91,57 @@
       </div>
     </section>
     <section class="section blk">
-      <div class="sec-head"><div><span class="tag mono">Portfolio</span><h2 class="h2" data-reveal>Automobile <em>projects.</em></h2></div>
-        <a class="sec-head__link" href="../portfolio/index.html?industry=automobile" data-reveal>See all <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-      <div class="proj-grid">
+      <div class="sec-head"><div><span class="tag mono">Portfolio · 3 projects</span><h2 class="h2" data-reveal>Automobile <em>projects.</em></h2></div>
+        <div class="pcar__head" data-reveal><div class="pcar__nav"><button class="car-btn" type="button" data-pcar="-1" aria-label="Previous projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button><button class="car-btn" type="button" data-pcar="1" aria-label="Next projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><a class="sec-head__link" href="../portfolio/index.html?industry=automobile">See all <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
+      <div class="pcar">
+        <div class="pcar__track">
         <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/scan01.webp" data-after="../img/portfolio/cad1-cylinder.webp" data-title="Cylinder Head" data-summary="Engine cylinder head scanned and rebuilt as parametric CAD.">
           <button class="proj__open" type="button" aria-label="Open Cylinder Head">
-            <div class="proj__media proj__media--pair"><img src="../img/portfolio/scan01.webp" alt="" loading="lazy"><img class="proj__after" src="../img/portfolio/cad1-cylinder.webp" alt="" loading="lazy"><i class="proj__divider"></i></div>
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/scan01.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/cad1-cylinder.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
             <span class="proj__badge mono">Scan → CAD</span>
             <span class="proj__body"><b>Cylinder Head</b><span>Engine cylinder head scanned and rebuilt as parametric CAD.</span></span>
           </button>
         </article>
         <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/bike-scan.webp" data-after="../img/portfolio/bike-cad.webp" data-title="Bike Frame" data-summary="Motorcycle frame digitised and converted into an editable CAD assembly.">
           <button class="proj__open" type="button" aria-label="Open Bike Frame">
-            <div class="proj__media proj__media--pair"><img src="../img/portfolio/bike-scan.webp" alt="" loading="lazy"><img class="proj__after" src="../img/portfolio/bike-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i></div>
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/bike-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/bike-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
             <span class="proj__badge mono">Scan → CAD</span>
             <span class="proj__body"><b>Bike Frame</b><span>Motorcycle frame digitised and converted into an editable CAD assembly.</span></span>
           </button>
         </article>
         <article class="proj" data-services="3d-scanning reverse-engineering class-a-surfacing" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/bumper-scan.webp" data-after="../img/portfolio/bumper-cad.webp" data-title="Bumper" data-summary="Vehicle bumper scanned and resurfaced for tooling.">
           <button class="proj__open" type="button" aria-label="Open Bumper">
-            <div class="proj__media proj__media--pair"><img src="../img/portfolio/bumper-scan.webp" alt="" loading="lazy"><img class="proj__after" src="../img/portfolio/bumper-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i></div>
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/bumper-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/bumper-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
             <span class="proj__badge mono">Scan → CAD</span>
             <span class="proj__body"><b>Bumper</b><span>Vehicle bumper scanned and resurfaced for tooling.</span></span>
           </button>
         </article>
+        </div>
       </div>
     </section>
-    <section class="section blk"><div class="ind-chips"><span class="mono muted">Other industries</span><div><a class="chip" href="../industries/aerospace.html">Aerospace</a><a class="chip is-on" href="../industries/automobile.html">Automobile</a><a class="chip" href="../industries/construction.html">Construction</a><a class="chip" href="../industries/healthcare.html">Healthcare</a><a class="chip" href="../industries/education.html">Education</a><a class="chip" href="../industries/jewellery.html">Jewellery</a></div></div></section>
+    <section class="section xnav" aria-label="All industries">
+      <div class="xnav__head"><span class="tag mono">All industries</span><a class="xnav__all mono" href="../industries/index.html">Overview <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <nav class="xnav__row">
+        <a class="xnav__item" href="../industries/aerospace.html">
+          <img src="../img/industries/aerospace.webp" alt="" loading="lazy"><span><i class="mono">01</i><b>Aerospace</b></span>
+        </a>
+        <a class="xnav__item is-current" href="../industries/automobile.html" aria-current="page">
+          <img src="../img/industries/auto.webp" alt="" loading="lazy"><span><i class="mono">02</i><b>Automobile</b></span>
+        </a>
+        <a class="xnav__item" href="../industries/construction.html">
+          <img src="../img/industries/construction.webp" alt="" loading="lazy"><span><i class="mono">03</i><b>Construction</b></span>
+        </a>
+        <a class="xnav__item" href="../industries/healthcare.html">
+          <img src="../img/industries/hospital.webp" alt="" loading="lazy"><span><i class="mono">04</i><b>Healthcare</b></span>
+        </a>
+        <a class="xnav__item" href="../industries/education.html">
+          <img src="../img/industries/institute.webp" alt="" loading="lazy"><span><i class="mono">05</i><b>Education</b></span>
+        </a>
+        <a class="xnav__item" href="../industries/jewellery.html">
+          <img src="../img/industries/jewelery.webp" alt="" loading="lazy"><span><i class="mono">06</i><b>Jewellery</b></span>
+        </a>
+      </nav>
+    </section>
     <section class="cta-band">
       <div class="cta-band__inner">
         <h2 class="h2">Have a part, a building or an idea?</h2>
@@ -185,7 +209,7 @@
   <script src="../vendor/gsap.min.js?v=47da594c"></script>
   <script src="../vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
   <script src="../vendor/lenis.min.js?v=79e3a064"></script>
-  <script src="../js/portfolio.js?v=b47f9fc9"></script>
-  <script src="../js/main.js?v=fb62a11f"></script>
+  <script src="../js/portfolio.js?v=dc1ef029"></script>
+  <script src="../js/main.js?v=67ca3024"></script>
 </body>
 </html>

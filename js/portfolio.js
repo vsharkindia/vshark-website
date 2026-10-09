@@ -46,6 +46,37 @@
     apply(false);
   }
 
+  /* ---------- scan/CAD cards: the split line follows the mouse ---------- */
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (fine) {
+    $$('[data-cmp]').forEach((m) => {
+      m.addEventListener('pointermove', (e) => {
+        const r = m.getBoundingClientRect();
+        m.classList.add('is-tracking');
+        m.style.setProperty('--pos', (Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * 100).toFixed(1) + '%');
+      });
+      m.addEventListener('pointerleave', () => { m.classList.remove('is-tracking'); m.style.setProperty('--pos', '50%'); });
+    });
+  }
+
+  /* ---------- project carousel arrows (service & industry pages) ---------- */
+  $$('.pcar').forEach((car) => {
+    const track = $('.pcar__track', car);
+    const sec = car.closest('section');
+    const prev = $('[data-pcar="-1"]', sec), next = $('[data-pcar="1"]', sec);
+    if (!prev) return;
+    const step = () => { const c = $('.proj', track); return c ? c.getBoundingClientRect().width + 20 : track.clientWidth; };
+    const update = () => {
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+    };
+    prev.addEventListener('click', () => track.scrollBy({ left: -step() }));
+    next.addEventListener('click', () => track.scrollBy({ left: step() }));
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+
   /* ---------- lightbox ---------- */
   const lb = $('#lb');
   if (!lb) return;
@@ -55,27 +86,28 @@
   function compare(before, after) {
     const el = document.createElement('div');
     el.className = 'cmp';
-    el.innerHTML = `<img src="${before}" alt="3D scan"><img class="cmp__after" src="${after}" alt="CAD model">
-      <span class="cmp__lab cmp__lab--l mono">Scan</span><span class="cmp__lab cmp__lab--r mono">CAD</span>
+    el.innerHTML = `<img src="${before}" alt="3D scan"><img class="cmp__cad" src="${after}" alt="CAD model">
+      <span class="cmp__lab cmp__lab--l mono">CAD</span><span class="cmp__lab cmp__lab--r mono">Scan</span>
       <i class="cmp__line"></i><span class="cmp__knob" aria-hidden="true">⇆</span>
-      <input class="cmp__range" type="range" min="0" max="100" value="50" aria-label="Drag to compare scan and CAD">`;
+      <input class="cmp__range" type="range" min="0" max="100" value="50" aria-label="Compare CAD and scan">`;
     const range = $('.cmp__range', el);
-    const set = (v) => el.style.setProperty('--pos', v + '%');
-    range.addEventListener('input', () => set(range.value));
-    // drag anywhere on the image (the range input covers it; this adds smooth pointer tracking)
-    el.addEventListener('pointerdown', (e) => {
-      const move = (ev) => {
-        const r = el.getBoundingClientRect();
-        const v = Math.max(0, Math.min(100, ((ev.clientX - r.left) / r.width) * 100));
-        range.value = v; set(v);
-      };
-      move(e);
-      el.setPointerCapture(e.pointerId);
-      el.addEventListener('pointermove', move);
-      el.addEventListener('pointerup', () => el.removeEventListener('pointermove', move), { once: true });
+    let intro = null;
+    const set = (v) => { el.style.setProperty('--pos', v + '%'); range.value = v; };
+    const fromEvent = (ev) => { const r = el.getBoundingClientRect(); return Math.max(0, Math.min(100, ((ev.clientX - r.left) / r.width) * 100)); };
+    range.addEventListener('input', () => set(+range.value));          // keyboard
+    // mouse: the line simply follows the cursor; touch/pen: drag with a finger
+    el.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'mouse' || el.dataset.dragging) { intro?.kill(); set(fromEvent(e)); }
     });
+    el.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse') return;
+      intro?.kill(); el.dataset.dragging = '1'; try { el.setPointerCapture(e.pointerId); } catch (_) {} set(fromEvent(e));
+    });
+    const stop = () => { delete el.dataset.dragging; };
+    el.addEventListener('pointerup', stop); el.addEventListener('pointercancel', stop);
     // intro sweep so visitors see it is interactive
-    if (window.gsap) { const o = { v: 85 }; gsap.to(o, { v: 50, duration: 1.1, ease: 'expo.out', delay: 0.15, onUpdate: () => { range.value = o.v; set(o.v); } }); }
+    set(50);
+    if (window.gsap) { const o = { v: 82 }; intro = gsap.to(o, { v: 50, duration: 1.1, ease: 'expo.out', delay: 0.15, onUpdate: () => set(o.v) }); }
     return el;
   }
 
@@ -95,7 +127,7 @@
     if (d.kind === 'pair') {
       lb.classList.add('is-pair');
       stage.innerHTML = ''; stage.appendChild(compare(d.before, d.after));
-      count.textContent = 'Drag to compare';
+      count.textContent = fine ? 'Move the cursor to compare' : 'Drag to compare';
     } else {
       imgs = d.images.split('|'); idx = 0;
       if (imgs.length < 2) lb.classList.add('is-single');
