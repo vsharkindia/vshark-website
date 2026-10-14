@@ -1,0 +1,445 @@
+"""
+VShark customer collateral — no dependencies, run:  python collateral/build_collateral.py
+
+Reads data/site.json (same content as the website) and writes
+  • collateral/presentation.html  — 16:9 slide deck (arrow keys / click to present)
+  • collateral/brochure.html      — two-page A4 brochure
+then, if Microsoft Edge or Chrome is installed, exports
+  • collateral/VShark-Presentation.pdf
+  • collateral/VShark-Brochure.pdf
+Pass --no-pdf to skip the PDF export.
+Photos are copied to collateral/assets/ as JPEG (needs Pillow: pip install pillow) to keep the PDFs small.
+"""
+import html, json, os, shutil, subprocess, sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
+D = json.load(open(ROOT / 'data' / 'site.json', encoding='utf-8'))
+E = lambda t: html.escape(str(t), quote=True)
+IND = {i['slug']: i for i in D['industries']}
+PRJ = {p['slug']: p for p in D['projects']}
+C = D['contact']
+P = '../'          # pages live in collateral/, assets in the site root
+SITE = 'vsharksolutions.com'
+
+# Not in site.json — copied from the homepage testimonial strip (index.html).
+QUOTES = [
+    ("VShark Solutions was able to take a relatively poorly scanned object and convert it to a solid model with very accurate dimensions. Their surfacing skills are amazing, and the accuracy is perfect for our needs.", "Rachel Labonte", "Canada"),
+    ("VSHARK provided the best engineering service we've ever experienced. Their attention to detail and quick responsiveness made working with them a pleasure. We've collaborated with them many times and will continue to do so.", "Mace Roper", "United States"),
+    ("Working with VSHARK on a reverse engineering and 3D modelling project was impressive; their professionalism, clear communication, and dedication to quality made the entire process smooth and efficient.", "Benedikt Klein", "Germany"),
+    ("Exceptional work and accuracy! I will be using VSHARK skills again; I highly recommend them if you need something converted accurately. No need to look further.", "Xander Elon", "United Kingdom"),
+    ("VShark Solutions delivered exceptional work beyond my expectations! Their attention to detail and professionalism made the entire process seamless. I highly recommend them for any project.", "Ahtisham Muhammad", "Saudi Arabia"),
+    ("Working with VSHARK Engineers was a fantastic experience. Their creative approach and attention to detail perfectly aligned with our brand, and they were always polite and cooperative throughout the project.", "Mariam Al-Ghayousi", "Dubai"),
+]
+COUNTRIES = 'US · UK · Germany · Canada · UAE · Saudi Arabia'
+
+PROCESS_IMG = ['img/services/01-scanning.webp', 'img/portfolio/scan-impeller.webp',
+               'img/portfolio/cad-impeller.webp', 'img/services/printing.webp']
+PROCESS = [
+    ('Capture', 'We scan the part, product or site — in our lab or on location.'),
+    ('Process', 'Scans are aligned, cleaned and merged into usable, watertight data.'),
+    ('Engineer', 'CAD, Class A surfaces, BIM or inspection built from that data.'),
+    ('Deliver', 'Native files, drawings and reports in the formats your team uses.'),
+]
+
+ABOUT = [
+    "VShark Solutions provides state-of-the-art 3D scanning and 3D design services for businesses and individuals.",
+    "We capture parts, products and spaces as accurate digital data — then engineer that data into editable CAD, "
+    "flawless surfaces, BIM models, inspection reports, prototypes and photoreal visuals. One partner, from the physical "
+    "object to the finished digital deliverable and back again.",
+]
+
+PAIRS = ['cylinder-head', 'impeller', 'bike-frame', 'bumper']
+VISUALS = [  # (project slug, image index, caption) — picks avoid third-party logos and photos of real people
+    ('product-renders', 4, 'Product rendering'),
+    ('eyewear-frame', 0, 'Eyewear surfacing'),
+    ('jewellery-renders', 1, 'Jewellery rendering'),
+    ('character-sculpts', 5, 'Character sculpts'),
+    ('spaces-exhibitions', 0, 'Exhibition stands'),
+]
+
+USED = set()
+
+def jpeg(path, size=1100):
+    """WebP photos are stored uncompressed when printed to PDF, so use JPEG copies in collateral/assets/."""
+    if not path.endswith('.webp'):
+        return P + path
+    from PIL import Image
+    src, out = ROOT / path, HERE / 'assets' / (Path(path).stem + '.jpg')
+    USED.add(out.name)
+    if not out.exists() or out.stat().st_mtime < src.stat().st_mtime:
+        out.parent.mkdir(exist_ok=True)
+        im = Image.open(src).convert('RGB')
+        im.thumbnail((size, size), Image.LANCZOS)
+        im.save(out, 'JPEG', quality=82, optimize=True, progressive=True)
+    return 'assets/' + out.name
+
+def img(path, alt='', cls=''):
+    c = f' class="{cls}"' if cls else ''
+    return f'<img src="{E(jpeg(path))}" alt="{E(alt)}"{c}>'
+
+def stats():
+    return [('0.02', 'mm', 'Scan accuracy'), (str(len(D['services'])), '', 'Core services'),
+            (str(len(D['industries'])), '', 'Industries served'), ('6', '+', 'Countries with repeat clients')]
+
+def phones(sep=' · '):
+    return sep.join(f'{E(p["display"])} ({E(p["label"])})' for p in C['phones'])
+
+# ================================================================ presentation
+def chrome(n, label, dark=False):
+    logo = 'img/vshark-logo-white.png' if dark else 'img/vshark-logo.png'
+    return (f'<div class="chrome">{img(logo, "VShark Engineering Solutions")}'
+            f'<span class="mono">{E(label)} · {SITE}</span><span class="mono">{n:02d}</span></div>')
+
+def deck():
+    S = []
+    total_svc = len(D['services'])
+    pc = PRJ['cylinder-head']
+
+    S.append(f'''
+<section class="slide slide--dark">
+  <div class="cover">
+    <div>
+      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions', 'cover__logo')}
+      <p class="mono kicker">3D Scanning &amp; 3D Design Services</p>
+      <h1 class="h1">We capture reality.<br><em>Then we engineer it.</em></h1>
+      <p class="lead">Precise 3D scanning and innovative 3D design that transform physical parts, products and spaces into digital models — and back into physical prototypes.</p>
+      <div class="cover__meta mono">
+        <span>Email<b>{E(C['email'])}</b></span>
+        {''.join(f'<span>{E(p["label"])}<b>{E(p["display"])}</b></span>' for p in C['phones'])}
+      </div>
+    </div>
+    <div class="cover__pair">
+      <figure>{img(pc['before'], 'Cylinder head 3D scan')}<figcaption class="mono">01 · Scan</figcaption></figure>
+      <figure>{img(pc['after'], 'Cylinder head CAD model')}<figcaption class="mono">02 · CAD</figcaption></figure>
+    </div>
+  </div>
+</section>''')
+
+    st = ''.join(f'<div class="stat"><b>{a}<small>{u}</small></b><span class="mono">{E(l)}</span></div>' for a, u, l in stats())
+    S.append(f'''
+<section class="slide">
+  <div class="about">
+    <div>
+      <p class="mono kicker">( 01 ) — Who we are</p>
+      <h2 class="h2">From physical<br>to digital <em>and back.</em></h2>
+      {''.join(f'<p class="lead">{E(t)}</p>' for t in ABOUT)}
+    </div>
+    <div class="stats">{st}</div>
+  </div>
+  {chrome(2, 'About VShark')}
+</section>''')
+
+    cards = ''.join(f'''
+    <article class="svc">{img(s['image'], s['name'])}<div>
+      <span class="mono">{i:02d}</span><h3 class="h3">{E(s['name'])}</h3><p>{E(s['tagline'])}</p></div></article>'''
+        for i, s in enumerate(D['services'], 1))
+    S.append(f'''
+<section class="slide">
+  <div class="head">
+    <div><p class="mono kicker">( 02 ) — Services</p><h2 class="h2">Seven services, <em>one partner.</em></h2></div>
+    <p class="lead">Use one service on its own, or hand us the whole job — from first scan to final file.</p>
+  </div>
+  <div class="svc-grid">{cards}
+    <article class="svc svc--cta"><h3 class="h3">End-to-end delivery</h3><p>Scan, engineer, inspect, print and render — under one roof, with one point of contact.</p></article>
+  </div>
+  {chrome(3, 'Services')}
+</section>''')
+
+    steps = ''.join(f'<div class="step">{img(PROCESS_IMG[i - 1], t)}<div class="num">{i:02d}</div><h3 class="h3">{E(t)}</h3><p class="small">{E(d)}</p></div>'
+                    for i, (t, d) in enumerate(PROCESS, 1))
+    S.append(f'''
+<section class="slide">
+  <p class="mono kicker">( 03 ) — How we work</p>
+  <h2 class="h2">A simple, four-step<br>process — <em>scan to solution.</em></h2>
+  <div class="process">{steps}</div>
+  {chrome(4, 'Process')}
+</section>''')
+
+    n = 5
+    for i, s in enumerate(D['services'], 1):
+        pts = ''.join(f'<li><b>{E(a)}</b><span>{E(b)}</span></li>' for a, b in s['points'])
+        dl = ''.join(f'<span class="chip">{E(x)}</span>' for x in s['deliverables'])
+        ind = ''.join(f'<span class="chip chip--ind">{E(IND[x]["name"])}</span>' for x in s['industries'] if x in IND)
+        S.append(f'''
+<section class="slide">
+  <div class="detail">
+    <div class="detail__img">{img(s['image'], s['name'])}<span class="mono">Service {i:02d} / {total_svc:02d}</span></div>
+    <div class="detail__body">
+      <p class="mono kicker">( 02.{i} ) — Services</p>
+      <h2 class="h2">{E(s['name'])}</h2>
+      <p class="tagline">{E(s['tagline'])}</p>
+      <p class="lead">{E(s['intro'])}</p>
+      <ul class="points">{pts}</ul>
+      <p class="mono label">Deliverables</p><div class="chips">{dl}</div>
+      <p class="mono label">Industries</p><div class="chips">{ind}</div>
+    </div>
+  </div>
+  {chrome(n, s['name'])}
+</section>''')
+        n += 1
+
+    pairs = ''.join(f'''
+    <div class="pair">
+      <figure>{img(PRJ[k]['before'], PRJ[k]['title'] + ' scan')}<figcaption>Scan</figcaption></figure>
+      <figure>{img(PRJ[k]['after'], PRJ[k]['title'] + ' CAD')}<figcaption>CAD</figcaption></figure>
+      <p><b>{E(PRJ[k]['title'])}</b>{E(PRJ[k]['summary'])}</p>
+    </div>''' for k in PAIRS)
+    S.append(f'''
+<section class="slide">
+  <div class="head">
+    <div><p class="mono kicker">( 04 ) — Portfolio</p><h2 class="h2">Scan in. <em>CAD out.</em></h2></div>
+    <p class="lead">Real parts we have captured and rebuilt as editable, manufacturable CAD.</p>
+  </div>
+  <div class="pairs">{pairs}</div>
+  {chrome(n, 'Portfolio — reverse engineering')}
+</section>''')
+    n += 1
+
+    mos = ''.join(f'<figure>{img(PRJ[k]["images"][ix], cap)}<figcaption>{E(cap)}<span>{E(PRJ[k]["summary"])}</span></figcaption></figure>'
+                  for k, ix, cap in VISUALS)
+    S.append(f'''
+<section class="slide">
+  <div class="head">
+    <div><p class="mono kicker">( 04 ) — Portfolio</p><h2 class="h2">Design &amp; <em>visualisation.</em></h2></div>
+    <p class="lead">Surfacing, sculpting and photoreal rendering — visuals that sell a product before it is made.</p>
+  </div>
+  <div class="mosaic">{mos}</div>
+  {chrome(n, 'Portfolio — design & visualisation')}
+</section>''')
+    n += 1
+
+    inds = ''.join(f'<article class="ind">{img(d["image"], d["name"])}<div><span class="mono">{i:02d}</span><h3 class="h3">{E(d["name"])}</h3><p>{E(d["line"])}</p></div></article>'
+                   for i, d in enumerate(D['industries'], 1))
+    S.append(f'''
+<section class="slide">
+  <div class="head">
+    <div><p class="mono kicker">( 05 ) — Industries</p><h2 class="h2">Industries <em>we serve.</em></h2></div>
+    <p class="lead">Six sectors, one standard of precision.</p>
+  </div>
+  <div class="ind-grid">{inds}</div>
+  {chrome(n, 'Industries')}
+</section>''')
+    n += 1
+
+    prods = ''.join(f'''<article>{img(p['image'], p['name'])}<div><h3 class="h3">{E(p['name'])}</h3><p class="type">{E(p['type'])}</p>
+      <p class="fig">{E(p['figure'])}<small>{E(p['unit'])}</small></p></div></article>''' for p in D['products'])
+    keep = ['High-speed scanning', 'Max. scanning speed', 'Max. scanning field', 'Max. resolution', 'Volume accuracy', 'Recommended sample size', 'Output formats']
+    rows = ''.join(f'<tr><th>{E(r[0])}</th>' + ''.join(f'<td>{E(c)}</td>' for c in r[1:]) + '</tr>'
+                   for r in D['productSpecs'] if r[0] in keep)
+    S.append(f'''
+<section class="slide">
+  <div class="head">
+    <div><p class="mono kicker">( 06 ) — Products</p><h2 class="h2">Professional <em>3D scanners.</em></h2></div>
+    <p class="lead">Vertex blue-laser and optical-tracking scanners — now available from VShark, with training and support.</p>
+  </div>
+  <div class="prod">{prods}</div>
+  <table class="specs"><thead><tr><th>Specification</th>{''.join(f'<th>{E(p["name"])}</th>' for p in D['products'])}</tr></thead><tbody>{rows}</tbody></table>
+  <p class="pc"><span class="mono">Recommended PC</span>{E(D['productPc'])}</p>
+  {chrome(n, 'Products')}
+</section>''')
+    n += 1
+
+    qs = ''.join(f'<blockquote class="quote"><p>{E(q)}</p><footer>{E(w)}<span>{E(c)}</span></footer></blockquote>' for q, w, c in QUOTES)
+    S.append(f'''
+<section class="slide">
+  <div class="head">
+    <div><p class="mono kicker">( 07 ) — What clients say</p><h2 class="h2">Trusted <em>worldwide.</em></h2></div>
+    <p class="lead mono nowrap">{COUNTRIES}</p>
+  </div>
+  <div class="quotes">{qs}</div>
+  {chrome(n, 'Testimonials')}
+</section>''')
+    n += 1
+
+    ph = ''.join(f'<li><span class="mono">{E(p["label"])}</span><a href="tel:{E(p["tel"])}">{E(p["display"])}</a></li>' for p in C['phones'])
+    S.append(f'''
+<section class="slide slide--dark">
+  <div class="contact">
+    <div>
+      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions', 'cover__logo')}
+      <p class="mono kicker">( 08 ) — Get in touch</p>
+      <h2 class="h1">Let&rsquo;s start<br><em>your project.</em></h2>
+      <p class="lead">Send us a photo, drawing or the part itself — we&rsquo;ll come back with the right approach, timeline and quote.</p>
+    </div>
+    <ul class="contact__list">
+      <li><span class="mono">Email</span><a href="mailto:{E(C['email'])}">{E(C['email'])}</a></li>
+      {ph}
+      <li><span class="mono">WhatsApp</span><a href="https://wa.me/{E(C['whatsapp'])}">+{E(C['whatsapp'][:2])} {E(C['whatsapp'][2:7])} {E(C['whatsapp'][7:])}</a></li>
+      <li><span class="mono">Web</span><a href="https://{SITE}">{SITE}</a></li>
+    </ul>
+  </div>
+  {chrome(n, 'Contact', dark=True)}
+</section>''')
+
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>VShark Solutions — Company Presentation</title>
+<link rel="icon" href="{P}img/favicon-32.png">
+<link rel="stylesheet" href="deck.css">
+</head><body>
+<!-- GENERATED by collateral/build_collateral.py from data/site.json — edit those, not this file. -->
+<main class="deck">{''.join(S)}
+</main>
+<div class="nav"><button type="button" data-go="-1" aria-label="Previous slide">&larr;</button><span id="count"></span><button type="button" data-go="1" aria-label="Next slide">&rarr;</button></div>
+<script>
+(function () {{
+  var slides = [].slice.call(document.querySelectorAll('.slide')), i = 0, count = document.getElementById('count');
+  function fit() {{
+    var s = Math.min(innerWidth / 1280, innerHeight / 720) * 0.94;
+    slides.forEach(function (el) {{ el.style.transform = 'translate(-50%,-50%) scale(' + s + ')'; }});
+  }}
+  function show(n) {{
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (el, k) {{ el.classList.toggle('is-current', k === i); }});
+    count.textContent = (i + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (i + 1));
+  }}
+  addEventListener('resize', fit);
+  addEventListener('keydown', function (e) {{
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].indexOf(e.key) > -1) {{ e.preventDefault(); show(i + 1); }}
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp'].indexOf(e.key) > -1) {{ e.preventDefault(); show(i - 1); }}
+    else if (e.key === 'Home') show(0); else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'f') document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+  }});
+  document.querySelector('.nav').addEventListener('click', function (e) {{
+    var b = e.target.closest('button'); if (b) show(i + +b.dataset.go);
+  }});
+  document.querySelector('.deck').addEventListener('click', function (e) {{
+    if (!e.target.closest('a')) show(i + (e.clientX < innerWidth / 3 ? -1 : 1));
+  }});
+  fit(); show((parseInt(location.hash.slice(1), 10) || 1) - 1);
+}})();
+</script>
+</body></html>
+'''
+
+# ================================================================ brochure
+def brochure():
+    pc = PRJ['cylinder-head']
+    st = ''.join(f'<div><b>{a}<small>{u}</small></b><span class="mono">{E(l)}</span></div>' for a, u, l in stats())
+    svcs = ''.join(f'''
+      <article class="svc">{img(s['image'], s['name'])}<div>
+        <h3><span>{i:02d}</span>{E(s['name'])}</h3><p>{E(s['tagline'])}</p>
+        <small>{E(' · '.join(s['deliverables'][:3]))}</small></div></article>'''
+        for i, s in enumerate(D['services'], 1))
+    steps = ''.join(f'<div class="step">{img(PROCESS_IMG[i - 1], t)}<span class="mono">Step {i:02d}</span><b>{E(t)}</b><p>{E(d)}</p></div>'
+                    for i, (t, d) in enumerate(PROCESS, 1))
+    pairs = ''.join(f'''
+      <div class="pair">
+        <figure>{img(PRJ[k]['before'], PRJ[k]['title'] + ' scan')}<figcaption>Scan</figcaption></figure>
+        <figure>{img(PRJ[k]['after'], PRJ[k]['title'] + ' CAD')}<figcaption>CAD</figcaption></figure>
+        <p><b>{E(PRJ[k]['title'])}</b>{E(PRJ[k]['summary'])}</p>
+      </div>''' for k in PAIRS)
+    strip = ''.join(f'<figure>{img(PRJ[k]["images"][ix], cap)}<figcaption>{E(cap)}</figcaption></figure>' for k, ix, cap in VISUALS[:4])
+    inds = ''.join(f'<article>{img(d["image"], d["name"])}<div><h3>{E(d["name"])}</h3><p>{E(d["line"])}</p></div></article>' for d in D['industries'])
+    prods = ''.join(f'<article>{img(p["image"], p["name"])}<div><h3>{E(p["name"])}</h3><p>{E(p["type"])}</p></div><b>{E(p["figure"])}<small>{E(p["unit"])}</small></b></article>' for p in D['products'])
+    qs = ''.join(f'<blockquote class="quote"><p>&ldquo;{E(q)}&rdquo;</p><footer>{E(w)}<span>{E(c)}</span></footer></blockquote>' for q, w, c in (QUOTES[0], QUOTES[2]))
+    ph = ''.join(f'<li><span class="mono">{E(p["label"])}</span><a href="tel:{E(p["tel"])}">{E(p["display"])}</a></li>' for p in C['phones'])
+
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>VShark Solutions — Brochure</title>
+<link rel="icon" href="{P}img/favicon-32.png">
+<link rel="stylesheet" href="brochure.css">
+</head><body>
+<!-- GENERATED by collateral/build_collateral.py from data/site.json — edit those, not this file. -->
+
+<section class="page">
+  <header class="hero">
+    <div>
+      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions', 'hero__logo')}
+      <h1>We capture reality.<br><em>Then we engineer it.</em></h1>
+      <p>{E(ABOUT[0])} {E(ABOUT[1])}</p>
+    </div>
+    <div class="hero__pair">
+      <figure>{img(pc['before'], 'Cylinder head 3D scan')}<figcaption>Scan</figcaption></figure>
+      <figure>{img(pc['after'], 'Cylinder head CAD model')}<figcaption>CAD</figcaption></figure>
+    </div>
+  </header>
+  <div class="stats">{st}</div>
+  <div class="pad">
+    <div class="sec"><span class="mono">01</span><h2>Our services</h2><p>Use one on its own, or hand us the whole job.</p></div>
+    <div class="svc-list">{svcs}
+      <article class="svc--cta"><h3>End-to-end, one partner</h3><p>Scan, engineer, inspect, print and render under one roof — with one point of contact.</p></article>
+    </div>
+    <div class="sec"><span class="mono">02</span><h2>How we work</h2><p>Scan to solution in four steps.</p></div>
+    <div class="process">{steps}</div>
+  </div>
+  <div class="foot">{img('img/vshark-logo.png', 'VShark')}<span class="mono">{E(C['email'])} · {phones()}</span></div>
+</section>
+
+<section class="page">
+  <div class="pad back-top">
+    <div class="sec"><span class="mono">03</span><h2>Scan in. <em>CAD out.</em></h2><p>Real parts captured and rebuilt as editable CAD.</p></div>
+    <div class="pairs">{pairs}</div>
+    <div class="sec"><span class="mono">04</span><h2>Design &amp; visualisation</h2><p>Surfacing, sculpting and photoreal rendering.</p></div>
+    <div class="strip">{strip}</div>
+    <div class="sec"><span class="mono">05</span><h2>Industries we serve</h2><p>Six sectors, one standard of precision.</p></div>
+    <div class="ind">{inds}</div>
+    <div class="lower">
+      <div>
+        <div class="sec"><span class="mono">06</span><h2>3D scanners</h2></div>
+        <div class="prod">{prods}</div>
+      </div>
+      <div>
+        <div class="sec"><span class="mono">07</span><h2>What clients say</h2></div>
+        <div class="quotes">{qs}</div>
+        <p class="reach mono">Clients in {COUNTRIES}</p>
+      </div>
+    </div>
+  </div>
+  <footer class="cta">
+    <div>
+      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions')}
+      <h2>Let&rsquo;s start <em>your project.</em></h2>
+      <p>Send us a photo, drawing or the part itself — we&rsquo;ll reply with the right approach, timeline and quote.</p>
+    </div>
+    <ul>
+      <li><span class="mono">Email</span><a href="mailto:{E(C['email'])}">{E(C['email'])}</a></li>
+      <li><span class="mono">Web</span><a href="https://{SITE}">{SITE}</a></li>
+      {ph}
+    </ul>
+  </footer>
+</section>
+</body></html>
+'''
+
+# ================================================================ PDF export
+def find_browser():
+    cands = [shutil.which(n) for n in ('msedge', 'chrome', 'google-chrome', 'chromium')] + [
+        r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe',
+        r'C:\Program Files\Microsoft\Edge\Application\msedge.exe',
+        r'C:\Program Files\Google\Chrome\Application\chrome.exe',
+        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge']
+    return next((c for c in cands if c and os.path.isfile(c)), None)
+
+def to_pdf(browser, src, out):
+    subprocess.run([browser, '--headless=new', '--disable-gpu', '--no-pdf-header-footer',
+                    '--virtual-time-budget=8000', '--run-all-compositor-stages-before-draw',
+                    f'--print-to-pdf={out}', src.as_uri()],
+                   check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=120)
+
+if __name__ == '__main__':
+    pages = {'presentation.html': deck(), 'brochure.html': brochure()}
+    for name, body in pages.items():
+        (HERE / name).write_text(body, encoding='utf-8', newline='\n')
+        print('wrote', f'collateral/{name}')
+    for f in (HERE / 'assets').glob('*.jpg'):  # drop photos no longer used
+        if f.name not in USED:
+            f.unlink()
+    if '--no-pdf' in sys.argv:
+        sys.exit(0)
+    b = find_browser()
+    if not b:
+        print('No Edge/Chrome found — open the HTML files and use Print > Save as PDF instead.')
+        sys.exit(0)
+    for name, pdf in (('presentation.html', 'VShark-Presentation.pdf'), ('brochure.html', 'VShark-Brochure.pdf')):
+        to_pdf(b, HERE / name, HERE / pdf)
+        print('wrote', f'collateral/{pdf}')
