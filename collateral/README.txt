@@ -2,8 +2,10 @@ VSHARK — CUSTOMER COLLATERAL
 ============================
 
 Ready to send
-  VShark-Presentation.pdf   17-slide company presentation (16:9)
-  VShark-Brochure.pdf       2-page A4 brochure (print double-sided or email)
+  VShark-Presentation.pdf           17-slide company presentation (16:9)
+  VShark-Brochure-Services.pdf      2-page A4 brochure — services first, scanners in short
+  VShark-Brochure-Scanners.pdf      2-page A4 brochure — scanners for sale, services in short
+  (print double-sided or email)
 
 To present live
   Open presentation.html in Chrome/Edge.
@@ -16,8 +18,9 @@ To update
 
       python collateral/build_collateral.py
 
-  This rewrites presentation.html, brochure.html, the JPEG copies in assets/,
+  This rewrites presentation.html, both brochure-*.html files, the JPEG copies in assets/,
   and both PDFs (needs Pillow and Microsoft Edge or Google Chrome).
-  Layout/colours: deck.css (presentation) and brochure.css (brochure).
+  Layout/colours: deck.css (presentation) and brochure.css (both brochures).
   Text that is not on the website (about copy, process steps, testimonials,
-  which portfolio images to show) is at the top of build_collateral.py.
+  which portfolio images to show, scanner "why buy from us" points) is near the
+  top of build_collateral.py and above scanners_brochure().

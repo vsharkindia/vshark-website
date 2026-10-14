@@ -117,6 +117,70 @@ em { font-style: normal; color: var(--brand); }
 .cta li a, .cta li > span:last-child { font-family: var(--display); font-size: 12px; }
 .cta img { height: 20px; width: auto; margin-bottom: 12px; }
 
+/* ---------- Scanners brochure ---------- */
+.hero--prod { grid-template-columns: 1fr 250px; align-items: center; }
+.hero__kick { color: var(--brand-lt); margin-bottom: 10px; }
+.hero--prod { padding-top: 28px; padding-bottom: 24px; }
+.hero--prod .hero__logo { margin-bottom: 26px; }
+.hero--prod h1 { font-size: 34px; }
+.hero__prod { position: relative; background: radial-gradient(circle at 50% 45%, #fff 0%, #e4e7ea 70%); border-radius: 10px; height: 210px; display: grid; place-items: center; }
+.hero__prod img { width: 180px; height: 180px; object-fit: contain; }
+.hero__prod .mono { position: absolute; left: 10px; bottom: 10px; color: var(--muted); }
+
+.pcards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+.pcard { background: var(--bg); border-radius: 8px; padding: 12px 14px 12px; }
+.pcard__img { position: relative; background: #fff; border-radius: 6px; height: 100px; display: grid; place-items: center; margin-bottom: 9px; }
+.pcard__img img { height: 92px; width: 92px; object-fit: contain; }
+.pcard__img .mono { position: absolute; left: 8px; top: 8px; color: var(--brand); }
+.pcard h3 { font-family: var(--display); font-weight: 500; font-size: 16px; letter-spacing: -.02em; line-height: 1.1; }
+.pcard__type { color: var(--muted); font-size: 9px; margin-top: 1px; }
+.pcard__sum { font-size: 9.5px; color: var(--fg-2); line-height: 1.45; margin: 6px 0 8px; min-height: 42px; }
+.pcard__fig { font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -.03em; line-height: 1; padding-bottom: 8px; border-bottom: 1px solid var(--line); margin-bottom: 6px; }
+.pcard__fig small { font-family: var(--body); font-weight: 400; font-size: 9px; color: var(--muted); letter-spacing: 0; margin-left: 4px; }
+.pcard dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 8px; font-size: 8.8px; }
+.pcard dt { color: var(--muted); }
+.pcard dd { color: var(--fg); text-align: right; }
+
+.modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 18px; }
+.mode { border-top: 1.5px solid var(--line); padding-top: 8px; position: relative; }
+.mode::before { content: ""; position: absolute; top: -1.5px; left: 0; width: 26px; height: 1.5px; background: var(--brand); }
+.mode .mono { color: var(--steel); }
+.mode b { display: block; font-family: var(--display); font-weight: 500; font-size: 13px; margin-top: 2px; }
+.mode em { display: block; font-size: 9px; color: var(--brand); margin: 1px 0 2px; }
+.mode p { font-size: 9px; color: var(--muted); line-height: 1.45; }
+
+.whys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.why { background: var(--ink); color: #fff; border-radius: 6px; padding: 12px 12px 13px; }
+.why .mono { color: var(--brand-lt); }
+.why b { display: block; font-family: var(--display); font-weight: 500; font-size: 12px; line-height: 1.2; margin: 4px 0 4px; }
+.why p { font-size: 8.8px; line-height: 1.45; color: rgba(255,255,255,.7); }
+
+.strip--scan { margin-bottom: 10px; }
+.strip--scan figure { background: var(--bg); }
+.strip--scan figcaption { position: static; background: #fff; color: var(--fg); padding: 5px 7px; }
+.apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.app { border-left: 2px solid var(--brand); padding-left: 9px; }
+.app b { display: block; font-family: var(--display); font-weight: 500; font-size: 11px; }
+.app p { font-size: 8.8px; color: var(--muted); line-height: 1.4; }
+
+.page .specs { width: 100%; border-collapse: collapse; font-size: 8.8px; }
+.page .specs th, .page .specs td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); }
+.page .specs thead th { font-family: var(--mono); font-size: 7.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 400; background: var(--bg); }
+.page .specs tbody th { font-weight: 500; color: var(--fg); width: 25%; }
+.page .specs td { color: var(--fg-2); width: 25%; }
+.page .specs tbody tr:nth-child(even) { background: #fafbfc; }
+.note { font-size: 8.5px; color: var(--muted); margin: 8px 0 24px; line-height: 1.45; }
+.note b { color: var(--fg); font-weight: 500; }
+
+.also { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.also > div > p { font-size: 9.5px; color: var(--fg-2); line-height: 1.5; }
+.flow { margin-top: 8px; font-size: 10px; }
+.flow b { font-family: var(--display); font-weight: 500; }
+.flow i { font-style: normal; color: var(--brand); margin: 0 3px; }
+.svc-names { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; margin-top: 4px; }
+.svc-names li { font-family: var(--display); font-weight: 500; font-size: 10.5px; padding: 4px 0; border-bottom: 1px solid var(--line); }
+.svc-names .mono { color: var(--brand); margin-right: 6px; }
+
 /* ---------- Screen: pages stacked; Print: A4 ---------- */
 @media screen {
   body { padding: 24px 0; }
