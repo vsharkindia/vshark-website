@@ -19,7 +19,7 @@ To update
       python collateral/build_collateral.py
 
   This rewrites presentation.html, both brochure-*.html files, the JPEG copies in assets/,
-  and both PDFs (needs Pillow and Microsoft Edge or Google Chrome).
+  and all three PDFs (needs Pillow and Microsoft Edge or Google Chrome).
   Layout/colours: deck.css (presentation) and brochure.css (both brochures).
   Text that is not on the website (about copy, process steps, testimonials,
   which portfolio images to show, scanner "why buy from us" points) is near the
