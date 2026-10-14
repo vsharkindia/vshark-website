@@ -90,7 +90,7 @@ def phones(sep=' · '):
 # ================================================================ presentation
 def chrome(n, label, dark=False):
     logo = 'img/vshark-logo-white.png' if dark else 'img/vshark-logo.png'
-    return (f'<div class="chrome">{img(logo, "VShark Engineering Solutions")}'
+    return (f'<div class="chrome">{img(logo, "VShark Solutions Pvt Ltd")}'
             f'<span class="mono">{E(label)} · {SITE}</span><span class="mono">{n:02d}</span></div>')
 
 def deck():
@@ -102,7 +102,7 @@ def deck():
 <section class="slide slide--dark">
   <div class="cover">
     <div>
-      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions', 'cover__logo')}
+      {img('img/vshark-logo-white.png', 'VShark Solutions Pvt Ltd', 'cover__logo')}
       <p class="mono kicker">3D Scanning &amp; 3D Design Services</p>
       <h1 class="h1">We capture reality.<br><em>Then we engineer it.</em></h1>
       <p class="lead">Precise 3D scanning and innovative 3D design that transform physical parts, products and spaces into digital models — and back into physical prototypes.</p>
@@ -259,7 +259,7 @@ def deck():
 <section class="slide slide--dark">
   <div class="contact">
     <div>
-      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions', 'cover__logo')}
+      {img('img/vshark-logo-white.png', 'VShark Solutions Pvt Ltd', 'cover__logo')}
       <p class="mono kicker">( 08 ) — Get in touch</p>
       <h2 class="h1">Let&rsquo;s start<br><em>your project.</em></h2>
       <p class="lead">Send us a photo, drawing or the part itself — we&rsquo;ll come back with the right approach, timeline and quote.</p>
@@ -335,7 +335,7 @@ def b_cta(heading, text):
     ph = ''.join(f'<li><span class="mono">{E(p["label"])}</span><a href="tel:{E(p["tel"])}">{E(p["display"])}</a></li>' for p in C['phones'])
     return f'''<footer class="cta">
     <div>
-      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions')}
+      {img('img/vshark-logo-white.png', 'VShark Solutions Pvt Ltd')}
       <h2>{heading}</h2>
       <p>{text}</p>
     </div>
@@ -373,7 +373,7 @@ def services_brochure():
 <section class="page">
   <header class="hero">
     <div>
-      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions', 'hero__logo')}
+      {img('img/vshark-logo-white.png', 'VShark Solutions Pvt Ltd', 'hero__logo')}
       <h1>We capture reality.<br><em>Then we engineer it.</em></h1>
       <p>{E(ABOUT[0])} {E(ABOUT[1])}</p>
     </div>
@@ -474,7 +474,7 @@ def scanners_brochure():
 <section class="page">
   <header class="hero hero--prod">
     <div>
-      {img('img/vshark-logo-white.png', 'VShark Engineering Solutions', 'hero__logo')}
+      {img('img/vshark-logo-white.png', 'VShark Solutions Pvt Ltd', 'hero__logo')}
       <p class="mono hero__kick">Vertex 3D scanners · now from VShark</p>
       <h1>Professional 3D scanners.<br><em>Backed by scanning engineers.</em></h1>
       <p>Vertex blue-laser and optical-tracking scanners — sold, set up and supported by the VShark team that scans and models parts for clients every day.</p>
