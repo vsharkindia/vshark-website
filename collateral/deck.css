@@ -184,6 +184,7 @@ em { font-style: normal; color: var(--brand); }
 @media print {
   html, body { background: none; }
   .nav { display: none; }
-  .slide { page-break-after: always; break-after: page; }
+  /* undo the screen-mode fit-to-window scale that JS sets inline */
+  .slide { transform: none !important; display: flex !important; page-break-after: always; break-after: page; }
   .slide:last-child { page-break-after: auto; break-after: auto; }
 }

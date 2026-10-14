@@ -5,8 +5,10 @@ Reads data/site.json (same content as the website) and writes
   • collateral/presentation.html  — 16:9 slide deck (arrow keys / click to present)
   • collateral/brochure-services.html  — two-page A4 brochure, services first
   • collateral/brochure-scanners.html  — two-page A4 brochure, 3D scanners for sale
-then, if Microsoft Edge or Chrome is installed, exports each to a matching VShark-*.pdf
-Pass --no-pdf to skip the PDF export.
+then, if Microsoft Edge or Chrome is installed, exports each to a matching VShark-*.pdf,
+and, if Node.js and pptxgenjs are available, writes the PowerPoint version
+  • collateral/VShark-Presentation.pptx   (via collateral/build_pptx.js)
+Pass --no-pdf / --no-pptx to skip those exports.
 Photos are copied to collateral/assets/ as JPEG (needs Pillow: pip install pillow) to keep the PDFs small.
 """
 import html, json, os, shutil, subprocess, sys
@@ -513,6 +515,51 @@ def scanners_brochure():
 </body></html>
 '''
 
+# ================================================================ PowerPoint export
+def deck_data():
+    """Everything build_pptx.js needs, with image paths relative to collateral/."""
+    pj = lambda k: PRJ[k]
+    return {
+        'site': SITE, 'contact': C, 'about': ABOUT, 'countries': COUNTRIES,
+        'stats': stats(),
+        'process': [{'title': t, 'text': d, 'image': jpeg(PROCESS_IMG[i])} for i, (t, d) in enumerate(PROCESS)],
+        'services': [dict(s, image=jpeg(s['image']), industries=[IND[x]['name'] for x in s['industries'] if x in IND])
+                     for s in D['services']],
+        'industries': [dict(i, image=jpeg(i['image'])) for i in D['industries']],
+        'products': [dict(p, image=jpeg(p['image'])) for p in D['products']],
+        'specs': [r for r in D['productSpecs'] if r[0] in ('High-speed scanning', 'Max. scanning speed', 'Max. scanning field',
+                  'Max. resolution', 'Volume accuracy', 'Recommended sample size', 'Output formats')],
+        'pc': D['productPc'],
+        'cover': {'scan': jpeg(pj('cylinder-head')['before']), 'cad': jpeg(pj('cylinder-head')['after'])},
+        'pairs': [{'title': pj(k)['title'], 'summary': pj(k)['summary'], 'scan': jpeg(pj(k)['before']), 'cad': jpeg(pj(k)['after'])}
+                  for k in PAIRS],
+        'visuals': [{'caption': cap, 'summary': pj(k)['summary'], 'image': jpeg(pj(k)['images'][ix])} for k, ix, cap in VISUALS],
+        'quotes': [{'text': q, 'name': w, 'place': c} for q, w, c in QUOTES],
+        'logo': jpeg('img/vshark-logo.png'), 'logoWhite': jpeg('img/vshark-logo-white.png'),
+    }
+
+def to_pptx(out):
+    """Returns False when Node or pptxgenjs is missing (set NODE_PATH to the node_modules holding pptxgenjs)."""
+    node = shutil.which('node')
+    if not node:
+        return False
+    from PIL import Image
+    data, dims = deck_data(), {}
+    def walk(v):  # pixel size of every image, so pptxgenjs can crop to fill without distorting
+        if isinstance(v, dict): [walk(x) for x in v.values()]
+        elif isinstance(v, list): [walk(x) for x in v]
+        elif isinstance(v, str) and v.endswith(('.jpg', '.png')) and v not in dims:
+            dims[v] = Image.open(HERE / v).size
+    walk(data)
+    data['dims'] = dims
+    r = subprocess.run([node, str(HERE / 'build_pptx.js'), str(out)], input=json.dumps(data),
+                       text=True, encoding='utf-8', cwd=HERE, capture_output=True)
+    if r.returncode == 3:
+        return False
+    if r.returncode:
+        sys.exit(r.stderr)
+    return True
+
 # ================================================================ PDF export
 def find_browser():
     cands = [shutil.which(n) for n in ('msedge', 'chrome', 'google-chrome', 'chromium')] + [
@@ -540,6 +587,11 @@ if __name__ == '__main__':
     for f in (HERE / 'assets').glob('*.jpg'):  # drop photos no longer used
         if f.name not in USED:
             f.unlink()
+    if '--no-pptx' not in sys.argv:
+        if to_pptx(HERE / 'VShark-Presentation.pptx'):
+            print('wrote collateral/VShark-Presentation.pptx')
+        else:
+            print('Skipped PowerPoint: needs Node.js and pptxgenjs (npm install pptxgenjs, or set NODE_PATH).')
     if '--no-pdf' in sys.argv:
         sys.exit(0)
     b = find_browser()

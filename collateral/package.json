@@ -1,0 +1,8 @@
+{
+  "name": "vshark-collateral",
+  "private": true,
+  "description": "Only needed for the PowerPoint export: run  npm install --prefix collateral  once.",
+  "dependencies": {
+    "pptxgenjs": "3.12.0"
+  }
+}
