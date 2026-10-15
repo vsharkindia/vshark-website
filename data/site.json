@@ -2,8 +2,16 @@
   "contact": {
     "email": "info@vsharksolutions.com",
     "phones": [
-      { "label": "India", "display": "+91 95142 48525", "tel": "+919514248525" },
-      { "label": "UAE", "display": "+971 52 248 6238", "tel": "+971522486238" }
+      {
+        "label": "India",
+        "display": "+91 95142 48525",
+        "tel": "+919514248525"
+      },
+      {
+        "label": "UAE",
+        "display": "+971 52 248 6238",
+        "tel": "+971522486238"
+      }
     ],
     "whatsapp": "919514248525",
     "address": "",
@@ -13,7 +21,6 @@
       "linkedin": "https://www.linkedin.com/in/vsharkenggsolns/"
     }
   },
-
   "services": [
     {
       "slug": "3d-scanning",
@@ -22,13 +29,36 @@
       "tagline": "Capture any part, product or space as an accurate digital model.",
       "intro": "We scan parts of every size with a range of professional 3D scanners — from small precision components to car bodies and full buildings. The result is a precise digital copy of the physical object, ready for product design, reverse engineering and quality control.",
       "points": [
-        ["High-accuracy capture", "Blue-laser and structured-light scanners record detail down to hundredths of a millimetre."],
-        ["Any size, on site or in-house", "From jewellery to vehicles and plant rooms — we bring the scanner to you when the part can't travel."],
-        ["Clean, usable data", "Scans are aligned, cleaned and merged into watertight meshes, not raw point dumps."],
-        ["Ready for the next step", "Data is prepared for reverse engineering, inspection, printing or visualisation."]
+        [
+          "High-accuracy capture",
+          "Blue-laser and structured-light scanners record detail down to hundredths of a millimetre."
+        ],
+        [
+          "Any size, on site or in-house",
+          "From jewellery to vehicles and plant rooms — we bring the scanner to you when the part can't travel."
+        ],
+        [
+          "Clean, usable data",
+          "Scans are aligned, cleaned and merged into watertight meshes, not raw point dumps."
+        ],
+        [
+          "Ready for the next step",
+          "Data is prepared for reverse engineering, inspection, printing or visualisation."
+        ]
       ],
-      "deliverables": ["Point cloud (.PLY, .TXT)", "Mesh (.STL, .OBJ)", "Colour/texture scans", "Scan report"],
-      "industries": ["aerospace", "automobile", "healthcare", "jewellery", "education"],
+      "deliverables": [
+        "Point cloud (.PLY, .TXT)",
+        "Mesh (.STL, .OBJ)",
+        "Colour/texture scans",
+        "Scan report"
+      ],
+      "industries": [
+        "aerospace",
+        "automobile",
+        "healthcare",
+        "jewellery",
+        "education"
+      ],
       "products": true
     },
     {
@@ -38,13 +68,34 @@
       "tagline": "Turn scan data into fully editable, manufacturable CAD.",
       "intro": "We rebuild physical parts as parametric CAD models — for re-manufacturing legacy parts with no drawings, modifying existing designs, or creating moulds and tooling. You choose how faithful the model should be to the scanned part.",
       "points": [
-        ["Design-intent modelling", "A clean CAD model with manufacturing imperfections removed — ideal for re-manufacture from 3D models or 2D drawings."],
-        ["NURBS surface models", "Precise freeform surfaces fitted over scan data where an exact as-is representation matters."],
-        ["Hybrid modelling", "Prismatic features modelled to design intent, freeform areas surfaced to the scan — the best of both."],
-        ["Drawings on request", "2D manufacturing drawings with GD&T generated from the final model."]
+        [
+          "Design-intent modelling",
+          "A clean CAD model with manufacturing imperfections removed — ideal for re-manufacture from 3D models or 2D drawings."
+        ],
+        [
+          "NURBS surface models",
+          "Precise freeform surfaces fitted over scan data where an exact as-is representation matters."
+        ],
+        [
+          "Hybrid modelling",
+          "Prismatic features modelled to design intent, freeform areas surfaced to the scan — the best of both."
+        ],
+        [
+          "Drawings on request",
+          "2D manufacturing drawings with GD&T generated from the final model."
+        ]
       ],
-      "deliverables": ["Parametric CAD (.STEP, .IGES, .X_T)", "Native SolidWorks / Creo / NX", "2D drawings (.PDF, .DWG)", "Deviation report vs. scan"],
-      "industries": ["automobile", "aerospace", "healthcare"],
+      "deliverables": [
+        "Parametric CAD (.STEP, .IGES, .X_T)",
+        "Native SolidWorks / Creo / NX",
+        "2D drawings (.PDF, .DWG)",
+        "Deviation report vs. scan"
+      ],
+      "industries": [
+        "automobile",
+        "aerospace",
+        "healthcare"
+      ],
       "products": false
     },
     {
@@ -54,13 +105,34 @@
       "tagline": "Existing buildings captured as accurate, intelligent BIM models.",
       "intro": "We laser-scan existing structures and convert the point cloud into detailed BIM models. Architects, engineers and contractors get an accurate as-built foundation for renovation, retrofit and facility-management projects — with every wall, slab, column and service documented.",
       "points": [
-        ["As-built accuracy", "Terrestrial laser scanning records the true geometry of the building, not the original drawings."],
-        ["LOD 200–400 models", "Walls, floors, structure and MEP modelled to the level of detail your project needs."],
-        ["Clash-ready coordination", "Models are set up for coordination with new design work in Revit and Navisworks."],
-        ["Drawings from the model", "Floor plans, sections and elevations exported straight from the BIM."]
+        [
+          "As-built accuracy",
+          "Terrestrial laser scanning records the true geometry of the building, not the original drawings."
+        ],
+        [
+          "LOD 200–400 models",
+          "Walls, floors, structure and MEP modelled to the level of detail your project needs."
+        ],
+        [
+          "Clash-ready coordination",
+          "Models are set up for coordination with new design work in Revit and Navisworks."
+        ],
+        [
+          "Drawings from the model",
+          "Floor plans, sections and elevations exported straight from the BIM."
+        ]
       ],
-      "deliverables": ["Registered point cloud (.E57, .RCP)", "Revit model (.RVT)", "IFC export", "2D plans, sections, elevations"],
-      "industries": ["construction", "education", "healthcare"],
+      "deliverables": [
+        "Registered point cloud (.E57, .RCP)",
+        "Revit model (.RVT)",
+        "IFC export",
+        "2D plans, sections, elevations"
+      ],
+      "industries": [
+        "construction",
+        "education",
+        "healthcare"
+      ],
       "products": false
     },
     {
@@ -70,13 +142,33 @@
       "tagline": "Flawless, curvature-continuous surfaces for visible parts.",
       "intro": "Class A surfaces are the visible skins of a product — car body panels, aircraft fairings, consumer-product housings. We build G2/G3-continuous surfaces with clean patch layouts and verify them with zebra and curvature analysis, so reflections flow without a ripple.",
       "points": [
-        ["G2 / G3 continuity", "Curvature-continuous transitions between every patch for perfect reflections."],
-        ["Analysis-verified", "Zebra stripes, highlight lines and curvature combs checked on every surface."],
-        ["From scan or sketch", "Start from a clay-model scan, a reference surface or concept sketches."],
-        ["Tooling-ready", "Surfaces handed over with draft, flanges and offsets ready for engineering."]
+        [
+          "G2 / G3 continuity",
+          "Curvature-continuous transitions between every patch for perfect reflections."
+        ],
+        [
+          "Analysis-verified",
+          "Zebra stripes, highlight lines and curvature combs checked on every surface."
+        ],
+        [
+          "From scan or sketch",
+          "Start from a clay-model scan, a reference surface or concept sketches."
+        ],
+        [
+          "Tooling-ready",
+          "Surfaces handed over with draft, flanges and offsets ready for engineering."
+        ]
       ],
-      "deliverables": ["Class A surfaces (.IGES, .STEP)", "Native Alias / ICEM models", "Surface-analysis reports", "Render-ready model"],
-      "industries": ["automobile", "aerospace"],
+      "deliverables": [
+        "Class A surfaces (.IGES, .STEP)",
+        "Native Alias / ICEM models",
+        "Surface-analysis reports",
+        "Render-ready model"
+      ],
+      "industries": [
+        "automobile",
+        "aerospace"
+      ],
       "products": false
     },
     {
@@ -86,13 +178,34 @@
       "tagline": "Compare manufactured parts to their CAD — to the micron.",
       "intro": "We inspect manufactured parts by scanning them and comparing the result against the nominal CAD. Colour deviation maps, GD&T checks and first-article reports show exactly where a part is in or out of tolerance — fast, and without contact.",
       "points": [
-        ["Colour deviation maps", "Full-surface comparison against CAD, instantly showing where material is over or under."],
-        ["GD&T inspection", "Flatness, position, profile and more, measured and reported against the drawing."],
-        ["First-article inspection", "Complete FAI reports for new parts, tools and suppliers."],
-        ["Trend analysis", "Repeated inspections track tool wear and process drift over time."]
+        [
+          "Colour deviation maps",
+          "Full-surface comparison against CAD, instantly showing where material is over or under."
+        ],
+        [
+          "GD&T inspection",
+          "Flatness, position, profile and more, measured and reported against the drawing."
+        ],
+        [
+          "First-article inspection",
+          "Complete FAI reports for new parts, tools and suppliers."
+        ],
+        [
+          "Trend analysis",
+          "Repeated inspections track tool wear and process drift over time."
+        ]
       ],
-      "deliverables": ["Inspection report (.PDF)", "Colour deviation maps", "GD&T results tables", "Scan data for records"],
-      "industries": ["aerospace", "automobile", "healthcare"],
+      "deliverables": [
+        "Inspection report (.PDF)",
+        "Colour deviation maps",
+        "GD&T results tables",
+        "Scan data for records"
+      ],
+      "industries": [
+        "aerospace",
+        "automobile",
+        "healthcare"
+      ],
       "products": true
     },
     {
@@ -102,13 +215,35 @@
       "tagline": "Rapid prototypes and functional parts, straight from your model.",
       "intro": "We print prototypes, fit-check models, jigs, fixtures and short-run end-use parts directly from CAD or scan data. Our team also prepares and repairs files — including sculpted character models — so they print right the first time.",
       "points": [
-        ["Rapid prototyping", "Physical parts in days to check form, fit and function before tooling."],
-        ["Functional materials", "Engineering plastics and resins chosen for strength, heat or detail."],
-        ["Print-ready preparation", "Mesh repair, hollowing, supports and orientation handled for you."],
-        ["Character & figure models", "Digitally sculpted busts and figures prepared for high-detail resin printing."]
+        [
+          "Rapid prototyping",
+          "Physical parts in days to check form, fit and function before tooling."
+        ],
+        [
+          "Functional materials",
+          "Engineering plastics and resins chosen for strength, heat or detail."
+        ],
+        [
+          "Print-ready preparation",
+          "Mesh repair, hollowing, supports and orientation handled for you."
+        ],
+        [
+          "Character & figure models",
+          "Digitally sculpted busts and figures prepared for high-detail resin printing."
+        ]
       ],
-      "deliverables": ["Printed parts", "Print-ready files (.STL, .3MF)", "Finishing / painting on request", "Small production batches"],
-      "industries": ["education", "healthcare", "jewellery", "automobile"],
+      "deliverables": [
+        "Printed parts",
+        "Print-ready files (.STL, .3MF)",
+        "Finishing / painting on request",
+        "Small production batches"
+      ],
+      "industries": [
+        "education",
+        "healthcare",
+        "jewellery",
+        "automobile"
+      ],
       "products": false
     },
     {
@@ -118,108 +253,845 @@
       "tagline": "Photoreal visuals that sell a product before it is ever made.",
       "intro": "We turn CAD and design models into photorealistic images and animations for marketing, presentations and design reviews. Materials, lighting and scenes are tuned so your product looks real — and looks its best — before the first unit is built.",
       "points": [
-        ["Photoreal stills", "Studio and lifestyle shots with accurate materials, finishes and lighting."],
-        ["Animations & turntables", "Exploded views, assembly sequences and 360° spins."],
-        ["Interiors & exhibitions", "Spaces, stands and environments visualised before construction."],
-        ["Jewellery visualisation", "Metals and gemstones rendered with true reflections and sparkle."]
+        [
+          "Photoreal stills",
+          "Studio and lifestyle shots with accurate materials, finishes and lighting."
+        ],
+        [
+          "Animations & turntables",
+          "Exploded views, assembly sequences and 360° spins."
+        ],
+        [
+          "Interiors & exhibitions",
+          "Spaces, stands and environments visualised before construction."
+        ],
+        [
+          "Jewellery visualisation",
+          "Metals and gemstones rendered with true reflections and sparkle."
+        ]
       ],
-      "deliverables": ["High-res stills (.PNG, .TIFF)", "Animations (.MP4)", "360° turntables", "Web-ready image sets"],
-      "industries": ["jewellery", "construction", "automobile"],
+      "deliverables": [
+        "High-res stills (.PNG, .TIFF)",
+        "Animations (.MP4)",
+        "360° turntables",
+        "Web-ready image sets"
+      ],
+      "industries": [
+        "jewellery",
+        "construction",
+        "automobile"
+      ],
       "products": false
     }
   ],
-
   "industries": [
-    { "slug": "aerospace", "name": "Aerospace", "image": "img/industries/aerospace.webp",
+    {
+      "slug": "aerospace",
+      "name": "Aerospace",
+      "image": "img/industries/aerospace.webp",
       "line": "Inspection and reverse engineering of high-precision aircraft components.",
-      "intro": "Aerospace parts leave no room for error. We scan, inspect and reverse-engineer turbine components, brackets, ducts and fairings — with the documentation and accuracy the sector demands." },
-    { "slug": "automobile", "name": "Automobile", "image": "img/industries/auto.webp",
+      "intro": "Aerospace parts leave no room for error. We scan, inspect and reverse-engineer turbine components, brackets, ducts and fairings — with the documentation and accuracy the sector demands."
+    },
+    {
+      "slug": "automobile",
+      "name": "Automobile",
+      "image": "img/industries/auto.webp",
       "line": "Body surfacing, part digitising and fixture design for vehicles.",
-      "intro": "From cylinder heads to bumpers and bike frames, we digitise vehicle parts, rebuild them as CAD, create Class A body surfaces and inspect production parts against design." },
-    { "slug": "construction", "name": "Construction", "image": "img/industries/construction.webp",
+      "intro": "From cylinder heads to bumpers and bike frames, we digitise vehicle parts, rebuild them as CAD, create Class A body surfaces and inspect production parts against design."
+    },
+    {
+      "slug": "construction",
+      "name": "Construction",
+      "image": "img/industries/construction.webp",
       "line": "As-built scanning and BIM models for buildings and sites.",
-      "intro": "We capture existing buildings and sites as accurate point clouds and BIM models, and visualise spaces before they are built — so renovation and design start from reality." },
-    { "slug": "healthcare", "name": "Healthcare", "image": "img/industries/hospital.webp",
+      "intro": "We capture existing buildings and sites as accurate point clouds and BIM models, and visualise spaces before they are built — so renovation and design start from reality."
+    },
+    {
+      "slug": "healthcare",
+      "name": "Healthcare",
+      "image": "img/industries/hospital.webp",
       "line": "Medical devices and custom-fit parts captured and modelled in 3D.",
-      "intro": "We scan and model medical devices, wearables and custom-fit products such as eyewear and orthotics, and prototype them quickly for testing and approval." },
-    { "slug": "education", "name": "Education", "image": "img/industries/institute.webp",
+      "intro": "We scan and model medical devices, wearables and custom-fit products such as eyewear and orthotics, and prototype them quickly for testing and approval."
+    },
+    {
+      "slug": "education",
+      "name": "Education",
+      "image": "img/industries/institute.webp",
       "line": "Scanning and 3D printing support for labs, research and teaching.",
-      "intro": "Universities, labs and schools use our scanning, modelling and printing for research projects, teaching aids and digitising collections." },
-    { "slug": "jewellery", "name": "Jewellery", "image": "img/industries/jewelery.webp",
+      "intro": "Universities, labs and schools use our scanning, modelling and printing for research projects, teaching aids and digitising collections."
+    },
+    {
+      "slug": "jewellery",
+      "name": "Jewellery",
+      "image": "img/industries/jewelery.webp",
       "line": "Fine-detail scanning and printing for jewellery design and casting.",
-      "intro": "We capture fine jewellery detail, prepare models for casting and printing, and produce photoreal renders that sell pieces before they are made." }
+      "intro": "We capture fine jewellery detail, prepare models for casting and printing, and produce photoreal renders that sell pieces before they are made."
+    }
   ],
-
   "products": [
     {
-      "slug": "vertex3d", "name": "Vertex3D", "image": "img/products/vertex3d.png",
+      "slug": "vertex3d",
+      "name": "Vertex3D",
+      "image": "img/products/vertex3d.png",
       "type": "Handheld blue-laser 3D scanner",
       "summary": "A fast, lightweight handheld scanner with 26 crossed blue laser lines for everyday industrial scanning.",
-      "figure": "0.020", "unit": "mm precision"
+      "figure": "0.020",
+      "unit": "mm precision"
     },
     {
-      "slug": "vertex3d-pro", "name": "Vertex3D Pro", "image": "img/products/vertex3d-pro.png",
+      "slug": "vertex3d-pro",
+      "name": "Vertex3D Pro",
+      "image": "img/products/vertex3d-pro.png",
       "type": "Handheld blue-laser 3D scanner",
       "summary": "50 crossed blue laser lines and 7.1 million measurements per second for large parts and demanding production work.",
-      "figure": "0.020", "unit": "mm precision"
+      "figure": "0.020",
+      "unit": "mm precision"
     },
     {
-      "slug": "vertex-tracker", "name": "Vertex Tracker", "image": "img/products/vertex-tracker.png",
+      "slug": "vertex-tracker",
+      "name": "Vertex Tracker",
+      "image": "img/products/vertex-tracker.png",
       "type": "Optical-tracking 3D scanning system",
       "summary": "Optical tracking with a 1100 × 800 mm field for large objects up to 8 m — no markers on the part.",
-      "figure": "0.025", "unit": "mm precision"
+      "figure": "0.025",
+      "unit": "mm precision"
     }
   ],
   "productSpecs": [
-    ["High-speed scanning", "26 crossed blue laser lines", "50 crossed blue laser lines", "50 crossed blue laser lines"],
-    ["Precision scanning", "7 blue laser lines", "7 blue laser lines", "7 blue laser lines"],
-    ["Deep-hole scanning", "1 single blue laser line", "1 single blue laser line", "1 single blue laser line"],
-    ["Highest precision", "0.020 mm", "0.020 mm", "0.025 mm"],
-    ["Max. scanning speed", "5,400,000 measurements/s", "7,100,000 measurements/s", "7,100,000 measurements/s"],
-    ["Max. scanning field", "650 × 550 mm", "650 × 550 mm", "1100 × 800 mm"],
-    ["Max. resolution", "0.01 mm", "0.01 mm", "0.01 mm"],
-    ["Volume accuracy", "0.015 mm + 0.035 mm/m", "0.015 mm + 0.035 mm/m", "10.0 m³: 0.060 mm · 25.0 m³: 0.083 mm"],
-    ["Volume accuracy (photogrammetry)", "0.015 mm + 0.025 mm/m", "0.015 mm + 0.025 mm/m", "0.044 mm + 0.012 mm/m"],
-    ["Reference distance", "300 mm (200 mm fine mode)", "300 mm (200 mm fine mode)", "300 mm"],
-    ["Recommended sample size", "> 10 mm", "> 10 mm", "10 mm – 8000 mm"],
-    ["Depth of field", "550 mm", "550 mm", "400 mm (scanner only)"],
-    ["Laser class", "Class II (eye safe)", "Class II (eye safe)", "Class II (eye safe)"],
-    ["Output formats", ".STL, .PLY, .ASC, .TXT", ".STL, .PLY, .ASC, .TXT", ".STL, .PLY, .ASC, .TXT"],
-    ["Interface", "USB 3.0", "USB 3.0", "USB 3.0"],
-    ["Operating temperature", "-10 °C to 40 °C", "-10 °C to 40 °C", "-10 °C to 40 °C"]
+    [
+      "High-speed scanning",
+      "26 crossed blue laser lines",
+      "50 crossed blue laser lines",
+      "50 crossed blue laser lines"
+    ],
+    [
+      "Precision scanning",
+      "7 blue laser lines",
+      "7 blue laser lines",
+      "7 blue laser lines"
+    ],
+    [
+      "Deep-hole scanning",
+      "1 single blue laser line",
+      "1 single blue laser line",
+      "1 single blue laser line"
+    ],
+    [
+      "Highest precision",
+      "0.020 mm",
+      "0.020 mm",
+      "0.025 mm"
+    ],
+    [
+      "Max. scanning speed",
+      "5,400,000 measurements/s",
+      "7,100,000 measurements/s",
+      "7,100,000 measurements/s"
+    ],
+    [
+      "Max. scanning field",
+      "650 × 550 mm",
+      "650 × 550 mm",
+      "1100 × 800 mm"
+    ],
+    [
+      "Max. resolution",
+      "0.01 mm",
+      "0.01 mm",
+      "0.01 mm"
+    ],
+    [
+      "Volume accuracy",
+      "0.015 mm + 0.035 mm/m",
+      "0.015 mm + 0.035 mm/m",
+      "10.0 m³: 0.060 mm · 25.0 m³: 0.083 mm"
+    ],
+    [
+      "Volume accuracy (photogrammetry)",
+      "0.015 mm + 0.025 mm/m",
+      "0.015 mm + 0.025 mm/m",
+      "0.044 mm + 0.012 mm/m"
+    ],
+    [
+      "Reference distance",
+      "300 mm (200 mm fine mode)",
+      "300 mm (200 mm fine mode)",
+      "300 mm"
+    ],
+    [
+      "Recommended sample size",
+      "> 10 mm",
+      "> 10 mm",
+      "10 mm – 8000 mm"
+    ],
+    [
+      "Depth of field",
+      "550 mm",
+      "550 mm",
+      "400 mm (scanner only)"
+    ],
+    [
+      "Laser class",
+      "Class II (eye safe)",
+      "Class II (eye safe)",
+      "Class II (eye safe)"
+    ],
+    [
+      "Output formats",
+      ".STL, .PLY, .ASC, .TXT",
+      ".STL, .PLY, .ASC, .TXT",
+      ".STL, .PLY, .ASC, .TXT"
+    ],
+    [
+      "Interface",
+      "USB 3.0",
+      "USB 3.0",
+      "USB 3.0"
+    ],
+    [
+      "Operating temperature",
+      "-10 °C to 40 °C",
+      "-10 °C to 40 °C",
+      "-10 °C to 40 °C"
+    ]
   ],
   "productPc": "Windows 10 or later (64-bit) · NVIDIA GTX/RTX GPU (e.g. RTX 4060 or higher), 8 GB+ VRAM · Intel Core i7-13700H or better · 32 GB RAM or more",
-
   "projects": [
-    { "slug": "cylinder-head", "title": "Cylinder Head", "kind": "pair", "before": "img/portfolio/scan01.webp", "after": "img/portfolio/cad1-cylinder.webp",
-      "services": ["3d-scanning", "reverse-engineering"], "industries": ["automobile"],
-      "summary": "Engine cylinder head scanned and rebuilt as parametric CAD." },
-    { "slug": "impeller", "title": "Impeller", "kind": "pair", "before": "img/portfolio/scan-impeller.webp", "after": "img/portfolio/cad-impeller.webp",
-      "services": ["3d-scanning", "reverse-engineering"], "industries": ["aerospace"],
-      "summary": "Bladed impeller captured and modelled with precise freeform blade surfaces." },
-    { "slug": "bike-frame", "title": "Bike Frame", "kind": "pair", "before": "img/portfolio/bike-scan.webp", "after": "img/portfolio/bike-cad.webp",
-      "services": ["3d-scanning", "reverse-engineering"], "industries": ["automobile"],
-      "summary": "Motorcycle frame digitised and converted into an editable CAD assembly." },
-    { "slug": "bumper", "title": "Bumper", "kind": "pair", "before": "img/portfolio/bumper-scan.webp", "after": "img/portfolio/bumper-cad.webp",
-      "services": ["3d-scanning", "reverse-engineering", "class-a-surfacing"], "industries": ["automobile"],
-      "summary": "Vehicle bumper scanned and resurfaced for tooling." },
-    { "slug": "pistol-frame", "title": "Pistol Frame", "kind": "pair", "before": "img/portfolio/gun-scan.webp", "after": "img/portfolio/gun-cad.webp",
-      "services": ["3d-scanning", "reverse-engineering"], "industries": [],
-      "summary": "Complex moulded frame captured and remodelled to design intent." },
-    { "slug": "eyewear-frame", "title": "Eyewear Frame", "kind": "gallery", "images": ["img/portfolio/eye-wear1.webp", "img/portfolio/eye-wear2.webp", "img/portfolio/eye-wear3.webp"],
-      "services": ["3d-scanning", "reverse-engineering"], "industries": ["healthcare"],
-      "summary": "Eyewear frame surfaced over scan data for a custom-fit product." },
-    { "slug": "character-sculpts", "title": "Character Sculpts", "kind": "gallery", "images": ["img/portfolio/modelling1.webp", "img/portfolio/modelling2.webp", "img/portfolio/modelling3.webp", "img/portfolio/modelling4.webp", "img/portfolio/modelling5.webp", "img/portfolio/rendeing5.webp"],
-      "services": ["3d-printing"], "industries": [],
-      "summary": "Digitally sculpted busts, figures and characters prepared for high-detail printing." },
-    { "slug": "jewellery-renders", "title": "Jewellery Renders", "kind": "gallery", "images": ["img/portfolio/rendering6.webp", "img/portfolio/rendering5.webp"],
-      "services": ["product-rendering"], "industries": ["jewellery"],
-      "summary": "Rings rendered with true metal reflections and gemstone sparkle." },
-    { "slug": "product-renders", "title": "Product Renders", "kind": "gallery", "images": ["img/portfolio/rendering3.webp", "img/portfolio/rendering4.webp", "img/portfolio/rendering2.webp", "img/portfolio/rendeing1.webp", "img/portfolio/rendeing2.webp"],
-      "services": ["product-rendering"], "industries": [],
-      "summary": "Photoreal product visuals — footwear, electronics and props." },
-    { "slug": "spaces-exhibitions", "title": "Spaces & Exhibitions", "kind": "gallery", "images": ["img/portfolio/rendering1.webp", "img/portfolio/rendeing3.webp"],
-      "services": ["product-rendering"], "industries": ["construction"],
-      "summary": "Exhibition stands and interiors visualised before they are built." }
+    {
+      "slug": "race-car-body",
+      "title": "Prototype Race Car Body",
+      "kind": "pair",
+      "before": "img/portfolio/race-car-body-scan.webp",
+      "after": "img/portfolio/race-car-body-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/race-car-body-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Full body of a prototype race car scanned, rebuilt as CAD and checked against the scan."
+    },
+    {
+      "slug": "cylinder-head",
+      "title": "Engine Cylinder Head",
+      "kind": "pair",
+      "before": "img/portfolio/cylinder-head-scan.webp",
+      "after": "img/portfolio/cylinder-head-cad.webp",
+      "views": [],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Engine cylinder head scanned and rebuilt as parametric CAD."
+    },
+    {
+      "slug": "engine-crankcase",
+      "title": "Engine Crankcase Casting",
+      "kind": "pair",
+      "before": "img/portfolio/engine-crankcase-scan.webp",
+      "after": "img/portfolio/engine-crankcase-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/engine-crankcase-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Complex crankcase casting digitised and remodelled, with a deviation overlay."
+    },
+    {
+      "slug": "motorcycle-fairing",
+      "title": "Motorcycle Front Fairing",
+      "kind": "pair",
+      "before": "img/portfolio/motorcycle-fairing-scan.webp",
+      "after": "img/portfolio/motorcycle-fairing-cad.webp",
+      "views": [
+        [
+          "Scan overlay",
+          "img/portfolio/motorcycle-fairing-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "class-a-surfacing"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Front fairing resurfaced as curvature-continuous Class A surfaces."
+    },
+    {
+      "slug": "uav-wing",
+      "title": "UAV Drone Wing",
+      "kind": "pair",
+      "before": "img/portfolio/uav-wing-scan.webp",
+      "after": "img/portfolio/uav-wing-cad.webp",
+      "views": [
+        [
+          "Scan overlay",
+          "img/portfolio/uav-wing-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "class-a-surfacing"
+      ],
+      "industries": [
+        "aerospace"
+      ],
+      "summary": "Drone wing captured and rebuilt as smooth Class A aerodynamic surfaces."
+    },
+    {
+      "slug": "dashboard",
+      "title": "Car Dashboard",
+      "kind": "pair",
+      "before": "img/portfolio/dashboard-scan.webp",
+      "after": "img/portfolio/dashboard-cad.webp",
+      "views": [
+        [
+          "Scan overlay",
+          "img/portfolio/dashboard-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "class-a-surfacing"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Instrument panel scanned and surfaced to Class A quality for tooling."
+    },
+    {
+      "slug": "key-fob",
+      "title": "Car Key Fob",
+      "kind": "pair",
+      "before": "img/portfolio/key-fob-scan.webp",
+      "after": "img/portfolio/key-fob-cad.webp",
+      "views": [
+        [
+          "Scan overlay",
+          "img/portfolio/key-fob-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "class-a-surfacing"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Small consumer part surfaced with a clean Class A patch layout."
+    },
+    {
+      "slug": "e-bike-frame",
+      "title": "Electric Dirt Bike Frame",
+      "kind": "pair",
+      "before": "img/portfolio/e-bike-frame-scan.webp",
+      "after": "img/portfolio/e-bike-frame-cad.webp",
+      "views": [
+        [
+          "Overlay, angled",
+          "img/portfolio/e-bike-frame-overlay.webp"
+        ],
+        [
+          "Overlay, side",
+          "img/portfolio/e-bike-frame-overlay2.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Whole bike scanned; the frame extracted and rebuilt as editable CAD."
+    },
+    {
+      "slug": "car-body-in-white",
+      "title": "Car Body-in-White",
+      "kind": "pair",
+      "before": "img/portfolio/car-body-in-white-scan.webp",
+      "after": "img/portfolio/car-body-in-white-cad.webp",
+      "views": [],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Complete body-in-white shell digitised and converted to CAD."
+    },
+    {
+      "slug": "roll-cage",
+      "title": "Tubular Roll Cage",
+      "kind": "pair",
+      "before": "img/portfolio/roll-cage-scan.webp",
+      "after": "img/portfolio/roll-cage-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/roll-cage-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Space-frame roll cage captured tube by tube and modelled for fabrication."
+    },
+    {
+      "slug": "truck-chassis",
+      "title": "Truck Chassis Frame",
+      "kind": "pair",
+      "before": "img/portfolio/truck-chassis-scan.webp",
+      "after": "img/portfolio/truck-chassis-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/truck-chassis-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Heavy truck chassis scanned and rebuilt as a CAD assembly."
+    },
+    {
+      "slug": "tractor-underbody",
+      "title": "Tractor Underbody",
+      "kind": "pair",
+      "before": "img/portfolio/tractor-underbody-scan.webp",
+      "after": "img/portfolio/tractor-underbody-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/tractor-underbody-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Tractor underbody digitised for redesign and packaging studies."
+    },
+    {
+      "slug": "pump-volute",
+      "title": "Centrifugal Pump Volute",
+      "kind": "pair",
+      "before": "img/portfolio/pump-volute-scan.webp",
+      "after": "img/portfolio/pump-volute-cad.webp",
+      "views": [],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [],
+      "summary": "Pump volute casing reverse-engineered for re-manufacture."
+    },
+    {
+      "slug": "crusher-liner",
+      "title": "Cone Crusher Liner",
+      "kind": "pair",
+      "before": "img/portfolio/crusher-liner-scan.webp",
+      "after": "img/portfolio/crusher-liner-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/crusher-liner-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [],
+      "summary": "Wear liner scanned and modelled so replacements can be produced."
+    },
+    {
+      "slug": "smartphone-housing",
+      "title": "Smartphone Back Housing",
+      "kind": "pair",
+      "before": "img/portfolio/smartphone-housing-scan.webp",
+      "after": "img/portfolio/smartphone-housing-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/smartphone-housing-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [],
+      "summary": "Thin-walled consumer housing captured and remodelled to design intent."
+    },
+    {
+      "slug": "mold-insert",
+      "title": "Automotive Mold Insert",
+      "kind": "pair",
+      "before": "img/portfolio/mold-insert-scan.webp",
+      "after": "img/portfolio/mold-insert-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/mold-insert-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Mold insert assembly reverse-engineered for tool repair and duplication."
+    },
+    {
+      "slug": "shopping-trolley",
+      "title": "Plastic Shopping Trolley",
+      "kind": "pair",
+      "before": "img/portfolio/shopping-trolley-scan.webp",
+      "after": "img/portfolio/shopping-trolley-cad.webp",
+      "views": [
+        [
+          "Overlay inspection",
+          "img/portfolio/shopping-trolley-overlay.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [],
+      "summary": "Large moulded trolley scanned and rebuilt as production CAD."
+    },
+    {
+      "slug": "impeller",
+      "title": "Impeller",
+      "kind": "pair",
+      "before": "img/portfolio/scan-impeller.webp",
+      "after": "img/portfolio/cad-impeller.webp",
+      "views": [],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "aerospace"
+      ],
+      "summary": "Bladed impeller captured and modelled with precise freeform blade surfaces."
+    },
+    {
+      "slug": "bumper",
+      "title": "Bumper",
+      "kind": "pair",
+      "before": "img/portfolio/bumper-scan.webp",
+      "after": "img/portfolio/bumper-cad.webp",
+      "views": [],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "class-a-surfacing"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Vehicle bumper scanned and resurfaced for tooling."
+    },
+    {
+      "slug": "motorcycle-frame",
+      "title": "Motorcycle Frame",
+      "kind": "pair",
+      "before": "img/portfolio/bike-scan.webp",
+      "after": "img/portfolio/bike-cad.webp",
+      "views": [],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Motorcycle frame digitised and converted into an editable CAD assembly."
+    },
+    {
+      "slug": "pistol-frame",
+      "title": "Pistol Frame",
+      "kind": "pair",
+      "before": "img/portfolio/gun-scan.webp",
+      "after": "img/portfolio/gun-cad.webp",
+      "views": [],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [],
+      "summary": "Complex moulded frame captured and remodelled to design intent."
+    },
+    {
+      "slug": "eyewear-frame",
+      "title": "Eyewear Frame",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/eye-wear1.webp",
+        "img/portfolio/eye-wear2.webp",
+        "img/portfolio/eye-wear3.webp"
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "healthcare"
+      ],
+      "summary": "Eyewear frame surfaced over scan data for a custom-fit product."
+    },
+    {
+      "slug": "pump-room-piping",
+      "title": "Pump Room Piping",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/bim-pump-room.webp"
+      ],
+      "services": [
+        "scan-to-bim",
+        "3d-scanning"
+      ],
+      "industries": [
+        "construction"
+      ],
+      "summary": "Pump room laser-scanned and modelled with piping, equipment and structure.",
+      "badge": "Point cloud → BIM",
+      "fit": "contain"
+    },
+    {
+      "slug": "steel-platform",
+      "title": "Steel Structure Platform",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/bim-steel-platform.webp"
+      ],
+      "services": [
+        "scan-to-bim",
+        "3d-scanning"
+      ],
+      "industries": [
+        "construction"
+      ],
+      "summary": "Point cloud of a steel access platform converted into a structural model.",
+      "badge": "Point cloud → BIM",
+      "fit": "contain"
+    },
+    {
+      "slug": "storage-tank",
+      "title": "Industrial Storage Tank",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/bim-storage-tank.webp"
+      ],
+      "services": [
+        "scan-to-bim",
+        "3d-scanning"
+      ],
+      "industries": [
+        "construction"
+      ],
+      "summary": "Storage tank and supports captured and modelled for retrofit design.",
+      "badge": "Point cloud → BIM",
+      "fit": "contain"
+    },
+    {
+      "slug": "vibrating-screen",
+      "title": "Crusher Plant Vibrating Screen",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/bim-vibrating-screen.webp"
+      ],
+      "services": [
+        "scan-to-bim",
+        "3d-scanning"
+      ],
+      "industries": [
+        "construction"
+      ],
+      "summary": "Crusher-plant screen and supporting structure modelled from the point cloud.",
+      "badge": "Point cloud → BIM",
+      "fit": "contain"
+    },
+    {
+      "slug": "hopper-pump-skid",
+      "title": "Hopper and Pump Skid",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/bim-hopper-pump-skid.webp"
+      ],
+      "services": [
+        "scan-to-bim",
+        "3d-scanning"
+      ],
+      "industries": [
+        "construction"
+      ],
+      "summary": "Hoppers, pumps and piping turned into an as-built BIM model.",
+      "badge": "Point cloud → BIM",
+      "fit": "contain"
+    },
+    {
+      "slug": "heritage-scans",
+      "title": "Idols and Heritage Reliefs",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/heritage-ganesha.webp",
+        "img/portfolio/heritage-gajalakshmi.webp",
+        "img/portfolio/heritage-lakshmi.webp",
+        "img/portfolio/heritage-leaf.webp"
+      ],
+      "services": [
+        "3d-scanning"
+      ],
+      "industries": [],
+      "summary": "Carved idols and reliefs captured with fine surface detail for replication and archiving."
+    },
+    {
+      "slug": "vajra-pendant",
+      "title": "Vajra Pendant",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/pendant-sculpt.webp",
+        "img/portfolio/pendant-casting.webp"
+      ],
+      "services": [
+        "3d-printing"
+      ],
+      "industries": [
+        "jewellery"
+      ],
+      "summary": "Ornate pendant sculpted digitally and prepared for printing and casting."
+    },
+    {
+      "slug": "scale-models",
+      "title": "Scale Vehicle Models",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/model-tow-truck.webp",
+        "img/portfolio/model-utility-truck.webp",
+        "img/portfolio/model-race-car.webp",
+        "img/portfolio/model-hot-rod.webp",
+        "img/portfolio/model-bush-plane.webp"
+      ],
+      "services": [
+        "3d-printing"
+      ],
+      "industries": [],
+      "summary": "Detailed vehicle and aircraft scale models prepared as printable STL files."
+    },
+    {
+      "slug": "character-sculpts",
+      "title": "Character Sculpts",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/sculpt-triceratops.webp",
+        "img/portfolio/sculpt-cherubs.webp",
+        "img/portfolio/sculpt-kangaroo.webp",
+        "img/portfolio/sculpt-cartoon.webp",
+        "img/portfolio/sculpt-game-character.webp",
+        "img/portfolio/modelling5.webp",
+        "img/portfolio/rendeing5.webp"
+      ],
+      "services": [
+        "3d-printing"
+      ],
+      "industries": [],
+      "summary": "Figures, reliefs and characters sculpted digitally for high-detail resin printing."
+    },
+    {
+      "slug": "jewellery-renders",
+      "title": "Jewellery Renders",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/render-sapphire-ring.webp",
+        "img/portfolio/render-ram-ring.webp"
+      ],
+      "services": [
+        "product-rendering"
+      ],
+      "industries": [
+        "jewellery"
+      ],
+      "summary": "Rings rendered with true metal reflections and gemstone sparkle."
+    },
+    {
+      "slug": "product-renders",
+      "title": "Product Renders",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/render-shoe.webp",
+        "img/portfolio/render-camera.webp",
+        "img/portfolio/render-laptop.webp",
+        "img/portfolio/rendeing1.webp",
+        "img/portfolio/rendeing2.webp"
+      ],
+      "services": [
+        "product-rendering"
+      ],
+      "industries": [],
+      "summary": "Photoreal product visuals: footwear, electronics and props."
+    },
+    {
+      "slug": "spaces-exhibitions",
+      "title": "Spaces and Exhibitions",
+      "kind": "gallery",
+      "images": [
+        "img/portfolio/render-exhibition.webp",
+        "img/portfolio/rendeing3.webp"
+      ],
+      "services": [
+        "product-rendering"
+      ],
+      "industries": [
+        "construction"
+      ],
+      "summary": "Exhibition stands and interiors visualised before they are built."
+    }
   ]
 }

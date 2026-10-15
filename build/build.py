@@ -204,11 +204,15 @@ def proj_card(P, p, show_tags=True):
         media = (f'<div class="proj__media proj__media--pair" data-cmp><img src="{P}{p["before"]}" alt="" loading="lazy">'
                  f'<img class="proj__cad" src="{P}{p["after"]}" alt="" loading="lazy"><i class="proj__divider"></i>'
                  f'<span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>')
-        badge = 'Scan → CAD'
-        data = f'data-kind="pair" data-before="{P}{p["before"]}" data-after="{P}{p["after"]}"'
+        nv = len(p.get('views', []))
+        badge = 'Scan → CAD' + (f' · +{nv} view{"s" if nv > 1 else ""}' if nv else '')
+        views = ';;'.join(f'{lab}|{P}{src}' for lab, src in p.get('views', []))
+        data = f'data-kind="pair" data-before="{P}{p["before"]}" data-after="{P}{p["after"]}" data-views="{E(views)}"'
     else:
-        media = f'<div class="proj__media"><img src="{P}{p["images"][0]}" alt="" loading="lazy"></div>'
-        badge = f'{len(p["images"])} images'
+        fit = ' proj__media--contain' if p.get('fit') == 'contain' else ''
+        media = f'<div class="proj__media{fit}"><img src="{P}{p["images"][0]}" alt="" loading="lazy"></div>'
+        n_img = len(p['images'])
+        badge = p.get('badge') or (f'{n_img} images' if n_img > 1 else 'View')
         data = f'data-kind="gallery" data-images="{"|".join(P + i for i in p["images"])}"'
     tags = ''
     if show_tags:
@@ -229,7 +233,7 @@ def proj_section(P, projects, title_html, link_qs):
       <p class="sec-head__sub muted">Project case studies for this area are being added. Ask us for examples relevant to your work.</p></div>
       <a class="sec-head__link" href="{P}portfolio/index.html">Full portfolio {A}</a></div>
     </section>'''
-    cards = '\n'.join(proj_card(P, p, False) for p in projects)
+    cards = '\n'.join(proj_card(P, p, False) for p in projects[:8])
     n = len(projects)
     return f'''    <section class="section blk">
       <div class="sec-head"><div><span class="tag mono">Portfolio · {n} project{'s' if n != 1 else ''}</span><h2 class="h2" data-reveal>{title_html}</h2></div>
@@ -258,7 +262,7 @@ def xnav(P, items, current, folder, label):
 LIGHTBOX = '''    <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project viewer">
       <button class="lb__close" type="button" aria-label="Close">×</button>
       <div class="lb__stage"></div>
-      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__count mono"></span></div>
+      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__views" role="group" aria-label="Views"></span><span class="lb__count mono"></span></div>
       <button class="lb__nav lb__prev" type="button" aria-label="Previous image">‹</button>
       <button class="lb__nav lb__next" type="button" aria-label="Next image">›</button>
     </div>'''
@@ -450,7 +454,7 @@ def portfolio_page():
     used_i = [s for s in D['industries'] if any(s['slug'] in p['industries'] for p in D['projects'])]
     chips = lambda key, items: f'<button class="chip is-on" type="button" data-f="{key}" data-v="">All</button>' + ''.join(f'<button class="chip" type="button" data-f="{key}" data-v="{x["slug"]}">{E(x["name"])}</button>' for x in items)
     cards = '\n'.join(proj_card(P, p) for p in D['projects'])
-    body = f'''{page_hero(P, [("Portfolio", None)], "( 04 ) — Portfolio", "Completed <em>projects.</em>", "A selection of scanning, engineering and visualisation work. Filter by service or industry — drag the slider on Scan → CAD projects to compare.")}
+    body = f'''{page_hero(P, [("Portfolio", None)], "( 04 ) — Portfolio", "Completed <em>projects.</em>", "A selection of scanning, engineering and visualisation work. Filter by service or industry — move the cursor over a Scan → CAD project to compare the scan with the finished model.")}
     <section class="section blk pf">
       <div class="pf__filters" data-reveal>
         <div class="pf__row"><span class="mono muted">Service</span><div class="pf__chips">{chips('service', used_s)}</div></div>

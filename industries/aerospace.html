@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="stylesheet" href="../fonts/fonts.css?v=3ef5b0da">
   <link rel="stylesheet" href="../css/style.css?v=1ec8151d">
-  <link rel="stylesheet" href="../css/pages.css?v=7ba61c54">
+  <link rel="stylesheet" href="../css/pages.css?v=b3bf179f">
 </head>
 <body class="inner">
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
@@ -85,11 +85,18 @@
       </div>
     </section>
     <section class="section blk">
-      <div class="sec-head"><div><span class="tag mono">Portfolio · 1 project</span><h2 class="h2" data-reveal>Aerospace <em>projects.</em></h2></div>
+      <div class="sec-head"><div><span class="tag mono">Portfolio · 2 projects</span><h2 class="h2" data-reveal>Aerospace <em>projects.</em></h2></div>
         <div class="pcar__head" data-reveal><a class="sec-head__link" href="../portfolio/index.html?industry=aerospace">See all <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
       <div class="pcar">
         <div class="pcar__track">
-        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="aerospace" data-kind="pair" data-before="../img/portfolio/scan-impeller.webp" data-after="../img/portfolio/cad-impeller.webp" data-title="Impeller" data-summary="Bladed impeller captured and modelled with precise freeform blade surfaces.">
+        <article class="proj" data-services="3d-scanning class-a-surfacing" data-industries="aerospace" data-kind="pair" data-before="../img/portfolio/uav-wing-scan.webp" data-after="../img/portfolio/uav-wing-cad.webp" data-views="Scan overlay|../img/portfolio/uav-wing-overlay.webp" data-title="UAV Drone Wing" data-summary="Drone wing captured and rebuilt as smooth Class A aerodynamic surfaces.">
+          <button class="proj__open" type="button" aria-label="Open UAV Drone Wing">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/uav-wing-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/uav-wing-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>UAV Drone Wing</b><span>Drone wing captured and rebuilt as smooth Class A aerodynamic surfaces.</span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="aerospace" data-kind="pair" data-before="../img/portfolio/scan-impeller.webp" data-after="../img/portfolio/cad-impeller.webp" data-views="" data-title="Impeller" data-summary="Bladed impeller captured and modelled with precise freeform blade surfaces.">
           <button class="proj__open" type="button" aria-label="Open Impeller">
             <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/scan-impeller.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/cad-impeller.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
             <span class="proj__badge mono">Scan → CAD</span>
@@ -136,7 +143,7 @@
     <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project viewer">
       <button class="lb__close" type="button" aria-label="Close">×</button>
       <div class="lb__stage"></div>
-      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__count mono"></span></div>
+      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__views" role="group" aria-label="Views"></span><span class="lb__count mono"></span></div>
       <button class="lb__nav lb__prev" type="button" aria-label="Previous image">‹</button>
       <button class="lb__nav lb__next" type="button" aria-label="Next image">›</button>
     </div>
@@ -190,7 +197,7 @@
   <script src="../vendor/gsap.min.js?v=47da594c"></script>
   <script src="../vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
   <script src="../vendor/lenis.min.js?v=79e3a064"></script>
-  <script src="../js/portfolio.js?v=490d920b"></script>
+  <script src="../js/portfolio.js?v=b9041b99"></script>
   <script src="../js/main.js?v=67ca3024"></script>
 </body>
 </html>

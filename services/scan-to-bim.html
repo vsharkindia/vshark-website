@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="stylesheet" href="../fonts/fonts.css?v=3ef5b0da">
   <link rel="stylesheet" href="../css/style.css?v=1ec8151d">
-  <link rel="stylesheet" href="../css/pages.css?v=7ba61c54">
+  <link rel="stylesheet" href="../css/pages.css?v=b3bf179f">
 </head>
 <body class="inner">
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
@@ -96,9 +96,48 @@
     </section>
 
     <section class="section blk">
-      <div class="sec-head"><div><span class="tag mono">Portfolio</span><h2 class="h2">Scan to BIM <em>projects.</em></h2>
-      <p class="sec-head__sub muted">Project case studies for this area are being added. Ask us for examples relevant to your work.</p></div>
-      <a class="sec-head__link" href="../portfolio/index.html">Full portfolio <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="sec-head"><div><span class="tag mono">Portfolio · 5 projects</span><h2 class="h2" data-reveal>Scan to BIM <em>projects.</em></h2></div>
+        <div class="pcar__head" data-reveal><a class="sec-head__link" href="../portfolio/index.html?service=scan-to-bim">See all <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
+      <div class="pcar">
+        <div class="pcar__track">
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-pump-room.webp" data-title="Pump Room Piping" data-summary="Pump room laser-scanned and modelled with piping, equipment and structure.">
+          <button class="proj__open" type="button" aria-label="Open Pump Room Piping">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-pump-room.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Pump Room Piping</b><span>Pump room laser-scanned and modelled with piping, equipment and structure.</span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-steel-platform.webp" data-title="Steel Structure Platform" data-summary="Point cloud of a steel access platform converted into a structural model.">
+          <button class="proj__open" type="button" aria-label="Open Steel Structure Platform">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-steel-platform.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Steel Structure Platform</b><span>Point cloud of a steel access platform converted into a structural model.</span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-storage-tank.webp" data-title="Industrial Storage Tank" data-summary="Storage tank and supports captured and modelled for retrofit design.">
+          <button class="proj__open" type="button" aria-label="Open Industrial Storage Tank">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-storage-tank.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Industrial Storage Tank</b><span>Storage tank and supports captured and modelled for retrofit design.</span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-vibrating-screen.webp" data-title="Crusher Plant Vibrating Screen" data-summary="Crusher-plant screen and supporting structure modelled from the point cloud.">
+          <button class="proj__open" type="button" aria-label="Open Crusher Plant Vibrating Screen">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-vibrating-screen.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Crusher Plant Vibrating Screen</b><span>Crusher-plant screen and supporting structure modelled from the point cloud.</span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-hopper-pump-skid.webp" data-title="Hopper and Pump Skid" data-summary="Hoppers, pumps and piping turned into an as-built BIM model.">
+          <button class="proj__open" type="button" aria-label="Open Hopper and Pump Skid">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-hopper-pump-skid.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Hopper and Pump Skid</b><span>Hoppers, pumps and piping turned into an as-built BIM model.</span></span>
+          </button>
+        </article>
+        </div>
+        <div class="pcar__bar" aria-hidden="true"><b></b></div>
+      </div>
     </section>
 
     <section class="section xnav" aria-label="All services">
@@ -140,7 +179,7 @@
     <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project viewer">
       <button class="lb__close" type="button" aria-label="Close">×</button>
       <div class="lb__stage"></div>
-      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__count mono"></span></div>
+      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__views" role="group" aria-label="Views"></span><span class="lb__count mono"></span></div>
       <button class="lb__nav lb__prev" type="button" aria-label="Previous image">‹</button>
       <button class="lb__nav lb__next" type="button" aria-label="Next image">›</button>
     </div>
@@ -194,7 +233,7 @@
   <script src="../vendor/gsap.min.js?v=47da594c"></script>
   <script src="../vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
   <script src="../vendor/lenis.min.js?v=79e3a064"></script>
-  <script src="../js/portfolio.js?v=490d920b"></script>
+  <script src="../js/portfolio.js?v=b9041b99"></script>
   <script src="../js/main.js?v=67ca3024"></script>
 </body>
 </html>

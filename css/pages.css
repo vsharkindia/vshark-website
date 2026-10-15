@@ -255,3 +255,12 @@
 .ccard--wa small { color: rgba(255,255,255,.8); }
 @media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .cform__grid { grid-template-columns: 1fr; } }
+
+/* lightbox view switcher (scan/CAD compare vs overlay inspection images) */
+.lb__views { display: flex; flex-wrap: wrap; gap: 6px; }
+.lb__view { height: 32px; padding: 0 12px; border-radius: 100px; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.85); font-size: 13px; transition: background .25s, border-color .25s, color .25s; }
+.lb__view:hover { border-color: #fff; color: #fff; }
+.lb__view.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.lb__stage > img.lb__flat { width: min(100%, calc((100vh - 190px) * 1.5)); aspect-ratio: 3 / 2; object-fit: contain; background: #f2f2f2; }
+.proj__media--contain { background: #fff; }
+.proj__media--contain img { object-fit: contain; padding: 6px; }

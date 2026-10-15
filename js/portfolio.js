@@ -97,7 +97,7 @@
   /* ---------- lightbox ---------- */
   const lb = $('#lb');
   if (!lb) return;
-  const stage = $('.lb__stage', lb), title = $('.lb__title', lb), sum = $('.lb__sum', lb), count = $('.lb__count', lb);
+  const stage = $('.lb__stage', lb), title = $('.lb__title', lb), sum = $('.lb__sum', lb), count = $('.lb__count', lb), viewsEl = $('.lb__views', lb);
   let imgs = [], idx = 0, lastFocus = null;
 
   function compare(before, after) {
@@ -141,10 +141,30 @@
     const d = card.dataset;
     title.textContent = d.title; sum.textContent = d.summary;
     lb.classList.remove('is-pair', 'is-single');
+    viewsEl.innerHTML = '';
     if (d.kind === 'pair') {
       lb.classList.add('is-pair');
-      stage.innerHTML = ''; stage.appendChild(compare(d.before, d.after));
-      count.textContent = fine ? 'Move the cursor to compare' : 'Drag to compare';
+      const showCompare = () => {
+        stage.innerHTML = ''; stage.appendChild(compare(d.before, d.after));
+        count.textContent = fine ? 'Move the cursor to compare' : 'Drag to compare';
+      };
+      // extra views (overlay inspections) become buttons next to "Scan ⇆ CAD"
+      const views = (d.views || '').split(';;').filter(Boolean).map((v) => v.split('|'));
+      if (views.length) {
+        const all = [['Scan ⇆ CAD', null], ...views];
+        all.forEach(([label, src], k) => {
+          const b = document.createElement('button');
+          b.type = 'button'; b.className = 'lb__view' + (k === 0 ? ' is-on' : ''); b.textContent = label;
+          b.addEventListener('click', () => {
+            $$('.lb__view', viewsEl).forEach((x) => x.classList.toggle('is-on', x === b));
+            if (!src) return showCompare();
+            stage.innerHTML = ''; const im = document.createElement('img'); im.src = src; im.alt = `${d.title} — ${label}`; im.className = 'lb__flat'; stage.appendChild(im);
+            count.textContent = 'Scan data over the CAD model';
+          });
+          viewsEl.appendChild(b);
+        });
+      }
+      showCompare();
     } else {
       imgs = d.images.split('|'); idx = 0;
       if (imgs.length < 2) lb.classList.add('is-single');

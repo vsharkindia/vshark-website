@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="stylesheet" href="../fonts/fonts.css?v=3ef5b0da">
   <link rel="stylesheet" href="../css/style.css?v=1ec8151d">
-  <link rel="stylesheet" href="../css/pages.css?v=7ba61c54">
+  <link rel="stylesheet" href="../css/pages.css?v=b3bf179f">
 </head>
 <body class="inner">
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
@@ -96,15 +96,29 @@
     </section>
 
     <section class="section blk">
-      <div class="sec-head"><div><span class="tag mono">Portfolio · 1 project</span><h2 class="h2" data-reveal>3D Printing <em>projects.</em></h2></div>
+      <div class="sec-head"><div><span class="tag mono">Portfolio · 3 projects</span><h2 class="h2" data-reveal>3D Printing <em>projects.</em></h2></div>
         <div class="pcar__head" data-reveal><a class="sec-head__link" href="../portfolio/index.html?service=3d-printing">See all <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
       <div class="pcar">
         <div class="pcar__track">
-        <article class="proj" data-services="3d-printing" data-industries="" data-kind="gallery" data-images="../img/portfolio/modelling1.webp|../img/portfolio/modelling2.webp|../img/portfolio/modelling3.webp|../img/portfolio/modelling4.webp|../img/portfolio/modelling5.webp|../img/portfolio/rendeing5.webp" data-title="Character Sculpts" data-summary="Digitally sculpted busts, figures and characters prepared for high-detail printing.">
+        <article class="proj" data-services="3d-printing" data-industries="jewellery" data-kind="gallery" data-images="../img/portfolio/pendant-sculpt.webp|../img/portfolio/pendant-casting.webp" data-title="Vajra Pendant" data-summary="Ornate pendant sculpted digitally and prepared for printing and casting.">
+          <button class="proj__open" type="button" aria-label="Open Vajra Pendant">
+            <div class="proj__media"><img src="../img/portfolio/pendant-sculpt.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">2 images</span>
+            <span class="proj__body"><b>Vajra Pendant</b><span>Ornate pendant sculpted digitally and prepared for printing and casting.</span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-printing" data-industries="" data-kind="gallery" data-images="../img/portfolio/model-tow-truck.webp|../img/portfolio/model-utility-truck.webp|../img/portfolio/model-race-car.webp|../img/portfolio/model-hot-rod.webp|../img/portfolio/model-bush-plane.webp" data-title="Scale Vehicle Models" data-summary="Detailed vehicle and aircraft scale models prepared as printable STL files.">
+          <button class="proj__open" type="button" aria-label="Open Scale Vehicle Models">
+            <div class="proj__media"><img src="../img/portfolio/model-tow-truck.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">5 images</span>
+            <span class="proj__body"><b>Scale Vehicle Models</b><span>Detailed vehicle and aircraft scale models prepared as printable STL files.</span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-printing" data-industries="" data-kind="gallery" data-images="../img/portfolio/sculpt-triceratops.webp|../img/portfolio/sculpt-cherubs.webp|../img/portfolio/sculpt-kangaroo.webp|../img/portfolio/sculpt-cartoon.webp|../img/portfolio/sculpt-game-character.webp|../img/portfolio/modelling5.webp|../img/portfolio/rendeing5.webp" data-title="Character Sculpts" data-summary="Figures, reliefs and characters sculpted digitally for high-detail resin printing.">
           <button class="proj__open" type="button" aria-label="Open Character Sculpts">
-            <div class="proj__media"><img src="../img/portfolio/modelling1.webp" alt="" loading="lazy"></div>
-            <span class="proj__badge mono">6 images</span>
-            <span class="proj__body"><b>Character Sculpts</b><span>Digitally sculpted busts, figures and characters prepared for high-detail printing.</span></span>
+            <div class="proj__media"><img src="../img/portfolio/sculpt-triceratops.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">7 images</span>
+            <span class="proj__body"><b>Character Sculpts</b><span>Figures, reliefs and characters sculpted digitally for high-detail resin printing.</span></span>
           </button>
         </article>
         </div>
@@ -151,7 +165,7 @@
     <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project viewer">
       <button class="lb__close" type="button" aria-label="Close">×</button>
       <div class="lb__stage"></div>
-      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__count mono"></span></div>
+      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__views" role="group" aria-label="Views"></span><span class="lb__count mono"></span></div>
       <button class="lb__nav lb__prev" type="button" aria-label="Previous image">‹</button>
       <button class="lb__nav lb__next" type="button" aria-label="Next image">›</button>
     </div>
@@ -205,7 +219,7 @@
   <script src="../vendor/gsap.min.js?v=47da594c"></script>
   <script src="../vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
   <script src="../vendor/lenis.min.js?v=79e3a064"></script>
-  <script src="../js/portfolio.js?v=490d920b"></script>
+  <script src="../js/portfolio.js?v=b9041b99"></script>
   <script src="../js/main.js?v=67ca3024"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="stylesheet" href="../fonts/fonts.css?v=3ef5b0da">
   <link rel="stylesheet" href="../css/style.css?v=1ec8151d">
-  <link rel="stylesheet" href="../css/pages.css?v=7ba61c54">
+  <link rel="stylesheet" href="../css/pages.css?v=b3bf179f">
 </head>
 <body class="inner">
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
@@ -56,46 +56,158 @@
         <div data-in><nav class="crumbs mono" aria-label="Breadcrumb"><a href="../index.html">Home</a> <i>/</i> <span>Portfolio</span></nav></div>
         <span class="tag mono" data-in>( 04 ) — Portfolio</span>
         <h1 class="page-hero__title" data-in>Completed <em>projects.</em></h1>
-        <p class="page-hero__lead" data-in>A selection of scanning, engineering and visualisation work. Filter by service or industry — drag the slider on Scan → CAD projects to compare.</p>
+        <p class="page-hero__lead" data-in>A selection of scanning, engineering and visualisation work. Filter by service or industry — move the cursor over a Scan → CAD project to compare the scan with the finished model.</p>
       </div>
       
     </section>
     <section class="section blk pf">
       <div class="pf__filters" data-reveal>
-        <div class="pf__row"><span class="mono muted">Service</span><div class="pf__chips"><button class="chip is-on" type="button" data-f="service" data-v="">All</button><button class="chip" type="button" data-f="service" data-v="3d-scanning">3D Scanning</button><button class="chip" type="button" data-f="service" data-v="reverse-engineering">Reverse Engineering</button><button class="chip" type="button" data-f="service" data-v="class-a-surfacing">Class A Surfacing</button><button class="chip" type="button" data-f="service" data-v="3d-printing">3D Printing</button><button class="chip" type="button" data-f="service" data-v="product-rendering">Product Rendering</button></div></div>
+        <div class="pf__row"><span class="mono muted">Service</span><div class="pf__chips"><button class="chip is-on" type="button" data-f="service" data-v="">All</button><button class="chip" type="button" data-f="service" data-v="3d-scanning">3D Scanning</button><button class="chip" type="button" data-f="service" data-v="reverse-engineering">Reverse Engineering</button><button class="chip" type="button" data-f="service" data-v="scan-to-bim">Scan to BIM</button><button class="chip" type="button" data-f="service" data-v="class-a-surfacing">Class A Surfacing</button><button class="chip" type="button" data-f="service" data-v="digital-metrology">Digital Metrology</button><button class="chip" type="button" data-f="service" data-v="3d-printing">3D Printing</button><button class="chip" type="button" data-f="service" data-v="product-rendering">Product Rendering</button></div></div>
         <div class="pf__row"><span class="mono muted">Industry</span><div class="pf__chips"><button class="chip is-on" type="button" data-f="industry" data-v="">All</button><button class="chip" type="button" data-f="industry" data-v="aerospace">Aerospace</button><button class="chip" type="button" data-f="industry" data-v="automobile">Automobile</button><button class="chip" type="button" data-f="industry" data-v="construction">Construction</button><button class="chip" type="button" data-f="industry" data-v="healthcare">Healthcare</button><button class="chip" type="button" data-f="industry" data-v="jewellery">Jewellery</button></div></div>
         <span class="pf__count mono" aria-live="polite"></span>
       </div>
       <div class="proj-grid proj-grid--pf" id="pfGrid">
-        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/scan01.webp" data-after="../img/portfolio/cad1-cylinder.webp" data-title="Cylinder Head" data-summary="Engine cylinder head scanned and rebuilt as parametric CAD.">
-          <button class="proj__open" type="button" aria-label="Open Cylinder Head">
-            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/scan01.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/cad1-cylinder.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
-            <span class="proj__badge mono">Scan → CAD</span>
-            <span class="proj__body"><b>Cylinder Head</b><span>Engine cylinder head scanned and rebuilt as parametric CAD.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Automobile</i></span></span>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/race-car-body-scan.webp" data-after="../img/portfolio/race-car-body-cad.webp" data-views="Overlay inspection|../img/portfolio/race-car-body-overlay.webp" data-title="Prototype Race Car Body" data-summary="Full body of a prototype race car scanned, rebuilt as CAD and checked against the scan.">
+          <button class="proj__open" type="button" aria-label="Open Prototype Race Car Body">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/race-car-body-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/race-car-body-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Prototype Race Car Body</b><span>Full body of a prototype race car scanned, rebuilt as CAD and checked against the scan.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i><i>Automobile</i></span></span>
           </button>
         </article>
-        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="aerospace" data-kind="pair" data-before="../img/portfolio/scan-impeller.webp" data-after="../img/portfolio/cad-impeller.webp" data-title="Impeller" data-summary="Bladed impeller captured and modelled with precise freeform blade surfaces.">
+        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/cylinder-head-scan.webp" data-after="../img/portfolio/cylinder-head-cad.webp" data-views="" data-title="Engine Cylinder Head" data-summary="Engine cylinder head scanned and rebuilt as parametric CAD.">
+          <button class="proj__open" type="button" aria-label="Open Engine Cylinder Head">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/cylinder-head-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/cylinder-head-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD</span>
+            <span class="proj__body"><b>Engine Cylinder Head</b><span>Engine cylinder head scanned and rebuilt as parametric CAD.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/engine-crankcase-scan.webp" data-after="../img/portfolio/engine-crankcase-cad.webp" data-views="Overlay inspection|../img/portfolio/engine-crankcase-overlay.webp" data-title="Engine Crankcase Casting" data-summary="Complex crankcase casting digitised and remodelled, with a deviation overlay.">
+          <button class="proj__open" type="button" aria-label="Open Engine Crankcase Casting">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/engine-crankcase-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/engine-crankcase-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Engine Crankcase Casting</b><span>Complex crankcase casting digitised and remodelled, with a deviation overlay.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning class-a-surfacing" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/motorcycle-fairing-scan.webp" data-after="../img/portfolio/motorcycle-fairing-cad.webp" data-views="Scan overlay|../img/portfolio/motorcycle-fairing-overlay.webp" data-title="Motorcycle Front Fairing" data-summary="Front fairing resurfaced as curvature-continuous Class A surfaces.">
+          <button class="proj__open" type="button" aria-label="Open Motorcycle Front Fairing">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/motorcycle-fairing-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/motorcycle-fairing-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Motorcycle Front Fairing</b><span>Front fairing resurfaced as curvature-continuous Class A surfaces.</span><span class="proj__tags"><i>3D Scanning</i><i>Class A Surfacing</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning class-a-surfacing" data-industries="aerospace" data-kind="pair" data-before="../img/portfolio/uav-wing-scan.webp" data-after="../img/portfolio/uav-wing-cad.webp" data-views="Scan overlay|../img/portfolio/uav-wing-overlay.webp" data-title="UAV Drone Wing" data-summary="Drone wing captured and rebuilt as smooth Class A aerodynamic surfaces.">
+          <button class="proj__open" type="button" aria-label="Open UAV Drone Wing">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/uav-wing-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/uav-wing-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>UAV Drone Wing</b><span>Drone wing captured and rebuilt as smooth Class A aerodynamic surfaces.</span><span class="proj__tags"><i>3D Scanning</i><i>Class A Surfacing</i><i>Aerospace</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning class-a-surfacing" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/dashboard-scan.webp" data-after="../img/portfolio/dashboard-cad.webp" data-views="Scan overlay|../img/portfolio/dashboard-overlay.webp" data-title="Car Dashboard" data-summary="Instrument panel scanned and surfaced to Class A quality for tooling.">
+          <button class="proj__open" type="button" aria-label="Open Car Dashboard">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/dashboard-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/dashboard-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Car Dashboard</b><span>Instrument panel scanned and surfaced to Class A quality for tooling.</span><span class="proj__tags"><i>3D Scanning</i><i>Class A Surfacing</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning class-a-surfacing" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/key-fob-scan.webp" data-after="../img/portfolio/key-fob-cad.webp" data-views="Scan overlay|../img/portfolio/key-fob-overlay.webp" data-title="Car Key Fob" data-summary="Small consumer part surfaced with a clean Class A patch layout.">
+          <button class="proj__open" type="button" aria-label="Open Car Key Fob">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/key-fob-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/key-fob-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Car Key Fob</b><span>Small consumer part surfaced with a clean Class A patch layout.</span><span class="proj__tags"><i>3D Scanning</i><i>Class A Surfacing</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/e-bike-frame-scan.webp" data-after="../img/portfolio/e-bike-frame-cad.webp" data-views="Overlay, angled|../img/portfolio/e-bike-frame-overlay.webp;;Overlay, side|../img/portfolio/e-bike-frame-overlay2.webp" data-title="Electric Dirt Bike Frame" data-summary="Whole bike scanned; the frame extracted and rebuilt as editable CAD.">
+          <button class="proj__open" type="button" aria-label="Open Electric Dirt Bike Frame">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/e-bike-frame-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/e-bike-frame-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +2 views</span>
+            <span class="proj__body"><b>Electric Dirt Bike Frame</b><span>Whole bike scanned; the frame extracted and rebuilt as editable CAD.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/car-body-in-white-scan.webp" data-after="../img/portfolio/car-body-in-white-cad.webp" data-views="" data-title="Car Body-in-White" data-summary="Complete body-in-white shell digitised and converted to CAD.">
+          <button class="proj__open" type="button" aria-label="Open Car Body-in-White">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/car-body-in-white-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/car-body-in-white-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD</span>
+            <span class="proj__body"><b>Car Body-in-White</b><span>Complete body-in-white shell digitised and converted to CAD.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/roll-cage-scan.webp" data-after="../img/portfolio/roll-cage-cad.webp" data-views="Overlay inspection|../img/portfolio/roll-cage-overlay.webp" data-title="Tubular Roll Cage" data-summary="Space-frame roll cage captured tube by tube and modelled for fabrication.">
+          <button class="proj__open" type="button" aria-label="Open Tubular Roll Cage">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/roll-cage-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/roll-cage-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Tubular Roll Cage</b><span>Space-frame roll cage captured tube by tube and modelled for fabrication.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/truck-chassis-scan.webp" data-after="../img/portfolio/truck-chassis-cad.webp" data-views="Overlay inspection|../img/portfolio/truck-chassis-overlay.webp" data-title="Truck Chassis Frame" data-summary="Heavy truck chassis scanned and rebuilt as a CAD assembly.">
+          <button class="proj__open" type="button" aria-label="Open Truck Chassis Frame">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/truck-chassis-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/truck-chassis-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Truck Chassis Frame</b><span>Heavy truck chassis scanned and rebuilt as a CAD assembly.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/tractor-underbody-scan.webp" data-after="../img/portfolio/tractor-underbody-cad.webp" data-views="Overlay inspection|../img/portfolio/tractor-underbody-overlay.webp" data-title="Tractor Underbody" data-summary="Tractor underbody digitised for redesign and packaging studies.">
+          <button class="proj__open" type="button" aria-label="Open Tractor Underbody">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/tractor-underbody-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/tractor-underbody-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Tractor Underbody</b><span>Tractor underbody digitised for redesign and packaging studies.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="" data-kind="pair" data-before="../img/portfolio/pump-volute-scan.webp" data-after="../img/portfolio/pump-volute-cad.webp" data-views="" data-title="Centrifugal Pump Volute" data-summary="Pump volute casing reverse-engineered for re-manufacture.">
+          <button class="proj__open" type="button" aria-label="Open Centrifugal Pump Volute">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/pump-volute-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/pump-volute-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD</span>
+            <span class="proj__body"><b>Centrifugal Pump Volute</b><span>Pump volute casing reverse-engineered for re-manufacture.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="" data-kind="pair" data-before="../img/portfolio/crusher-liner-scan.webp" data-after="../img/portfolio/crusher-liner-cad.webp" data-views="Overlay inspection|../img/portfolio/crusher-liner-overlay.webp" data-title="Cone Crusher Liner" data-summary="Wear liner scanned and modelled so replacements can be produced.">
+          <button class="proj__open" type="button" aria-label="Open Cone Crusher Liner">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/crusher-liner-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/crusher-liner-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Cone Crusher Liner</b><span>Wear liner scanned and modelled so replacements can be produced.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="" data-kind="pair" data-before="../img/portfolio/smartphone-housing-scan.webp" data-after="../img/portfolio/smartphone-housing-cad.webp" data-views="Overlay inspection|../img/portfolio/smartphone-housing-overlay.webp" data-title="Smartphone Back Housing" data-summary="Thin-walled consumer housing captured and remodelled to design intent.">
+          <button class="proj__open" type="button" aria-label="Open Smartphone Back Housing">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/smartphone-housing-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/smartphone-housing-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Smartphone Back Housing</b><span>Thin-walled consumer housing captured and remodelled to design intent.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/mold-insert-scan.webp" data-after="../img/portfolio/mold-insert-cad.webp" data-views="Overlay inspection|../img/portfolio/mold-insert-overlay.webp" data-title="Automotive Mold Insert" data-summary="Mold insert assembly reverse-engineered for tool repair and duplication.">
+          <button class="proj__open" type="button" aria-label="Open Automotive Mold Insert">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/mold-insert-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/mold-insert-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Automotive Mold Insert</b><span>Mold insert assembly reverse-engineered for tool repair and duplication.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering digital-metrology" data-industries="" data-kind="pair" data-before="../img/portfolio/shopping-trolley-scan.webp" data-after="../img/portfolio/shopping-trolley-cad.webp" data-views="Overlay inspection|../img/portfolio/shopping-trolley-overlay.webp" data-title="Plastic Shopping Trolley" data-summary="Large moulded trolley scanned and rebuilt as production CAD.">
+          <button class="proj__open" type="button" aria-label="Open Plastic Shopping Trolley">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/shopping-trolley-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/shopping-trolley-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD · +1 view</span>
+            <span class="proj__body"><b>Plastic Shopping Trolley</b><span>Large moulded trolley scanned and rebuilt as production CAD.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Digital Metrology</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="aerospace" data-kind="pair" data-before="../img/portfolio/scan-impeller.webp" data-after="../img/portfolio/cad-impeller.webp" data-views="" data-title="Impeller" data-summary="Bladed impeller captured and modelled with precise freeform blade surfaces.">
           <button class="proj__open" type="button" aria-label="Open Impeller">
             <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/scan-impeller.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/cad-impeller.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
             <span class="proj__badge mono">Scan → CAD</span>
             <span class="proj__body"><b>Impeller</b><span>Bladed impeller captured and modelled with precise freeform blade surfaces.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Aerospace</i></span></span>
           </button>
         </article>
-        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/bike-scan.webp" data-after="../img/portfolio/bike-cad.webp" data-title="Bike Frame" data-summary="Motorcycle frame digitised and converted into an editable CAD assembly.">
-          <button class="proj__open" type="button" aria-label="Open Bike Frame">
-            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/bike-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/bike-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
-            <span class="proj__badge mono">Scan → CAD</span>
-            <span class="proj__body"><b>Bike Frame</b><span>Motorcycle frame digitised and converted into an editable CAD assembly.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Automobile</i></span></span>
-          </button>
-        </article>
-        <article class="proj" data-services="3d-scanning reverse-engineering class-a-surfacing" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/bumper-scan.webp" data-after="../img/portfolio/bumper-cad.webp" data-title="Bumper" data-summary="Vehicle bumper scanned and resurfaced for tooling.">
+        <article class="proj" data-services="3d-scanning reverse-engineering class-a-surfacing" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/bumper-scan.webp" data-after="../img/portfolio/bumper-cad.webp" data-views="" data-title="Bumper" data-summary="Vehicle bumper scanned and resurfaced for tooling.">
           <button class="proj__open" type="button" aria-label="Open Bumper">
             <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/bumper-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/bumper-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
             <span class="proj__badge mono">Scan → CAD</span>
             <span class="proj__body"><b>Bumper</b><span>Vehicle bumper scanned and resurfaced for tooling.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Class A Surfacing</i><i>Automobile</i></span></span>
           </button>
         </article>
-        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="" data-kind="pair" data-before="../img/portfolio/gun-scan.webp" data-after="../img/portfolio/gun-cad.webp" data-title="Pistol Frame" data-summary="Complex moulded frame captured and remodelled to design intent.">
+        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="automobile" data-kind="pair" data-before="../img/portfolio/bike-scan.webp" data-after="../img/portfolio/bike-cad.webp" data-views="" data-title="Motorcycle Frame" data-summary="Motorcycle frame digitised and converted into an editable CAD assembly.">
+          <button class="proj__open" type="button" aria-label="Open Motorcycle Frame">
+            <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/bike-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/bike-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
+            <span class="proj__badge mono">Scan → CAD</span>
+            <span class="proj__body"><b>Motorcycle Frame</b><span>Motorcycle frame digitised and converted into an editable CAD assembly.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Automobile</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning reverse-engineering" data-industries="" data-kind="pair" data-before="../img/portfolio/gun-scan.webp" data-after="../img/portfolio/gun-cad.webp" data-views="" data-title="Pistol Frame" data-summary="Complex moulded frame captured and remodelled to design intent.">
           <button class="proj__open" type="button" aria-label="Open Pistol Frame">
             <div class="proj__media proj__media--pair" data-cmp><img src="../img/portfolio/gun-scan.webp" alt="" loading="lazy"><img class="proj__cad" src="../img/portfolio/gun-cad.webp" alt="" loading="lazy"><i class="proj__divider"></i><span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>
             <span class="proj__badge mono">Scan → CAD</span>
@@ -109,32 +221,88 @@
             <span class="proj__body"><b>Eyewear Frame</b><span>Eyewear frame surfaced over scan data for a custom-fit product.</span><span class="proj__tags"><i>3D Scanning</i><i>Reverse Engineering</i><i>Healthcare</i></span></span>
           </button>
         </article>
-        <article class="proj" data-services="3d-printing" data-industries="" data-kind="gallery" data-images="../img/portfolio/modelling1.webp|../img/portfolio/modelling2.webp|../img/portfolio/modelling3.webp|../img/portfolio/modelling4.webp|../img/portfolio/modelling5.webp|../img/portfolio/rendeing5.webp" data-title="Character Sculpts" data-summary="Digitally sculpted busts, figures and characters prepared for high-detail printing.">
-          <button class="proj__open" type="button" aria-label="Open Character Sculpts">
-            <div class="proj__media"><img src="../img/portfolio/modelling1.webp" alt="" loading="lazy"></div>
-            <span class="proj__badge mono">6 images</span>
-            <span class="proj__body"><b>Character Sculpts</b><span>Digitally sculpted busts, figures and characters prepared for high-detail printing.</span><span class="proj__tags"><i>3D Printing</i></span></span>
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-pump-room.webp" data-title="Pump Room Piping" data-summary="Pump room laser-scanned and modelled with piping, equipment and structure.">
+          <button class="proj__open" type="button" aria-label="Open Pump Room Piping">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-pump-room.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Pump Room Piping</b><span>Pump room laser-scanned and modelled with piping, equipment and structure.</span><span class="proj__tags"><i>Scan to BIM</i><i>3D Scanning</i><i>Construction</i></span></span>
           </button>
         </article>
-        <article class="proj" data-services="product-rendering" data-industries="jewellery" data-kind="gallery" data-images="../img/portfolio/rendering6.webp|../img/portfolio/rendering5.webp" data-title="Jewellery Renders" data-summary="Rings rendered with true metal reflections and gemstone sparkle.">
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-steel-platform.webp" data-title="Steel Structure Platform" data-summary="Point cloud of a steel access platform converted into a structural model.">
+          <button class="proj__open" type="button" aria-label="Open Steel Structure Platform">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-steel-platform.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Steel Structure Platform</b><span>Point cloud of a steel access platform converted into a structural model.</span><span class="proj__tags"><i>Scan to BIM</i><i>3D Scanning</i><i>Construction</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-storage-tank.webp" data-title="Industrial Storage Tank" data-summary="Storage tank and supports captured and modelled for retrofit design.">
+          <button class="proj__open" type="button" aria-label="Open Industrial Storage Tank">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-storage-tank.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Industrial Storage Tank</b><span>Storage tank and supports captured and modelled for retrofit design.</span><span class="proj__tags"><i>Scan to BIM</i><i>3D Scanning</i><i>Construction</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-vibrating-screen.webp" data-title="Crusher Plant Vibrating Screen" data-summary="Crusher-plant screen and supporting structure modelled from the point cloud.">
+          <button class="proj__open" type="button" aria-label="Open Crusher Plant Vibrating Screen">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-vibrating-screen.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Crusher Plant Vibrating Screen</b><span>Crusher-plant screen and supporting structure modelled from the point cloud.</span><span class="proj__tags"><i>Scan to BIM</i><i>3D Scanning</i><i>Construction</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="scan-to-bim 3d-scanning" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/bim-hopper-pump-skid.webp" data-title="Hopper and Pump Skid" data-summary="Hoppers, pumps and piping turned into an as-built BIM model.">
+          <button class="proj__open" type="button" aria-label="Open Hopper and Pump Skid">
+            <div class="proj__media proj__media--contain"><img src="../img/portfolio/bim-hopper-pump-skid.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">Point cloud → BIM</span>
+            <span class="proj__body"><b>Hopper and Pump Skid</b><span>Hoppers, pumps and piping turned into an as-built BIM model.</span><span class="proj__tags"><i>Scan to BIM</i><i>3D Scanning</i><i>Construction</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-scanning" data-industries="" data-kind="gallery" data-images="../img/portfolio/heritage-ganesha.webp|../img/portfolio/heritage-gajalakshmi.webp|../img/portfolio/heritage-lakshmi.webp|../img/portfolio/heritage-leaf.webp" data-title="Idols and Heritage Reliefs" data-summary="Carved idols and reliefs captured with fine surface detail for replication and archiving.">
+          <button class="proj__open" type="button" aria-label="Open Idols and Heritage Reliefs">
+            <div class="proj__media"><img src="../img/portfolio/heritage-ganesha.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">4 images</span>
+            <span class="proj__body"><b>Idols and Heritage Reliefs</b><span>Carved idols and reliefs captured with fine surface detail for replication and archiving.</span><span class="proj__tags"><i>3D Scanning</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-printing" data-industries="jewellery" data-kind="gallery" data-images="../img/portfolio/pendant-sculpt.webp|../img/portfolio/pendant-casting.webp" data-title="Vajra Pendant" data-summary="Ornate pendant sculpted digitally and prepared for printing and casting.">
+          <button class="proj__open" type="button" aria-label="Open Vajra Pendant">
+            <div class="proj__media"><img src="../img/portfolio/pendant-sculpt.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">2 images</span>
+            <span class="proj__body"><b>Vajra Pendant</b><span>Ornate pendant sculpted digitally and prepared for printing and casting.</span><span class="proj__tags"><i>3D Printing</i><i>Jewellery</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-printing" data-industries="" data-kind="gallery" data-images="../img/portfolio/model-tow-truck.webp|../img/portfolio/model-utility-truck.webp|../img/portfolio/model-race-car.webp|../img/portfolio/model-hot-rod.webp|../img/portfolio/model-bush-plane.webp" data-title="Scale Vehicle Models" data-summary="Detailed vehicle and aircraft scale models prepared as printable STL files.">
+          <button class="proj__open" type="button" aria-label="Open Scale Vehicle Models">
+            <div class="proj__media"><img src="../img/portfolio/model-tow-truck.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">5 images</span>
+            <span class="proj__body"><b>Scale Vehicle Models</b><span>Detailed vehicle and aircraft scale models prepared as printable STL files.</span><span class="proj__tags"><i>3D Printing</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="3d-printing" data-industries="" data-kind="gallery" data-images="../img/portfolio/sculpt-triceratops.webp|../img/portfolio/sculpt-cherubs.webp|../img/portfolio/sculpt-kangaroo.webp|../img/portfolio/sculpt-cartoon.webp|../img/portfolio/sculpt-game-character.webp|../img/portfolio/modelling5.webp|../img/portfolio/rendeing5.webp" data-title="Character Sculpts" data-summary="Figures, reliefs and characters sculpted digitally for high-detail resin printing.">
+          <button class="proj__open" type="button" aria-label="Open Character Sculpts">
+            <div class="proj__media"><img src="../img/portfolio/sculpt-triceratops.webp" alt="" loading="lazy"></div>
+            <span class="proj__badge mono">7 images</span>
+            <span class="proj__body"><b>Character Sculpts</b><span>Figures, reliefs and characters sculpted digitally for high-detail resin printing.</span><span class="proj__tags"><i>3D Printing</i></span></span>
+          </button>
+        </article>
+        <article class="proj" data-services="product-rendering" data-industries="jewellery" data-kind="gallery" data-images="../img/portfolio/render-sapphire-ring.webp|../img/portfolio/render-ram-ring.webp" data-title="Jewellery Renders" data-summary="Rings rendered with true metal reflections and gemstone sparkle.">
           <button class="proj__open" type="button" aria-label="Open Jewellery Renders">
-            <div class="proj__media"><img src="../img/portfolio/rendering6.webp" alt="" loading="lazy"></div>
+            <div class="proj__media"><img src="../img/portfolio/render-sapphire-ring.webp" alt="" loading="lazy"></div>
             <span class="proj__badge mono">2 images</span>
             <span class="proj__body"><b>Jewellery Renders</b><span>Rings rendered with true metal reflections and gemstone sparkle.</span><span class="proj__tags"><i>Product Rendering</i><i>Jewellery</i></span></span>
           </button>
         </article>
-        <article class="proj" data-services="product-rendering" data-industries="" data-kind="gallery" data-images="../img/portfolio/rendering3.webp|../img/portfolio/rendering4.webp|../img/portfolio/rendering2.webp|../img/portfolio/rendeing1.webp|../img/portfolio/rendeing2.webp" data-title="Product Renders" data-summary="Photoreal product visuals — footwear, electronics and props.">
+        <article class="proj" data-services="product-rendering" data-industries="" data-kind="gallery" data-images="../img/portfolio/render-shoe.webp|../img/portfolio/render-camera.webp|../img/portfolio/render-laptop.webp|../img/portfolio/rendeing1.webp|../img/portfolio/rendeing2.webp" data-title="Product Renders" data-summary="Photoreal product visuals: footwear, electronics and props.">
           <button class="proj__open" type="button" aria-label="Open Product Renders">
-            <div class="proj__media"><img src="../img/portfolio/rendering3.webp" alt="" loading="lazy"></div>
+            <div class="proj__media"><img src="../img/portfolio/render-shoe.webp" alt="" loading="lazy"></div>
             <span class="proj__badge mono">5 images</span>
-            <span class="proj__body"><b>Product Renders</b><span>Photoreal product visuals — footwear, electronics and props.</span><span class="proj__tags"><i>Product Rendering</i></span></span>
+            <span class="proj__body"><b>Product Renders</b><span>Photoreal product visuals: footwear, electronics and props.</span><span class="proj__tags"><i>Product Rendering</i></span></span>
           </button>
         </article>
-        <article class="proj" data-services="product-rendering" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/rendering1.webp|../img/portfolio/rendeing3.webp" data-title="Spaces &amp; Exhibitions" data-summary="Exhibition stands and interiors visualised before they are built.">
-          <button class="proj__open" type="button" aria-label="Open Spaces &amp; Exhibitions">
-            <div class="proj__media"><img src="../img/portfolio/rendering1.webp" alt="" loading="lazy"></div>
+        <article class="proj" data-services="product-rendering" data-industries="construction" data-kind="gallery" data-images="../img/portfolio/render-exhibition.webp|../img/portfolio/rendeing3.webp" data-title="Spaces and Exhibitions" data-summary="Exhibition stands and interiors visualised before they are built.">
+          <button class="proj__open" type="button" aria-label="Open Spaces and Exhibitions">
+            <div class="proj__media"><img src="../img/portfolio/render-exhibition.webp" alt="" loading="lazy"></div>
             <span class="proj__badge mono">2 images</span>
-            <span class="proj__body"><b>Spaces &amp; Exhibitions</b><span>Exhibition stands and interiors visualised before they are built.</span><span class="proj__tags"><i>Product Rendering</i><i>Construction</i></span></span>
+            <span class="proj__body"><b>Spaces and Exhibitions</b><span>Exhibition stands and interiors visualised before they are built.</span><span class="proj__tags"><i>Product Rendering</i><i>Construction</i></span></span>
           </button>
         </article>
       </div>
@@ -153,7 +321,7 @@
     <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project viewer">
       <button class="lb__close" type="button" aria-label="Close">×</button>
       <div class="lb__stage"></div>
-      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__count mono"></span></div>
+      <div class="lb__cap"><b class="lb__title"></b><span class="lb__sum"></span><span class="lb__views" role="group" aria-label="Views"></span><span class="lb__count mono"></span></div>
       <button class="lb__nav lb__prev" type="button" aria-label="Previous image">‹</button>
       <button class="lb__nav lb__next" type="button" aria-label="Next image">›</button>
     </div>
@@ -207,7 +375,7 @@
   <script src="../vendor/gsap.min.js?v=47da594c"></script>
   <script src="../vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
   <script src="../vendor/lenis.min.js?v=79e3a064"></script>
-  <script src="../js/portfolio.js?v=490d920b"></script>
+  <script src="../js/portfolio.js?v=b9041b99"></script>
   <script src="../js/main.js?v=67ca3024"></script>
 </body>
 </html>
