@@ -35,6 +35,9 @@ ICON = {
  'in': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>',
  'arrow': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
  'down': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+ 'specs': '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
+ 'play': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+ 'file': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M12 12v6M9 15l3 3 3-3"/></svg>',
 }
 A = ICON['arrow']
 wa_link = lambda msg='': f'https://wa.me/{C["whatsapp"]}' + (f'?text={quote(msg)}' if msg else '')
@@ -406,9 +409,59 @@ def industry_page(ind):
 {LIGHTBOX}'''
     return page(P, ind['name'], f"3D scanning and design for {ind['name'].lower()} — {ind['line']}", 'industries', body, ('js/portfolio.js',))
 
+def video_embed(P, url, title):
+    '''YouTube link -> privacy-friendly embed; anything else is treated as a local/hosted video file.'''
+    m = re.search(r'(?:youtu\.be/|youtube\.com/(?:watch\?v=|embed/|shorts/))([\w-]{11})', url)
+    if m:
+        return (f'<iframe src="https://www.youtube-nocookie.com/embed/{m.group(1)}" title="{E(title)} video" loading="lazy" '
+                'allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+    src = url if url.startswith('http') else P + url
+    return f'<video src="{E(src)}" controls preload="metadata" playsinline></video>'
+
+def spec_dialog(P, p, k):
+    '''Popup with one scanner's specifications. Media blocks render only when the data has them.'''
+    col = k + 1
+    groups = ''.join(
+        f'<div class="sd__group"><h3 class="mono">{E(name)}</h3><dl>'
+        + ''.join(f'<div><dt>{E(D["productSpecs"][i][0])}</dt><dd>{E(D["productSpecs"][i][col])}</dd></div>' for i in idx)
+        + '</dl></div>' for name, idx in D['productSpecGroups'])
+    logo = f'<img class="sd__logo" src="{P}{p["logo"]}" alt="{E(p["name"])} logo">' if p.get('logo') else ''
+    media = ''
+    if p.get('video'):
+        media += f'<div class="sd__video">{video_embed(P, p["video"], p["name"])}</div>'
+    if p.get('gallery'):
+        media += '<div class="sd__gallery">' + ''.join(f'<img src="{P}{g}" alt="{E(p["name"])}" loading="lazy">' for g in p['gallery']) + '</div>'
+    if media:
+        media = f'<div class="sd__media">{media}</div>'
+    brochure = (f'<a class="btn btn--ghost" href="{P}{p["brochure"]}" target="_blank" rel="noopener" download>{ICON["file"]}<span>Datasheet (PDF)</span></a>'
+                if p.get('brochure') else '')
+    return f'''    <dialog class="sd" id="spec-{p['slug']}" aria-labelledby="spec-{p['slug']}-title" data-lenis-prevent>
+      <button class="sd__close" type="button" aria-label="Close specifications" data-spec-close>×</button>
+      <div class="sd__panel">
+        <header class="sd__head">
+          <div class="sd__shot"><i class="prod__slash prod__slash--red"></i><img src="{P}{p['image']}" alt="" loading="lazy"></div>
+          <div class="sd__title">
+            {logo}<span class="tag mono">{E(p['type'])}</span>
+            <h2 id="spec-{p['slug']}-title">{E(p['name'])}</h2>
+            <p>{E(p['summary'])}</p>
+            <div class="prod__fig"><b>{E(p['figure'])}</b><span class="mono">{E(p['unit'])}</span></div>
+          </div>
+        </header>
+        {media}
+        <div class="sd__specs">{groups}</div>
+        <p class="sd__pc"><b>Recommended computer</b> {E(D['productPc'])}</p>
+        <footer class="sd__foot">
+          <a class="btn btn--accent" href="{P}contact.html?product={p['slug']}"><span>Request a quote</span>{A}</a>
+          <a class="btn btn--ghost" href="{wa_link('Hi VShark, I would like a demo of the ' + p['name'] + ' scanner.')}" target="_blank" rel="noopener"><span>Book a demo</span></a>
+          {brochure}
+          <span class="sd__note muted">Manufacturer specifications, subject to change.</span>
+        </footer>
+      </div>
+    </dialog>'''
+
 def products_page():
     P = '../'
-    rows = []
+    rows, dialogs = [], []
     for k, p in enumerate(D['products']):
         rows.append(f'''      <article class="prow{' prow--flip' if k % 2 else ''}" id="{p['slug']}">
         <div class="prow__media" data-reveal>
@@ -424,9 +477,11 @@ def products_page():
           <div class="prow__actions">
             <a class="btn btn--accent magnetic" href="{P}contact.html?product={p['slug']}"><span>Request a quote</span>{A}</a>
             <a class="btn btn--ghost magnetic" href="{wa_link('Hi VShark, I would like a demo of the ' + p['name'] + ' scanner.')}" target="_blank" rel="noopener"><span>Book a demo</span></a>
+            <button class="btn btn--link" type="button" data-spec-open="{p['slug']}" aria-haspopup="dialog"><span>Specifications</span>{ICON['specs']}</button>
           </div>
         </div>
       </article>''')
+        dialogs.append(spec_dialog(P, p, k))
     head = ''.join(f'<th scope="col">{E(p["name"])}</th>' for p in D['products'])
     trs = '\n'.join(f'<tr><th scope="row">{E(r[0])}</th>' + ''.join(f'<td>{E(c)}</td>' for c in r[1:]) + '</tr>' for r in D['productSpecs'])
     body = f'''{page_hero(P, [("Products", None)], "( 01 ) — Products", "Professional <em>3D scanners.</em>", "Vertex blue-laser and optical-tracking scanners — sold, set up and supported by VShark's scanning engineers.")}
@@ -445,8 +500,9 @@ def products_page():
       </div>
       <p class="spec-note muted"><b>Recommended computer:</b> {E(D['productPc'])}. Specifications from the manufacturer and subject to change.</p>
     </section>
+{chr(10).join(dialogs)}
 {cta(P, 'Not sure which scanner fits?', 'Send us your parts and use case — we will recommend a model and can arrange a live demo.', 'Hi VShark, please help me choose a 3D scanner.')}'''
-    return page(P, 'Products — 3D Scanners', 'Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners from VShark Solutions — specifications, comparison and quotes.', 'products', body)
+    return page(P, 'Products — 3D Scanners', 'Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners from VShark Solutions — specifications, comparison and quotes.', 'products', body, ('js/products.js',))
 
 def portfolio_page():
     P = '../'

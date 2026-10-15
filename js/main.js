@@ -29,6 +29,7 @@
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
     lenis.stop();
+    window.VSharkLenis = lenis; // page scripts (e.g. product popups) pause scrolling through this
   }
   function scrollTo(target) {
     if (lenis) lenis.scrollTo(target, { offset: 0, duration: 1.4 });

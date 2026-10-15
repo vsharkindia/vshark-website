@@ -336,7 +336,11 @@
       "type": "Handheld blue-laser 3D scanner",
       "summary": "A fast, lightweight handheld scanner with 26 crossed blue laser lines for everyday industrial scanning.",
       "figure": "0.020",
-      "unit": "mm precision"
+      "unit": "mm precision",
+      "logo": "",
+      "gallery": [],
+      "video": "",
+      "brochure": ""
     },
     {
       "slug": "vertex3d-pro",
@@ -345,7 +349,11 @@
       "type": "Handheld blue-laser 3D scanner",
       "summary": "50 crossed blue laser lines and 7.1 million measurements per second for large parts and demanding production work.",
       "figure": "0.020",
-      "unit": "mm precision"
+      "unit": "mm precision",
+      "logo": "",
+      "gallery": [],
+      "video": "",
+      "brochure": ""
     },
     {
       "slug": "vertex-tracker",
@@ -354,7 +362,11 @@
       "type": "Optical-tracking 3D scanning system",
       "summary": "Optical tracking with a 1100 × 800 mm field for large objects up to 8 m — no markers on the part.",
       "figure": "0.025",
-      "unit": "mm precision"
+      "unit": "mm precision",
+      "logo": "",
+      "gallery": [],
+      "video": "",
+      "brochure": ""
     }
   ],
   "productSpecs": [
@@ -1093,5 +1105,43 @@
       ],
       "summary": "Exhibition stands and interiors visualised before they are built."
     }
+  ],
+  "productSpecGroups": [
+    [
+      "Scanning modes",
+      [
+        0,
+        1,
+        2
+      ]
+    ],
+    [
+      "Accuracy",
+      [
+        3,
+        6,
+        7,
+        8
+      ]
+    ],
+    [
+      "Speed and range",
+      [
+        4,
+        5,
+        9,
+        10,
+        11
+      ]
+    ],
+    [
+      "General",
+      [
+        12,
+        13,
+        14,
+        15
+      ]
+    ]
   ]
 }
