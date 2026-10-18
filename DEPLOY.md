@@ -6,7 +6,7 @@ the HTML is generated and committed by the VShark team, so the server only needs
 
 | | |
 |---|---|
-| Repository | https://github.com/kalimuthu4978/vshark-website (private — ask VShark for read access) |
+| Repository | https://github.com/vsharkindia/vshark-website (private — ask VShark for read access) |
 | Branch to deploy | `main` (the new site is under review in pull request #5 and goes to `main` when approved) |
 | Preview of the new site | https://deploy-preview-5--vshark-preview.netlify.app/ |
 | Web root | the repository root (`index.html` at the top level) |
