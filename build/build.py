@@ -85,6 +85,10 @@ META = {
     'contact.html': ('Contact VShark Solutions – Get a Quote | India & UAE',
          'Send your part photos or drawings for a free quote. Call +91 95142 48525 (India) or +971 52 248 6238 (UAE), or WhatsApp us.'),
     'thanks.html': ('Thank you | VShark Solutions', 'Enquiry received.'),
+    'about.html': ('About VShark Solutions – 3D Scanning & Engineering Since 2019',
+         'VShark Solutions is a 3D scanning, reverse engineering and 3D design company based in Coimbatore and Dubai, serving clients across India, the UAE and worldwide since 2019.'),
+    'privacy-policy.html': ('Privacy Policy | VShark Solutions',
+         'How VShark Solutions collects, uses and protects personal data and files shared through our website, WhatsApp and email.'),
 }
 SITE_URL = 'https://www.vsharksolutions.com/'
 
@@ -135,6 +139,7 @@ def header(P, active=''):
       {drop('services', f'{P}services/index.html', 'Services', svc_items, 'All services')}
       {drop('industries', f'{P}industries/index.html', 'Industries', ind_items, 'All industries')}
       {link('portfolio', f'{P}portfolio/index.html', 'Portfolio')}
+      {link('about', f'{P}about.html', 'About')}
       {link('contact', f'{P}contact.html', 'Contact')}
     </nav>
     <a href="{P}contact.html" class="btn btn--sm btn--accent header__cta magnetic"><span>Enquire Now</span></a>
@@ -148,7 +153,8 @@ def header(P, active=''):
       {m(2, f'{P}services/index.html', 'Services')}
       {m(3, f'{P}industries/index.html', 'Industries')}
       {m(4, f'{P}portfolio/index.html', 'Portfolio')}
-      {m(5, f'{P}contact.html', 'Contact')}
+      {m(5, f'{P}about.html', 'About')}
+      {m(6, f'{P}contact.html', 'Contact')}
     </nav>
     <div class="menu__cta">
       <a class="btn btn--accent" href="{P}contact.html"><span>Get a quote</span>{A}</a>
@@ -193,7 +199,7 @@ def footer(P, msg='Hi VShark, I would like to discuss a project.'):
     <div class="footer__big" aria-hidden="true">VSHARK</div>
     <div class="footer__bottom mono">
       <span>© <span id="year">2026</span> VShark Solutions Private Limited</span>
-      <span>All rights reserved</span>
+      <span><a href="{P}about.html">About</a> · <a href="{P}privacy-policy.html">Privacy Policy</a></span>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
@@ -643,6 +649,131 @@ def portfolio_page():
 {LIGHTBOX}'''
     return page(P, 'portfolio/index.html', 'portfolio', body, ('js/portfolio.js',))
 
+def md(text):
+    """Tiny Markdown subset for the policy text: ## headings, **bold**, - lists, paragraphs, line breaks.
+    A bold-only line directly above a list becomes a sub-heading."""
+    text = re.sub(r'<!--.*?-->', '', text, flags=re.S).strip()
+    inline = lambda t: re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', E(t))
+    out = []
+    for block in re.split(r'\n\s*\n', text):
+        lines = block.strip().split('\n')
+        i = 0
+        while i < len(lines):
+            l = lines[i]
+            if l.startswith('## '):
+                out.append(f'<h2>{inline(l[3:])}</h2>'); i += 1
+            elif l.startswith('- '):
+                items = []
+                while i < len(lines) and lines[i].startswith('- '):
+                    items.append(f'<li>{inline(lines[i][2:])}</li>'); i += 1
+                out.append('<ul>' + ''.join(items) + '</ul>')
+            elif re.fullmatch(r'\*\*[^*]+\*\*', l) and i + 1 < len(lines) and lines[i + 1].startswith('- '):
+                out.append(f'<h3>{E(l[2:-2])}</h3>'); i += 1
+            else:
+                para = []
+                while i < len(lines) and not lines[i].startswith(('- ', '## ')):
+                    para.append(inline(lines[i])); i += 1
+                out.append('<p>' + '<br>'.join(para) + '</p>')
+    return '\n'.join(out)
+
+def about_page():
+    P = ''
+    PH = 'img/about/'
+    svc = ''.join(f'<li><a href="services/{s["slug"]}.html"><b>{E(s["name"])}</b><span>{E(t)}</span>{A}</a></li>' for s, t in zip(D['services'], [
+        'High-accuracy blue-laser scanning of parts, castings, vehicles and large objects, at our facility or on site anywhere in India and the UAE.',
+        'Worn, legacy and undocumented parts rebuilt as editable, manufacturable CAD, delivered as STEP and other neutral formats.',
+        # handoff said "built from your point cloud data" — corrected: VShark also laser-scans the site
+        'Buildings and plant rooms laser-scanned on site, or your own point cloud, modelled as accurate Autodesk Revit BIM.',
+        'Smooth, curvature-continuous surfaces for visible automotive and product parts.',
+        'Scan-to-CAD inspection with deviation colour maps and clear reports.',
+        'FDM and SLA prototypes, functional parts, scale models and jewellery masters.',
+        'Photorealistic visuals of products before they are made.',
+    ]))
+    steps = [('Understand the goal', 'A replacement part, an inspection report, a BIM model or a new product. We start with what you need the data for.'),
+             ('Capture accurately', "The right scanner and setup for the part's size, surface and tolerance."),
+             ('Engineer with care', 'Experienced engineers build CAD, surfaces and models with design intent, not just shape.'),
+             ('Prove the result', 'Every model is checked against the scan, and you see the deviation.'),
+             ('Deliver on time', 'In the formats your team and suppliers already use.')]
+    step_html = '\n'.join(f'<li class="step2" data-reveal><i class="mono">{k+1:02d}</i><b>{t}</b><span>{E(d)}</span></li>' for k, (t, d) in enumerate(steps))
+    why = [('One team, end to end', 'Scanning, CAD, inspection, printing and rendering under one roof.'),
+           ('Accuracy you can verify', 'Scan-to-CAD comparisons and reports on every job.'),
+           ('On-site service in India and the UAE', 'We come to your plant, workshop or site.'),
+           ('Confidential by default', 'NDAs on request, with client data and designs kept secure.'),
+           ('Fast response', 'We usually reply within one working day.')]
+    why_html = '\n'.join(f'<div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(d)}</p></div>' for k, (t, d) in enumerate(why))
+    offices = ''.join(f'<div class="ccard ccard--static">{ICON["pin"]}<span><small class="mono">{E(o["label"])}</small>{"<br>".join(E(l) for l in o["lines"])}</span></div>' for o in C['offices'])
+    phones = ''.join(f'<a class="ccard" href="tel:{p["tel"]}">{ICON["phone"]}<span><small class="mono">{E(p["label"])}</small>{E(p["display"])}</span></a>' for p in C['phones'])
+    stats = [('2019', 'In business since'), ('7', 'Countries served'), (str(len(D['services'])), 'Services under one roof'), ('IN · AE', 'On-site service')]
+    stat_html = ''.join(f'<div class="astat" data-reveal><b>{E(a)}</b><span class="mono">{E(l)}</span></div>' for a, l in stats)
+    body = f"""{page_hero(P, [("About", None)], "( 05 ) — About", "We capture reality. <em>Then we engineer it.</em>",
+        "VShark Solutions Private Limited is a 3D scanning and engineering design company based in Coimbatore, India, with a presence in Dubai, UAE. Since 2019, we have helped manufacturers, engineers, designers and builders turn physical objects into accurate, usable digital data, and turn digital designs back into real parts.",
+        PH + 'vshark-engineer-3d-scanning-a-car-body-at-a-customer-workshop.webp', alt='VShark engineer 3D scanning a car body at a customer workshop')}
+
+    <section class="section blk">
+      <p class="lead-lg" data-reveal>Our clients range from automotive and aerospace suppliers to foundries, mining and process plants, construction teams, jewellers and research labs. We have delivered projects for clients in India, the UAE, Saudi Arabia, the USA, the UK, Germany and Canada.</p>
+      <div class="astats">{stat_html}</div>
+    </section>
+
+    <section class="section blk blk--alt">
+      <div class="about-split">
+        <div>
+          <div class="sec-head"><div><span class="tag mono">What we do</span><h2 class="h2" data-reveal>Seven services, <em>one team.</em></h2></div></div>
+          <ul class="alist" data-reveal>{svc}</ul>
+        </div>
+        <figure class="about-fig" data-reveal><img src="{PH}vshark-engineer-laser-scanning-an-aluminium-housing-with-a-portable-measuring-arm.webp" alt="VShark engineer laser scanning an aluminium housing with a portable measuring arm" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <section class="section blk">
+      <div class="dist-block" data-reveal>
+        {DIST_BADGE.replace(' data-in', '')}
+        <div>
+          <h2 class="h2">Scanners we <em>use and sell.</em></h2>
+          <p>We are the authorised distributor of JINUOSH Vertex 3D scanners in India: the Vertex3D, Vertex3D Pro and Vertex Tracker. We use these scanners every day in our own service work, so our advice comes from real projects, not brochures. Every scanner we supply is installed at the customer's site, with hands-on training for their team, and comes with a 12-month warranty.</p>
+          <a class="btn btn--ghost" href="products/index.html"><span>See the scanners</span>{A}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">How we work</span><h2 class="h2" data-reveal>Five steps, <em>proven results.</em></h2></div></div>
+      <ol class="steps2 steps2--5">
+{step_html}
+      </ol>
+    </section>
+
+    <section class="section blk">
+      <div class="about-split about-split--flip">
+        <figure class="about-fig" data-reveal><img src="{PH}handheld-3d-scanning-of-a-car-wheel-arch-on-a-vehicle-lift.webp" alt="Handheld 3D scanning of a car wheel arch on a vehicle lift" loading="lazy"></figure>
+        <div>
+          <div class="sec-head"><div><span class="tag mono">Why VShark</span><h2 class="h2" data-reveal>Why clients <em>choose us.</em></h2></div></div>
+          <div class="feat-grid feat-grid--1">
+{why_html}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">Our locations</span><h2 class="h2" data-reveal>Coimbatore <em>&amp; Dubai.</em></h2></div></div>
+      <div class="aloc" data-reveal>{offices}{phones}<a class="ccard" href="mailto:{C['email']}">{ICON['mail']}<span><small class="mono">Email</small>{C['email']}</span></a></div>
+    </section>
+{cta(P, 'Have a part, a building or an idea?', 'Send us photos or drawings for a free quote — we usually reply within one working day.')}"""
+    return page(P, 'about.html', 'about', body)
+
+def privacy_page():
+    P = ''
+    text = open(os.path.join(ROOT, 'data', 'privacy-policy.md'), encoding='utf-8').read()
+    updated = re.search(r'^Last updated: (.+)$', text, re.M).group(1)
+    text = re.sub(r'^Last updated: .+$', '', text, flags=re.M)
+    body = f"""{page_hero(P, [("Privacy Policy", None)], "Legal", "Privacy <em>Policy.</em>", f"Last updated: {E(updated)}")}
+    <section class="section blk">
+      <div class="prose">
+{md(text)}
+      </div>
+    </section>"""
+    return page(P, 'privacy-policy.html', '', body)
+
 def contact_page():
     P = ''
     svc_opts = ''.join(f'<option value="{E(s["name"])}">{E(s["name"])}</option>' for s in D['services'])
@@ -670,6 +801,8 @@ def contact_page():
             <label class="field field--full"><span>Project details *</span><textarea name="message" rows="5" required placeholder="Part size, material, quantity, deadline, file formats you need…"></textarea></label>
             <label class="field field--full field--file"><span>Attach a file (optional, max 8 MB)</span><input type="file" name="attachment" accept=".pdf,.jpg,.jpeg,.png,.stl,.step,.stp,.zip"></label>
           </div>
+          <label class="consent"><input type="checkbox" name="consent" value="yes" required>
+            <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank">Privacy Policy</a>.</span></label>
           <button class="btn btn--accent magnetic" type="submit"><span>Send enquiry</span>{A}</button>
         </form>
         <aside class="contact__side" data-reveal>
@@ -774,7 +907,9 @@ if __name__ == '__main__':
            write('products/index.html', products_page()),
            write('portfolio/index.html', portfolio_page()),
            write('contact.html', contact_page()),
-           write('thanks.html', thanks_page())]
+           write('thanks.html', thanks_page()),
+           write('about.html', about_page()),
+           write('privacy-policy.html', privacy_page())]
     out += [write(f'services/{s["slug"]}.html', service_page(s)) for s in D['services']]
     out += [write(f'industries/{s["slug"]}.html', industry_page(s)) for s in D['industries']]
     build_home()
