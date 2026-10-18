@@ -41,7 +41,7 @@ PROCESS = [
     ('Capture', 'We scan the part, product or site — in our lab or on location.'),
     ('Process', 'Scans are aligned, cleaned and merged into usable, watertight data.'),
     ('Engineer', 'CAD, Class A surfaces, BIM or inspection built from that data.'),
-    ('Deliver', 'Native files, drawings and reports in the formats your team uses.'),
+    ('Deliver', 'CAD files, drawings and reports in the formats your team uses.'),
 ]
 
 ABOUT = [
@@ -51,14 +51,15 @@ ABOUT = [
     "object to the finished digital deliverable and back again.",
 ]
 
-PAIRS = ['cylinder-head', 'impeller', 'bike-frame', 'bumper']
-VISUALS = [  # (project slug, image index, caption) — picks avoid third-party logos and photos of real people
-    ('product-renders', 4, 'Product rendering'),
-    ('eyewear-frame', 0, 'Eyewear surfacing'),
-    ('jewellery-renders', 1, 'Jewellery rendering'),
-    ('character-sculpts', 5, 'Character sculpts'),
-    ('spaces-exhibitions', 0, 'Exhibition stands'),
+PAIRS = ['cylinder-head', 'impeller', 'motorcycle-frame', 'bumper']
+VISUALS = [  # (project slug, image file, caption) — picks avoid third-party logos and photos of real people
+    ('product-renders', 'rendeing2.webp', 'Product rendering'),
+    ('eyewear-frame', 'eye-wear1.webp', 'Eyewear surfacing'),
+    ('jewellery-renders', 'render-ram-ring.webp', 'Jewellery rendering'),
+    ('character-sculpts', 'rendeing5.webp', 'Character sculpts'),
+    ('spaces-exhibitions', 'render-exhibition.webp', 'Exhibition stands'),
 ]
+VIMG = lambda k, f: next(i for i in PRJ[k]['images'] if i.endswith('/' + f))
 
 USED = set()
 
@@ -198,7 +199,7 @@ def deck():
 </section>''')
     n += 1
 
-    mos = ''.join(f'<figure>{img(PRJ[k]["images"][ix], cap)}<figcaption>{E(cap)}<span>{E(PRJ[k]["summary"])}</span></figcaption></figure>'
+    mos = ''.join(f'<figure>{img(VIMG(k, ix), cap)}<figcaption>{E(cap)}<span>{E(PRJ[k]["summary"])}</span></figcaption></figure>'
                   for k, ix, cap in VISUALS)
     S.append(f'''
 <section class="slide">
@@ -365,7 +366,7 @@ def services_brochure():
         <figure>{img(PRJ[k]['after'], PRJ[k]['title'] + ' CAD')}<figcaption>CAD</figcaption></figure>
         <p><b>{E(PRJ[k]['title'])}</b>{E(PRJ[k]['summary'])}</p>
       </div>''' for k in PAIRS)
-    strip = ''.join(f'<figure>{img(PRJ[k]["images"][ix], cap)}<figcaption>{E(cap)}</figcaption></figure>' for k, ix, cap in VISUALS[:4])
+    strip = ''.join(f'<figure>{img(VIMG(k, ix), cap)}<figcaption>{E(cap)}</figcaption></figure>' for k, ix, cap in VISUALS[:4])
     inds = ''.join(f'<article>{img(d["image"], d["name"])}<div><h3>{E(d["name"])}</h3><p>{E(d["line"])}</p></div></article>' for d in D['industries'])
     prods = ''.join(f'<article>{img(p["image"], p["name"])}<div><h3>{E(p["name"])}</h3><p>{E(p["type"])}</p></div><b>{E(p["figure"])}<small>{E(p["unit"])}</small></b></article>' for p in D['products'])
     qs = ''.join(f'<blockquote class="quote"><p>&ldquo;{E(q)}&rdquo;</p><footer>{E(w)}<span>{E(c)}</span></footer></blockquote>' for q, w, c in (QUOTES[0], QUOTES[2]))
@@ -439,7 +440,7 @@ APPLICATIONS = [
     ('Product design', 'Capture prototypes, clay models and existing parts.'),
     ('Digital archiving', 'Record moulds, tools and heritage objects.'),
 ]
-SCAN_SAMPLES = [('scan01', 'cylinder-head'), ('scan-impeller', 'impeller'), ('bike-scan', 'bike-frame'), ('bumper-scan', 'bumper')]
+SCAN_SAMPLES = ['cylinder-head', 'impeller', 'motorcycle-frame', 'bumper']   # each project's scan image
 
 def spec(label, i):
     return next(r[i + 1] for r in D['productSpecs'] if r[0] == label)
@@ -463,7 +464,7 @@ def scanners_brochure():
         <em>{E(lines)}</em><p>{E(d)}</p></div>'''
         for i, (t, lines, d) in enumerate(SCAN_MODES, 1))
     why = ''.join(f'<div class="why"><span class="mono">{i:02d}</span><b>{E(t)}</b><p>{E(d)}</p></div>' for i, (t, d) in enumerate(WHY_US, 1))
-    samples = ''.join(f'<figure>{img("img/portfolio/" + f + ".webp", PRJ[k]["title"])}<figcaption>{E(PRJ[k]["title"])}</figcaption></figure>' for f, k in SCAN_SAMPLES)
+    samples = ''.join(f'<figure>{img(PRJ[k]["before"], PRJ[k]["title"])}<figcaption>{E(PRJ[k]["title"])}</figcaption></figure>' for k in SCAN_SAMPLES)
     apps = ''.join(f'<div class="app"><b>{E(t)}</b><p>{E(d)}</p></div>' for t, d in APPLICATIONS)
     head = ''.join(f'<th>{E(p["name"])}</th>' for p in D['products'])
     rows = ''.join(f'<tr><th>{E(r[0])}</th>' + ''.join(f'<td>{E(c)}</td>' for c in r[1:]) + '</tr>' for r in D['productSpecs'])
@@ -533,7 +534,7 @@ def deck_data():
         'cover': {'scan': jpeg(pj('cylinder-head')['before']), 'cad': jpeg(pj('cylinder-head')['after'])},
         'pairs': [{'title': pj(k)['title'], 'summary': pj(k)['summary'], 'scan': jpeg(pj(k)['before']), 'cad': jpeg(pj(k)['after'])}
                   for k in PAIRS],
-        'visuals': [{'caption': cap, 'summary': pj(k)['summary'], 'image': jpeg(pj(k)['images'][ix])} for k, ix, cap in VISUALS],
+        'visuals': [{'caption': cap, 'summary': pj(k)['summary'], 'image': jpeg(VIMG(k, ix))} for k, ix, cap in VISUALS],
         'quotes': [{'text': q, 'name': w, 'place': c} for q, w, c in QUOTES],
         'logo': jpeg('img/vshark-logo.png'), 'logoWhite': jpeg('img/vshark-logo-white.png'),
     }
