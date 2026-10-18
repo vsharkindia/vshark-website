@@ -19,14 +19,23 @@
       if (v && $(`.chip[data-f="${k}"][data-v="${CSS.escape(v)}"]`)) state[k] = v;
     });
 
+    // long lists are paged with a "Show more" button (8 at a time on phones, 12 elsewhere)
+    const more = $('.pf__more');
+    const PAGE = window.matchMedia('(max-width: 600px)').matches ? 8 : 12;
+    let limit = PAGE;
+
     function apply(push) {
       let shown = 0;
       cards.forEach((c) => {
         const ok = (!state.service || c.dataset.services.split(' ').includes(state.service)) &&
                    (!state.industry || c.dataset.industries.split(' ').includes(state.industry));
-        c.hidden = !ok;
         if (ok) shown++;
+        c.hidden = !ok || shown > limit;
       });
+      if (more) {
+        more.hidden = shown <= limit;
+        $('span', more).textContent = `Show more projects (${shown - limit})`;
+      }
       $$('.pf__chips .chip').forEach((b) => b.classList.toggle('is-on', state[b.dataset.f] === b.dataset.v));
       countEl.textContent = `${shown} project${shown === 1 ? '' : 's'}`;
       empty.hidden = shown > 0;
@@ -38,8 +47,15 @@
       }
       if (window.ScrollTrigger) ScrollTrigger.refresh();
     }
+    more?.addEventListener('click', () => {
+      const before = new Set(cards.filter((c) => !c.hidden));
+      limit += PAGE;
+      apply(false);
+      if (window.gsap) gsap.fromTo(cards.filter((c) => !c.hidden && !before.has(c)), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out', stagger: 0.04 });
+    });
     $$('.pf__chips .chip').forEach((b) => b.addEventListener('click', () => {
       state[b.dataset.f] = b.dataset.v;
+      limit = PAGE;
       apply(true);
       if (window.gsap) gsap.fromTo(cards.filter((c) => !c.hidden), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out', stagger: 0.04 });
     }));
@@ -97,7 +113,7 @@
   /* ---------- lightbox ---------- */
   const lb = $('#lb');
   if (!lb) return;
-  const stage = $('.lb__stage', lb), title = $('.lb__title', lb), sum = $('.lb__sum', lb), count = $('.lb__count', lb);
+  const stage = $('.lb__stage', lb), title = $('.lb__title', lb), sum = $('.lb__sum', lb), count = $('.lb__count', lb), viewsEl = $('.lb__views', lb);
   let imgs = [], idx = 0, lastFocus = null;
 
   function compare(before, after) {
@@ -141,10 +157,30 @@
     const d = card.dataset;
     title.textContent = d.title; sum.textContent = d.summary;
     lb.classList.remove('is-pair', 'is-single');
+    viewsEl.innerHTML = '';
     if (d.kind === 'pair') {
       lb.classList.add('is-pair');
-      stage.innerHTML = ''; stage.appendChild(compare(d.before, d.after));
-      count.textContent = fine ? 'Move the cursor to compare' : 'Drag to compare';
+      const showCompare = () => {
+        stage.innerHTML = ''; stage.appendChild(compare(d.before, d.after));
+        count.textContent = fine ? 'Move the cursor to compare' : 'Drag to compare';
+      };
+      // extra views (overlay inspections) become buttons next to "Scan ⇆ CAD"
+      const views = (d.views || '').split(';;').filter(Boolean).map((v) => v.split('|'));
+      if (views.length) {
+        const all = [['Scan ⇆ CAD', null], ...views];
+        all.forEach(([label, src], k) => {
+          const b = document.createElement('button');
+          b.type = 'button'; b.className = 'lb__view' + (k === 0 ? ' is-on' : ''); b.textContent = label;
+          b.addEventListener('click', () => {
+            $$('.lb__view', viewsEl).forEach((x) => x.classList.toggle('is-on', x === b));
+            if (!src) return showCompare();
+            stage.innerHTML = ''; const im = document.createElement('img'); im.src = src; im.alt = `${d.title} — ${label}`; im.className = 'lb__flat'; stage.appendChild(im);
+            count.textContent = 'Scan data over the CAD model';
+          });
+          viewsEl.appendChild(b);
+        });
+      }
+      showCompare();
     } else {
       imgs = d.images.split('|'); idx = 0;
       if (imgs.length < 2) lb.classList.add('is-single');
