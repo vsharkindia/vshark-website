@@ -808,6 +808,447 @@
       "summary": "Instrument panel scanned and surfaced to Class A quality for tooling."
     },
     {
+      "slug": "helicopter-fuselage",
+      "title": "Helicopter Fuselage",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-helicopter-fuselage.webp",
+      "after": "img/portfolio/cad-model-of-a-helicopter-fuselage.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-helicopter-fuselage.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "aerospace"
+      ],
+      "summary": "Helicopter fuselage scanned and rebuilt as editable CAD surfaces.",
+      "part": "helicopter fuselage"
+    },
+    {
+      "slug": "large-industrial-fan-impeller",
+      "title": "Large Industrial Fan Impeller",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-large-industrial-fan-impeller.webp",
+      "after": "img/portfolio/cad-model-of-a-large-industrial-fan-impeller.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-large-industrial-fan-impeller.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "industrial"
+      ],
+      "summary": "Large fan impeller digitised and remodelled as editable CAD for re-manufacture.",
+      "part": "large industrial fan impeller"
+    },
+    {
+      "slug": "car-bonnet-hood",
+      "title": "Car Bonnet",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-car-bonnet-hood.webp",
+      "after": "img/portfolio/cad-model-of-a-car-bonnet-hood.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-car-bonnet-hood.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "class-a-surfacing"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Car bonnet scanned and resurfaced as smooth, curvature-continuous Class A surfaces.",
+      "part": "car bonnet hood"
+    },
+    {
+      "slug": "steering-wheel-armature",
+      "title": "Steering Wheel Armature",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-steering-wheel-armature.webp",
+      "after": "img/portfolio/cad-model-of-a-steering-wheel-armature.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-steering-wheel-armature.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Steering wheel armature captured and rebuilt as manufacturable CAD.",
+      "part": "steering wheel armature"
+    },
+    {
+      "slug": "car-accelerator-pedal",
+      "title": "Accelerator Pedal",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-car-accelerator-pedal.webp",
+      "after": "img/portfolio/cad-model-of-a-car-accelerator-pedal.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-car-accelerator-pedal.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Accelerator pedal scanned and modelled as editable CAD.",
+      "part": "car accelerator pedal"
+    },
+    {
+      "slug": "car-front-grille",
+      "title": "Front Grille",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-car-front-grille.webp",
+      "after": "img/portfolio/cad-model-of-a-car-front-grille.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-car-front-grille.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Front grille digitised and rebuilt as editable CAD.",
+      "part": "car front grille"
+    },
+    {
+      "slug": "car-grille-insert",
+      "title": "Grille Insert",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-car-grille-insert.webp",
+      "after": "img/portfolio/cad-model-of-a-car-grille-insert.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-car-grille-insert.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Grille insert captured and remodelled to design intent.",
+      "part": "car grille insert"
+    },
+    {
+      "slug": "automotive-plastic-carrier-panel",
+      "title": "Plastic Carrier Panel",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-automotive-plastic-carrier-panel.webp",
+      "after": "img/portfolio/cad-model-of-a-automotive-plastic-carrier-panel.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-automotive-plastic-carrier-panel.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Moulded plastic carrier panel scanned and rebuilt as production CAD.",
+      "part": "automotive plastic carrier panel"
+    },
+    {
+      "slug": "transmission-lower-housing-casting",
+      "title": "Transmission Lower Housing Casting",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-transmission-lower-housing-casting.webp",
+      "after": "img/portfolio/cad-model-of-a-transmission-lower-housing-casting.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-transmission-lower-housing-casting.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering",
+        "digital-metrology"
+      ],
+      "industries": [
+        "automobile"
+      ],
+      "summary": "Transmission housing casting scanned, modelled and compared against the CAD.",
+      "part": "transmission lower housing casting"
+    },
+    {
+      "slug": "crusher-main-throat",
+      "title": "Crusher Main Throat",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-crusher-main-throat.webp",
+      "after": "img/portfolio/cad-model-of-a-crusher-main-throat.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-crusher-main-throat.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "mining"
+      ],
+      "summary": "Crusher main throat scanned and rebuilt as CAD so replacements can be produced.",
+      "part": "crusher main throat"
+    },
+    {
+      "slug": "electrical-shorting-bus-frame",
+      "title": "Shorting Bus Frame",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-electrical-shorting-bus-frame.webp",
+      "after": "img/portfolio/cad-model-of-a-electrical-shorting-bus-frame.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-electrical-shorting-bus-frame.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "industrial"
+      ],
+      "summary": "Electrical shorting bus frame captured and modelled as editable CAD.",
+      "part": "electrical shorting bus frame"
+    },
+    {
+      "slug": "pump-valve-assembly",
+      "title": "Pump and Valve Assembly",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-pump-valve-assembly.webp",
+      "after": "img/portfolio/cad-model-of-a-pump-valve-assembly.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-pump-valve-assembly.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "oil-gas"
+      ],
+      "summary": "Pump and valve assembly digitised and modelled as editable CAD.",
+      "part": "pump valve assembly"
+    },
+    {
+      "slug": "extruder-screw",
+      "title": "Extruder Screw",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-extruder-screw.webp",
+      "after": "img/portfolio/cad-model-of-a-extruder-screw.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-extruder-screw.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "industrial"
+      ],
+      "summary": "Extruder screw scanned and remodelled as editable CAD.",
+      "part": "extruder screw"
+    },
+    {
+      "slug": "safety-helmet-shell",
+      "title": "Safety Helmet Shell",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-safety-helmet-shell.webp",
+      "after": "img/portfolio/cad-model-of-a-safety-helmet-shell.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-safety-helmet-shell.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "consumer-products"
+      ],
+      "summary": "Safety helmet shell scanned and rebuilt as smooth production CAD.",
+      "part": "safety helmet shell"
+    },
+    {
+      "slug": "plastic-jerry-can",
+      "title": "Plastic Jerry Can",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-plastic-jerry-can.webp",
+      "after": "img/portfolio/cad-model-of-a-plastic-jerry-can.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-plastic-jerry-can.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "consumer-products"
+      ],
+      "summary": "Plastic jerry can captured and rebuilt as production CAD.",
+      "part": "plastic jerry can"
+    },
+    {
+      "slug": "plastic-can-with-handle",
+      "title": "Blow-Moulded Plastic Can",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-plastic-can-with-handle.webp",
+      "after": "img/portfolio/cad-model-of-a-plastic-can-with-handle.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-plastic-can-with-handle.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "consumer-products"
+      ],
+      "summary": "Blow-moulded can with handle scanned and rebuilt as editable CAD.",
+      "part": "plastic can with handle"
+    },
+    {
+      "slug": "vented-plastic-crate",
+      "title": "Vented Plastic Crate",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-vented-plastic-crate.webp",
+      "after": "img/portfolio/cad-model-of-a-vented-plastic-crate.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-vented-plastic-crate.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "consumer-products"
+      ],
+      "summary": "Vented plastic crate digitised and rebuilt as production CAD.",
+      "part": "vented plastic crate"
+    },
+    {
+      "slug": "spa-hot-tub-shell",
+      "title": "Spa Hot Tub Shell",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-spa-hot-tub-shell.webp",
+      "after": "img/portfolio/cad-model-of-a-spa-hot-tub-shell.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-spa-hot-tub-shell.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "consumer-products"
+      ],
+      "summary": "Spa hot tub shell scanned and rebuilt as smooth CAD surfaces.",
+      "part": "spa hot tub shell"
+    },
+    {
+      "slug": "boat-deck",
+      "title": "Boat Deck",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-boat-deck.webp",
+      "after": "img/portfolio/cad-model-of-a-boat-deck.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-boat-deck.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "marine"
+      ],
+      "summary": "Boat deck scanned and modelled as editable CAD.",
+      "part": "boat deck"
+    },
+    {
+      "slug": "luxury-motor-yacht",
+      "title": "Motor Yacht",
+      "kind": "pair",
+      "before": "img/portfolio/3d-scan-of-a-luxury-motor-yacht.webp",
+      "after": "img/portfolio/cad-model-of-a-luxury-motor-yacht.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-luxury-motor-yacht.webp"
+        ]
+      ],
+      "services": [
+        "3d-scanning",
+        "reverse-engineering"
+      ],
+      "industries": [
+        "marine"
+      ],
+      "summary": "Motor yacht hull and superstructure scanned and modelled as CAD.",
+      "part": "luxury motor yacht"
+    },
+    {
       "slug": "key-fob",
       "title": "Car Key Fob",
       "kind": "pair",
@@ -1074,12 +1515,17 @@
       "summary": "Vehicle bumper scanned and resurfaced for tooling."
     },
     {
-      "slug": "motorcycle-frame",
-      "title": "Motorcycle Frame",
+      "slug": "motorcycle-tubular-frame",
+      "title": "Motorcycle Tubular Frame",
       "kind": "pair",
-      "before": "img/portfolio/bike-scan.webp",
-      "after": "img/portfolio/bike-cad.webp",
-      "views": [],
+      "before": "img/portfolio/3d-scan-of-a-motorcycle-tubular-frame.webp",
+      "after": "img/portfolio/cad-model-of-a-motorcycle-tubular-frame.webp",
+      "views": [
+        [
+          "Scan to CAD overlay",
+          "img/portfolio/scan-to-cad-overlay-of-a-motorcycle-tubular-frame.webp"
+        ]
+      ],
       "services": [
         "3d-scanning",
         "reverse-engineering"
@@ -1087,7 +1533,8 @@
       "industries": [
         "automobile"
       ],
-      "summary": "Motorcycle frame digitised and converted into an editable CAD assembly."
+      "summary": "Tubular motorcycle frame digitised and converted into an editable CAD model.",
+      "part": "motorcycle tubular frame"
     },
     {
       "slug": "eyewear-frame",
