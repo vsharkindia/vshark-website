@@ -17,7 +17,8 @@ for p in pages:
         if re.match(r'^(https?:|mailto:|tel:|data:|#$|javascript:)', url):
             continue
         u = urlsplit(url)
-        target = os.path.normpath(os.path.join(os.path.dirname(p), unquote(u.path))) if u.path else os.path.normpath(p)
+        base = ROOT if u.path.startswith('/') else os.path.dirname(p)   # root-relative links (used by 404.html)
+        target = os.path.normpath(os.path.join(base, unquote(u.path).lstrip('/'))) if u.path else os.path.normpath(p)
         if u.path and not os.path.isfile(target):
             bad.append((os.path.relpath(p, ROOT), url, 'missing file'))
         elif u.fragment and target.endswith('.html') and u.fragment not in ids.get(target, set()) and u.fragment != 'top':

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /build/
+Disallow: /data/
+
+Sitemap: https://www.vsharksolutions.com/sitemap.xml

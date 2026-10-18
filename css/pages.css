@@ -393,3 +393,5 @@ html.sd-open { overflow: hidden; }
 .prose li { margin-bottom: 6px; }
 .prose li::marker { color: var(--accent); }
 .prose strong { color: var(--fg); font-weight: 600; }
+#enquiry { scroll-margin-top: 120px; }
+.cform__error { margin-bottom: 18px; padding: 14px 16px; border-radius: 10px; background: rgba(153,27,46,.08); border: 1px solid rgba(153,27,46,.35); color: var(--accent); font-size: 15px; }

@@ -85,6 +85,7 @@ META = {
     'contact.html': ('Contact VShark Solutions – Get a Quote | India & UAE',
          'Send your part photos or drawings for a free quote. Call +91 95142 48525 (India) or +971 52 248 6238 (UAE), or WhatsApp us.'),
     'thanks.html': ('Thank you | VShark Solutions', 'Enquiry received.'),
+    '404.html': ('Page not found | VShark Solutions', 'The page you are looking for has moved or does not exist.'),
     'about.html': ('About VShark Solutions – 3D Scanning & Engineering Since 2019',
          'VShark Solutions is a 3D scanning, reverse engineering and 3D design company based in Coimbatore and Dubai, serving clients across India, the UAE and worldwide since 2019.'),
     'privacy-policy.html': ('Privacy Policy | VShark Solutions',
@@ -788,7 +789,7 @@ def contact_page():
     body = f'''{page_hero(P, [("Contact", None)], "( 06 ) — Contact", "Let's <em>scan it.</em>", "Tell us about your part, building or idea. We usually reply within one working day.")}
     <section class="section blk">
       <div class="contact">
-        <form class="cform" name="enquiry" method="POST" action="thanks.html" data-netlify="true" netlify-honeypot="company_url" enctype="multipart/form-data" data-reveal>
+        <form class="cform" id="enquiry" name="enquiry" method="POST" action="send-enquiry.php" data-netlify="true" netlify-honeypot="company_url" enctype="multipart/form-data" data-reveal>
           <input type="hidden" name="form-name" value="enquiry">
           <p class="cform__hp" aria-hidden="true"><label>Leave empty <input name="company_url" tabindex="-1" autocomplete="off"></label></p>
           <div class="cform__grid">
@@ -821,6 +822,27 @@ def thanks_page():
     body = f'''{page_hero(P, [("Contact", "contact.html"), ("Thank you", None)], "Enquiry sent", "Thank <em>you.</em>", "We have received your message and will get back to you within one working day.")}
     <section class="section blk"><a class="btn btn--accent magnetic" href="index.html"><span>Back to home</span>{A}</a></section>'''
     return page(P, 'thanks.html', 'contact', body)
+
+def notfound_page():
+    P = '/'   # served at any missing URL, so every link is root-relative
+    links = [('Services', 'services/index.html'), ('3D scanners', 'products/index.html'), ('Portfolio', 'portfolio/index.html'), ('Contact', 'contact.html')]
+    chips = ''.join(f'<a class="chip" href="{P}{h}">{E(t)} {A}</a>' for t, h in links)
+    body = f"""{page_hero(P, [("Page not found", None)], "Error 404", "Page not <em>found.</em>", "The page you are looking for has moved or no longer exists. These are good places to continue:")}
+    <section class="section blk"><div class="ind-chips"><div>{chips}</div></div></section>"""
+    return page(P, '404.html', '', body)
+
+def sitemap_and_robots(pages):
+    """sitemap.xml (handoff B6) lists every public page; robots.txt points to it."""
+    today = __import__('datetime').date.today().isoformat()
+    skip = {'thanks.html', '404.html'}
+    urls = ['index.html'] + [r for r in pages if r not in skip]
+    def loc(r):
+        return SITE_URL + ('' if r == 'index.html' else r[:-len('index.html')] if r.endswith('/index.html') else r)
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
+        f'  <url><loc>{loc(r)}</loc><lastmod>{today}</lastmod></url>\n' for r in urls) + '</urlset>\n'
+    open(os.path.join(ROOT, 'sitemap.xml'), 'w', encoding='utf-8', newline='\n').write(xml)
+    robots = f'User-agent: *\nAllow: /\nDisallow: /build/\nDisallow: /data/\n\nSitemap: {SITE_URL}sitemap.xml\n'
+    open(os.path.join(ROOT, 'robots.txt'), 'w', encoding='utf-8', newline='\n').write(robots)
 
 # ---------------------------------------------------------------- homepage regions
 def home_products():
@@ -909,8 +931,10 @@ if __name__ == '__main__':
            write('contact.html', contact_page()),
            write('thanks.html', thanks_page()),
            write('about.html', about_page()),
-           write('privacy-policy.html', privacy_page())]
+           write('privacy-policy.html', privacy_page()),
+           write('404.html', notfound_page())]
     out += [write(f'services/{s["slug"]}.html', service_page(s)) for s in D['services']]
     out += [write(f'industries/{s["slug"]}.html', industry_page(s)) for s in D['industries']]
     build_home()
-    print(f'built {len(out)} pages + index.html')
+    sitemap_and_robots(out)
+    print(f'built {len(out)} pages + index.html, sitemap.xml, robots.txt')
