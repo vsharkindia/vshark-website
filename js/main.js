@@ -97,6 +97,7 @@
       onUpdate: (self) => hero.setScrollProgress(self.progress),
     });
   } else if (tabs.length) {
+    $('.hud')?.remove(); // its readouts are driven by the 3D scene; never show them as static placeholders
     // no WebGL: tabs still highlight on click and auto-cycle
     let ti = 0;
     tabs.forEach((b, k) => b.addEventListener('click', () => { ti = k; setActiveTab(k); }));

@@ -16,16 +16,39 @@
     "whatsapp": "919514248525",
     "address": "",
     "social": {
-      "instagram": "https://www.instagram.com/vshark.in/",
-      "facebook": "https://www.facebook.com/vshark.india",
+      "instagram": "https://www.instagram.com/vshark.solutions/",
+      "facebook": "https://www.facebook.com/vshark.solutions",
       "linkedin": "https://www.linkedin.com/in/vsharkenggsolns/"
-    }
+    },
+    "offices": [
+      {
+        "label": "India",
+        "lines": [
+          "Rajiv Gandhi Nagar, Neelambur",
+          "Coimbatore, Tamil Nadu 641062"
+        ],
+        "street": "Rajiv Gandhi Nagar, Neelambur",
+        "city": "Coimbatore",
+        "region": "Tamil Nadu",
+        "postcode": "641062",
+        "country": "IN"
+      },
+      {
+        "label": "UAE",
+        "lines": [
+          "Dubai, UAE"
+        ],
+        "city": "Dubai",
+        "country": "AE"
+      }
+    ],
+    "map": "Rajiv Gandhi Nagar, Neelambur, Coimbatore, Tamil Nadu 641062"
   },
   "services": [
     {
       "slug": "3d-scanning",
       "name": "3D Scanning",
-      "image": "img/services/01-scanning.webp",
+      "image": "img/services/handheld-3d-laser-scanning-of-an-engine-cylinder-head-4x3.webp",
       "tagline": "Capture any part, product or space as an accurate digital model.",
       "intro": "We scan parts of every size with a range of professional 3D scanners — from small precision components to car bodies and full buildings. The result is a precise digital copy of the physical object, ready for product design, reverse engineering and quality control.",
       "points": [
@@ -81,12 +104,15 @@
           "Can you scan highly polished gold jewellery?",
           "Yes. Reflective surfaces need the right setup, and sometimes a temporary removable matte coating, which we discuss with you before scanning."
         ]
-      ]
+      ],
+      "tile": "img/services/handheld-3d-laser-scanning-of-an-engine-cylinder-head-16x10.webp",
+      "wide": "img/services/handheld-3d-laser-scanning-of-an-engine-cylinder-head-16x9.webp",
+      "alt": "Handheld 3D laser scanning of an engine cylinder head"
     },
     {
       "slug": "reverse-engineering",
       "name": "Reverse Engineering",
-      "image": "img/services/02-reverse-engineering.webp",
+      "image": "img/services/3d-scan-to-cad-reverse-engineering-of-a-motorcycle-tubular-frame-4x3.webp",
       "tagline": "Turn scan data into fully editable, manufacturable CAD.",
       "intro": "We rebuild physical parts as parametric CAD models — for re-manufacturing legacy parts with no drawings, modifying existing designs, or creating moulds and tooling. You choose how faithful the model should be to the scanned part.",
       "points": [
@@ -144,12 +170,15 @@
           "Do you scan on site?",
           "Yes. Large parts and installed equipment can be scanned at your facility in India or the UAE."
         ]
-      ]
+      ],
+      "tile": "img/services/3d-scan-to-cad-reverse-engineering-of-a-motorcycle-tubular-frame-16x10.webp",
+      "wide": "img/services/3d-scan-to-cad-reverse-engineering-of-a-motorcycle-tubular-frame-section-1600.webp",
+      "alt": "3D scan to CAD reverse engineering of a motorcycle tubular frame"
     },
     {
       "slug": "scan-to-bim",
       "name": "Scan to BIM",
-      "image": "img/services/bim.webp",
+      "image": "img/services/terrestrial-laser-scanning-of-an-industrial-pump-room-for-scan-to-bim-4x3.webp",
       "tagline": "Existing buildings captured as accurate, intelligent BIM models.",
       "intro": "We laser-scan existing structures and convert the point cloud into detailed BIM models. Architects, engineers and contractors get an accurate as-built foundation for renovation, retrofit and facility-management projects — with every wall, slab, column and service documented.",
       "points": [
@@ -199,12 +228,15 @@
           "How do you price Scan to BIM?",
           "By area or volume, complexity and LOD. Photos, any existing drawings and a short description of the site (or a sample of your point cloud) are enough for an initial estimate."
         ]
-      ]
+      ],
+      "tile": "img/services/terrestrial-laser-scanning-of-an-industrial-pump-room-for-scan-to-bim-16x10.webp",
+      "wide": "img/services/terrestrial-laser-scanning-of-an-industrial-pump-room-for-scan-to-bim-16x9.webp",
+      "alt": "Terrestrial laser scanning of an industrial pump room for Scan to BIM"
     },
     {
       "slug": "class-a-surfacing",
       "name": "Class A Surfacing",
-      "image": "img/services/class-a.webp",
+      "image": "img/services/class-a-surface-zebra-stripe-analysis-of-a-car-fender-4x3.webp",
       "tagline": "Flawless, curvature-continuous surfaces for visible parts.",
       "intro": "Class A surfaces are the visible skins of a product — car body panels, aircraft fairings, consumer-product housings. We build G2/G3-continuous surfaces with clean patch layouts and verify them with zebra and curvature analysis, so reflections flow without a ripple.",
       "points": [
@@ -248,12 +280,15 @@
           "Which file formats do you deliver?",
           "Neutral formats such as STEP and IGES, which open in CATIA, NX, Alias and other platforms."
         ]
-      ]
+      ],
+      "tile": "img/services/class-a-surface-zebra-stripe-analysis-of-a-car-fender-16x10.webp",
+      "wide": "img/services/class-a-surface-zebra-stripe-analysis-of-a-car-fender-16x9.webp",
+      "alt": "Class A surface zebra stripe analysis of a car fender"
     },
     {
       "slug": "digital-metrology",
       "name": "Digital Metrology",
-      "image": "img/services/digital.webp",
+      "image": "img/services/3d-digital-inspection-deviation-colour-map-of-a-cast-transmission-housing-4x3.webp",
       "tagline": "Compare manufactured parts to their CAD — to the micron.",
       "intro": "We inspect manufactured parts by scanning them and comparing the result against the nominal CAD. Colour deviation maps, GD&T checks and first-article reports show exactly where a part is in or out of tolerance — fast, and without contact.",
       "points": [
@@ -299,12 +334,15 @@
           "How long does a 3D inspection take?",
           "Scanning a typical part takes minutes to an hour. Reporting depends on how many features and GD&T checks you need."
         ]
-      ]
+      ],
+      "tile": "img/services/3d-digital-inspection-deviation-colour-map-of-a-cast-transmission-housing-16x10.webp",
+      "wide": "img/services/3d-digital-inspection-deviation-colour-map-of-a-cast-transmission-housing-16x9.webp",
+      "alt": "3D digital inspection deviation colour map of a cast transmission housing"
     },
     {
       "slug": "3d-printing",
       "name": "3D Printing",
-      "image": "img/services/printing.webp",
+      "image": "img/services/resin-3d-printed-prototype-of-an-engine-crankcase-beside-the-original-casting-4x3.webp",
       "tagline": "Rapid prototypes and functional parts, straight from your model.",
       "intro": "We print prototypes, fit-check models, jigs, fixtures and short-run end-use parts directly from CAD or scan data. Our team also prepares and repairs files — including sculpted character models — so they print right the first time.",
       "points": [
@@ -355,12 +393,17 @@
           "How long does a prototype take?",
           "Small parts can often be printed in a few days. Scanning and CAD work add time depending on complexity. Contact us with details for a timeline."
         ]
-      ]
+      ],
+      "tile": "img/services/resin-3d-printed-prototype-of-an-engine-crankcase-beside-the-original-casting-16x10.webp",
+      "wide": "img/services/resin-3d-printed-prototype-of-an-engine-crankcase-beside-the-original-casting-16x9.webp",
+      "alt": "Resin 3D printed prototype of an engine crankcase beside the original casting",
+      "image2": "img/services/resin-3d-printed-scale-car-aircraft-model-and-pendant-16x10.webp",
+      "alt2": "Resin 3D printed scale car, aircraft model and pendant"
     },
     {
       "slug": "product-rendering",
       "name": "Product Rendering",
-      "image": "img/services/product-rendering.webp",
+      "image": "img/services/product-rendering-of-wireless-earbuds-from-clay-model-to-photorealistic-render-4x3.webp",
       "tagline": "Photoreal visuals that sell a product before it is ever made.",
       "intro": "We turn CAD and design models into photorealistic images and animations for marketing, presentations and design reviews. Materials, lighting and scenes are tuned so your product looks real — and looks its best — before the first unit is built.",
       "points": [
@@ -410,51 +453,72 @@
           "Do you render jewellery?",
           "Yes. Metals and gemstones are rendered with true reflections and sparkle, so pieces can be shown and sold before they are made."
         ]
-      ]
+      ],
+      "tile": "img/services/product-rendering-of-wireless-earbuds-from-clay-model-to-photorealistic-render-16x10.webp",
+      "wide": "img/services/product-rendering-of-wireless-earbuds-from-clay-model-to-photorealistic-render-16x9.webp",
+      "alt": "Product rendering of wireless earbuds from clay model to photorealistic render"
     }
   ],
   "industries": [
     {
       "slug": "aerospace",
       "name": "Aerospace",
-      "image": "img/industries/aerospace.webp",
+      "image": "img/industries/3d-laser-scanning-of-a-jet-engine-fan-blade-in-an-aircraft-hangar.webp",
       "line": "Inspection and reverse engineering of high-precision aircraft components.",
-      "intro": "Aerospace parts leave no room for error. We scan, inspect and reverse-engineer turbine components, brackets, ducts and fairings — with the documentation and accuracy the sector demands."
+      "intro": "Aerospace parts leave no room for error. We scan, inspect and reverse-engineer turbine components, brackets, ducts and fairings — with the documentation and accuracy the sector demands.",
+      "square": "img/industries/3d-laser-scanning-of-a-jet-engine-fan-blade-in-an-aircraft-hangar-1x1.webp",
+      "portrait": "img/industries/3d-laser-scanning-of-a-jet-engine-fan-blade-in-an-aircraft-hangar-4x5.webp",
+      "alt": "3D laser scanning of a jet engine fan blade in an aircraft hangar"
     },
     {
       "slug": "automobile",
       "name": "Automobile",
-      "image": "img/industries/auto.webp",
+      "image": "img/industries/handheld-3d-scanning-of-a-cast-aluminium-engine-block.webp",
       "line": "Body surfacing, part digitising and fixture design for vehicles.",
-      "intro": "From cylinder heads to bumpers and bike frames, we digitise vehicle parts, rebuild them as CAD, create Class A body surfaces and inspect production parts against design."
+      "intro": "From cylinder heads to bumpers and bike frames, we digitise vehicle parts, rebuild them as CAD, create Class A body surfaces and inspect production parts against design.",
+      "square": "img/industries/handheld-3d-scanning-of-a-cast-aluminium-engine-block-1x1.webp",
+      "portrait": "img/industries/handheld-3d-scanning-of-a-cast-aluminium-engine-block-4x5.webp",
+      "alt": "Handheld 3D scanning of a cast aluminium engine block"
     },
     {
       "slug": "construction",
       "name": "Construction",
-      "image": "img/industries/construction.webp",
+      "image": "img/industries/terrestrial-laser-scanning-of-a-building-under-renovation-for-scan-to-bim.webp",
       "line": "As-built scanning and BIM models for buildings and sites.",
-      "intro": "We capture existing buildings and sites as accurate point clouds and BIM models, and visualise spaces before they are built — so renovation and design start from reality."
+      "intro": "We capture existing buildings and sites as accurate point clouds and BIM models, and visualise spaces before they are built — so renovation and design start from reality.",
+      "square": "img/industries/terrestrial-laser-scanning-of-a-building-under-renovation-for-scan-to-bim-1x1.webp",
+      "portrait": "img/industries/terrestrial-laser-scanning-of-a-building-under-renovation-for-scan-to-bim-4x5.webp",
+      "alt": "Terrestrial laser scanning of a building under renovation for Scan to BIM"
     },
     {
       "slug": "healthcare",
       "name": "Healthcare",
-      "image": "img/industries/hospital.webp",
+      "image": "img/industries/3d-scanning-a-leg-cast-to-make-a-custom-3d-printed-orthotic-brace.webp",
       "line": "Medical devices and custom-fit parts captured and modelled in 3D.",
-      "intro": "We scan and model medical devices, wearables and custom-fit products such as eyewear and orthotics, and prototype them quickly for testing and approval."
+      "intro": "We scan and model medical devices, wearables and custom-fit products such as eyewear and orthotics, and prototype them quickly for testing and approval.",
+      "square": "img/industries/3d-scanning-a-leg-cast-to-make-a-custom-3d-printed-orthotic-brace-1x1.webp",
+      "portrait": "img/industries/3d-scanning-a-leg-cast-to-make-a-custom-3d-printed-orthotic-brace-4x5.webp",
+      "alt": "3D scanning a leg cast to make a custom 3D printed orthotic brace"
     },
     {
       "slug": "education",
       "name": "Education",
-      "image": "img/industries/institute.webp",
+      "image": "img/industries/engineering-students-3d-scanning-a-gear-with-a-handheld-3d-scanner.webp",
       "line": "Scanning and 3D printing support for labs, research and teaching.",
-      "intro": "Universities, labs and schools use our scanning, modelling and printing for research projects, teaching aids and digitising collections."
+      "intro": "Universities, labs and schools use our scanning, modelling and printing for research projects, teaching aids and digitising collections.",
+      "square": "img/industries/engineering-students-3d-scanning-a-gear-with-a-handheld-3d-scanner-1x1.webp",
+      "portrait": "img/industries/engineering-students-3d-scanning-a-gear-with-a-handheld-3d-scanner-4x5.webp",
+      "alt": "Engineering students 3D scanning a gear with a handheld 3D scanner"
     },
     {
       "slug": "jewellery",
       "name": "Jewellery",
-      "image": "img/industries/jewelery.webp",
+      "image": "img/industries/gold-temple-pendant-beside-its-3d-printed-resin-casting-pattern.webp",
       "line": "Fine-detail scanning and printing for jewellery design and casting.",
-      "intro": "We capture fine jewellery detail, prepare models for casting and printing, and produce photoreal renders that sell pieces before they are made."
+      "intro": "We capture fine jewellery detail, prepare models for casting and printing, and produce photoreal renders that sell pieces before they are made.",
+      "square": "img/industries/gold-temple-pendant-beside-its-3d-printed-resin-casting-pattern-1x1.webp",
+      "portrait": "img/industries/gold-temple-pendant-beside-its-3d-printed-resin-casting-pattern-4x5.webp",
+      "alt": "Gold temple pendant beside its 3D printed resin casting pattern"
     }
   ],
   "products": [
@@ -883,7 +947,9 @@
         "3d-scanning",
         "reverse-engineering"
       ],
-      "industries": [],
+      "industries": [
+        "industrial"
+      ],
       "summary": "Pump volute casing reverse-engineered for re-manufacture."
     },
     {
@@ -903,7 +969,9 @@
         "reverse-engineering",
         "digital-metrology"
       ],
-      "industries": [],
+      "industries": [
+        "mining"
+      ],
       "summary": "Wear liner scanned and modelled so replacements can be produced."
     },
     {
@@ -923,7 +991,9 @@
         "reverse-engineering",
         "digital-metrology"
       ],
-      "industries": [],
+      "industries": [
+        "consumer-products"
+      ],
       "summary": "Thin-walled consumer housing captured and remodelled to design intent."
     },
     {
@@ -965,7 +1035,9 @@
         "reverse-engineering",
         "digital-metrology"
       ],
-      "industries": [],
+      "industries": [
+        "consumer-products"
+      ],
       "summary": "Large moulded trolley scanned and rebuilt as production CAD."
     },
     {
@@ -1016,20 +1088,6 @@
         "automobile"
       ],
       "summary": "Motorcycle frame digitised and converted into an editable CAD assembly."
-    },
-    {
-      "slug": "pistol-frame",
-      "title": "Pistol Frame",
-      "kind": "pair",
-      "before": "img/portfolio/gun-scan.webp",
-      "after": "img/portfolio/gun-cad.webp",
-      "views": [],
-      "services": [
-        "3d-scanning",
-        "reverse-engineering"
-      ],
-      "industries": [],
-      "summary": "Complex moulded frame captured and remodelled to design intent."
     },
     {
       "slug": "eyewear-frame",
@@ -1115,7 +1173,8 @@
         "3d-scanning"
       ],
       "industries": [
-        "construction"
+        "construction",
+        "mining"
       ],
       "summary": "Crusher-plant screen and supporting structure modelled from the point cloud.",
       "badge": "Point cloud → BIM",
@@ -1152,7 +1211,10 @@
       "services": [
         "3d-scanning"
       ],
-      "industries": [],
+      "industries": [
+        "jewellery",
+        "education"
+      ],
       "summary": "Carved idols and reliefs captured with fine surface detail for replication and archiving."
     },
     {
@@ -1185,7 +1247,9 @@
       "services": [
         "3d-printing"
       ],
-      "industries": [],
+      "industries": [
+        "consumer-products"
+      ],
       "summary": "Detailed vehicle and aircraft scale models prepared as printable STL files."
     },
     {
@@ -1196,16 +1260,15 @@
         "img/portfolio/sculpt-triceratops.webp",
         "img/portfolio/sculpt-cherubs.webp",
         "img/portfolio/sculpt-kangaroo.webp",
-        "img/portfolio/sculpt-cartoon.webp",
-        "img/portfolio/sculpt-game-character.webp",
-        "img/portfolio/modelling5.webp",
         "img/portfolio/rendeing5.webp"
       ],
       "services": [
         "3d-printing"
       ],
-      "industries": [],
-      "summary": "Figures, reliefs and characters sculpted digitally for high-detail resin printing."
+      "industries": [
+        "consumer-products"
+      ],
+      "summary": "Figures, reliefs and creatures sculpted digitally for high-detail resin printing."
     },
     {
       "slug": "jewellery-renders",
@@ -1228,8 +1291,6 @@
       "title": "Product Renders",
       "kind": "gallery",
       "images": [
-        "img/portfolio/render-shoe.webp",
-        "img/portfolio/render-camera.webp",
         "img/portfolio/render-laptop.webp",
         "img/portfolio/rendeing1.webp",
         "img/portfolio/rendeing2.webp"
@@ -1237,8 +1298,10 @@
       "services": [
         "product-rendering"
       ],
-      "industries": [],
-      "summary": "Photoreal product visuals: footwear, electronics and props."
+      "industries": [
+        "consumer-products"
+      ],
+      "summary": "Photoreal product visuals: electronics, tools and props."
     },
     {
       "slug": "spaces-exhibitions",
@@ -1294,5 +1357,27 @@
         15
       ]
     ]
+  ],
+  "filterIndustries": [
+    {
+      "slug": "industrial",
+      "name": "Industrial"
+    },
+    {
+      "slug": "mining",
+      "name": "Mining"
+    },
+    {
+      "slug": "oil-gas",
+      "name": "Oil & Gas"
+    },
+    {
+      "slug": "marine",
+      "name": "Marine"
+    },
+    {
+      "slug": "consumer-products",
+      "name": "Consumer Products"
+    }
   ]
 }

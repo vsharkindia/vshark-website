@@ -697,8 +697,9 @@
     renderer.render(scene, camera);
 
     if (++frame % 4 === 0) {
-      if (hudX) hudX.textContent = fmt(mouse.x);
-      if (hudY) hudY.textContent = fmt(-mouse.y);
+      // live model rotation (keeps moving on touch screens, where there is no mouse)
+      if (hudX) hudX.textContent = fmt(group.rotation.x);
+      if (hudY) hudY.textContent = fmt(Math.atan2(Math.sin(group.rotation.y), Math.cos(group.rotation.y)));
       if (hudScan) hudScan.textContent = (scanY >= 0 ? '+' : '') + scanY.toFixed(2);
     }
   }

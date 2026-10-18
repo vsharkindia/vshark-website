@@ -336,3 +336,10 @@ html.sd-open { overflow: hidden; }
   .sd__foot .btn { flex: 1 1 auto; justify-content: center; }
   .sd__note { margin-left: 0; }
 }
+
+/* ---------- Contact map / second service image / products badge ---------- */
+.cmap { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding-top: 0; }
+.cmap iframe { width: 100%; height: clamp(280px, 40vw, 420px); border: 0; border-radius: 14px; filter: grayscale(.35); }
+.svc-fig { margin-top: 36px; --cut: 30px; overflow: hidden; clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut)); }
+.svc-fig img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.page-hero .dist-badge { align-self: end; justify-self: start; }
