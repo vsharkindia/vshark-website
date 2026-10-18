@@ -51,7 +51,7 @@ ABOUT = [
     "object to the finished digital deliverable and back again.",
 ]
 
-PAIRS = ['cylinder-head', 'impeller', 'motorcycle-frame', 'bumper']
+PAIRS = ['cylinder-head', 'impeller', 'motorcycle-tubular-frame', 'bumper']
 VISUALS = [  # (project slug, image file, caption) — picks avoid third-party logos and photos of real people
     ('product-renders', 'rendeing2.webp', 'Product rendering'),
     ('eyewear-frame', 'eye-wear1.webp', 'Eyewear surfacing'),
@@ -443,7 +443,7 @@ APPLICATIONS = [
     ('Product design', 'Capture prototypes, clay models and existing parts.'),
     ('Digital archiving', 'Record moulds, tools and heritage objects.'),
 ]
-SCAN_SAMPLES = ['cylinder-head', 'impeller', 'motorcycle-frame', 'bumper']   # each project's scan image
+SCAN_SAMPLES = ['cylinder-head', 'impeller', 'motorcycle-tubular-frame', 'bumper']   # each project's scan image
 
 def spec(label, i):
     return next(r[i + 1] for r in D['productSpecs'] if r[0] == label)
