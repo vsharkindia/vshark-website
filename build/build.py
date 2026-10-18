@@ -296,8 +296,8 @@ def a_an(t):
 def proj_card(P, p, show_tags=True):
     svc = ' '.join(p['services']); ind = ' '.join(p['industries'])
     if p['kind'] == 'pair':
-        media = (f'<div class="proj__media proj__media--pair" data-cmp><img src="{P}{p["before"]}" alt="3D scan of {E(a_an(p["title"]))}" loading="lazy">'
-                 f'<img class="proj__cad" src="{P}{p["after"]}" alt="CAD model of {E(a_an(p["title"]))}" loading="lazy"><i class="proj__divider"></i>'
+        media = (f'<div class="proj__media proj__media--pair" data-cmp><img src="{P}{p["before"]}" alt="3D scan of {E(a_an(p.get("part", p["title"])))}" loading="lazy">'
+                 f'<img class="proj__cad" src="{P}{p["after"]}" alt="CAD model of {E(a_an(p.get("part", p["title"])))}" loading="lazy"><i class="proj__divider"></i>'
                  f'<span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>')
         nv = len(p.get('views', []))
         badge = 'Scan → CAD' + (f' · +{nv} view{"s" if nv > 1 else ""}' if nv else '')
