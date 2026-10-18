@@ -33,10 +33,10 @@ QUOTES = [
     ("VShark Solutions delivered exceptional work beyond my expectations! Their attention to detail and professionalism made the entire process seamless. I highly recommend them for any project.", "Ahtisham Muhammad", "Saudi Arabia"),
     ("Working with VSHARK Engineers was a fantastic experience. Their creative approach and attention to detail perfectly aligned with our brand, and they were always polite and cooperative throughout the project.", "Mariam Al-Ghayousi", "Dubai"),
 ]
-COUNTRIES = 'US · UK · Germany · Canada · UAE · Saudi Arabia'
+COUNTRIES = 'India · UAE · Saudi Arabia · USA · UK · Germany · Canada'
 
-PROCESS_IMG = ['img/services/01-scanning.webp', 'img/portfolio/scan-impeller.webp',
-               'img/portfolio/cad-impeller.webp', 'img/services/printing.webp']
+PROCESS_IMG = [next(s['tile'] for s in D['services'] if s['slug'] == '3d-scanning'), 'img/portfolio/scan-impeller.webp',
+               'img/portfolio/cad-impeller.webp', next(s['tile'] for s in D['services'] if s['slug'] == '3d-printing')]
 PROCESS = [
     ('Capture', 'We scan the part, product or site — in our lab or on location.'),
     ('Process', 'Scans are aligned, cleaned and merged into usable, watertight data.'),
@@ -82,8 +82,9 @@ def img(path, alt='', cls=''):
     return f'<img src="{E(jpeg(path))}" alt="{E(alt)}"{c}>'
 
 def stats():
-    return [('0.02', 'mm', 'Scan accuracy'), (str(len(D['services'])), '', 'Core services'),
-            (str(len(D['industries'])), '', 'Industries served'), ('6', '+', 'Countries with repeat clients')]
+    # 0.02 mm is the scanner specification, not a guaranteed service tolerance (handoff A13)
+    return [('0.02', 'mm', 'Scanner precision (up to)'), (str(len(D['services'])), '', 'Core services'),
+            (str(len(D['industries'])), '', 'Industries served'), ('7', '', 'Countries served')]
 
 def phones(sep=' · '):
     return sep.join(f'{E(p["display"])} ({E(p["label"])})' for p in C['phones'])
@@ -134,7 +135,7 @@ def deck():
 </section>''')
 
     cards = ''.join(f'''
-    <article class="svc">{img(s['image'], s['name'])}<div>
+    <article class="svc">{img(s['tile'], s['alt'])}<div>
       <span class="mono">{i:02d}</span><h3 class="h3">{E(s['name'])}</h3><p>{E(s['tagline'])}</p></div></article>'''
         for i, s in enumerate(D['services'], 1))
     S.append(f'''
@@ -167,15 +168,17 @@ def deck():
         S.append(f'''
 <section class="slide">
   <div class="detail">
-    <div class="detail__img">{img(s['image'], s['name'])}<span class="mono">Service {i:02d} / {total_svc:02d}</span></div>
+    <div class="detail__left">
+      <div class="detail__img">{img(s['image'], s['alt'])}<span class="mono">Service {i:02d} / {total_svc:02d}</span></div>
+      <p class="mono label">Deliverables</p><div class="chips">{dl}</div>
+      <p class="mono label">Industries</p><div class="chips">{ind}</div>
+    </div>
     <div class="detail__body">
       <p class="mono kicker">( 02.{i} ) — Services</p>
       <h2 class="h2">{E(s['name'])}</h2>
       <p class="tagline">{E(s['tagline'])}</p>
       <p class="lead">{E(s['intro'])}</p>
       <ul class="points">{pts}</ul>
-      <p class="mono label">Deliverables</p><div class="chips">{dl}</div>
-      <p class="mono label">Industries</p><div class="chips">{ind}</div>
     </div>
   </div>
   {chrome(n, s['name'])}
@@ -212,7 +215,7 @@ def deck():
 </section>''')
     n += 1
 
-    inds = ''.join(f'<article class="ind">{img(d["image"], d["name"])}<div><span class="mono">{i:02d}</span><h3 class="h3">{E(d["name"])}</h3><p>{E(d["line"])}</p></div></article>'
+    inds = ''.join(f'<article class="ind">{img(d["portrait"], d["alt"])}<div><span class="mono">{i:02d}</span><h3 class="h3">{E(d["name"])}</h3><p>{E(d["line"])}</p></div></article>'
                    for i, d in enumerate(D['industries'], 1))
     S.append(f'''
 <section class="slide">
@@ -354,7 +357,7 @@ def services_brochure():
     pc = PRJ['cylinder-head']
     st = ''.join(f'<div><b>{a}<small>{u}</small></b><span class="mono">{E(l)}</span></div>' for a, u, l in stats())
     svcs = ''.join(f'''
-      <article class="svc">{img(s['image'], s['name'])}<div>
+      <article class="svc">{img(s['image'], s['alt'])}<div>
         <h3><span>{i:02d}</span>{E(s['name'])}</h3><p>{E(s['tagline'])}</p>
         <small>{E(' · '.join(s['deliverables'][:3]))}</small></div></article>'''
         for i, s in enumerate(D['services'], 1))
@@ -367,7 +370,7 @@ def services_brochure():
         <p><b>{E(PRJ[k]['title'])}</b>{E(PRJ[k]['summary'])}</p>
       </div>''' for k in PAIRS)
     strip = ''.join(f'<figure>{img(VIMG(k, ix), cap)}<figcaption>{E(cap)}</figcaption></figure>' for k, ix, cap in VISUALS[:4])
-    inds = ''.join(f'<article>{img(d["image"], d["name"])}<div><h3>{E(d["name"])}</h3><p>{E(d["line"])}</p></div></article>' for d in D['industries'])
+    inds = ''.join(f'<article>{img(d["square"], d["alt"])}<div><h3>{E(d["name"])}</h3><p>{E(d["line"])}</p></div></article>' for d in D['industries'])
     prods = ''.join(f'<article>{img(p["image"], p["name"])}<div><h3>{E(p["name"])}</h3><p>{E(p["type"])}</p></div><b>{E(p["figure"])}<small>{E(p["unit"])}</small></b></article>' for p in D['products'])
     qs = ''.join(f'<blockquote class="quote"><p>&ldquo;{E(q)}&rdquo;</p><footer>{E(w)}<span>{E(c)}</span></footer></blockquote>' for q, w, c in (QUOTES[0], QUOTES[2]))
     return f'''{b_head('Services Brochure')}
@@ -431,7 +434,7 @@ SCAN_MODES = [  # (name, laser lines — see productSpecs, what it is for)
 WHY_US = [
     ('Sold by scanning engineers', 'We scan and model parts for clients every day — we know the whole workflow, not just the hardware.'),
     ('Live demo on your parts', 'Send us your parts and use case; we recommend the right model and show it working.'),
-    ('Set-up & training', 'We install the scanner and software and train your team to get clean data fast.'),
+    ('Set-up, training & warranty', 'We install the scanner at your site, train your team at delivery, and every scanner has a 12-month warranty.'),
     ('Support in India & UAE', 'Local help by phone and WhatsApp — plus our service team for overflow work.'),
 ]
 APPLICATIONS = [
@@ -524,9 +527,9 @@ def deck_data():
         'site': SITE, 'contact': C, 'about': ABOUT, 'countries': COUNTRIES,
         'stats': stats(),
         'process': [{'title': t, 'text': d, 'image': jpeg(PROCESS_IMG[i])} for i, (t, d) in enumerate(PROCESS)],
-        'services': [dict(s, image=jpeg(s['image']), industries=[IND[x]['name'] for x in s['industries'] if x in IND])
+        'services': [dict(s, image=jpeg(s['image']), tile=jpeg(s['tile']), industries=[IND[x]['name'] for x in s['industries'] if x in IND])
                      for s in D['services']],
-        'industries': [dict(i, image=jpeg(i['image'])) for i in D['industries']],
+        'industries': [dict(i, image=jpeg(i['portrait'])) for i in D['industries']],
         'products': [dict(p, image=jpeg(p['image'])) for p in D['products']],
         'specs': [r for r in D['productSpecs'] if r[0] in ('High-speed scanning', 'Max. scanning speed', 'Max. scanning field',
                   'Max. resolution', 'Volume accuracy', 'Recommended sample size', 'Output formats')],

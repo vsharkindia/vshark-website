@@ -164,7 +164,7 @@ const cw = (CW - 3 * 0.2) / 4, ch = 2.35;
 D.services.forEach((v, i) => {
   const x = M + (i % 4) * (cw + 0.2), y = 1.95 + Math.floor(i / 4) * (ch + 0.2);
   box(s, x, y, cw, ch, { objectName: 'Service card ' + v.name });
-  pic(s, v.image, x, y, cw, 1.05, 'cover', v.name);
+  pic(s, v.tile, x, y, cw, 1.05, 'cover', v.name);
   mono(s, String(i + 1).padStart(2, '0'), { x: x + 0.18, y: y + 1.17, w: 1, h: 0.2, fontSize: 9, color: BRAND });
   txt(s, v.name, { x: x + 0.18, y: y + 1.38, w: cw - 0.36, h: 0.3, fontFace: THEME.headFontFace, fontSize: 14, bold: true });
   txt(s, v.tagline, { x: x + 0.18, y: y + 1.7, w: cw - 0.36, h: 0.55, fontSize: 11, color: MUTED });
@@ -190,8 +190,8 @@ D.process.forEach((p, i) => {
 // ================================================================ 5–11 · Service detail
 D.services.forEach((v, i) => {
   s = slide(SERVICE, 'Services', `( 02.${i + 1} ) — Services`, v.name, v.intro);
-  pic(s, v.image, M, 0.6, 5.3, 6.15, 'cover', v.name);
-  tag(s, `Service ${String(i + 1).padStart(2, '0')} / ${String(D.services.length).padStart(2, '0')}`, M + 0.18, 6.3);
+  pic(s, v.image, M, 0.6, 5.3, 3.975, 'cover', v.name);   // 4:3
+  tag(s, `Service ${String(i + 1).padStart(2, '0')} / ${String(D.services.length).padStart(2, '0')}`, M + 0.18, 4.17);
   const x = 6.35, w = 6.3;
   txt(s, v.tagline, { x, y: 1.6, w, h: 0.55, fontFace: THEME.headFontFace, fontSize: 14, color: BRAND });
   txt(s, v.intro, { x, y: 2.25, w, h: 1.1, fontSize: 12, color: FG2, lineSpacingMultiple: 1.1 });
@@ -200,10 +200,10 @@ D.services.forEach((v, i) => {
     txt(s, a, { x: px, y: py, w: 3.05, h: 0.28, fontFace: THEME.headFontFace, fontSize: 12.5, bold: true });
     txt(s, b, { x: px, y: py + 0.3, w: 3.05, h: 0.6, fontSize: 10.5, color: MUTED });
   });
-  mono(s, 'Deliverables', { x, y: 5.35, w: 3, h: 0.2, fontSize: 9 });
-  let y = chips(s, v.deliverables, x, 5.6, w);
-  mono(s, 'Industries', { x, y: y + 0.12, w: 3, h: 0.2, fontSize: 9 });
-  chips(s, v.industries, x, y + 0.37, w, { outline: true });
+  mono(s, 'Deliverables', { x: M, y: 4.8, w: 3, h: 0.2, fontSize: 9 });
+  let y = chips(s, v.deliverables, M, 5.05, 5.3);
+  mono(s, 'Industries', { x: M, y: y + 0.14, w: 3, h: 0.2, fontSize: 9 });
+  chips(s, v.industries, M, y + 0.39, 5.3, { outline: true });
 });
 
 // ================================================================ 12 · Portfolio — scan to CAD
