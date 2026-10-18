@@ -537,6 +537,8 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .footer__contact a:hover { color: var(--accent); }
 .footer__contact svg { width: 18px; height: 18px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 .footer__contact small { color: var(--muted); font-size: 10px; }
+.footer__addr { display: flex; gap: 10px; align-items: flex-start; color: var(--fg-2); font-size: 14.5px; line-height: 1.45; }
+.footer__addr svg { width: 18px; height: 18px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 1px; }
 .footer__social { display: flex; gap: 10px; }
 .footer__social a { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; color: var(--fg-2); transition: background .3s, border-color .3s, color .3s; }
 .footer__social svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -559,3 +561,8 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
   .js [data-reveal] { opacity: 1; transform: none; }
   .testi__strip { overflow-x: auto; }
 }
+
+/* ---------- Authorised-distributor badge (handoff A8; JINUOSH logo to follow) ---------- */
+.dist-badge { display: inline-flex; flex-direction: column; gap: 4px; padding: 12px 18px 12px 16px; border-left: 3px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; font-family: var(--display); font-weight: 500; font-size: 15px; color: var(--fg); box-shadow: 0 10px 26px -18px rgba(28,33,37,.35); }
+.dist-badge .mono { color: var(--accent); }
+.sec-head .dist-badge { margin-top: 14px; }

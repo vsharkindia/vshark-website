@@ -15,7 +15,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D = json.load(open(os.path.join(ROOT, 'data', 'site.json'), encoding='utf-8'))
 E = lambda t: html.escape(str(t), quote=True)
 SVC = {s['slug']: s for s in D['services']}
-IND = {i['slug']: i for i in D['industries']}
+IND = {i['slug']: i for i in D['industries'] + D.get('filterIndustries', [])}
 C = D['contact']
 
 def ver(path):
@@ -37,10 +37,80 @@ ICON = {
  'down': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
  'specs': '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
  'play': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+ 'pin': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
  'file': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M12 12v6M9 15l3 3 3-3"/></svg>',
 }
 A = ICON['arrow']
 wa_link = lambda msg='': f'https://wa.me/{C["whatsapp"]}' + (f'?text={quote(msg)}' if msg else '')
+
+# ---------------------------------------------------------------- meta (handoff part C)
+META = {
+    '': ('3D Scanning & Reverse Engineering Services | VShark Solutions',
+         '3D scanning, reverse engineering, Scan to BIM, Class A surfacing and 3D inspection services in India and the UAE. Authorised JINUOSH Vertex scanner distributor.'),
+    'products/index.html': ('Vertex 3D Scanners in India | JINUOSH Distributor | VShark',
+         'Buy JINUOSH Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners in India from an authorised distributor. Compare specs, request a quote or book a demo.'),
+    'services/index.html': ('3D Scanning & 3D Design Services | VShark Solutions',
+         '3D scanning, reverse engineering, Scan to BIM, Class A surfacing, digital metrology, 3D printing and product rendering for India, the UAE and worldwide.'),
+    'services/3d-scanning.html': ('3D Scanning Services in India & UAE | VShark Solutions',
+         'Accurate 3D scanning of parts, castings, vehicles and large objects. Get mesh, point cloud or CAD-ready data from Coimbatore and the UAE. Free quote.'),
+    'services/reverse-engineering.html': ('Reverse Engineering Services – Scan to CAD | VShark',
+         'Turn worn, legacy or undocumented parts into editable, manufacturable CAD (STEP, IGES and other neutral formats). Reverse engineering for India and the UAE.'),
+    # handoff wording said "your laser-scan point clouds" — corrected: VShark also does the site scanning
+    'services/scan-to-bim.html': ('Scan to BIM Services – Point Cloud to Revit | VShark',
+         'We laser-scan plant rooms, piping and buildings, or use your point cloud, and model them as accurate Autodesk Revit BIM for retrofit and facility management.'),
+    'services/class-a-surfacing.html': ('Class A Surfacing Services | Automotive Surfaces | VShark',
+         'Class A surfacing for automotive and consumer products: G2/G3-continuous surfaces checked with zebra and curvature analysis, ready for tooling.'),
+    'services/digital-metrology.html': ('3D Inspection & Digital Metrology Services | VShark',
+         'Scan-to-CAD deviation colour maps, GD&T checks and first-article inspection reports for castings, moulded and machined parts.'),
+    'services/3d-printing.html': ('3D Printing Services – Prototypes & Parts | VShark',
+         'FDM and SLA 3D printing of prototypes, functional parts, scale models and jewellery masters, from your CAD or a 3D scan of an existing part.'),
+    'services/product-rendering.html': ('Product Rendering & 3D Visualisation | VShark Solutions',
+         'Photorealistic product renders, exploded views and jewellery visuals created from CAD, so you can market a product before it is made.'),
+    'industries/index.html': ('Industries We Serve – 3D Scanning & CAD | VShark',
+         '3D scanning, reverse engineering and inspection for aerospace, automobile, construction, healthcare, education and jewellery.'),
+    'industries/aerospace.html': ('3D Scanning for Aerospace Components | VShark Solutions',
+         'Inspection and reverse engineering of turbine blades, impellers, ducts, fairings and UAV parts, from high-accuracy 3D scan data.'),
+    'industries/automobile.html': ('3D Scanning & Reverse Engineering for Automotive | VShark',
+         'Body surfacing, chassis and casting digitisation, fixture design and scan-based inspection for OEMs, tier suppliers and motorsport.'),
+    'industries/construction.html': ('Scan to BIM for Construction & Facilities | VShark',
+         'Revit BIM models from point cloud data of buildings, plant rooms and industrial structures, for renovation, retrofit and asset management.'),
+    'industries/healthcare.html': ('3D Scanning for Healthcare & Medical Devices | VShark',
+         '3D scanning and design for medical devices, orthotics, prosthetics and custom-fit parts, from scan to CAD to 3D print.'),
+    'industries/education.html': ('3D Scanning for Universities & Labs | VShark Solutions',
+         '3D scanners, training and scanning services for engineering colleges, research labs and design schools across India and the UAE.'),
+    'industries/jewellery.html': ('3D Scanning & Printing for Jewellery | VShark Solutions',
+         'Fine-detail 3D scanning, CAD and high-detail SLA resin masters for jewellers, plus 3D scanning of temple idols and heritage carvings.'),
+    'portfolio/index.html': ('Portfolio – 3D Scanning & Reverse Engineering Projects',
+         'Real scan, CAD and inspection projects: castings, vehicle bodies, frames, impellers, plant rooms and more. Filter by service or industry.'),
+    'contact.html': ('Contact VShark Solutions – Get a Quote | India & UAE',
+         'Send your part photos or drawings for a free quote. Call +91 95142 48525 (India) or +971 52 248 6238 (UAE), or WhatsApp us.'),
+    'thanks.html': ('Thank you | VShark Solutions', 'Enquiry received.'),
+}
+SITE_URL = 'https://www.vsharksolutions.com/'
+
+def head_meta(rel):
+    title, desc = META[rel]
+    return (f'<title>{E(title)}</title>\n  <meta name="description" content="{E(desc)}">\n'
+            f'  <meta property="og:type" content="website">\n  <meta property="og:site_name" content="VShark Solutions">\n'
+            f'  <meta property="og:title" content="{E(title)}">\n  <meta property="og:description" content="{E(desc)}">')
+
+def schema_org():
+    """Organization + LocalBusiness JSON-LD (handoff A7 / B8) — same on every page."""
+    S = C['social']
+    org = {
+        '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': SITE_URL + '#business',
+        'name': 'VShark Solutions Private Limited', 'alternateName': 'VShark Solutions', 'url': SITE_URL,
+        'logo': SITE_URL + 'img/vshark-logo.png', 'image': SITE_URL + 'img/vshark-logo.png',
+        'email': C['email'], 'telephone': C['phones'][0]['tel'],
+        'address': [dict({'@type': 'PostalAddress', 'addressLocality': o['city'], 'addressCountry': o['country']},
+                         **({'streetAddress': o['street'], 'addressRegion': o['region'], 'postalCode': o['postcode']} if o.get('street') else {}))
+                    for o in C['offices']],
+        'contactPoint': [{'@type': 'ContactPoint', 'telephone': p['tel'], 'contactType': 'sales',
+                          'areaServed': 'IN' if p['label'] == 'India' else 'AE'} for p in C['phones']],
+        'areaServed': ['IN', 'AE'], 'foundingDate': '2019',
+        'sameAs': [S['facebook'], S['instagram'], S['linkedin']],
+    }
+    return '<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False).replace('</', '<\\/') + '</script>'
 
 # ---------------------------------------------------------------- shared chrome
 def header(P, active=''):
@@ -111,6 +181,7 @@ def footer(P, msg='Hi VShark, I would like to discuss a project.'):
         <span class="mono muted">Contact</span>
         <a href="mailto:{C['email']}">{ICON['mail']}{C['email']}</a>
         {phones_f}
+        {''.join(f'<span class="footer__addr">{ICON["pin"]}<span><small class="mono">{E(o["label"])}</small> {", ".join(E(l) for l in o["lines"])}</span></span>' for o in C['offices'])}
         <div class="footer__social">
           <a href="{wa_link()}" target="_blank" rel="noopener" aria-label="WhatsApp">{ICON['wa']}</a>
           <a href="{S['instagram']}" target="_blank" rel="noopener" aria-label="Instagram">{ICON['ig']}</a>
@@ -151,15 +222,15 @@ def footer(P, msg='Hi VShark, I would like to discuss a project.'):
   </nav>
   <!-- /@footer -->'''
 
-def page(P, title, desc, active, body, scripts=(), wa_msg='Hi VShark, I would like to discuss a project.'):
+def page(P, rel, active, body, scripts=(), wa_msg='Hi VShark, I would like to discuss a project.'):
     js = '\n'.join(f'  <script src="{asset(s, P)}"></script>' for s in ('vendor/gsap.min.js', 'vendor/ScrollTrigger.min.js', 'vendor/lenis.min.js', *scripts, 'js/main.js'))
     return f'''<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{E(title)} — VShark Solutions</title>
-  <meta name="description" content="{E(desc)}">
+  {head_meta(rel)}
+  {schema_org()}
   <meta name="theme-color" content="#f5f6f8">
   <link rel="icon" href="{P}favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="{P}img/favicon-32.png">
@@ -189,8 +260,8 @@ def crumbs(P, items):
     parts = [f'<a href="{P}index.html">Home</a>'] + [f'<a href="{h}">{E(t)}</a>' if h else f'<span>{E(t)}</span>' for t, h in items]
     return '<nav class="crumbs mono" aria-label="Breadcrumb">' + ' <i>/</i> '.join(parts) + '</nav>'
 
-def page_hero(P, crumb_items, tag, title_html, lead, image=None, side=''):
-    img = f'<figure class="page-hero__media" data-in><img src="{P}{image}" alt="" loading="eager"><i class="page-hero__slash" aria-hidden="true"></i></figure>' if image else side
+def page_hero(P, crumb_items, tag, title_html, lead, image=None, side='', alt=''):
+    img = f'<figure class="page-hero__media" data-in><img src="{P}{image}" alt="{E(alt)}" loading="eager"><i class="page-hero__slash" aria-hidden="true"></i></figure>' if image else side
     return f'''    <section class="page-hero{' page-hero--media' if (image or side) else ''}">
       <div class="page-hero__text">
         <div data-in>{crumbs(P, crumb_items)}</div>
@@ -213,11 +284,14 @@ def cta(P, title='Have a part, a building or an idea?', text='Tell us what you n
       </div>
     </section>'''
 
+def a_an(t):
+    return ('an ' if t[:1].lower() in 'aeiou' else 'a ') + t.lower()
+
 def proj_card(P, p, show_tags=True):
     svc = ' '.join(p['services']); ind = ' '.join(p['industries'])
     if p['kind'] == 'pair':
-        media = (f'<div class="proj__media proj__media--pair" data-cmp><img src="{P}{p["before"]}" alt="" loading="lazy">'
-                 f'<img class="proj__cad" src="{P}{p["after"]}" alt="" loading="lazy"><i class="proj__divider"></i>'
+        media = (f'<div class="proj__media proj__media--pair" data-cmp><img src="{P}{p["before"]}" alt="3D scan of {E(a_an(p["title"]))}" loading="lazy">'
+                 f'<img class="proj__cad" src="{P}{p["after"]}" alt="CAD model of {E(a_an(p["title"]))}" loading="lazy"><i class="proj__divider"></i>'
                  f'<span class="proj__lab proj__lab--l mono">CAD</span><span class="proj__lab proj__lab--r mono">Scan</span></div>')
         nv = len(p.get('views', []))
         badge = 'Scan → CAD' + (f' · +{nv} view{"s" if nv > 1 else ""}' if nv else '')
@@ -225,7 +299,7 @@ def proj_card(P, p, show_tags=True):
         data = f'data-kind="pair" data-before="{P}{p["before"]}" data-after="{P}{p["after"]}" data-views="{E(views)}"'
     else:
         fit = ' proj__media--contain' if p.get('fit') == 'contain' else ''
-        media = f'<div class="proj__media{fit}"><img src="{P}{p["images"][0]}" alt="" loading="lazy"></div>'
+        media = f'<div class="proj__media{fit}"><img src="{P}{p["images"][0]}" alt="{E(p["title"])}" loading="lazy"></div>'
         n_img = len(p['images'])
         badge = p.get('badge') or (f'{n_img} images' if n_img > 1 else 'View')
         data = f'data-kind="gallery" data-images="{"|".join(P + i for i in p["images"])}"'
@@ -286,7 +360,7 @@ def xnav(P, items, current, folder, label):
     '''Row of every service / industry at the bottom of a detail page; the current one is highlighted.'''
     links = '\n'.join(
         f'''        <a class="xnav__item{' is-current' if o is current else ''}" href="{P}{folder}/{o['slug']}.html"{' aria-current="page"' if o is current else ''}>
-          <img src="{P}{o['image']}" alt="" loading="lazy"><span><i class="mono">{k+1:02d}</i><b>{E(o['name'])}</b></span>
+          <img src="{P}{o.get('tile') or o.get('square') or o['image']}" alt="" loading="lazy"><span><i class="mono">{k+1:02d}</i><b>{E(o['name'])}</b></span>
         </a>''' for k, o in enumerate(items))
     return f'''    <section class="section xnav" aria-label="{label}">
       <div class="xnav__head"><span class="tag mono">{label}</span><a class="xnav__all mono" href="{P}{folder}/index.html">Overview {A}</a></div>
@@ -302,6 +376,9 @@ LIGHTBOX = '''    <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-
       <button class="lb__nav lb__prev" type="button" aria-label="Previous image">‹</button>
       <button class="lb__nav lb__next" type="button" aria-label="Next image">›</button>
     </div>'''
+
+# TODO(handoff A8): add the JINUOSH logo here once their written letter is received
+DIST_BADGE = '<p class="dist-badge" data-in><span class="mono">Authorised distributor</span>JINUOSH Vertex 3D scanners in India</p>'
 
 def prod_tile(P, p, i, href):
     return f'''    <article class="prod" data-reveal>
@@ -325,13 +402,13 @@ def prod_tile(P, p, i, href):
 
 def svc_tile(P, s, i):
     return f'''        <a class="stile" href="{P}services/{s['slug']}.html" data-reveal>
-          <span class="stile__media"><img src="{P}{s['image']}" alt="" loading="lazy"></span>
+          <span class="stile__media"><img src="{P}{s['tile']}" alt="{E(s['alt'])}" loading="lazy"></span>
           <span class="stile__body"><i class="mono">{i+1:02d}</i><b>{E(s['name'])}</b><span>{E(s['tagline'])}</span><em>Explore {A}</em></span>
         </a>'''
 
 def ind_tile(P, s, i):
     return f'''        <a class="itile" href="{P}industries/{s['slug']}.html" data-reveal>
-          <img src="{P}{s['image']}" alt="" loading="lazy">
+          <img src="{P}{s['square']}" alt="{E(s['alt'])}" loading="lazy">
           <span class="itile__body"><i class="mono">{i+1:02d}</i><b>{E(s['name'])}</b><span>{E(s['line'])}</span></span>
         </a>'''
 
@@ -357,9 +434,10 @@ def service_page(s):
 {chr(10).join(prod_tile(P, p, k, f"{P}products/index.html#{p['slug']}") for k, p in enumerate(D['products']))}
       </div>
     </section>'''
+    fig2 = f'          <figure class="svc-fig" data-reveal><img src="{P}{s["image2"]}" alt="{E(s["alt2"])}" loading="lazy"></figure>' if s.get('image2') else ''
     cur_attr = ' aria-current="page"'
     others = ''.join(f'<a href="{P}services/{o["slug"]}.html"{cur_attr if o is s else ""}>{E(o["name"])}</a>' for o in D['services'])
-    body = f'''{page_hero(P, [("Services", P + "services/index.html"), (s["name"], None)], f"( {i+1:02d} ) — Service", E(s["name"]), E(s["tagline"]), s["image"])}
+    body = f'''{page_hero(P, [("Services", P + "services/index.html"), (s["name"], None)], f"( {i+1:02d} ) — Service", E(s["name"]), E(s["tagline"]), s["image"], alt=s["alt"])}
 
     <section class="section blk">
       <div class="split">
@@ -369,6 +447,7 @@ def service_page(s):
           <div class="feat-grid">
 {pts}
           </div>
+{fig2}
         </div>
         <aside class="split__side" data-reveal>
           <div class="side-card">
@@ -395,7 +474,7 @@ def service_page(s):
 {xnav(P, D['services'], s, 'services', 'All services')}
 {cta(P, msg=f"Hi VShark, I'm interested in {s['name']}.")}
 {LIGHTBOX}'''
-    return page(P, s['name'], f"{s['name']} — {s['tagline']} VShark Solutions.", 'services', body, ('js/portfolio.js',),
+    return page(P, f"services/{s['slug']}.html", 'services', body, ('js/portfolio.js',),
                 wa_msg=f"Hi VShark, I'm interested in {s['name']}.")
 
 def services_index():
@@ -408,7 +487,7 @@ def services_index():
       </div>
     </section>
 {cta(P)}'''
-    return page(P, 'Services', 'VShark Solutions services: 3D scanning, reverse engineering, Scan to BIM, Class A surfacing, digital metrology, 3D printing and product rendering.', 'services', body)
+    return page(P, 'services/index.html', 'services', body)
 
 def industries_index():
     P = '../'
@@ -420,7 +499,7 @@ def industries_index():
       </div>
     </section>
 {cta(P)}'''
-    return page(P, 'Industries', 'Industries served by VShark Solutions: aerospace, automobile, construction, healthcare, education and jewellery.', 'industries', body)
+    return page(P, 'industries/index.html', 'industries', body)
 
 def industry_page(ind):
     P = '../'
@@ -428,7 +507,7 @@ def industry_page(ind):
     svcs = [s for s in D['services'] if ind['slug'] in s['industries']]
     tiles = '\n'.join(svc_tile(P, s, D['services'].index(s)) for s in svcs)
     projects = [p for p in D['projects'] if ind['slug'] in p['industries']]
-    body = f'''{page_hero(P, [("Industries", P + "industries/index.html"), (ind["name"], None)], f"( {i+1:02d} ) — Industry", E(ind["name"]), E(ind["line"]), ind["image"])}
+    body = f'''{page_hero(P, [("Industries", P + "industries/index.html"), (ind["name"], None)], f"( {i+1:02d} ) — Industry", E(ind["name"]), E(ind["line"]), ind["square"], alt=ind["alt"])}
     <section class="section blk">
       <p class="lead-lg" data-reveal>{E(ind['intro'])}</p>
     </section>
@@ -442,7 +521,7 @@ def industry_page(ind):
 {xnav(P, D['industries'], ind, 'industries', 'All industries')}
 {cta(P, msg=f"Hi VShark, I work in {ind['name']} and would like to discuss a project.")}
 {LIGHTBOX}'''
-    return page(P, ind['name'], f"3D scanning and design for {ind['name'].lower()} — {ind['line']}", 'industries', body, ('js/portfolio.js',))
+    return page(P, f"industries/{ind['slug']}.html", 'industries', body, ('js/portfolio.js',))
 
 def video_embed(P, url, title):
     '''YouTube link -> privacy-friendly embed; anything else is treated as a local/hosted video file.'''
@@ -519,7 +598,7 @@ def products_page():
         dialogs.append(spec_dialog(P, p, k))
     head = ''.join(f'<th scope="col">{E(p["name"])}</th>' for p in D['products'])
     trs = '\n'.join(f'<tr><th scope="row">{E(r[0])}</th>' + ''.join(f'<td>{E(c)}</td>' for c in r[1:]) + '</tr>' for r in D['productSpecs'])
-    body = f'''{page_hero(P, [("Products", None)], "( 01 ) — Products", "Professional <em>3D scanners.</em>", "Vertex blue-laser and optical-tracking scanners — sold, set up and supported by VShark's scanning engineers.")}
+    body = f'''{page_hero(P, [("Products", None)], "( 01 ) — Products", "Professional <em>3D scanners.</em>", "Vertex blue-laser and optical-tracking scanners — sold, set up and supported by VShark's scanning engineers.", side=DIST_BADGE)}
     <section class="section blk prows">
 {chr(10).join(rows)}
     </section>
@@ -538,13 +617,13 @@ def products_page():
 {faq_section(D.get('productFaq', []), 'Buying a scanner: <em>FAQ.</em>')}
 {chr(10).join(dialogs)}
 {cta(P, 'Not sure which scanner fits?', 'Send us your parts and use case — we will recommend a model and can arrange a live demo.', 'Hi VShark, please help me choose a 3D scanner.')}'''
-    return page(P, 'Products — 3D Scanners', 'Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners from VShark Solutions — specifications, comparison and quotes.', 'products', body, ('js/products.js',),
+    return page(P, 'products/index.html', 'products', body, ('js/products.js',),
                 wa_msg='Hi VShark, I would like a quote or demo for a 3D scanner.')
 
 def portfolio_page():
     P = '../'
     used_s = [s for s in D['services'] if any(s['slug'] in p['services'] for p in D['projects'])]
-    used_i = [s for s in D['industries'] if any(s['slug'] in p['industries'] for p in D['projects'])]
+    used_i = [s for s in D['industries'] + D.get('filterIndustries', []) if any(s['slug'] in p['industries'] for p in D['projects'])]
     chips = lambda key, items: f'<button class="chip is-on" type="button" data-f="{key}" data-v="">All</button>' + ''.join(f'<button class="chip" type="button" data-f="{key}" data-v="{x["slug"]}">{E(x["name"])}</button>' for x in items)
     cards = '\n'.join(proj_card(P, p) for p in D['projects'])
     body = f'''{page_hero(P, [("Portfolio", None)], "( 04 ) — Portfolio", "Completed <em>projects.</em>", "A selection of scanning, engineering and visualisation work. Filter by service or industry. On a Scan → CAD project, hover or drag across the image to compare the scan with the finished model.")}
@@ -562,14 +641,19 @@ def portfolio_page():
     </section>
 {cta(P)}
 {LIGHTBOX}'''
-    return page(P, 'Portfolio', 'Completed 3D scanning, reverse engineering, rendering and modelling projects by VShark Solutions.', 'portfolio', body, ('js/portfolio.js',))
+    return page(P, 'portfolio/index.html', 'portfolio', body, ('js/portfolio.js',))
 
 def contact_page():
     P = ''
     svc_opts = ''.join(f'<option value="{E(s["name"])}">{E(s["name"])}</option>' for s in D['services'])
     prod_opts = ''.join(f'<option value="{E("Product: " + p["name"])}">Buy a scanner — {E(p["name"])}</option>' for p in D['products'])
     phones = ''.join(f'<a class="ccard" href="tel:{p["tel"]}">{ICON["phone"]}<span><small class="mono">{E(p["label"])}</small>{E(p["display"])}</span></a>' for p in C['phones'])
-    addr = f'<div class="ccard ccard--static"><span><small class="mono">Office</span>{E(C["address"])}</span></div>' if C['address'] else ''
+    addr = ''.join(f'<div class="ccard ccard--static">{ICON["pin"]}<span><small class="mono">{E(o["label"])} office</small>{"<br>".join(E(l) for l in o["lines"])}</span></div>' for o in C['offices'])
+    mapq = quote(C['map'])
+    gmap = f'''    <section class="section blk cmap" data-reveal>
+      <iframe title="Map: VShark Solutions, {E(C['map'])}" src="https://www.google.com/maps?q={mapq}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <a class="sec-head__link" href="https://www.google.com/maps/search/?api=1&amp;query={mapq}" target="_blank" rel="noopener">Open in Google Maps {A}</a>
+    </section>'''
     body = f'''{page_hero(P, [("Contact", None)], "( 06 ) — Contact", "Let's <em>scan it.</em>", "Tell us about your part, building or idea. We usually reply within one working day.")}
     <section class="section blk">
       <div class="contact">
@@ -595,14 +679,15 @@ def contact_page():
           {addr}
         </aside>
       </div>
-    </section>'''
-    return page(P, 'Contact', 'Contact VShark Solutions for 3D scanning, reverse engineering, BIM, surfacing, metrology, printing, rendering and 3D scanner sales.', 'contact', body, ('js/contact.js',))
+    </section>
+{gmap}'''
+    return page(P, 'contact.html', 'contact', body, ('js/contact.js',))
 
 def thanks_page():
     P = ''
     body = f'''{page_hero(P, [("Contact", "contact.html"), ("Thank you", None)], "Enquiry sent", "Thank <em>you.</em>", "We have received your message and will get back to you within one working day.")}
     <section class="section blk"><a class="btn btn--accent magnetic" href="index.html"><span>Back to home</span>{A}</a></section>'''
-    return page(P, 'Thank you', 'Enquiry received.', 'contact', body)
+    return page(P, 'thanks.html', 'contact', body)
 
 # ---------------------------------------------------------------- homepage regions
 def home_products():
@@ -618,12 +703,12 @@ def home_services():
               <span class="svx__n mono">{i+1:02d}</span><b>{E(s['name'])}</b>{A}<i class="svx__bar"></i>
             </button>
             <div class="svx__drop">
-              <img src="{s['image']}" alt="" loading="lazy">
+              <img src="{s['tile']}" alt="{E(s['alt'])}" loading="lazy">
               <p>{E(s['tagline'])}</p>
               <a href="services/{s['slug']}.html" class="svx__link">Learn more {A}</a>
             </div>
           </li>''' for i, s in enumerate(D['services']))
-    imgs = '\n'.join(f'          <img class="svx__img{" is-on" if i == 0 else ""}" src="{s["image"]}" alt="{E(s["name"])}" loading="lazy">' for i, s in enumerate(D['services']))
+    imgs = '\n'.join(f'          <img class="svx__img{" is-on" if i == 0 else ""}" src="{s["tile"]}" alt="{E(s["alt"])}" loading="lazy">' for i, s in enumerate(D['services']))
     f = D['services'][0]
     return f'''<!-- @services -->
       <div class="svx" id="svx">
@@ -648,7 +733,7 @@ def home_services():
 
 def home_industries():
     panels = '\n'.join(f'''        <div class="ip{' is-active' if i == 0 else ''}" role="button" tabindex="0" aria-pressed="{'true' if i == 0 else 'false'}" aria-label="{E(s['name'])}">
-          <img src="{s['image']}" alt="" loading="lazy" draggable="false">
+          <picture><source media="(max-width: 760px)" srcset="{s['square']}"><img src="{s['image']}" alt="{E(s['alt'])}" loading="lazy" draggable="false"></picture>
           <span class="ip__num mono">{i+1:02d}</span>
           <span class="ip__label">{E(s['name'])}</span>
           <span class="ip__body"><b>{E(s['name'])}</b><span>{E(s['line'])}</span><a class="ip__go" href="industries/{s['slug']}.html">Explore {E(s['name'].lower())} {A}</a></span>
@@ -665,7 +750,8 @@ def build_home():
     p = os.path.join(ROOT, 'index.html')
     s = open(p, encoding='utf-8').read()
     regions = {'header': header('', ''), 'footer': footer(''), 'products': home_products(),
-               'services': home_services(), 'industries': home_industries()}
+               'services': home_services(), 'industries': home_industries(),
+               'meta': '<!-- @meta -->\n  ' + head_meta('') + '\n  ' + schema_org() + '\n  <!-- /@meta -->'}
     for name, content in regions.items():
         pat = re.compile(r'<!-- @%s -->.*?<!-- /@%s -->' % (name, name), re.S)
         if not pat.search(s):
