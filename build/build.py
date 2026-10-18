@@ -65,7 +65,6 @@ def header(P, active=''):
       {drop('services', f'{P}services/index.html', 'Services', svc_items, 'All services')}
       {drop('industries', f'{P}industries/index.html', 'Industries', ind_items, 'All industries')}
       {link('portfolio', f'{P}portfolio/index.html', 'Portfolio')}
-      {link('blog', '#', 'Blog')}
       {link('contact', f'{P}contact.html', 'Contact')}
     </nav>
     <a href="{P}contact.html" class="btn btn--sm btn--accent header__cta magnetic"><span>Enquire Now</span></a>
@@ -79,9 +78,12 @@ def header(P, active=''):
       {m(2, f'{P}services/index.html', 'Services')}
       {m(3, f'{P}industries/index.html', 'Industries')}
       {m(4, f'{P}portfolio/index.html', 'Portfolio')}
-      {m(5, '#', 'Blog')}
-      {m(6, f'{P}contact.html', 'Contact')}
+      {m(5, f'{P}contact.html', 'Contact')}
     </nav>
+    <div class="menu__cta">
+      <a class="btn btn--accent" href="{P}contact.html"><span>Get a quote</span>{A}</a>
+      <a class="btn btn--ghost" href="{wa_link('Hi VShark, I would like to discuss a project.')}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp</span></a>
+    </div>
     <div class="menu__foot mono">
       <a href="mailto:{C['email']}">{C['email']}</a>
       {phones}
@@ -89,7 +91,7 @@ def header(P, active=''):
   </div>
   <!-- /@header -->'''
 
-def footer(P):
+def footer(P, msg='Hi VShark, I would like to discuss a project.'):
     phones_f = ''.join(f'<a href="tel:{p["tel"]}">{ICON["phone"]}{E(p["display"])} <small class="mono">{E(p["label"])}</small></a>' for p in C['phones'])
     phones_r = ''.join(f'<a href="tel:{p["tel"]}"><small class="mono">{E(p["label"])}</small>{E(p["display"])}</a>' for p in C['phones'])
     S = C['social']
@@ -137,9 +139,19 @@ def footer(P):
     <a class="rail__item rail__btn" href="{S['facebook']}" target="_blank" rel="noopener" aria-label="Facebook">{ICON['fb']}<span class="rail__label">Facebook</span></a>
     <a class="rail__item rail__btn" href="{S['linkedin']}" target="_blank" rel="noopener" aria-label="LinkedIn">{ICON['in']}<span class="rail__label">LinkedIn</span></a>
   </aside>
+
+  <!-- MOBILE ACTION BAR — phones only; replaces the rail -->
+  <nav class="mbar" aria-label="Quick contact">
+    <div class="mbar__call">
+      <button type="button" class="mbar__btn" aria-expanded="false" aria-controls="mbarPhones">{ICON['phone']}<span>Call</span></button>
+      <div class="mbar__sheet" id="mbarPhones">{phones_r}</div>
+    </div>
+    <a class="mbar__btn" href="{wa_link(msg)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp</span></a>
+    <a class="mbar__btn mbar__btn--accent" href="{P}contact.html"><span>Get a quote</span>{A}</a>
+  </nav>
   <!-- /@footer -->'''
 
-def page(P, title, desc, active, body, scripts=()):
+def page(P, title, desc, active, body, scripts=(), wa_msg='Hi VShark, I would like to discuss a project.'):
     js = '\n'.join(f'  <script src="{asset(s, P)}"></script>' for s in ('vendor/gsap.min.js', 'vendor/ScrollTrigger.min.js', 'vendor/lenis.min.js', *scripts, 'js/main.js'))
     return f'''<!doctype html>
 <html lang="en">
@@ -165,7 +177,7 @@ def page(P, title, desc, active, body, scripts=()):
 {body}
   </main>
 
-  {footer(P)}
+  {footer(P, wa_msg)}
 
 {js}
 </body>
@@ -247,6 +259,27 @@ def proj_section(P, projects, title_html, link_qs):
         </div>
         <div class="pcar__bar" aria-hidden="true"><b></b></div>
       </div>
+    </section>'''
+
+def faq_section(faqs, title_html='Common <em>questions.</em>'):
+    """Accordion of questions with FAQPage JSON-LD (read by Google and AI search)."""
+    if not faqs:
+        return ''
+    items = '\n'.join(f'''        <details class="faq__item" data-reveal>
+          <summary><span>{E(q)}</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>{E(a)}</p></div>
+        </details>''' for q, a in faqs)
+    ld = json.dumps({'@context': 'https://schema.org', '@type': 'FAQPage',
+                     'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in faqs]},
+                    ensure_ascii=False, indent=1).replace('</', '<\\/')
+    return f'''    <section class="section blk faq" id="faq">
+      <div class="sec-head"><div><span class="tag mono">FAQ</span><h2 class="h2" data-reveal>{title_html}</h2></div></div>
+      <div class="faq__list">
+{items}
+      </div>
+      <script type="application/ld+json">
+{ld}
+      </script>
     </section>'''
 
 def xnav(P, items, current, folder, label):
@@ -358,10 +391,12 @@ def service_page(s):
 
 {proj_section(P, projects, f'{E(s["name"])} <em>projects.</em>', f'service={s["slug"]}')}
 {prods}
+{faq_section(s.get('faq', []), f'{E(s["name"])} <em>FAQ.</em>')}
 {xnav(P, D['services'], s, 'services', 'All services')}
 {cta(P, msg=f"Hi VShark, I'm interested in {s['name']}.")}
 {LIGHTBOX}'''
-    return page(P, s['name'], f"{s['name']} — {s['tagline']} VShark Solutions.", 'services', body, ('js/portfolio.js',))
+    return page(P, s['name'], f"{s['name']} — {s['tagline']} VShark Solutions.", 'services', body, ('js/portfolio.js',),
+                wa_msg=f"Hi VShark, I'm interested in {s['name']}.")
 
 def services_index():
     P = '../'
@@ -500,9 +535,11 @@ def products_page():
       </div>
       <p class="spec-note muted"><b>Recommended computer:</b> {E(D['productPc'])}. Specifications from the manufacturer and subject to change.</p>
     </section>
+{faq_section(D.get('productFaq', []), 'Buying a scanner: <em>FAQ.</em>')}
 {chr(10).join(dialogs)}
 {cta(P, 'Not sure which scanner fits?', 'Send us your parts and use case — we will recommend a model and can arrange a live demo.', 'Hi VShark, please help me choose a 3D scanner.')}'''
-    return page(P, 'Products — 3D Scanners', 'Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners from VShark Solutions — specifications, comparison and quotes.', 'products', body, ('js/products.js',))
+    return page(P, 'Products — 3D Scanners', 'Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners from VShark Solutions — specifications, comparison and quotes.', 'products', body, ('js/products.js',),
+                wa_msg='Hi VShark, I would like a quote or demo for a 3D scanner.')
 
 def portfolio_page():
     P = '../'
@@ -510,7 +547,7 @@ def portfolio_page():
     used_i = [s for s in D['industries'] if any(s['slug'] in p['industries'] for p in D['projects'])]
     chips = lambda key, items: f'<button class="chip is-on" type="button" data-f="{key}" data-v="">All</button>' + ''.join(f'<button class="chip" type="button" data-f="{key}" data-v="{x["slug"]}">{E(x["name"])}</button>' for x in items)
     cards = '\n'.join(proj_card(P, p) for p in D['projects'])
-    body = f'''{page_hero(P, [("Portfolio", None)], "( 04 ) — Portfolio", "Completed <em>projects.</em>", "A selection of scanning, engineering and visualisation work. Filter by service or industry — move the cursor over a Scan → CAD project to compare the scan with the finished model.")}
+    body = f'''{page_hero(P, [("Portfolio", None)], "( 04 ) — Portfolio", "Completed <em>projects.</em>", "A selection of scanning, engineering and visualisation work. Filter by service or industry. On a Scan → CAD project, hover or drag across the image to compare the scan with the finished model.")}
     <section class="section blk pf">
       <div class="pf__filters" data-reveal>
         <div class="pf__row"><span class="mono muted">Service</span><div class="pf__chips">{chips('service', used_s)}</div></div>
@@ -520,6 +557,7 @@ def portfolio_page():
       <div class="proj-grid proj-grid--pf" id="pfGrid">
 {cards}
       </div>
+      <div class="pf__more-wrap"><button class="btn btn--ghost pf__more" type="button" hidden><span>Show more projects</span></button></div>
       <p class="pf__empty muted" hidden>No projects match this combination yet — <a href="{P}contact.html">ask us for examples</a>.</p>
     </section>
 {cta(P)}

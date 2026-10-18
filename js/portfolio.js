@@ -19,14 +19,23 @@
       if (v && $(`.chip[data-f="${k}"][data-v="${CSS.escape(v)}"]`)) state[k] = v;
     });
 
+    // long lists are paged with a "Show more" button (8 at a time on phones, 12 elsewhere)
+    const more = $('.pf__more');
+    const PAGE = window.matchMedia('(max-width: 600px)').matches ? 8 : 12;
+    let limit = PAGE;
+
     function apply(push) {
       let shown = 0;
       cards.forEach((c) => {
         const ok = (!state.service || c.dataset.services.split(' ').includes(state.service)) &&
                    (!state.industry || c.dataset.industries.split(' ').includes(state.industry));
-        c.hidden = !ok;
         if (ok) shown++;
+        c.hidden = !ok || shown > limit;
       });
+      if (more) {
+        more.hidden = shown <= limit;
+        $('span', more).textContent = `Show more projects (${shown - limit})`;
+      }
       $$('.pf__chips .chip').forEach((b) => b.classList.toggle('is-on', state[b.dataset.f] === b.dataset.v));
       countEl.textContent = `${shown} project${shown === 1 ? '' : 's'}`;
       empty.hidden = shown > 0;
@@ -38,8 +47,15 @@
       }
       if (window.ScrollTrigger) ScrollTrigger.refresh();
     }
+    more?.addEventListener('click', () => {
+      const before = new Set(cards.filter((c) => !c.hidden));
+      limit += PAGE;
+      apply(false);
+      if (window.gsap) gsap.fromTo(cards.filter((c) => !c.hidden && !before.has(c)), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out', stagger: 0.04 });
+    });
     $$('.pf__chips .chip').forEach((b) => b.addEventListener('click', () => {
       state[b.dataset.f] = b.dataset.v;
+      limit = PAGE;
       apply(true);
       if (window.gsap) gsap.fromTo(cards.filter((c) => !c.hidden), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out', stagger: 0.04 });
     }));

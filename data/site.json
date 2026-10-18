@@ -59,7 +59,29 @@
         "jewellery",
         "education"
       ],
-      "products": true
+      "products": true,
+      "faq": [
+        [
+          "What accuracy can I expect for my part?",
+          "It depends on size, surface and setup. Share the part size and tolerance, and we'll tell you what's achievable and how we'll verify it."
+        ],
+        [
+          "Do shiny or black parts reduce accuracy?",
+          "They can be harder to scan. Blue-laser scanners handle many such surfaces well, and a light, removable matte spray is used when needed."
+        ],
+        [
+          "Is a higher-resolution scan more accurate?",
+          "Not necessarily. Resolution captures finer detail; accuracy is how close the measurements are to the true size. Both matter, but they are different."
+        ],
+        [
+          "Do you scan on site?",
+          "Yes. Large parts and installed equipment can be scanned at your facility in India or the UAE."
+        ],
+        [
+          "Can you scan highly polished gold jewellery?",
+          "Yes. Reflective surfaces need the right setup, and sometimes a temporary removable matte coating, which we discuss with you before scanning."
+        ]
+      ]
     },
     {
       "slug": "reverse-engineering",
@@ -87,7 +109,7 @@
       ],
       "deliverables": [
         "Parametric CAD (.STEP, .IGES, .X_T)",
-        "Native SolidWorks / Creo / NX",
+        "Scan data (.STL)",
         "2D drawings (.PDF, .DWG)",
         "Deviation report vs. scan"
       ],
@@ -96,7 +118,33 @@
         "aerospace",
         "healthcare"
       ],
-      "products": false
+      "products": false,
+      "faq": [
+        [
+          "What do I need to send to get a quote?",
+          "Clear photos of the part from several angles, approximate dimensions, the quantity you plan to make, and what you need delivered (CAD only, CAD and drawings, or inspection). If you have an old drawing, even a partial one, send that too."
+        ],
+        [
+          "Can you reverse engineer a broken or worn part?",
+          "Yes. We scan what remains and rebuild the missing or worn geometry using design intent, symmetry, mating parts and any information you can share."
+        ],
+        [
+          "Will the new part be identical to the original?",
+          "It will match the original design intent and fit. Where wear has changed the shape, we restore the original geometry rather than copying the wear."
+        ],
+        [
+          "Which CAD formats do you deliver?",
+          "STEP as standard, plus IGES, Parasolid and other neutral formats that open in SolidWorks, Creo, NX, CATIA and similar systems. We also supply the scan in STL."
+        ],
+        [
+          "Do you manufacture the replacement part as well?",
+          "We deliver CAD and drawings ready for manufacture. If needed, we can also coordinate 3D-printed prototypes or recommend manufacturing partners."
+        ],
+        [
+          "Do you scan on site?",
+          "Yes. Large parts and installed equipment can be scanned at your facility in India or the UAE."
+        ]
+      ]
     },
     {
       "slug": "scan-to-bim",
@@ -133,7 +181,25 @@
         "education",
         "healthcare"
       ],
-      "products": false
+      "products": false,
+      "faq": [
+        [
+          "Do you do the laser scanning for BIM projects?",
+          "Yes. Our team scans the building or plant room on site with terrestrial laser scanners suited to the space. If you already have a point cloud from your own survey team, we can model from that instead."
+        ],
+        [
+          "What software do you deliver BIM models in?",
+          "Autodesk Revit (RVT)."
+        ],
+        [
+          "How accurate is a Scan to BIM model?",
+          "The point cloud itself is highly accurate. Model accuracy depends on the LOD and modelling tolerances agreed for the project, which we define at the scoping stage."
+        ],
+        [
+          "How do you price Scan to BIM?",
+          "By area or volume, complexity and LOD. Photos, any existing drawings and a short description of the site (or a sample of your point cloud) are enough for an initial estimate."
+        ]
+      ]
     },
     {
       "slug": "class-a-surfacing",
@@ -161,7 +227,6 @@
       ],
       "deliverables": [
         "Class A surfaces (.IGES, .STEP)",
-        "Native Alias / ICEM models",
         "Surface-analysis reports",
         "Render-ready model"
       ],
@@ -169,7 +234,21 @@
         "automobile",
         "aerospace"
       ],
-      "products": false
+      "products": false,
+      "faq": [
+        [
+          "Can you create Class A surfaces from a 3D scan?",
+          "Yes. We scan the physical model or part, then build new Class A surfaces that follow the scan within an agreed tolerance, with clean G2/G3 continuity."
+        ],
+        [
+          "What's the difference between Class A surfacing and reverse engineering?",
+          "Reverse engineering focuses on accurate, manufacturable geometry. Class A surfacing adds strict control of surface continuity and reflection quality for visible surfaces."
+        ],
+        [
+          "Which file formats do you deliver?",
+          "Neutral formats such as STEP and IGES, which open in CATIA, NX, Alias and other platforms."
+        ]
+      ]
     },
     {
       "slug": "digital-metrology",
@@ -206,7 +285,21 @@
         "automobile",
         "healthcare"
       ],
-      "products": true
+      "products": true,
+      "faq": [
+        [
+          "Is 3D scanning accurate enough to replace a CMM?",
+          "For most castings, moulded parts and freeform surfaces, yes. For micron-level machined features, a CMM is still the better tool, and many companies combine both."
+        ],
+        [
+          "What do you need from us for an inspection?",
+          "The part (or access to it on site), the CAD model, and the drawing or tolerances to check against. If there is no CAD, we can compare two parts against each other, or against a \"golden\" sample."
+        ],
+        [
+          "How long does a 3D inspection take?",
+          "Scanning a typical part takes minutes to an hour. Reporting depends on how many features and GD&T checks you need."
+        ]
+      ]
     },
     {
       "slug": "3d-printing",
@@ -220,8 +313,8 @@
           "Physical parts in days to check form, fit and function before tooling."
         ],
         [
-          "Functional materials",
-          "Engineering plastics and resins chosen for strength, heat or detail."
+          "FDM and SLA printing",
+          "FDM engineering plastics for strong parts, SLA resins for fine detail."
         ],
         [
           "Print-ready preparation",
@@ -244,7 +337,25 @@
         "jewellery",
         "automobile"
       ],
-      "products": false
+      "products": false,
+      "faq": [
+        [
+          "Which 3D printing processes do you offer?",
+          "FDM and SLA. FDM suits strong, functional parts and fixtures; SLA resin suits fine detail, smooth surfaces and jewellery masters."
+        ],
+        [
+          "Can you print directly from a 3D scan?",
+          "For decorative or artistic objects, often yes, after mesh cleanup. For engineering parts, we usually create CAD first, so the print is accurate and editable."
+        ],
+        [
+          "What file do I need to send for printing?",
+          "STEP or STL is ideal. If you only have a physical part, we can scan it for you."
+        ],
+        [
+          "How long does a prototype take?",
+          "Small parts can often be printed in a few days. Scanning and CAD work add time depending on complexity. Contact us with details for a timeline."
+        ]
+      ]
     },
     {
       "slug": "product-rendering",
@@ -281,7 +392,25 @@
         "construction",
         "automobile"
       ],
-      "products": false
+      "products": false,
+      "faq": [
+        [
+          "What do you need to create a product render?",
+          "A CAD model or 3D scan of the product, plus reference photos or samples for materials, colours and finishes. If you only have sketches, we can model the product first."
+        ],
+        [
+          "Can you render a product that hasn't been made yet?",
+          "Yes, that is the main use. Renders made from CAD let you market, present or review a product before the first unit is built."
+        ],
+        [
+          "What can you deliver?",
+          "High-resolution stills, 360° turntables, exploded views and animations, plus web-ready image sets."
+        ],
+        [
+          "Do you render jewellery?",
+          "Yes. Metals and gemstones are rendered with true reflections and sparkle, so pieces can be shown and sold before they are made."
+        ]
+      ]
     }
   ],
   "industries": [
@@ -465,6 +594,28 @@
       "-10 °C to 40 °C",
       "-10 °C to 40 °C",
       "-10 °C to 40 °C"
+    ]
+  ],
+  "productFaq": [
+    [
+      "What is the price of a 3D scanner in India?",
+      "Pricing depends on the model, software and accessories. Contact us for a current quotation for Vertex3D, Vertex3D Pro or Vertex Tracker."
+    ],
+    [
+      "Can I see the scanner working before I buy?",
+      "Yes. We offer demos on your own parts, so you can judge the data quality yourself."
+    ],
+    [
+      "Which model is best for an engineering college?",
+      "For teaching and research labs, the Vertex3D usually offers the best balance of capability and cost. It handles the wide range of student and research parts well."
+    ],
+    [
+      "What's included when I buy a scanner?",
+      "Our engineers install the scanner at your site and train your team when it's delivered. The scanner comes with a 12-month warranty."
+    ],
+    [
+      "Do you also supply scanners in the UAE?",
+      "Contact us with your location and requirements and we will advise on availability and support."
     ]
   ],
   "productPc": "Windows 10 or later (64-bit) · NVIDIA GTX/RTX GPU (e.g. RTX 4060 or higher), 8 GB+ VRAM · Intel Core i7-13700H or better · 32 GB RAM or more",

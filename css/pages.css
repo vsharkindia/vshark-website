@@ -135,8 +135,29 @@
 @media (max-width: 640px) {
   .pf__row { grid-template-columns: 1fr; gap: 8px; }
   .pf__chips { flex-wrap: nowrap; overflow-x: auto; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) 4px; scrollbar-width: none; }
-  .pf__chips .chip { flex-shrink: 0; }
+  .pf__chips .chip { flex-shrink: 0; height: 40px; }
+  /* fade the right edge so it's clear the chip row scrolls */
+  .pf__chips { mask-image: linear-gradient(90deg, #000 85%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); }
+  .crumbs a { padding: 10px 0; }
 }
+.pf__more-wrap { display: flex; justify-content: center; margin-top: 28px; }
+.pf__more-wrap:has(.pf__more[hidden]) { display: none; }
+
+/* ---------- FAQ accordion ---------- */
+.faq__list { max-width: 900px; border-top: 1px solid var(--line); }
+.faq__item { border-bottom: 1px solid var(--line); }
+.faq__item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 4px; cursor: pointer; list-style: none;
+  font-family: var(--display); font-weight: 500; font-size: clamp(17px, 1.5vw, 21px); letter-spacing: -0.01em; color: var(--fg); transition: color .3s;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary:hover, .faq__item[open] summary { color: var(--accent); }
+.faq__item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.faq__item summary i { position: relative; flex-shrink: 0; width: 18px; height: 18px; }
+.faq__item summary i::before, .faq__item summary i::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: currentColor; transition: transform .4s var(--ease); }
+.faq__item summary i::after { transform: rotate(90deg); }
+.faq__item[open] summary i::after { transform: rotate(0deg); }
+.faq__a { padding: 0 4px 24px; max-width: 760px; color: var(--fg-2); }
 
 /* ---------- lightbox + compare slider ---------- */
 .lb { position: fixed; inset: 0; z-index: 9500; display: grid; grid-template-rows: 1fr auto; padding: 60px clamp(16px, 6vw, 100px) 24px; background: rgba(20,23,26,.94); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }

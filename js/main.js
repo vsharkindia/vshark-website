@@ -120,7 +120,7 @@
   const countEl = $('#loaderCount'), barEl = $('#loaderBar');
   const intro = gsap.timeline({ paused: true });
   intro
-    .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut' })
+    .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 0.8, ease: 'expo.inOut' })
     .add(() => { document.body.classList.remove('is-loading'); lenis?.start(); hero?.start(); }, '-=0.7')
     .from('.hero .line-mask > span', { yPercent: 110, duration: 1.3, ease: 'expo.out', stagger: 0.08 }, '-=0.5')
     .from('.svc-tab', { y: 24, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.06 }, '-=1.1')
@@ -129,19 +129,14 @@
     .from('.hud > div', { opacity: 0, duration: 1.2, stagger: 0.1 }, '-=0.9')
     .add(() => loader.remove());
 
+  // Don't hold the page for every image (that took ~4 s on phones): wait only for the web fonts, capped at 0.7 s.
   const prog = { v: 0 };
-  let loaded = false;
-  window.addEventListener('load', () => { loaded = true; });
-  if (document.readyState === 'complete') loaded = true;
-  const minTime = reduceMotion ? 0.2 : 1.8;
+  const fontsReady = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 700))]);
+  const minTime = reduceMotion ? 0.2 : 0.6;
   gsap.to(prog, {
     v: 90, duration: minTime, ease: 'power2.out',
     onUpdate: renderProg,
-    onComplete: function finish() {
-      const go = () => gsap.to(prog, { v: 100, duration: 0.4, ease: 'power1.out', onUpdate: renderProg, onComplete: () => intro.play() });
-      if (loaded) go();
-      else { window.addEventListener('load', go, { once: true }); setTimeout(() => { if (!loaded) { loaded = true; go(); } }, 4000); }
-    },
+    onComplete: () => fontsReady.then(() => gsap.to(prog, { v: 100, duration: 0.2, ease: 'power1.out', onUpdate: renderProg, onComplete: () => intro.play() })),
   });
   function renderProg() {
     countEl.textContent = String(Math.round(prog.v)).padStart(3, '0');
@@ -337,7 +332,17 @@
       if (!phoneItem.contains(e.target)) { phoneItem.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
     });
   }
-  gsap.from('.rail', { xPercent: 120, opacity: 0, duration: 1.1, ease: 'expo.out', delay: $('#loader') ? 2.4 : 0.4, clearProps: 'transform' });
+  gsap.from('.rail', { xPercent: 120, opacity: 0, duration: 1.1, ease: 'expo.out', delay: $('#loader') ? 1.3 : 0.4, clearProps: 'transform' });
+
+  /* ---------- Phone action bar: Call opens both numbers ---------- */
+  const mCall = $('.mbar__call');
+  if (mCall) {
+    const btn = $('.mbar__btn', mCall);
+    const set = (open) => { mCall.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+    btn.addEventListener('click', (e) => { e.stopPropagation(); set(!mCall.classList.contains('is-open')); });
+    document.addEventListener('click', (e) => { if (!mCall.contains(e.target)) set(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  }
 
   /* ---------- Footer big text ---------- */
   if ($('.footer__big')) gsap.from('.footer__big', { yPercent: 40, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
