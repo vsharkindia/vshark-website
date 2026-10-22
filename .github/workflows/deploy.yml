@@ -1,0 +1,52 @@
+# Uploads the website to the live server over SFTP/FTP. See DEPLOY.md, "Option B".
+# - Run it by hand first (Actions -> "Deploy to live server" -> Run workflow), after the server backup.
+# - Automatic deploys on every push to main start only once the repository variable AUTO_DEPLOY is "true".
+# - Files are uploaded and overwritten; nothing on the server is deleted.
+name: Deploy to live server
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency: deploy-live
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || vars.AUTO_DEPLOY == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check deployment settings
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          DIR: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          if [ -z "$HOST" ] || [ -z "$DIR" ]; then
+            echo "::error::Add the DEPLOY_HOST, DEPLOY_USER, DEPLOY_PASSWORD and DEPLOY_PATH secrets (see DEPLOY.md)."
+            exit 1
+          fi
+
+      - name: Install lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Upload site
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          PORT: ${{ secrets.DEPLOY_PORT }}
+          USER: ${{ secrets.DEPLOY_USER }}
+          LFTP_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+          DIR: ${{ secrets.DEPLOY_PATH }}
+          PROTO: ${{ vars.DEPLOY_PROTOCOL || 'sftp' }}
+        run: |
+          lftp -c "
+            set sftp:auto-confirm yes; set ftp:ssl-allow yes; set net:max-retries 2; set net:timeout 30;
+            open -u '$USER' --env-password ${PORT:+-p $PORT} $PROTO://$HOST;
+            mirror --reverse --parallel=4 --verbose \
+              --exclude-glob .git/ --exclude-glob .github/ --exclude-glob .claude/ \
+              --exclude-glob build/ --exclude-glob data/ --exclude-glob collateral/ \
+              --exclude-glob '*.md' --exclude-glob netlify.toml --exclude-glob .gitignore \
+              --exclude-glob enquiry-config.php \
+              ./ '$DIR'
+          "

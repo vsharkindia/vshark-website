@@ -3,3 +3,6 @@
 *.zip
 .DS_Store
 Thumbs.db
+
+# server-only secrets (mail password for the contact form)
+enquiry-config.php
