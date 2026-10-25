@@ -566,3 +566,47 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .dist-badge { display: inline-flex; flex-direction: column; gap: 4px; padding: 12px 18px 12px 16px; border-left: 3px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; font-family: var(--display); font-weight: 500; font-size: 15px; color: var(--fg); box-shadow: 0 10px 26px -18px rgba(28,33,37,.35); }
 .dist-badge .mono { color: var(--accent); }
 .sec-head .dist-badge { margin-top: 14px; }
+
+/* ---------- Header WhatsApp button ---------- */
+.header__actions { display: flex; align-items: center; gap: 10px; }
+.header__wa { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: #25d366; color: #fff; box-shadow: 0 8px 20px -10px rgba(37,211,102,.7); transition: transform .3s var(--ease), background .3s; }
+.header__wa svg { width: 21px; height: 21px; fill: currentColor; }
+.header__wa:hover { transform: scale(1.08); background: #1ebe5b; }
+
+/* ---------- Floating WhatsApp button (every page, bottom-right) ---------- */
+.wa-float { position: fixed; right: 22px; bottom: calc(22px + env(safe-area-inset-bottom)); z-index: 860; width: 60px; height: 60px; border-radius: 50%;
+  display: grid; place-items: center; background: #25d366; color: #fff; box-shadow: 0 12px 30px -8px rgba(37,211,102,.6);
+  transition: transform .35s var(--ease), background .3s; }
+.wa-float svg { width: 32px; height: 32px; fill: currentColor; }
+.wa-float:hover { transform: scale(1.08); background: #1ebe5b; }
+.wa-float::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: waPulse 2.6s ease-out infinite; }
+@keyframes waPulse { 0% { transform: scale(1); opacity: .7; } 80%, 100% { transform: scale(1.5); opacity: 0; } }
+body.is-loading .wa-float { opacity: 0; transform: translateY(20px); }
+@media (max-width: 760px) {
+  .wa-float { right: 14px; bottom: calc(84px + env(safe-area-inset-bottom)); width: 54px; height: 54px; } /* sits above the phone action bar */
+  .wa-float svg { width: 29px; height: 29px; }
+}
+@media (prefers-reduced-motion: reduce) { .wa-float::before { animation: none; } }
+
+/* ---------- Cookie consent banner ---------- */
+.cookie { position: fixed; left: 22px; bottom: calc(22px + env(safe-area-inset-bottom)); z-index: 9000; width: min(460px, calc(100vw - 120px));
+  display: flex; flex-direction: column; gap: 14px; padding: 18px 20px; background: #fff; color: var(--fg);
+  border: 1px solid rgba(28,33,37,.14); border-radius: 16px; box-shadow: 0 24px 50px -20px rgba(28,33,37,.45);
+  opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity .35s, transform .45s var(--ease); }
+.cookie.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.cookie__text { font-size: 14px; line-height: 1.55; color: var(--fg-2); }
+.cookie__text b { display: block; font-family: var(--display); font-size: 16px; color: var(--fg); margin-bottom: 4px; }
+.cookie__text a { color: var(--accent); text-decoration: underline; }
+.cookie__actions { display: flex; gap: 10px; justify-content: flex-end; }
+.cookie__btn { height: 42px; padding: 0 22px; border-radius: 100px; font-family: var(--display); font-weight: 500; font-size: 14.5px; background: var(--accent); color: #fff; border: 1px solid var(--accent); cursor: pointer; transition: background .25s, color .25s; }
+.cookie__btn:hover { background: var(--fg); border-color: var(--fg); }
+.cookie__btn--ghost { background: #fff; color: var(--fg); border-color: rgba(28,33,37,.2); }
+.cookie__btn--ghost:hover { background: var(--bg-2); color: var(--fg); border-color: rgba(28,33,37,.35); }
+@media (max-width: 760px) {
+  .cookie { left: 10px; right: 10px; width: auto; bottom: calc(150px + env(safe-area-inset-bottom)); }  /* above the action bar and floating button */
+  .cookie__actions .cookie__btn { flex: 1; }
+}
+
+/* the decorative "VSHARK" lettering must never cover the footer links */
+.footer__big { pointer-events: none; }
+.footer__bottom { position: relative; z-index: 1; }
