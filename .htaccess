@@ -27,7 +27,7 @@ AddDefaultCharset UTF-8
 
   # 3. Source and tooling files are not part of the public website
   RewriteRule ^(build|data|collateral|\.github|\.git)(/|$) - [F,L]
-  RewriteRule ^(DEPLOY\.md|README\.txt|netlify\.toml|enquiry-config(\.sample)?\.php)$ - [F,L]
+  RewriteRule ^([^/]+\.md|README\.txt|netlify\.toml|enquiry-config(\.sample)?\.php)$ - [F,L]
 
   # 4. Clean URLs: /about serves about.html, /services/3d-scanning serves services/3d-scanning.html
   RewriteCond %{REQUEST_FILENAME} !-f
