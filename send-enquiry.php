@@ -87,6 +87,13 @@ $lines = [
     'Message:',
     $message,
 ];
+// Ad attribution (hidden fields filled from the visitor's landing URL)
+$attr = [];
+foreach (['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'landing_page', 'referrer'] as $k) {
+    $v = one_line(field($k, 300));
+    if ($v !== '') $attr[] = str_pad($k . ':', 14) . $v;
+}
+if ($attr) array_push($lines, '', 'Source:', ...$attr);
 $text = implode("\r\n", $lines);
 
 $enc = fn(string $s): string => '=?UTF-8?B?' . base64_encode($s) . '?=';
@@ -156,5 +163,6 @@ if (!empty($smtp['host'])) {
 }
 
 if (!$sent) back('send');
-header('Location: /thanks.html', true, 303);
+// ?sent=1 marks a real submission: the thanks page fires the Lead / generate_lead conversion only then
+header('Location: /thanks.html?sent=1', true, 303);
 exit;

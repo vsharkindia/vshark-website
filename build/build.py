@@ -41,7 +41,9 @@ ICON = {
  'file': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M12 12v6M9 15l3 3 3-3"/></svg>',
 }
 A = ICON['arrow']
-wa_link = lambda msg='': f'https://wa.me/{C["whatsapp"]}' + (f'?text={quote(msg)}' if msg else '')
+# default pre-filled WhatsApp message (from the Meta ads brief); context-specific links pass their own
+WA_DEFAULT = 'Hi VShark, I need 3D scanning / reverse engineering for: '
+wa_link = lambda msg=None: f'https://wa.me/{C["whatsapp"]}?text={quote(WA_DEFAULT if msg is None else msg, safe="")}'
 
 # ---------------------------------------------------------------- meta (handoff part C)
 META = {
@@ -143,8 +145,11 @@ def header(P, active=''):
       {link('about', f'{P}about.html', 'About')}
       {link('contact', f'{P}contact.html', 'Contact')}
     </nav>
-    <a href="{P}contact.html" class="btn btn--sm btn--accent header__cta magnetic"><span>Enquire Now</span></a>
-    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    <div class="header__actions">
+      <a href="{wa_link()}" class="header__wa" target="_blank" rel="noopener" aria-label="Chat with VShark on WhatsApp" data-wa-location="header">{ICON['wa']}</a>
+      <a href="{P}contact.html" class="btn btn--sm btn--accent header__cta magnetic"><span>Enquire Now</span></a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
   </header>
 
   <!-- MOBILE MENU -->
@@ -159,7 +164,7 @@ def header(P, active=''):
     </nav>
     <div class="menu__cta">
       <a class="btn btn--accent" href="{P}contact.html"><span>Get a quote</span>{A}</a>
-      <a class="btn btn--ghost" href="{wa_link('Hi VShark, I would like to discuss a project.')}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp</span></a>
+      <a class="btn btn--ghost" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp</span></a>
     </div>
     <div class="menu__foot mono">
       <a href="mailto:{C['email']}">{C['email']}</a>
@@ -168,7 +173,7 @@ def header(P, active=''):
   </div>
   <!-- /@header -->'''
 
-def footer(P, msg='Hi VShark, I would like to discuss a project.'):
+def footer(P, msg=WA_DEFAULT):
     phones_f = ''.join(f'<a href="tel:{p["tel"]}">{ICON["phone"]}{E(p["display"])} <small class="mono">{E(p["label"])}</small></a>' for p in C['phones'])
     phones_r = ''.join(f'<a href="tel:{p["tel"]}"><small class="mono">{E(p["label"])}</small>{E(p["display"])}</a>' for p in C['phones'])
     S = C['social']
@@ -200,7 +205,7 @@ def footer(P, msg='Hi VShark, I would like to discuss a project.'):
     <div class="footer__big" aria-hidden="true">VSHARK</div>
     <div class="footer__bottom mono">
       <span>© <span id="year">2026</span> VShark Solutions Private Limited</span>
-      <span><a href="{P}about.html">About</a> · <a href="{P}privacy-policy.html">Privacy Policy</a></span>
+      <span><a href="{P}about.html">About</a> · <a href="{P}privacy-policy.html">Privacy Policy</a> · <a href="{P}privacy-policy.html#cookies-and-analytics" data-cookie-settings>Cookie settings</a></span>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
@@ -218,6 +223,9 @@ def footer(P, msg='Hi VShark, I would like to discuss a project.'):
     <a class="rail__item rail__btn" href="{S['linkedin']}" target="_blank" rel="noopener" aria-label="LinkedIn">{ICON['in']}<span class="rail__label">LinkedIn</span></a>
   </aside>
 
+  <!-- FLOATING WHATSAPP BUTTON — every page, bottom-right -->
+  <a class="wa-float" href="{wa_link()}" target="_blank" rel="noopener" aria-label="Chat with VShark on WhatsApp" data-wa-location="floating_button">{ICON['wa']}</a>
+
   <!-- MOBILE ACTION BAR — phones only; replaces the rail -->
   <nav class="mbar" aria-label="Quick contact">
     <div class="mbar__call">
@@ -229,7 +237,7 @@ def footer(P, msg='Hi VShark, I would like to discuss a project.'):
   </nav>
   <!-- /@footer -->'''
 
-def page(P, rel, active, body, scripts=(), wa_msg='Hi VShark, I would like to discuss a project.'):
+def page(P, rel, active, body, scripts=(), wa_msg=WA_DEFAULT):
     js = '\n'.join(f'  <script src="{asset(s, P)}"></script>' for s in ('vendor/gsap.min.js', 'vendor/ScrollTrigger.min.js', 'vendor/lenis.min.js', *scripts, 'js/main.js'))
     return f'''<!doctype html>
 <html lang="en">
@@ -245,6 +253,7 @@ def page(P, rel, active, body, scripts=(), wa_msg='Hi VShark, I would like to di
   <link rel="stylesheet" href="{asset('fonts/fonts.css', P)}">
   <link rel="stylesheet" href="{asset('css/style.css', P)}">
   <link rel="stylesheet" href="{asset('css/pages.css', P)}">
+  <script src="{asset('js/consent.js', P)}" defer></script>
 </head>
 <body class="inner">
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
@@ -279,7 +288,7 @@ def page_hero(P, crumb_items, tag, title_html, lead, image=None, side='', alt=''
       {img}
     </section>'''
 
-def cta(P, title='Have a part, a building or an idea?', text='Tell us what you need — we usually reply within one working day.', msg='Hi VShark, I would like to discuss a project.'):
+def cta(P, title='Have a part, a building or an idea?', text='Tell us what you need — we usually reply within one working day.', msg=WA_DEFAULT):
     return f'''    <section class="cta-band">
       <div class="cta-band__inner">
         <h2 class="h2">{title}</h2>
@@ -662,7 +671,8 @@ def md(text):
         while i < len(lines):
             l = lines[i]
             if l.startswith('## '):
-                out.append(f'<h2>{inline(l[3:])}</h2>'); i += 1
+                hid = re.sub(r'[^a-z0-9]+', '-', re.sub(r'^\d+\.\s*', '', l[3:]).lower()).strip('-')  # '6. Cookies and analytics' -> cookies-and-analytics
+                out.append(f'<h2 id="{hid}">{inline(l[3:])}</h2>'); i += 1
             elif l.startswith('- '):
                 items = []
                 while i < len(lines) and lines[i].startswith('- '):
@@ -791,6 +801,8 @@ def contact_page():
       <div class="contact">
         <form class="cform" id="enquiry" name="enquiry" method="POST" action="send-enquiry.php" data-netlify="true" netlify-honeypot="company_url" enctype="multipart/form-data" data-reveal>
           <input type="hidden" name="form-name" value="enquiry">
+          <!-- ad attribution, filled in by js/consent.js from the landing URL -->
+          {''.join(f'<input type="hidden" name="{k}" data-attr>' for k in ('utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'landing_page', 'referrer'))}
           <p class="cform__hp" aria-hidden="true"><label>Leave empty <input name="company_url" tabindex="-1" autocomplete="off"></label></p>
           <div class="cform__grid">
             <label class="field"><span>Name *</span><input name="name" required autocomplete="name"></label>
@@ -807,7 +819,7 @@ def contact_page():
           <button class="btn btn--accent magnetic" type="submit"><span>Send enquiry</span>{A}</button>
         </form>
         <aside class="contact__side" data-reveal>
-          <a class="ccard ccard--wa" href="{wa_link('Hi VShark, I would like to discuss a project.')}" target="_blank" rel="noopener">{ICON['wa']}<span><small class="mono">Fastest</small>Chat on WhatsApp</span></a>
+          <a class="ccard ccard--wa" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span><small class="mono">Fastest</small>Chat on WhatsApp</span></a>
           <a class="ccard" href="mailto:{C['email']}">{ICON['mail']}<span><small class="mono">Email</small>{C['email']}</span></a>
           {phones}
           {addr}
