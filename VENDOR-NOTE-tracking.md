@@ -18,7 +18,11 @@ form-handler points below.
 4. **Do not strip query strings** (`?utm_…`, `?fbclid=…`, `?gclid=…`) in redirects or caching rules. They currently survive.
 5. **Pick one host name.** Both `vsharksolutions.com` and `www.vsharksolutions.com` currently load the site without
    redirecting. Please 301-redirect one to the other (the GA4 stream uses **www**), keeping the query string.
-6. **Content-Security-Policy:** if you add or tighten a CSP, allow `connect.facebook.net`, `www.facebook.com`,
+6. **Apply `.htaccess` (or equivalent rules).** Right now `https://www.vsharksolutions.com/DEPLOY.md` opens publicly, so the
+   repository's `.htaccess` is not in effect. It blocks internal files (`*.md` notes, `build/`, `data/`, `netlify.toml`,
+   `enquiry-config.php`) and adds the www/HTTPS redirect and security headers. If you can't use it, please block those paths another way,
+   or don't upload them (see the exclude list in `DEPLOY.md`).
+7. **Content-Security-Policy:** if you add or tighten a CSP, allow `connect.facebook.net`, `www.facebook.com`,
    `www.googletagmanager.com`, `*.google-analytics.com`, `*.analytics.google.com` and `stats.g.doubleclick.net`.
 
 ## What is installed (for reference)
