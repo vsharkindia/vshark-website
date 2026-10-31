@@ -1,6 +1,15 @@
+# PREVIEW SITE ONLY. The live site is hosted by the vendor (Apache/LiteSpeed): see DEPLOY.md and .htaccess.
 # Static site — no build step, serve the repo root as-is.
 [build]
   publish = "."
+
+# The enquiry form posts to send-enquiry.php on the live server. Here Netlify Forms captures the
+# submission and then sends the visitor to the form's action URL, which we show as the thank-you page.
+[[redirects]]
+  from = "/send-enquiry.php"
+  to = "/thanks.html"
+  status = 200
+  force = true
 
 # PREVIEW ONLY: keep the test site out of search engines.
 # Remove this block when the site goes live on vsharksolutions.com.
