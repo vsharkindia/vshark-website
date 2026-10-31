@@ -18,7 +18,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 D = json.load(open(ROOT / 'data' / 'site.json', encoding='utf-8'))
 E = lambda t: html.escape(str(t), quote=True)
-IND = {i['slug']: i for i in D['industries']}
+IND = {i['slug']: i for i in D['industries'] + D.get('filterIndustries', [])}
 PRJ = {p['slug']: p for p in D['projects']}
 C = D['contact']
 P = '../'          # pages live in collateral/, assets in the site root
@@ -68,7 +68,7 @@ def jpeg(path, size=1100):
     if not path.endswith('.webp'):
         return P + path
     from PIL import Image
-    src, out = ROOT / path, HERE / 'assets' / (Path(path).stem + '.jpg')
+    src, out = ROOT / path, HERE / 'assets' / (Path(path).stem + ('' if size == 1100 else f'-{size}') + '.jpg')
     USED.add(out.name)
     if not out.exists() or out.stat().st_mtime < src.stat().st_mtime:
         out.parent.mkdir(exist_ok=True)
@@ -520,6 +520,149 @@ def scanners_brochure():
 '''
 
 # ================================================================ PowerPoint export
+# ================================================================ portfolios (A4, for customers with a specific need)
+SVC = {s['slug']: s for s in D['services']}
+PORTFOLIOS = {
+    're': dict(html='portfolio-reverse-engineering.html', pdf='VShark-Portfolio-Reverse-Engineering.pdf', service='reverse-engineering',
+               title='3D Scanning &amp; <em>Reverse Engineering</em>', plain='3D Scanning & Reverse Engineering',
+               lead='Worn, legacy and undocumented parts captured with high-accuracy 3D scanning and rebuilt as editable, manufacturable CAD — delivered as STEP and other neutral formats.',
+               per_page=4, layout='three',
+               ask=('Have a part with <em>no drawing?</em>',
+                    'Send clear photos from several angles, approximate dimensions, the quantity you plan to make and what you need delivered: CAD only, CAD and drawings, or inspection. If you have an old drawing, even a partial one, send that too.')),
+    'qc': dict(html='portfolio-inspection.html', pdf='VShark-Portfolio-Inspection.pdf', service='digital-metrology',
+               title='3D Scanning &amp; <em>Inspection</em>', plain='3D Scanning & Inspection',
+               lead='Manufactured parts scanned and compared with their CAD, so you see exactly where a part is in or out of tolerance — fast, full-surface and without contact.',
+               per_page=2, layout='overlay',
+               ask=('Need a part <em>inspected?</em>',
+                    'Send the part (or give us access to it on site), the CAD model, and the drawing or tolerances to check against. If there is no CAD, we can compare two parts against each other, or against a "golden" sample.')),
+}
+
+def pf_projects(cfg):
+    return [p for p in D['projects'] if cfg['service'] in p['services']]
+
+def pf_views(p):
+    """(image, label) list for a project: scan, CAD, overlay — or the first gallery images."""
+    if p['kind'] == 'pair':
+        v = [(p['before'], 'Scan'), (p['after'], 'CAD')]
+        v += [(src, lab) for lab, src in p.get('views', [])[:1]]
+        return v
+    return [(i, '') for i in p['images'][:3]]
+
+def pf_alt(p, label):
+    part = p.get('part', p['title'])
+    return {'Scan': f'3D scan of {part.lower()}', 'CAD': f'CAD model of {part.lower()}'}.get(label, f'{label} — {p["title"]}' if label else p['title'])
+
+def pf_fig(p, src, label, size=700, cls=''):
+    cap = f'<figcaption>{E(label)}</figcaption>' if label else ''
+    c = f' class="{cls}"' if cls else ''
+    return f'<figure{c}><img src="{E(jpeg(src, size))}" alt="{E(pf_alt(p, label))}">{cap}</figure>'   # jpeg() once: img() would convert again
+
+def pf_tags(p):
+    names = [IND[i]['name'] for i in p['industries'] if i in IND] + [SVC[s]['name'] for s in p['services'] if s in SVC]
+    return ''.join(f'<i>{E(n)}</i>' for n in names)
+
+def pf_card(p, n, layout):
+    v = pf_views(p)
+    head = f'<header><span class="mono">{n:02d}</span><h3>{E(p["title"])}</h3><span class="pc__tags">{pf_tags(p)}</span></header>'
+    if layout == 'overlay' and len(v) == 3:
+        (s, ls), (c, lc), (o, lo) = v
+        figs = pf_fig(p, o, lo or 'Overlay', 1100, 'big') + pf_fig(p, s, ls) + pf_fig(p, c, lc)
+        return f'<article class="pc pc--big">{head}<div class="pc__grid">{figs}</div><p>{E(p["summary"])}</p></article>'
+    figs = ''.join(pf_fig(p, src, lab) for src, lab in v)
+    return f'<article class="pc">{head}<div class="pc__imgs">{figs}</div><p>{E(p["summary"])}</p></article>'
+
+def pf_foot(n, total, plain):
+    return (f'<div class="foot">{img("img/vshark-logo.png", "VShark")}'
+            f'<span class="mono">{E(plain)} · Portfolio</span><span class="mono">{n:02d} / {total:02d}</span></div>')
+
+def portfolio(key):
+    cfg = PORTFOLIOS[key]
+    s = SVC[cfg['service']]
+    projects = pf_projects(cfg)
+    pages = [projects[i:i + cfg['per_page']] for i in range(0, len(projects), cfg['per_page'])]
+    total = 2 + len(pages) + 1
+    inds = {}
+    for p in projects:
+        for i in p['industries']:
+            if i in IND:
+                inds[i] = inds.get(i, 0) + 1
+
+    # --- cover
+    hero = next(p for p in projects if p['kind'] == 'pair' and p.get('views'))
+    hv = pf_views(hero)
+    media = (pf_fig(hero, hv[2][0], hv[2][1], 1100, 'wide') if key == 'qc' else
+             pf_fig(hero, hv[0][0], 'Scan', 1100) + pf_fig(hero, hv[1][0], 'CAD', 1100))
+    st = [(str(len(projects)), 'Projects in this portfolio'), (str(len(inds)), 'Industries'),
+          ('0.02 mm', 'Scanner precision, up to'), ('IN · AE', 'On-site scanning')]
+    stats = ''.join(f'<div><b>{E(a)}</b><span class="mono">{E(l)}</span></div>' for a, l in st)
+    cover = f'''<section class="page pf-cover">
+  <div class="pf-cover__top">{img('img/vshark-logo-white.png', 'VShark Solutions Pvt Ltd')}<span class="mono">Project portfolio · {__import__('datetime').date.today():%B %Y}</span></div>
+  <div class="pf-cover__body">
+    <p class="mono">Portfolio</p>
+    <h1>{cfg['title']}</h1>
+    <p class="pf-cover__lead">{E(cfg['lead'])}</p>
+  </div>
+  <div class="pf-cover__media{' pf-cover__media--one' if key == 'qc' else ''}">{media}</div>
+  <p class="pf-cover__cap mono">Shown: {E(hero['title'])}</p>
+  <div class="pf-cover__stats">{stats}</div>
+  <div class="pf-cover__foot mono"><span>{E(C['email'])}</span><span>{phones()}</span><span>{SITE}</span></div>
+</section>'''
+
+    # --- what we deliver
+    pts = ''.join(f'<div class="pf-pt"><b>{E(a)}</b><p>{E(b)}</p></div>' for a, b in s['points'])
+    dels = ''.join(f'<span class="pf-chip">{E(d)}</span>' for d in s['deliverables'])
+    steps = ''.join(f'<div class="step"><span class="mono">Step {i:02d}</span><b>{E(t)}</b><p>{E(d)}</p></div>' for i, (t, d) in enumerate(PROCESS, 1))
+    ind_chips = ''.join(f'<span class="pf-chip pf-chip--line">{E(IND[i]["name"])} <small>{n}</small></span>' for i, n in sorted(inds.items(), key=lambda x: -x[1]))
+    faq = ''.join(f'<div class="pf-q"><b>{E(q)}</b><p>{E(a)}</p></div>' for q, a in s.get('faq', [])[:3])
+    feature = f'<figure class="pf-feature"><img src="{E(jpeg(s["wide"], 1400))}" alt="{E(s["alt"])}"></figure>' if s.get('wide') else ''
+    intro = f'''<section class="page pf-intro-page">
+  <div class="pad back-top">
+    <div class="sec"><span class="mono">01</span><h2>What we deliver</h2><p>{E(s['tagline'])}</p></div>
+    <p class="pf-intro">{E(s['intro'])}</p>
+    <div class="pf-pts">{pts}</div>
+    <div class="sec"><span class="mono">02</span><h2>Deliverables</h2></div>
+    <div class="pf-chips">{dels}</div>
+    <div class="sec"><span class="mono">03</span><h2>How we work</h2><p>Scan to solution in four steps.</p></div>
+    <div class="process">{steps}</div>
+    <div class="sec"><span class="mono">04</span><h2>Industries in this portfolio</h2></div>
+    <div class="pf-chips">{ind_chips}</div>
+    <div class="sec"><span class="mono">05</span><h2>Common questions</h2></div>
+    <div class="pf-faq">{faq}</div>
+    {feature}
+  </div>
+  {pf_foot(2, total, cfg['plain'])}
+</section>'''
+
+    # --- project pages
+    body, n = [], 0
+    for k, chunk in enumerate(pages):
+        cards = []
+        for p in chunk:
+            n += 1
+            cards.append(pf_card(p, n, cfg['layout']))
+        first, last = n - len(chunk) + 1, n
+        body.append(f'''<section class="page">
+  <div class="pad back-top">
+    <div class="sec"><span class="mono">Projects</span><h2>{first:02d}–{last:02d} <em>of {len(projects)}</em></h2><p>Real parts scanned and engineered by the VShark team.</p></div>
+    <div class="pc-list pc-list--{cfg['layout']}">{''.join(cards)}</div>
+  </div>
+  {pf_foot(3 + k, total, cfg['plain'])}
+</section>''')
+
+    # --- back page
+    others = ''.join(f'<li>{E(x["name"])}</li>' for x in D['services'] if x['slug'] not in (cfg['service'], '3d-scanning'))
+    back = f'''<section class="page pf-back">
+  <div class="pf-back__body">
+    {img('img/vshark-logo-white.png', 'VShark Solutions Pvt Ltd', 'pf-back__logo')}
+    <h2>{cfg['ask'][0]}</h2>
+    <p>{E(cfg['ask'][1])}</p>
+    <p class="pf-back__note">We usually reply within one working day. NDAs on request — your files are used only for your project.</p>
+    <div class="pf-back__also"><span class="mono">Also from VShark</span><ul>{others}</ul></div>
+  </div>
+  {b_cta('Let&rsquo;s start <em>your project.</em>', 'On-site scanning in India and the UAE. Send photos or drawings for a free quote.')}
+</section>'''
+    return b_head(cfg['plain'] + ' Portfolio') + cover + intro + ''.join(body) + back + '\n</body></html>\n'
+
 def deck_data():
     """Everything build_pptx.js needs, with image paths relative to collateral/."""
     pj = lambda k: PRJ[k]
@@ -584,6 +727,7 @@ if __name__ == '__main__':
     OUT = [('presentation.html', deck, 'VShark-Presentation.pdf'),
            ('brochure-services.html', services_brochure, 'VShark-Brochure-Services.pdf'),
            ('brochure-scanners.html', scanners_brochure, 'VShark-Brochure-Scanners.pdf')]
+    OUT += [(c['html'], (lambda k=k: portfolio(k)), c['pdf']) for k, c in PORTFOLIOS.items()]
     for name, build, _ in OUT:
         body = build()
         (HERE / name).write_text(body, encoding='utf-8', newline='\n')

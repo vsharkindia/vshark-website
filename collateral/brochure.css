@@ -181,6 +181,81 @@ em { font-style: normal; color: var(--brand); }
 .svc-names li { font-family: var(--display); font-weight: 500; font-size: 10.5px; padding: 4px 0; border-bottom: 1px solid var(--line); }
 .svc-names .mono { color: var(--brand); margin-right: 6px; }
 
+/* ---------- Portfolios ---------- */
+.pf-cover { background: var(--ink); color: #fff; padding: 40px 40px 26px; }
+.pf-cover__top { display: flex; justify-content: space-between; align-items: center; }
+.pf-cover__top img { height: 30px; width: auto; }
+.pf-cover__top .mono { color: rgba(255,255,255,.55); }
+.pf-cover__body { margin: auto 0 30px; }
+.pf-cover__body > .mono { color: var(--brand-lt); margin-bottom: 12px; }
+.pf-cover h1 { font-family: var(--display); font-weight: 500; font-size: 52px; line-height: .98; letter-spacing: -.035em; }
+.pf-cover h1 em { color: var(--brand-lt); }
+.pf-cover__lead { margin-top: 18px; max-width: 54ch; color: rgba(255,255,255,.72); font-size: 12.5px; line-height: 1.6; }
+.pf-cover__media { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pf-cover__media--one { grid-template-columns: 1fr; }
+.pf-cover__media figure { position: relative; border-radius: 8px; overflow: hidden; background: #f2f2f2; }
+.pf-cover__media img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.pf-cover__media--one img { aspect-ratio: 16 / 9; }
+.pf-cover__media figcaption, .pc figcaption { position: absolute; left: 7px; top: 7px; font-family: var(--mono); font-size: 7px; letter-spacing: .1em; text-transform: uppercase; background: rgba(21,25,28,.8); color: #fff; padding: 3px 6px; border-radius: 3px; }
+.pf-cover__media figure:nth-child(2) figcaption { background: var(--brand); }
+.pf-cover__cap { margin-top: 8px; color: rgba(255,255,255,.45); font-size: 7.5px; }
+.pf-cover__stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 44px; border-top: 1px solid rgba(255,255,255,.14); }
+.pf-cover__stats div { padding: 16px 12px 14px 0; }
+.pf-cover__stats b { display: block; font-family: var(--display); font-weight: 500; font-size: 24px; letter-spacing: -.03em; }
+.pf-cover__stats .mono { color: rgba(255,255,255,.5); font-size: 7.5px; }
+.pf-cover__foot { display: flex; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.55); font-size: 7.5px; }
+
+.pf-intro { font-family: var(--display); font-size: 15px; line-height: 1.45; letter-spacing: -.01em; color: var(--fg); margin-bottom: 16px; }
+.pf-pts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; margin-bottom: 22px; }
+.pf-pt { border-top: 1.5px solid var(--line); padding-top: 8px; }
+.pf-pt b { display: block; font-family: var(--display); font-weight: 500; font-size: 12.5px; margin-bottom: 2px; }
+.pf-pt p { font-size: 9.5px; color: var(--muted); line-height: 1.45; }
+.pf-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+.pf-chip { font-size: 9.5px; padding: 5px 11px; border-radius: 100px; background: var(--bg); color: var(--fg-2); }
+.pf-chip--line { background: none; border: 1px solid var(--line); }
+.pf-chip small { color: var(--brand); font-family: var(--mono); margin-left: 3px; }
+.pf-intro + .pf-pts, .process { margin-bottom: 22px; }
+.pf-faq { display: grid; gap: 10px; }
+.pf-feature { position: relative; flex: 1; min-height: 160px; margin-top: 18px; border-radius: 8px; overflow: hidden; background: #f2f2f2; }
+.pf-feature img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.pf-intro-page .pad { flex: 1; display: flex; flex-direction: column; padding-bottom: 22px; }
+.pf-q b { display: block; font-family: var(--display); font-weight: 500; font-size: 12px; }
+.pf-q p { font-size: 9.5px; color: var(--muted); line-height: 1.5; }
+
+.pc-list { display: grid; gap: 16px; }
+.pc { break-inside: avoid; }
+.pc header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.pc header .mono { color: var(--brand); }
+.pc h3 { font-family: var(--display); font-weight: 500; font-size: 14px; letter-spacing: -.01em; }
+.pc__tags { margin-left: auto; display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+.pc__tags i { font-style: normal; font-family: var(--mono); font-size: 6.8px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--bg); padding: 2px 6px; border-radius: 3px; }
+.pc__imgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.pc figure { position: relative; border-radius: 6px; overflow: hidden; background: #f2f2f2; }
+.pc img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+.pc figure:nth-child(2) figcaption { background: var(--brand); }
+.pc > p { margin-top: 5px; font-size: 9.5px; color: var(--fg-2); }
+.pc--big .pc__grid { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 6px; }
+.pc--big .big { grid-row: span 2; }
+.pc--big .big img { height: 100%; }
+.pc--big figure:nth-child(2) figcaption { background: rgba(21,25,28,.8); }
+.pc--big figure:nth-child(3) figcaption { background: var(--brand); }
+.pc--big .big figcaption { background: var(--brand); }
+.pc-list--overlay { gap: 30px; }
+.pc--big h3 { font-size: 16px; }
+.pc--big > p { font-size: 10.5px; }
+
+.pf-back { background: var(--ink); color: #fff; }
+.pf-back__body { padding: 60px 40px 30px; flex: 1; display: flex; flex-direction: column; }
+.pf-back__logo { height: 32px; width: auto; align-self: flex-start; margin-bottom: 120px; }
+.pf-back h2 { font-family: var(--display); font-weight: 500; font-size: 46px; line-height: 1; letter-spacing: -.035em; max-width: 12ch; }
+.pf-back h2 em { color: var(--brand-lt); }
+.pf-back__body > p { margin-top: 22px; max-width: 58ch; color: rgba(255,255,255,.75); font-size: 13px; line-height: 1.6; }
+.pf-back__note { font-size: 11px !important; color: rgba(255,255,255,.5) !important; }
+.pf-back__also { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.14); }
+.pf-back__also .mono { color: rgba(255,255,255,.45); }
+.pf-back__also ul { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 8px; font-family: var(--display); font-size: 12px; }
+.pf-back .cta { border-top: 1px solid rgba(255,255,255,.14); }
+
 /* ---------- Screen: pages stacked; Print: A4 ---------- */
 @media screen {
   body { padding: 24px 0; }
