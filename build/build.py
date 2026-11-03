@@ -49,6 +49,8 @@ wa_link = lambda msg=None: f'https://wa.me/{C["whatsapp"]}?text={quote(WA_DEFAUL
 META = {
     '': ('3D Scanning & Reverse Engineering Services | VShark Solutions',
          '3D scanning, reverse engineering, Scan to BIM, Class A surfacing and 3D inspection services in India and the UAE. Authorised JINUOSH Vertex scanner distributor.'),
+    '3d-scanning-services-coimbatore.html': ('3D Scanning Services in Coimbatore | VShark Solutions',
+         'On-site 3D scanning in Coimbatore for parts, moulds and castings. STL and editable CAD files, reverse engineering and CMM arm inspection. Get a quote.'),
     'products/index.html': ('Vertex 3D Scanners in India | JINUOSH Distributor | VShark',
          'Buy JINUOSH Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners in India from an authorised distributor. Compare specs, request a quote or book a demo.'),
     'services/index.html': ('3D Scanning & 3D Design Services | VShark Solutions',
@@ -854,6 +856,125 @@ def thanks_page():
     <section class="section blk"><a class="btn btn--accent magnetic" href="index.html"><span>Back to home</span>{A}</a></section>'''
     return page(P, 'thanks.html', 'contact', body)
 
+def coimbatore_page():
+    """S07: local landing page '3D Scanning Services in Coimbatore' (answer-first, FAQ + Service schema)."""
+    P = ''
+    img = 'img/services/'
+    scan_items = [
+        ('Machined parts, castings and forgings', 'Capture the real geometry, including wear, shrinkage and casting variation.'),
+        ('Moulds, dies and tooling', 'Rebuild tooling that has no drawing, or check it against its CAD.'),
+        ('Worn or broken spares', 'Digitise out-of-production parts so they can be remade or repaired.'),
+        ('Fixtures, jigs and assemblies', 'Record how an assembly really fits together.'),
+        ('Vehicle parts and body panels', 'Scan panels, under-body and suspension areas for design or repair work.'),
+        ('Large objects and plant areas', 'On-site scanning is easier than moving the part.'),
+    ]
+    scan_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(d)}</p></div>' for k, (t, d) in enumerate(scan_items))
+    steps = [('Send the part details', 'A photo and a short description of the part, or the part itself.'),
+             ('Confirm method and quote', 'We confirm the scanning method, the output you need and the price.'),
+             ('Scan', 'At our Coimbatore facility, or at your plant anywhere in India.'),
+             ('Process', 'We clean the scan data and build the mesh or CAD model.'),
+             ('Deliver', 'You receive the files and we answer questions on them.')]
+    step_html = '\n'.join(f'<li class="step2" data-reveal><i class="mono">{k+1:02d}</i><b>{E(t)}</b><span>{E(d)}</span></li>' for k, (t, d) in enumerate(steps))
+    deliver = [('STL or PLY mesh', '3D printing, visual checks and reference.'),
+               ('Editable CAD: STEP, IGES, Parasolid', 'Redesign, tooling and manufacturing.'),
+               ('Deviation colour map and report', 'Compare a made part against its CAD or a master.'),
+               ('Measured 2D drawing', 'Shop-floor use and repair.')]
+    del_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(d)}</p></div>' for k, (t, d) in enumerate(deliver))
+    rates = [('Scanner-based inspection and scanning', 'Rs 1,500 per hour'),
+             ('Portable CMM arm scanning and inspection', 'Rs 2,500 per hour'),
+             ('CAD design from scan data or sketches', 'Rs 1,000 per hour'),
+             ('Building, facade and heritage structure scanning', 'Rs 3,000 per hour')]
+    rate_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(r)}</p></div>' for k, (t, r) in enumerate(rates))
+    faqs = [
+        ('Do you offer 3D scanning in Coimbatore?', 'Yes. VShark Solutions offers 3D scanning in Coimbatore, at our facility or at your plant, and delivers STL meshes or editable CAD files.'),
+        ('Can you scan at my factory?', 'Yes. We travel to your plant in Coimbatore and across India. This suits large parts, heavy castings and tooling that cannot be moved.'),
+        ('Can you turn a scanned part into editable CAD?', 'Yes. We provide reverse engineering and scan-to-CAD, delivered as STEP files and other neutral formats such as IGES and Parasolid.'),
+        ('How long does a 3D scanning job take?', 'Small parts can be scanned in under a day. Larger parts and bigger quantities take more time, and CAD modelling adds time depending on the part. We give a delivery date with the quote.'),
+        ('How much does 3D scanning cost in Coimbatore?', 'The price depends on the part size, surface, accuracy and location, so we quote per job. As of November 2026 our listed rates are Rs 1,500 per hour for scanner-based inspection and scanning, Rs 2,500 per hour for portable CMM arm work, Rs 1,000 per hour for CAD design and Rs 3,000 per hour for building scans. On-site travel and accommodation are charged extra.'),
+        ('What file formats do you deliver?', 'STL and PLY meshes, and STEP, IGES or Parasolid CAD files. Inspection results come as deviation colour maps and reports.'),
+        ('Do you offer CMM inspection in Coimbatore?', 'Yes. We offer CMM arm inspection for dimensional checks against a drawing or CAD model.'),
+    ]
+    svc_ld = json.dumps({'@context': 'https://schema.org', '@type': 'Service', 'serviceType': '3D scanning',
+                         'name': '3D scanning services in Coimbatore',
+                         'description': 'On-site and in-house 3D scanning of parts, moulds, castings and tooling, delivered as STL meshes or editable STEP CAD files.',
+                         'provider': {'@id': SITE_URL + '#business'},
+                         'areaServed': [{'@type': 'City', 'name': 'Coimbatore'}, {'@type': 'State', 'name': 'Tamil Nadu'}, {'@type': 'Country', 'name': 'India'}],
+                         'url': SITE_URL + '3d-scanning-services-coimbatore.html'}, ensure_ascii=False).replace('</', '<' + chr(92) + '/')
+    body = f"""{page_hero(P, [("Services", "services/index.html"), ("3D scanning in Coimbatore", None)], "( 01 ) — Coimbatore", "3D Scanning Services <em>in Coimbatore.</em>",
+        "VShark Solutions Pvt Ltd offers 3D scanning services in Coimbatore, Tamil Nadu. We scan parts, moulds, castings and tooling at our facility or at your plant, then deliver an STL mesh or an editable STEP CAD model.",
+        img + '3d-scanning-services-coimbatore-hero.webp', alt='Handheld 3D scanner with red laser scanning a car wheel arch and suspension')}
+
+    <section class="section blk">
+      <div class="split">
+        <div class="split__main">
+          <span class="tag mono">What we scan</span>
+          <p class="lead-lg" data-reveal>If a part has no drawing, is worn, or must be checked against its CAD, we can capture it in 3D and turn the scan into data your team can use.</p>
+          <div class="feat-grid">
+{scan_html}
+          </div>
+          <figure class="svc-fig" data-reveal><img src="{img}handheld-3d-scanner-with-laptop-scan-software.webp" alt="Handheld 3D scanner and laptop showing scan software on a workshop table" loading="lazy"></figure>
+        </div>
+        <aside class="split__side" data-reveal>
+          <div class="side-card">
+            <span class="mono muted">Get a quote</span>
+            <p>Send a photo of the part and what you need from it. We usually reply within one working day.</p>
+            <a class="btn btn--accent btn--block magnetic" href="contact.html?service=3d-scanning"><span>Request a quote</span>{A}</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">How a job works</span><h2 class="h2" data-reveal>Five steps, <em>clear quote.</em></h2></div></div>
+      <ol class="steps2">
+{step_html}
+      </ol>
+    </section>
+
+    <section class="section blk">
+      <div class="sec-head"><div><span class="tag mono">What you receive</span><h2 class="h2" data-reveal>Files your team <em>can use.</em></h2></div></div>
+      <div class="feat-grid">
+{del_html}
+      </div>
+    </section>
+
+    <section class="section blk blk--alt">
+      <div class="split">
+        <div class="split__main">
+          <span class="tag mono">Reverse engineering, inspection and equipment</span>
+          <h2 class="h2" data-reveal>Scan to CAD, <em>inspect, or buy the scanner.</em></h2>
+          <p class="lead-lg" data-reveal>Many buyers need a CAD model of a part that has no drawing. We turn the scan into an editable model so a tool room or foundry can make, repair or improve the part. We also offer CMM arm inspection for dimensional checks against a drawing or CAD model, and we are the India distributor of JINUOSH Vertex 3D scanners.</p>
+          <p data-reveal><a class="sec-head__link" href="services/reverse-engineering.html">Reverse engineering {A}</a> &nbsp; <a class="sec-head__link" href="services/digital-metrology.html">Digital metrology and inspection {A}</a> &nbsp; <a class="sec-head__link" href="products/index.html">JINUOSH Vertex scanners {A}</a></p>
+          <figure class="svc-fig" data-reveal><img src="{img}cmm-arm-scanning-splined-shaft.webp" alt="CMM arm scanning a splined shaft on a granite table" loading="lazy"></figure>
+        </div>
+        <aside class="split__side" data-reveal>
+          <div class="side-card">
+            <span class="mono muted">Accuracy</span>
+            <p>The JINUOSH Vertex3D handheld blue-laser scanner we distribute is specified at up to 0.020 mm (JINUOSH specification, November 2026). We tell you the expected accuracy for your part before we start.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section blk">
+      <div class="sec-head"><div><span class="tag mono">Pricing, as of November 2026</span><h2 class="h2" data-reveal>Quoted per job, <em>rates listed.</em></h2></div></div>
+      <p class="lead-lg" data-reveal>Scanning cost depends on part size, surface, accuracy and location, so we quote per job after seeing the part. Our listed rates for related services in India are below. On-site travel and accommodation are charged extra, and rates can change, so confirm them when you ask for a quote.</p>
+      <div class="feat-grid">
+{rate_html}
+      </div>
+    </section>
+
+{faq_section(faqs, '3D scanning in Coimbatore <em>FAQ.</em>')}
+
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">Contact</span><h2 class="h2" data-reveal>VShark Solutions <em>Pvt Ltd.</em></h2></div></div>
+      <p class="lead-lg" data-reveal>Rajiv Gandhi Nagar, Neelambur, Coimbatore, Tamil Nadu 641062. WhatsApp or call {E(C['phones'][0]['display'])}, or email {E(C['email'])}.</p>
+    </section>
+    <script type="application/ld+json">{svc_ld}</script>
+{cta(P, msg="Hi VShark, I need 3D scanning in Coimbatore for: ")}"""
+    return page(P, '3d-scanning-services-coimbatore.html', 'services', body, wa_msg="Hi VShark, I need 3D scanning in Coimbatore for: ")
+
+
 def notfound_page():
     P = '/'   # served at any missing URL, so every link is root-relative
     links = [('Services', 'services/index.html'), ('3D scanners', 'products/index.html'), ('Portfolio', 'portfolio/index.html'), ('Contact', 'contact.html')]
@@ -975,6 +1096,7 @@ if __name__ == '__main__':
            write('thanks.html', thanks_page()),
            write('about.html', about_page()),
            write('privacy-policy.html', privacy_page()),
+           write('3d-scanning-services-coimbatore.html', coimbatore_page()),
            write('404.html', notfound_page())]
     out += [write(f'services/{s["slug"]}.html', service_page(s)) for s in D['services']]
     out += [write(f'industries/{s["slug"]}.html', industry_page(s)) for s in D['industries']]
