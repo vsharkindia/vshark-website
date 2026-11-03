@@ -20,7 +20,7 @@ C = D['contact']
 
 def ver(path):
     with open(os.path.join(ROOT, path), 'rb') as f:
-        return hashlib.md5(f.read()).hexdigest()[:8]
+        return hashlib.md5(f.read().replace(b'\r\n', b'\n')).hexdigest()[:8]
 
 def asset(path, P):
     return f'{P}{path}?v={ver(path)}'
@@ -95,11 +95,30 @@ META = {
 }
 SITE_URL = 'https://www.vsharksolutions.com/'
 
+NOINDEX_PAGES = {'thanks.html', '404.html'}
+OG_IMAGE = SITE_URL + 'img/og-default.jpg'
+
+def canonical_url(rel):
+    if rel in ('', 'index.html'):
+        return SITE_URL
+    return SITE_URL + (rel[:-len('index.html')] if rel.endswith('/index.html') else rel)
+
+def seo_extra(rel):
+    """Canonical + og:url + og:image + twitter card (technical SEO audit S05, F1/F7). Not on thanks/404."""
+    if rel in NOINDEX_PAGES:
+        return ''
+    u = canonical_url(rel)
+    alt = 'VShark Solutions: 3D scanning, reverse engineering and CAD, with the JINUOSH Vertex scanner'
+    return (f'@@  <link rel="canonical" href="{u}">@@  <meta property="og:url" content="{u}">'
+            f'@@  <meta property="og:image" content="{OG_IMAGE}">@@  <meta property="og:image:width" content="1200">'
+            f'@@  <meta property="og:image:height" content="630">@@  <meta property="og:image:alt" content="{alt}">'
+            f'@@  <meta name="twitter:card" content="summary_large_image">').replace('@@', '\n')
+
 def head_meta(rel):
     title, desc = META[rel]
     return (f'<title>{E(title)}</title>\n  <meta name="description" content="{E(desc)}">\n'
             f'  <meta property="og:type" content="website">\n  <meta property="og:site_name" content="VShark Solutions">\n'
-            f'  <meta property="og:title" content="{E(title)}">\n  <meta property="og:description" content="{E(desc)}">')
+            f'  <meta property="og:title" content="{E(title)}">\n  <meta property="og:description" content="{E(desc)}">' + seo_extra(rel))
 
 def schema_org():
     """Organization + LocalBusiness JSON-LD (handoff A7 / B8) — same on every page."""
@@ -115,7 +134,7 @@ def schema_org():
         'contactPoint': [{'@type': 'ContactPoint', 'telephone': p['tel'], 'contactType': 'sales',
                           'areaServed': 'IN' if p['label'] == 'India' else 'AE'} for p in C['phones']],
         'areaServed': ['IN', 'AE'], 'foundingDate': '2019',
-        'sameAs': [S['facebook'], S['instagram'], S['linkedin']],
+        'sameAs': [S['facebook'], S['instagram'], S['linkedin']] + ([S['youtube']] if S.get('youtube') else []),
     }
     return '<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False).replace('</', '<\\/') + '</script>'
 
@@ -569,7 +588,7 @@ def spec_dialog(P, p, k):
       <button class="sd__close" type="button" aria-label="Close specifications" data-spec-close>×</button>
       <div class="sd__panel">
         <header class="sd__head">
-          <div class="sd__shot"><i class="prod__slash prod__slash--red"></i><img src="{P}{p['image']}" alt="" loading="lazy"></div>
+          <div class="sd__shot"><i class="prod__slash prod__slash--red"></i><img src="{P}{p['image']}" alt="{E(p['name'])} 3D scanner" loading="lazy"></div>
           <div class="sd__title">
             {logo}<span class="tag mono">{E(p['type'])}</span>
             <h2 id="spec-{p['slug']}-title">{E(p['name'])}</h2>
@@ -855,6 +874,18 @@ def sitemap_and_robots(pages):
     open(os.path.join(ROOT, 'sitemap.xml'), 'w', encoding='utf-8', newline='\n').write(xml)
     robots = f'User-agent: *\nAllow: /\nDisallow: /build/\nDisallow: /data/\n\nSitemap: {SITE_URL}sitemap.xml\n'
     open(os.path.join(ROOT, 'robots.txt'), 'w', encoding='utf-8', newline='\n').write(robots)
+    write_llms()
+
+def write_llms():
+    """llms.txt (S05 F4): plain-text map of the site for AI assistants."""
+    lines = ['# VShark Solutions', '',
+             '> 3D scanning, reverse engineering, scan-to-CAD, Scan to BIM, Class A surfacing and 3D inspection from Coimbatore, India and Dubai, UAE. Distributor of JINUOSH Vertex 3D scanners in India.', '',
+             '## Services']
+    lines += [f'- [{x["name"]}]({SITE_URL}services/{x["slug"]}.html)' for x in D['services']]
+    lines += ['', '## Industries'] + [f'- [{x["name"]}]({SITE_URL}industries/{x["slug"]}.html)' for x in D['industries']]
+    lines += ['', '## Key pages', f'- [JINUOSH Vertex 3D scanners]({SITE_URL}products/)', f'- [Portfolio]({SITE_URL}portfolio/)',
+              f'- [About]({SITE_URL}about.html)', f'- [Contact and quotes]({SITE_URL}contact.html)', '']
+    open(os.path.join(ROOT, 'llms.txt'), 'w', encoding='utf-8', newline='\n').write('\n'.join(lines))
 
 # ---------------------------------------------------------------- homepage regions
 def home_products():
@@ -926,13 +957,13 @@ def build_home():
         s = pat.sub(lambda m: content, s)
     # fingerprint local css/js
     s = re.sub(r'(href|src)="((?:css|js|fonts)/[\w.-]+\.(?:css|js))(?:\?v=[\w]+)?"', lambda m: f'{m.group(1)}="{asset(m.group(2), "")}"', s)
-    open(p, 'w', encoding='utf-8').write(s)
+    open(p, 'w', encoding='utf-8', newline='\n').write(s)
 
 # ---------------------------------------------------------------- write everything
 def write(rel, content):
     path = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    open(path, 'w', encoding='utf-8').write(content)
+    open(path, 'w', encoding='utf-8', newline='\n').write(content)
     return rel
 
 if __name__ == '__main__':
