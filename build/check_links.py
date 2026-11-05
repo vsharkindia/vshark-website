@@ -19,6 +19,8 @@ for p in pages:
         u = urlsplit(url)
         base = ROOT if u.path.startswith('/') else os.path.dirname(p)   # root-relative links (used by 404.html)
         target = os.path.normpath(os.path.join(base, unquote(u.path).lstrip('/'))) if u.path else os.path.normpath(p)
+        if u.path.endswith('/'):
+            target = os.path.join(target, 'index.html')   # folder URL (/blog/, /products/)
         if u.path and not os.path.isfile(target):
             bad.append((os.path.relpath(p, ROOT), url, 'missing file'))
         elif u.fragment and target.endswith('.html') and u.fragment not in ids.get(target, set()) and u.fragment != 'top':

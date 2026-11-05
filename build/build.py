@@ -19,8 +19,9 @@ IND = {i['slug']: i for i in D['industries'] + D.get('filterIndustries', [])}
 C = D['contact']
 
 def ver(path):
+    # line endings are normalised so a Windows checkout (CRLF) gives the same hash as Linux/Netlify (LF)
     with open(os.path.join(ROOT, path), 'rb') as f:
-        return hashlib.md5(f.read()).hexdigest()[:8]
+        return hashlib.md5(f.read().replace(b'\r\n', b'\n')).hexdigest()[:8]
 
 def asset(path, P):
     return f'{P}{path}?v={ver(path)}'
@@ -33,6 +34,9 @@ ICON = {
  'ig': '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8a4 4 0 0 1 3.4 3.4z"/><path d="M17.5 6.5h.01"/></svg>',
  'fb': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
  'in': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>',
+ 'yt': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m9.8 15.5 5.7-3.5-5.7-3.5z"/></svg>',
+ 'shop': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 11.5V20h14v-8.5M10 20v-5h4v5"/></svg>',
+ 'web': '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>',
  'arrow': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
  'down': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
  'specs': '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
@@ -48,9 +52,11 @@ wa_link = lambda msg=None: f'https://wa.me/{C["whatsapp"]}?text={quote(WA_DEFAUL
 # ---------------------------------------------------------------- meta (handoff part C)
 META = {
     '': ('3D Scanning & Reverse Engineering Services | VShark Solutions',
-         '3D scanning, reverse engineering, Scan to BIM, Class A surfacing and 3D inspection services in India and the UAE. Authorised JINUOSH Vertex scanner distributor.'),
+         '3D scanning, reverse engineering, Scan to BIM, Class A surfacing and 3D inspection services in India and the UAE. India distributor of JINUOSH Vertex scanners.'),
+    '3d-scanning-services-coimbatore.html': ('3D Scanning Services in Coimbatore | VShark Solutions',
+         'On-site 3D scanning in Coimbatore for parts, moulds and castings. STL and editable CAD files, reverse engineering and CMM arm inspection. Get a quote.'),
     'products/index.html': ('Vertex 3D Scanners in India | JINUOSH Distributor | VShark',
-         'Buy JINUOSH Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners in India from an authorised distributor. Compare specs, request a quote or book a demo.'),
+         'Buy JINUOSH Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners in India from the India distributor. Compare specs, request a quote or book a demo.'),
     'services/index.html': ('3D Scanning & 3D Design Services | VShark Solutions',
          '3D scanning, reverse engineering, Scan to BIM, Class A surfacing, digital metrology, 3D printing and product rendering for India, the UAE and worldwide.'),
     'services/3d-scanning.html': ('3D Scanning Services in India & UAE | VShark Solutions',
@@ -92,32 +98,122 @@ META = {
          'VShark Solutions is a 3D scanning, reverse engineering and 3D design company based in Coimbatore and Dubai, serving clients across India, the UAE and worldwide since 2019.'),
     'privacy-policy.html': ('Privacy Policy | VShark Solutions',
          'How VShark Solutions collects, uses and protects personal data and files shared through our website, WhatsApp and email.'),
+    'links.html': ('VShark Solutions – Links | WhatsApp, Quote, YouTube, Instagram',
+         'All VShark Solutions links in one place: website, WhatsApp chat, quote form, YouTube, Instagram, Facebook and IndiaMART.'),
 }
 SITE_URL = 'https://www.vsharksolutions.com/'
+# social profiles listed in the Organization schema `sameAs` (dev note 2026-10-27, item 2).
+# LinkedIn is left out until VShark sends the company page URL (the current link is a personal profile).
+SAME_AS = ('youtube', 'instagram', 'facebook', 'linkedin', 'indiamart')
+
+def page_url(rel):
+    '''Public URL of a page: the same form the sitemap uses (folder index pages end in /).'''
+    if rel in ('', 'index.html'):
+        return SITE_URL
+    return SITE_URL + (rel[:-len('index.html')] if rel.endswith('/index.html') else rel)
+
+def og_image(rel):
+    '''1200×630 share image made by build/make_og.py: img/og/<page>.jpg, or the site default.'''
+    name = 'home' if rel in ('', 'index.html') else rel[:-5].replace('/index', '').replace('/', '-')
+    path = f'img/og/{name}.jpg'
+    return path if os.path.exists(os.path.join(ROOT, path)) else 'img/og/default.jpg'
+
+NOINDEX_PAGES = {'thanks.html', '404.html'}
+OG_IMAGE = SITE_URL + 'img/og-default.jpg'
+
+def canonical_url(rel):
+    if rel in ('', 'index.html'):
+        return SITE_URL
+    return SITE_URL + (rel[:-len('index.html')] if rel.endswith('/index.html') else rel)
 
 def head_meta(rel):
     title, desc = META[rel]
-    return (f'<title>{E(title)}</title>\n  <meta name="description" content="{E(desc)}">\n'
-            f'  <meta property="og:type" content="website">\n  <meta property="og:site_name" content="VShark Solutions">\n'
-            f'  <meta property="og:title" content="{E(title)}">\n  <meta property="og:description" content="{E(desc)}">')
+    url, img = page_url(rel), SITE_URL + og_image(rel)
+    iw, ih, ialt = 1200, 630, title
+    if rel in OG_POST:
+        img, iw, ih, ialt = OG_POST[rel]
+    tags = [f'<title>{E(title)}</title>',
+            f'<meta name="description" content="{E(desc)}">']
+    if rel not in ('404.html', 'thanks.html'):   # served at many URLs / not for search
+        tags.append(f'<link rel="canonical" href="{url}">')
+    tags += ['<meta property="og:type" content="website">',
+             '<meta property="og:site_name" content="VShark Solutions">',
+             '<meta property="og:locale" content="en_IN">',
+             f'<meta property="og:url" content="{url}">',
+             f'<meta property="og:title" content="{E(title)}">',
+             f'<meta property="og:description" content="{E(desc)}">',
+             f'<meta property="og:image" content="{img}">',
+             f'<meta property="og:image:width" content="{iw}">',
+             f'<meta property="og:image:height" content="{ih}">',
+             f'<meta property="og:image:alt" content="{E(ialt)}">',
+             '<meta name="twitter:card" content="summary_large_image">',
+             f'<meta name="twitter:title" content="{E(title)}">',
+             f'<meta name="twitter:description" content="{E(desc)}">',
+             f'<meta name="twitter:image" content="{img}">']
+    if rel in ('404.html', 'thanks.html'):
+        tags.append('<meta name="robots" content="noindex">')
+    return '\n  '.join(tags)
+
+def ld(obj):
+    return '<script type="application/ld+json">' + json.dumps(obj, ensure_ascii=False).replace('</', '<\\/') + '</script>'
 
 def schema_org():
-    """Organization + LocalBusiness JSON-LD (handoff A7 / B8) — same on every page."""
+    """Organization + LocalBusiness JSON-LD (handoff A7 / B8, dev note 2026-10-27 item 4) — same on every page."""
     S = C['social']
+    country = {'IN': 'India', 'AE': 'United Arab Emirates'}
     org = {
-        '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': SITE_URL + '#business',
-        'name': 'VShark Solutions Private Limited', 'alternateName': 'VShark Solutions', 'url': SITE_URL,
+        '@context': 'https://schema.org', '@type': ['Organization', 'LocalBusiness'], '@id': SITE_URL + '#business',
+        'name': 'VShark Solutions Private Limited', 'legalName': 'VShark Solutions Private Limited',
+        'alternateName': 'VShark Solutions', 'url': SITE_URL,
         'logo': SITE_URL + 'img/vshark-logo.png', 'image': SITE_URL + 'img/vshark-logo.png',
+        'description': META[''][1],
         'email': C['email'], 'telephone': C['phones'][0]['tel'],
         'address': [dict({'@type': 'PostalAddress', 'addressLocality': o['city'], 'addressCountry': o['country']},
                          **({'streetAddress': o['street'], 'addressRegion': o['region'], 'postalCode': o['postcode']} if o.get('street') else {}))
                     for o in C['offices']],
-        'contactPoint': [{'@type': 'ContactPoint', 'telephone': p['tel'], 'contactType': 'sales',
+        'contactPoint': [{'@type': 'ContactPoint', 'telephone': p['tel'], 'email': C['email'], 'contactType': 'sales',
                           'areaServed': 'IN' if p['label'] == 'India' else 'AE'} for p in C['phones']],
-        'areaServed': ['IN', 'AE'], 'foundingDate': '2019',
-        'sameAs': [S['facebook'], S['instagram'], S['linkedin']],
+        'areaServed': [{'@type': 'Country', 'name': country[c]} for c in ('IN', 'AE')],
+        'foundingDate': '2019',
+        'sameAs': [S[k] for k in SAME_AS if S.get(k)],
     }
-    return '<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False).replace('</', '<\\/') + '</script>'
+    return ld(org)
+
+# ---------------------------------------------------------------- YouTube videos (VideoObject, dev note item 4)
+def videos_for(key):
+    return [v for v in D.get('videos', []) if key in v.get('pages', [])]
+
+def video_ld(v):
+    '''VideoObject JSON-LD. Description falls back to the title, and uploadDate is left out,
+    until they are copied from YouTube into data/site.json.'''
+    obj = {'@context': 'https://schema.org', '@type': 'VideoObject', 'name': v['title'],
+           'description': v.get('description') or v['title'],
+           'thumbnailUrl': [f'https://i.ytimg.com/vi/{v["id"]}/maxresdefault.jpg', f'https://i.ytimg.com/vi/{v["id"]}/hqdefault.jpg'],
+           'contentUrl': f'https://www.youtube.com/watch?v={v["id"]}',
+           'embedUrl': f'https://www.youtube.com/embed/{v["id"]}',
+           'publisher': {'@id': SITE_URL + '#business'}}
+    if v.get('uploadDate'):
+        obj['uploadDate'] = v['uploadDate']
+    if v.get('duration'):
+        obj['duration'] = v['duration']
+    return ld(obj)
+
+def video_section(vids, title_html='See it <em>in action.</em>', alt=False):
+    if not vids:
+        return ''
+    cards = '\n'.join(f'''        <figure class="vcard" data-reveal>
+          <div class="vcard__frame"><iframe src="https://www.youtube-nocookie.com/embed/{v['id']}" title="{E(v['title'])}" loading="lazy"
+            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <figcaption>{E(v['title'])}</figcaption>
+          {video_ld(v)}
+        </figure>''' for v in vids)
+    return f'''    <section class="section blk{' blk--alt' if alt else ''}">
+      <div class="sec-head"><div><span class="tag mono">Video</span><h2 class="h2" data-reveal>{title_html}</h2></div>
+        <a class="sec-head__link" href="{C['social']['youtube']}" target="_blank" rel="noopener" data-reveal>YouTube channel {A}</a></div>
+      <div class="vgrid">
+{cards}
+      </div>
+    </section>'''
 
 # ---------------------------------------------------------------- shared chrome
 def header(P, active=''):
@@ -142,6 +238,7 @@ def header(P, active=''):
       {drop('services', f'{P}services/index.html', 'Services', svc_items, 'All services')}
       {drop('industries', f'{P}industries/index.html', 'Industries', ind_items, 'All industries')}
       {link('portfolio', f'{P}portfolio/index.html', 'Portfolio')}
+      {link('blog', f'{P}blog/', 'Blog')}
       {link('about', f'{P}about.html', 'About')}
       {link('contact', f'{P}contact.html', 'Contact')}
     </nav>
@@ -159,8 +256,9 @@ def header(P, active=''):
       {m(2, f'{P}services/index.html', 'Services')}
       {m(3, f'{P}industries/index.html', 'Industries')}
       {m(4, f'{P}portfolio/index.html', 'Portfolio')}
-      {m(5, f'{P}about.html', 'About')}
-      {m(6, f'{P}contact.html', 'Contact')}
+      {m(5, f'{P}blog/', 'Blog')}
+      {m(6, f'{P}about.html', 'About')}
+      {m(7, f'{P}contact.html', 'Contact')}
     </nav>
     <div class="menu__cta">
       <a class="btn btn--accent" href="{P}contact.html"><span>Get a quote</span>{A}</a>
@@ -196,8 +294,10 @@ def footer(P, msg=WA_DEFAULT):
         {''.join(f'<span class="footer__addr">{ICON["pin"]}<span><small class="mono">{E(o["label"])}</small> {", ".join(E(l) for l in o["lines"])}</span></span>' for o in C['offices'])}
         <div class="footer__social">
           <a href="{wa_link()}" target="_blank" rel="noopener" aria-label="WhatsApp">{ICON['wa']}</a>
+          <a href="{S['youtube']}" target="_blank" rel="noopener" aria-label="YouTube">{ICON['yt']}</a>
           <a href="{S['instagram']}" target="_blank" rel="noopener" aria-label="Instagram">{ICON['ig']}</a>
           <a href="{S['facebook']}" target="_blank" rel="noopener" aria-label="Facebook">{ICON['fb']}</a>
+          <a href="{S['indiamart']}" target="_blank" rel="noopener" aria-label="IndiaMART">{ICON['shop']}</a>
           <a href="{S['linkedin']}" target="_blank" rel="noopener" aria-label="LinkedIn">{ICON['in']}</a>
         </div>
       </div>
@@ -205,7 +305,7 @@ def footer(P, msg=WA_DEFAULT):
     <div class="footer__big" aria-hidden="true">VSHARK</div>
     <div class="footer__bottom mono">
       <span>© <span id="year">2026</span> VShark Solutions Private Limited</span>
-      <span><a href="{P}about.html">About</a> · <a href="{P}privacy-policy.html">Privacy Policy</a> · <a href="{P}privacy-policy.html#cookies-and-analytics" data-cookie-settings>Cookie settings</a></span>
+      <span><a href="{P}about.html">About</a> · <a href="{P}blog/">Blog</a> · <a href="{P}links.html">Links</a> · <a href="{P}privacy-policy.html">Privacy Policy</a> · <a href="{P}privacy-policy.html#cookies-and-analytics" data-cookie-settings>Cookie settings</a></span>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
@@ -218,6 +318,7 @@ def footer(P, msg=WA_DEFAULT):
     </div>
     <a class="rail__item rail__btn" href="{wa_link()}" target="_blank" rel="noopener" aria-label="WhatsApp">{ICON['wa']}<span class="rail__label">WhatsApp</span></a>
     <a class="rail__item rail__btn" href="mailto:{C['email']}" aria-label="Email">{ICON['mail']}<span class="rail__label">{C['email']}</span></a>
+    <a class="rail__item rail__btn" href="{S['youtube']}" target="_blank" rel="noopener" aria-label="YouTube">{ICON['yt']}<span class="rail__label">YouTube</span></a>
     <a class="rail__item rail__btn" href="{S['instagram']}" target="_blank" rel="noopener" aria-label="Instagram">{ICON['ig']}<span class="rail__label">Instagram</span></a>
     <a class="rail__item rail__btn" href="{S['facebook']}" target="_blank" rel="noopener" aria-label="Facebook">{ICON['fb']}<span class="rail__label">Facebook</span></a>
     <a class="rail__item rail__btn" href="{S['linkedin']}" target="_blank" rel="noopener" aria-label="LinkedIn">{ICON['in']}<span class="rail__label">LinkedIn</span></a>
@@ -237,8 +338,10 @@ def footer(P, msg=WA_DEFAULT):
   </nav>
   <!-- /@footer -->'''
 
-def page(P, rel, active, body, scripts=(), wa_msg=WA_DEFAULT):
+def page(P, rel, active, body, scripts=(), wa_msg=WA_DEFAULT, view=None):
+    '''view = (content_name, content_category): js/consent.js sends Meta ViewContent + GA4 view_content for it.'''
     js = '\n'.join(f'  <script src="{asset(s, P)}"></script>' for s in ('vendor/gsap.min.js', 'vendor/ScrollTrigger.min.js', 'vendor/lenis.min.js', *scripts, 'js/main.js'))
+    view_attr = f' data-view-content="{E(view[0])}" data-view-category="{E(view[1])}"' if view else ''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -255,7 +358,7 @@ def page(P, rel, active, body, scripts=(), wa_msg=WA_DEFAULT):
   <link rel="stylesheet" href="{asset('css/pages.css', P)}">
   <script src="{asset('js/consent.js', P)}" defer></script>
 </head>
-<body class="inner">
+<body class="inner"{view_attr}>
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
 
   {header(P, active)}
@@ -376,7 +479,7 @@ def xnav(P, items, current, folder, label):
     '''Row of every service / industry at the bottom of a detail page; the current one is highlighted.'''
     links = '\n'.join(
         f'''        <a class="xnav__item{' is-current' if o is current else ''}" href="{P}{folder}/{o['slug']}.html"{' aria-current="page"' if o is current else ''}>
-          <img src="{P}{o.get('tile') or o.get('square') or o['image']}" alt="" loading="lazy"><span><i class="mono">{k+1:02d}</i><b>{E(o['name'])}</b></span>
+          <img src="{P}{o.get('tile') or o.get('square') or o['image']}" alt="{E(o.get('alt') or o['name'])}" loading="lazy"><span><i class="mono">{k+1:02d}</i><b>{E(o['name'])}</b></span>
         </a>''' for k, o in enumerate(items))
     return f'''    <section class="section xnav" aria-label="{label}">
       <div class="xnav__head"><span class="tag mono">{label}</span><a class="xnav__all mono" href="{P}{folder}/index.html">Overview {A}</a></div>
@@ -394,7 +497,7 @@ LIGHTBOX = '''    <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-
     </div>'''
 
 # TODO(handoff A8): add the JINUOSH logo here once their written letter is received
-DIST_BADGE = '<p class="dist-badge" data-in><span class="mono">Authorised distributor</span>JINUOSH Vertex 3D scanners in India</p>'
+DIST_BADGE = '<p class="dist-badge" data-in><span class="mono">India distributor</span>JINUOSH Vertex 3D scanners in India</p>'
 
 def prod_tile(P, p, i, href):
     return f'''    <article class="prod" data-reveal>
@@ -485,13 +588,14 @@ def service_page(s):
     </section>
 
 {proj_section(P, projects, f'{E(s["name"])} <em>projects.</em>', f'service={s["slug"]}')}
+{video_section(videos_for(s['slug']), f'{E(s["name"])} <em>in action.</em>', alt=True)}
 {prods}
 {faq_section(s.get('faq', []), f'{E(s["name"])} <em>FAQ.</em>')}
 {xnav(P, D['services'], s, 'services', 'All services')}
 {cta(P, msg=f"Hi VShark, I'm interested in {s['name']}.")}
 {LIGHTBOX}'''
     return page(P, f"services/{s['slug']}.html", 'services', body, ('js/portfolio.js',),
-                wa_msg=f"Hi VShark, I'm interested in {s['name']}.")
+                wa_msg=f"Hi VShark, I'm interested in {s['name']}.", view=(s['name'], 'Service'))
 
 def services_index():
     P = '../'
@@ -534,6 +638,7 @@ def industry_page(ind):
       </div>
     </section>
 {proj_section(P, projects, f'{E(ind["name"])} <em>projects.</em>', f'industry={ind["slug"]}')}
+{video_section(videos_for(ind['slug']), alt=True)}
 {xnav(P, D['industries'], ind, 'industries', 'All industries')}
 {cta(P, msg=f"Hi VShark, I work in {ind['name']} and would like to discuss a project.")}
 {LIGHTBOX}'''
@@ -569,7 +674,7 @@ def spec_dialog(P, p, k):
       <button class="sd__close" type="button" aria-label="Close specifications" data-spec-close>×</button>
       <div class="sd__panel">
         <header class="sd__head">
-          <div class="sd__shot"><i class="prod__slash prod__slash--red"></i><img src="{P}{p['image']}" alt="" loading="lazy"></div>
+          <div class="sd__shot"><i class="prod__slash prod__slash--red"></i><img src="{P}{p['image']}" alt="{E(p['name'])} 3D scanner" loading="lazy"></div>
           <div class="sd__title">
             {logo}<span class="tag mono">{E(p['type'])}</span>
             <h2 id="spec-{p['slug']}-title">{E(p['name'])}</h2>
@@ -630,11 +735,17 @@ def products_page():
       </div>
       <p class="spec-note muted"><b>Recommended computer:</b> {E(D['productPc'])}. Specifications from the manufacturer and subject to change.</p>
     </section>
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">Full details</span><h2 class="h2" data-reveal>Specifications, what's included <em>and FAQs.</em></h2></div></div>
+      <nav class="bchips" aria-label="Scanner detail pages"><a class="chip" href="{P}jinuosh-vertex-3d-scanner-india.html">Vertex3D and Vertex3D Pro in India</a><a class="chip" href="{P}vertex-tracker.html">Vertex Tracker in India</a><a class="chip" href="{P}blog/choosing-a-handheld-3d-scanner-india/">Buying guide: which Vertex scanner?</a></nav>
+    </section>
+{video_section(videos_for('products'), 'The scanners <em>in action.</em>')}
 {faq_section(D.get('productFaq', []), 'Buying a scanner: <em>FAQ.</em>')}
 {chr(10).join(dialogs)}
 {cta(P, 'Not sure which scanner fits?', 'Send us your parts and use case — we will recommend a model and can arrange a live demo.', 'Hi VShark, please help me choose a 3D scanner.')}'''
     return page(P, 'products/index.html', 'products', body, ('js/products.js',),
-                wa_msg='Hi VShark, I would like a quote or demo for a 3D scanner.')
+                wa_msg='Hi VShark, I would like a quote or demo for a 3D scanner.',
+                view=('Vertex 3D scanners', 'Product'))
 
 def portfolio_page():
     P = '../'
@@ -740,7 +851,7 @@ def about_page():
         {DIST_BADGE.replace(' data-in', '')}
         <div>
           <h2 class="h2">Scanners we <em>use and sell.</em></h2>
-          <p>We are the authorised distributor of JINUOSH Vertex 3D scanners in India: the Vertex3D, Vertex3D Pro and Vertex Tracker. We use these scanners every day in our own service work, so our advice comes from real projects, not brochures. Every scanner we supply is installed at the customer's site, with hands-on training for their team, and comes with a 12-month warranty.</p>
+          <p>We are the India distributor of JINUOSH Vertex 3D scanners in India: the Vertex3D, Vertex3D Pro and Vertex Tracker. We use these scanners every day in our own service work, so our advice comes from real projects, not brochures. Every scanner we supply is installed at the customer's site, with hands-on training for their team, and comes with a 12-month warranty.</p>
           <a class="btn btn--ghost" href="products/index.html"><span>See the scanners</span>{A}</a>
         </div>
       </div>
@@ -815,7 +926,7 @@ def contact_page():
             <label class="field field--full field--file"><span>Attach a file (optional, max 8 MB)</span><input type="file" name="attachment" accept=".pdf,.jpg,.jpeg,.png,.stl,.step,.stp,.zip"></label>
           </div>
           <label class="consent"><input type="checkbox" name="consent" value="yes" required>
-            <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank">Privacy Policy</a>.</span></label>
+            <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
           <button class="btn btn--accent magnetic" type="submit"><span>Send enquiry</span>{A}</button>
         </form>
         <aside class="contact__side" data-reveal>
@@ -835,6 +946,125 @@ def thanks_page():
     <section class="section blk"><a class="btn btn--accent magnetic" href="index.html"><span>Back to home</span>{A}</a></section>'''
     return page(P, 'thanks.html', 'contact', body)
 
+def coimbatore_page():
+    """S07: local landing page '3D Scanning Services in Coimbatore' (answer-first, FAQ + Service schema)."""
+    P = ''
+    img = 'img/services/'
+    scan_items = [
+        ('Machined parts, castings and forgings', 'Capture the real geometry, including wear, shrinkage and casting variation.'),
+        ('Moulds, dies and tooling', 'Rebuild tooling that has no drawing, or check it against its CAD.'),
+        ('Worn or broken spares', 'Digitise out-of-production parts so they can be remade or repaired.'),
+        ('Fixtures, jigs and assemblies', 'Record how an assembly really fits together.'),
+        ('Vehicle parts and body panels', 'Scan panels, under-body and suspension areas for design or repair work.'),
+        ('Large objects and plant areas', 'On-site scanning is easier than moving the part.'),
+    ]
+    scan_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(d)}</p></div>' for k, (t, d) in enumerate(scan_items))
+    steps = [('Send the part details', 'A photo and a short description of the part, or the part itself.'),
+             ('Confirm method and quote', 'We confirm the scanning method, the output you need and the price.'),
+             ('Scan', 'At our Coimbatore facility, or at your plant anywhere in India.'),
+             ('Process', 'We clean the scan data and build the mesh or CAD model.'),
+             ('Deliver', 'You receive the files and we answer questions on them.')]
+    step_html = '\n'.join(f'<li class="step2" data-reveal><i class="mono">{k+1:02d}</i><b>{E(t)}</b><span>{E(d)}</span></li>' for k, (t, d) in enumerate(steps))
+    deliver = [('STL or PLY mesh', '3D printing, visual checks and reference.'),
+               ('Editable CAD: STEP, IGES, Parasolid', 'Redesign, tooling and manufacturing.'),
+               ('Deviation colour map and report', 'Compare a made part against its CAD or a master.'),
+               ('Measured 2D drawing', 'Shop-floor use and repair.')]
+    del_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(d)}</p></div>' for k, (t, d) in enumerate(deliver))
+    rates = [('Scanner-based inspection and scanning', 'Rs 1,500 per hour'),
+             ('Portable CMM arm scanning and inspection', 'Rs 2,500 per hour'),
+             ('CAD design from scan data or sketches', 'Rs 1,000 per hour'),
+             ('Building, facade and heritage structure scanning', 'Rs 3,000 per hour')]
+    rate_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(r)}</p></div>' for k, (t, r) in enumerate(rates))
+    faqs = [
+        ('Do you offer 3D scanning in Coimbatore?', 'Yes. VShark Solutions offers 3D scanning in Coimbatore, at our facility or at your plant, and delivers STL meshes or editable CAD files.'),
+        ('Can you scan at my factory?', 'Yes. We travel to your plant in Coimbatore and across India. This suits large parts, heavy castings and tooling that cannot be moved.'),
+        ('Can you turn a scanned part into editable CAD?', 'Yes. We provide reverse engineering and scan-to-CAD, delivered as STEP files and other neutral formats such as IGES and Parasolid.'),
+        ('How long does a 3D scanning job take?', 'Small parts can be scanned in under a day. Larger parts and bigger quantities take more time, and CAD modelling adds time depending on the part. We give a delivery date with the quote.'),
+        ('How much does 3D scanning cost in Coimbatore?', 'The price depends on the part size, surface, accuracy and location, so we quote per job. As of November 2026 our listed rates are Rs 1,500 per hour for scanner-based inspection and scanning, Rs 2,500 per hour for portable CMM arm work, Rs 1,000 per hour for CAD design and Rs 3,000 per hour for building scans. On-site travel and accommodation are charged extra.'),
+        ('What file formats do you deliver?', 'STL and PLY meshes, and STEP, IGES or Parasolid CAD files. Inspection results come as deviation colour maps and reports.'),
+        ('Do you offer CMM inspection in Coimbatore?', 'Yes. We offer CMM arm inspection for dimensional checks against a drawing or CAD model.'),
+    ]
+    svc_ld = json.dumps({'@context': 'https://schema.org', '@type': 'Service', 'serviceType': '3D scanning',
+                         'name': '3D scanning services in Coimbatore',
+                         'description': 'On-site and in-house 3D scanning of parts, moulds, castings and tooling, delivered as STL meshes or editable STEP CAD files.',
+                         'provider': {'@id': SITE_URL + '#business'},
+                         'areaServed': [{'@type': 'City', 'name': 'Coimbatore'}, {'@type': 'State', 'name': 'Tamil Nadu'}, {'@type': 'Country', 'name': 'India'}],
+                         'url': SITE_URL + '3d-scanning-services-coimbatore.html'}, ensure_ascii=False).replace('</', '<' + chr(92) + '/')
+    body = f"""{page_hero(P, [("Services", "services/index.html"), ("3D scanning in Coimbatore", None)], "( 01 ) — Coimbatore", "3D Scanning Services <em>in Coimbatore.</em>",
+        "VShark Solutions Pvt Ltd offers 3D scanning services in Coimbatore, Tamil Nadu. We scan parts, moulds, castings and tooling at our facility or at your plant, then deliver an STL mesh or an editable STEP CAD model.",
+        img + '3d-scanning-services-coimbatore-hero.webp', alt='Handheld 3D scanner with red laser scanning a car wheel arch and suspension')}
+
+    <section class="section blk">
+      <div class="split">
+        <div class="split__main">
+          <span class="tag mono">What we scan</span>
+          <p class="lead-lg" data-reveal>If a part has no drawing, is worn, or must be checked against its CAD, we can capture it in 3D and turn the scan into data your team can use.</p>
+          <div class="feat-grid">
+{scan_html}
+          </div>
+          <figure class="svc-fig" data-reveal><img src="{img}handheld-3d-scanner-with-laptop-scan-software.webp" alt="Handheld 3D scanner and laptop showing scan software on a workshop table" loading="lazy"></figure>
+        </div>
+        <aside class="split__side" data-reveal>
+          <div class="side-card">
+            <span class="mono muted">Get a quote</span>
+            <p>Send a photo of the part and what you need from it. We usually reply within one working day.</p>
+            <a class="btn btn--accent btn--block magnetic" href="contact.html?service=3d-scanning"><span>Request a quote</span>{A}</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">How a job works</span><h2 class="h2" data-reveal>Five steps, <em>clear quote.</em></h2></div></div>
+      <ol class="steps2">
+{step_html}
+      </ol>
+    </section>
+
+    <section class="section blk">
+      <div class="sec-head"><div><span class="tag mono">What you receive</span><h2 class="h2" data-reveal>Files your team <em>can use.</em></h2></div></div>
+      <div class="feat-grid">
+{del_html}
+      </div>
+    </section>
+
+    <section class="section blk blk--alt">
+      <div class="split">
+        <div class="split__main">
+          <span class="tag mono">Reverse engineering, inspection and equipment</span>
+          <h2 class="h2" data-reveal>Scan to CAD, <em>inspect, or buy the scanner.</em></h2>
+          <p class="lead-lg" data-reveal>Many buyers need a CAD model of a part that has no drawing. We turn the scan into an editable model so a tool room or foundry can make, repair or improve the part. We also offer CMM arm inspection for dimensional checks against a drawing or CAD model, and we are the India distributor of JINUOSH Vertex 3D scanners.</p>
+          <p data-reveal><a class="sec-head__link" href="services/reverse-engineering.html">Reverse engineering {A}</a> &nbsp; <a class="sec-head__link" href="services/digital-metrology.html">Digital metrology and inspection {A}</a> &nbsp; <a class="sec-head__link" href="products/index.html">JINUOSH Vertex scanners {A}</a></p>
+          <figure class="svc-fig" data-reveal><img src="{img}cmm-arm-scanning-splined-shaft.webp" alt="CMM arm scanning a splined shaft on a granite table" loading="lazy"></figure>
+        </div>
+        <aside class="split__side" data-reveal>
+          <div class="side-card">
+            <span class="mono muted">Accuracy</span>
+            <p>The JINUOSH Vertex3D handheld blue-laser scanner we distribute is specified at up to 0.020 mm (JINUOSH specification, November 2026). We tell you the expected accuracy for your part before we start.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section blk">
+      <div class="sec-head"><div><span class="tag mono">Pricing, as of November 2026</span><h2 class="h2" data-reveal>Quoted per job, <em>rates listed.</em></h2></div></div>
+      <p class="lead-lg" data-reveal>Scanning cost depends on part size, surface, accuracy and location, so we quote per job after seeing the part. Our listed rates for related services in India are below. On-site travel and accommodation are charged extra, and rates can change, so confirm them when you ask for a quote.</p>
+      <div class="feat-grid">
+{rate_html}
+      </div>
+    </section>
+
+{faq_section(faqs, '3D scanning in Coimbatore <em>FAQ.</em>')}
+
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">Contact</span><h2 class="h2" data-reveal>VShark Solutions <em>Pvt Ltd.</em></h2></div></div>
+      <p class="lead-lg" data-reveal>Rajiv Gandhi Nagar, Neelambur, Coimbatore, Tamil Nadu 641062. WhatsApp or call {E(C['phones'][0]['display'])}, or email {E(C['email'])}.</p>
+    </section>
+    <script type="application/ld+json">{svc_ld}</script>
+{cta(P, msg="Hi VShark, I need 3D scanning in Coimbatore for: ")}"""
+    return page(P, '3d-scanning-services-coimbatore.html', 'services', body, wa_msg="Hi VShark, I need 3D scanning in Coimbatore for: ")
+
+
 def notfound_page():
     P = '/'   # served at any missing URL, so every link is root-relative
     links = [('Services', 'services/index.html'), ('3D scanners', 'products/index.html'), ('Portfolio', 'portfolio/index.html'), ('Contact', 'contact.html')]
@@ -843,15 +1073,148 @@ def notfound_page():
     <section class="section blk"><div class="ind-chips"><div>{chips}</div></div></section>"""
     return page(P, '404.html', '', body)
 
+def links_page():
+    '''/links — bio-link page for Instagram / YouTube / Facebook profiles (dev note 2026-10-27 item 2).'''
+    P = ''
+    S = C['social']
+    ext = ' target="_blank" rel="noopener"'
+    items = [
+        ('wa', 'Chat on WhatsApp', C['phones'][0]['display'], wa_link(), ext + ' data-wa-location="links_page"', ' blink--wa'),
+        ('arrow', 'Get a free quote', 'Send part photos or drawings', 'contact.html', '', ' blink--accent'),
+        ('web', 'Website', 'vsharksolutions.com', 'index.html', '', ''),
+        ('yt', 'YouTube', 'Scanning demos and projects', S['youtube'], ext, ''),
+        ('ig', 'Instagram', '@vshark.solutions', S['instagram'], ext, ''),
+        ('fb', 'Facebook', 'VShark Solutions', S['facebook'], ext, ''),
+        ('shop', 'IndiaMART', 'Buy Vertex 3D scanners', S['indiamart'], ext, ''),
+        ('phone', 'Call India', C['phones'][0]['display'], f'tel:{C["phones"][0]["tel"]}', '', ''),
+        ('phone', 'Call UAE', C['phones'][1]['display'], f'tel:{C["phones"][1]["tel"]}', '', ''),
+        ('mail', 'Email', C['email'], f'mailto:{C["email"]}', '', ''),
+    ]
+    rows = '\n'.join(f'        <a class="blink{cls}" href="{href}"{attrs}><span class="blink__ic">{ICON[ic]}</span><span class="blink__t"><b>{E(t)}</b><small>{E(sub)}</small></span>{A}</a>'
+                     for ic, t, sub, href, attrs, cls in items)
+    body = f'''    <section class="section blk blinks">
+      <div class="blinks__head" data-in>
+        <img class="blinks__logo" src="img/emblem-512.png" alt="VShark Solutions emblem">
+        <h1 class="h2">VShark <em>Solutions</em></h1>
+        <p class="muted">3D scanning, reverse engineering and Vertex 3D scanners · Coimbatore, India &amp; Dubai, UAE</p>
+      </div>
+      <nav class="blinks__list" aria-label="VShark links">
+{rows}
+      </nav>
+    </section>'''
+    return page(P, 'links.html', '', body)
+
+def llms_txt():
+    '''/llms.txt — plain-language summary of the site for AI search tools (llmstxt.org format).'''
+    u = page_url
+    S = C['social']
+    svc = '\n'.join(f'- [{s["name"]}]({u("services/" + s["slug"] + ".html")}): {META["services/" + s["slug"] + ".html"][1]}' for s in D['services'])
+    ind = '\n'.join(f'- [{i["name"]}]({u("industries/" + i["slug"] + ".html")}): {i["line"]}' for i in D['industries'])
+    prod = '\n'.join(f'- [{p["name"]}]({u("products/index.html")}#{p["slug"]}): {p["type"]}. {p["summary"]}' for p in D['products'])
+    phones = ' · '.join(f'{p["display"]} ({p["label"]})' for p in C['phones'])
+    txt = f'''# VShark Solutions
+
+> VShark Solutions Private Limited is a 3D scanning, reverse engineering and 3D design company based in Coimbatore, Tamil Nadu, India, with a presence in Dubai, United Arab Emirates. Since 2019 it has served manufacturers, engineers, builders, jewellers and research labs across India, the UAE and worldwide, and it is the India distributor of JINUOSH Vertex 3D scanners in India.
+
+- Locations: Coimbatore, Tamil Nadu, India (head office: {C['offices'][0]['street']}, {C['offices'][0]['city']} {C['offices'][0]['postcode']}) and Dubai, UAE. On-site service across India and the UAE.
+- Contact: {C['email']} · {phones} · WhatsApp +91 95142 48525
+- Free quotes: send part photos, drawings or scan data through {u('contact.html')}
+
+## Services
+
+{svc}
+
+## Products (JINUOSH Vertex 3D scanners, sold, installed and supported in India)
+
+{prod}
+
+## Industries
+
+{ind}
+
+## Key pages
+
+- [Home]({u('')}): overview of services, scanners and industries
+- [About]({u('about.html')}): company background, how we work, locations
+- [Portfolio]({u('portfolio/index.html')}): completed scanning, CAD and inspection projects
+- [Contact]({u('contact.html')}): enquiry form, phone, WhatsApp and office addresses
+- [Vertex3D and Vertex3D Pro in India]({u('jinuosh-vertex-3d-scanner-india.html')}): specifications, what is included, FAQs
+- [Vertex Tracker in India]({u('vertex-tracker.html')}): optical-tracking scanner specifications and FAQs
+- [3D scanning services in Coimbatore]({u('3d-scanning-services-coimbatore.html')}): on-site scanning, reverse engineering and inspection
+
+## Social
+
+- YouTube: {S['youtube']}
+- Instagram: {S['instagram']}
+- Facebook: {S['facebook']}
+- LinkedIn: {S['linkedin']}
+- IndiaMART: {S['indiamart']}
+'''
+    if BLOG_POSTS:
+        blog = '\n'.join(f'- [{q["title"]}]({u("blog/" + q["slug"] + "/")}): {q["description"]}' for q in reversed(BLOG_POSTS))
+        txt = txt.replace('## Social', f'## Blog\n\n- [All articles]({u("blog/")})\n{blog}\n\n## Social', 1)
+    open(os.path.join(ROOT, 'llms.txt'), 'w', encoding='utf-8', newline='\n').write(txt)
+
+# ---------------------------------------------------------------- image width/height (prevents layout shift)
+def image_size(path):
+    '''(width, height) of a PNG, JPEG or WebP file, read from its header — no Pillow needed.'''
+    with open(path, 'rb') as f:
+        h = f.read(64)
+        if h[:8] == b'\x89PNG\r\n\x1a\n':
+            return int.from_bytes(h[16:20], 'big'), int.from_bytes(h[20:24], 'big')
+        if h[:4] == b'RIFF' and h[8:12] == b'WEBP':
+            kind = h[12:16]
+            if kind == b'VP8 ':
+                return int.from_bytes(h[26:28], 'little') & 0x3FFF, int.from_bytes(h[28:30], 'little') & 0x3FFF
+            if kind == b'VP8L':
+                b = int.from_bytes(h[21:25], 'little')
+                return (b & 0x3FFF) + 1, ((b >> 14) & 0x3FFF) + 1
+            if kind == b'VP8X':
+                return int.from_bytes(h[24:27], 'little') + 1, int.from_bytes(h[27:30], 'little') + 1
+        if h[:2] == b'\xff\xd8':
+            f.seek(2)
+            while True:
+                m = f.read(4)
+                if len(m) < 4 or m[0] != 0xFF:
+                    return None
+                seg = int.from_bytes(m[2:4], 'big')
+                if 0xC0 <= m[1] <= 0xCF and m[1] not in (0xC4, 0xC8, 0xCC):
+                    d = f.read(5)
+                    return int.from_bytes(d[3:5], 'big'), int.from_bytes(d[1:3], 'big')
+                f.seek(seg - 2, 1)
+    return None
+
+def add_image_sizes(rel):
+    '''Give every local <img> in a built page its intrinsic width/height (CSS keeps height:auto).'''
+    path = os.path.join(ROOT, rel)
+    base = os.path.dirname(path)
+    s = open(path, encoding='utf-8').read()
+    def fix(m):
+        tag = m.group(0)
+        if re.search(r'\swidth=', tag):
+            return tag
+        src = re.search(r'\ssrc="([^"?#]+)', tag)
+        if not src or src.group(1).startswith(('http:', 'https:', 'data:', '//')):
+            return tag
+        f = src.group(1)
+        f = os.path.join(ROOT, f.lstrip('/')) if f.startswith('/') else os.path.normpath(os.path.join(base, f))
+        size = image_size(f) if os.path.exists(f) else None
+        if not size:
+            print(f'  ! {rel}: no size for {src.group(1)}')
+            return tag
+        return tag[:4] + f' width="{size[0]}" height="{size[1]}"' + tag[4:]
+    s2 = re.sub(r'<img\b[^>]*>', fix, s)
+    if s2 != s:
+        open(path, 'w', encoding='utf-8', newline='\n').write(s2)
+
 def sitemap_and_robots(pages):
     """sitemap.xml (handoff B6) lists every public page; robots.txt points to it."""
-    today = __import__('datetime').date.today().isoformat()
     skip = {'thanks.html', '404.html'}
     urls = ['index.html'] + [r for r in pages if r not in skip]
     def loc(r):
         return SITE_URL + ('' if r == 'index.html' else r[:-len('index.html')] if r.endswith('/index.html') else r)
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
-        f'  <url><loc>{loc(r)}</loc><lastmod>{today}</lastmod></url>\n' for r in urls) + '</urlset>\n'
+        f'  <url><loc>{loc(r)}</loc><lastmod>{LASTMOD[r]["date"]}</lastmod></url>\n' for r in urls) + '</urlset>\n'
     open(os.path.join(ROOT, 'sitemap.xml'), 'w', encoding='utf-8', newline='\n').write(xml)
     robots = f'User-agent: *\nAllow: /\nDisallow: /build/\nDisallow: /data/\n\nSitemap: {SITE_URL}sitemap.xml\n'
     open(os.path.join(ROOT, 'robots.txt'), 'w', encoding='utf-8', newline='\n').write(robots)
@@ -926,16 +1289,410 @@ def build_home():
         s = pat.sub(lambda m: content, s)
     # fingerprint local css/js
     s = re.sub(r'(href|src)="((?:css|js|fonts)/[\w.-]+\.(?:css|js))(?:\?v=[\w]+)?"', lambda m: f'{m.group(1)}="{asset(m.group(2), "")}"', s)
-    open(p, 'w', encoding='utf-8').write(s)
+    open(p, 'w', encoding='utf-8', newline='\n').write(s)
+
+# ---------------------------------------------------------------- blog (S10 / audit F3, handoff Part F)
+BLOG_DIR = os.path.join(ROOT, 'data', 'blog')
+BLOG_CATS = [('Reverse Engineering', 'reverse-engineering'), ('3D Scanning', '3d-scanning'), ('Inspection & Metrology', 'inspection-metrology'),
+             ('Scan to BIM', 'scan-to-bim'), ('Class A Surfacing', 'class-a-surfacing'), ('3D Printing', '3d-printing'), ('3D Scanners', '3d-scanners')]
+CAT_SLUG = dict(BLOG_CATS)
+BLOG_PER_PAGE = 9
+OG_POST = {}      # rel -> (image url, width, height, alt) for per-post og:image
+
+def blog_href(u, P):
+    """Site-relative paths used in the post text (/services/x, /contact?service=x ...) -> real file paths."""
+    if u.startswith(('http', 'mailto:', 'tel:', '#')):
+        return u
+    path, _, q = u.partition('?')
+    q = '?' + q if q else ''
+    path = path.strip('/')
+    if path == '':
+        return P + 'index.html'
+    if path.startswith(('services/', 'industries/')) and not path.endswith('.html'):
+        return P + path + '.html' + q
+    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore', 'vertex-tracker', 'jinuosh-vertex-3d-scanner-india'):
+        return P + path + '.html' + q
+    if path in ('products', 'portfolio', 'services', 'industries', 'blog') or path.startswith('blog/'):
+        return P + path + '/' + q
+    print('  WARNING blog link not mapped:', u)
+    return P + path + q
+
+def blog_inline(t, P):
+    t = E(t)
+    t = re.sub(r'\[([^\]]+)\]\(([^)\s]+)\)', lambda m: f'<a href="{blog_href(html.unescape(m.group(2)), P)}">{m.group(1)}</a>', t)
+    t = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', t)
+    t = re.sub(r'(?<![\w*])\*([^*\n]+?)\*(?![\w*])', r'<em>\1</em>', t)
+    return t
+
+def blog_md(text, P, skip_img=None):
+    """Markdown subset used by the posts: ### / #### headings, paragraphs, lists, tables, images, blockquotes."""
+    out, lines, i = [], text.strip().split('\n'), 0
+    while i < len(lines):
+        l = lines[i]
+        if not l.strip():
+            i += 1
+        elif l.startswith('### '):
+            h = l[4:].strip()
+            out.append(f'<h2 id="{re.sub(r"[^a-z0-9]+", "-", h.lower()).strip("-")}">{blog_inline(h, P)}</h2>'); i += 1
+        elif l.startswith('#### '):
+            out.append(f'<h3>{blog_inline(l[5:].strip(), P)}</h3>'); i += 1
+        elif l.strip() == '---':
+            i += 1
+        elif re.match(r'!\[[^\]]*\]\([^)]+\)\s*$', l.strip()):
+            alt, src = re.match(r'!\[([^\]]*)\]\(([^)]+)\)', l.strip()).groups()
+            if src != skip_img:
+                out.append(f'<figure class="post-fig"><img src="{P}{src}" alt="{E(alt)}" loading="lazy"><figcaption>{E(alt)}</figcaption></figure>')
+            i += 1
+        elif l.startswith('|'):
+            rows = []
+            while i < len(lines) and lines[i].startswith('|'):
+                rows.append([c.strip() for c in lines[i].strip().strip('|').split(' | ')] if ' | ' in lines[i] else [c.strip() for c in lines[i].strip().strip('|').split('|')])
+                i += 1
+            head, body = rows[0], [r for r in rows[1:] if not all(re.fullmatch(r':?-+:?', c) for c in r)]
+            th = ''.join(f'<th>{blog_inline(c, P)}</th>' for c in head)
+            tb = ''.join('<tr>' + ''.join(f'<td>{blog_inline(c, P)}</td>' for c in r) + '</tr>' for r in body)
+            out.append(f'<div class="post-table"><table><thead><tr>{th}</tr></thead><tbody>{tb}</tbody></table></div>')
+        elif re.match(r'(- |\* )', l):
+            items = []
+            while i < len(lines) and re.match(r'(- |\* )', lines[i]):
+                items.append(f'<li>{blog_inline(lines[i][2:], P)}</li>'); i += 1
+            out.append('<ul>' + ''.join(items) + '</ul>')
+        elif re.match(r'\d+\. ', l):
+            items = []
+            while i < len(lines) and re.match(r'\d+\. ', lines[i]):
+                li = re.sub(r'^\d+\. ', '', lines[i])
+                items.append(f'<li>{blog_inline(li, P)}</li>'); i += 1
+            out.append('<ol>' + ''.join(items) + '</ol>')
+        elif l.startswith('@video '):
+            url, _, vt = l[7:].partition(' | ')
+            out.append(f'<div class="post-video">{video_embed(P, url.strip(), vt.strip())}</div>'); i += 1
+        elif l.startswith('> '):
+            q = []
+            while i < len(lines) and lines[i].startswith('>'):
+                q.append(lines[i][1:].strip()); i += 1
+            out.append('<blockquote><p>' + blog_inline(' '.join(q), P) + '</p></blockquote>')
+        else:
+            para = []
+            while i < len(lines) and lines[i].strip() and not re.match(r'(#|\||- |\* |\d+\. |> |!\[|---|@video)', lines[i]):
+                para.append(blog_inline(lines[i].strip(), P)); i += 1
+            out.append('<p>' + ' '.join(para) + '</p>')
+    return '\n'.join(out)
+
+def load_posts():
+    import datetime
+    dates = json.load(open(os.path.join(BLOG_DIR, 'dates.json'), encoding='utf-8'))
+    today = datetime.date.today().isoformat()
+    posts = []
+    for fn in sorted(os.listdir(BLOG_DIR)):
+        if not fn.endswith('.md'):
+            continue
+        raw = open(os.path.join(BLOG_DIR, fn), encoding='utf-8').read()
+        _, fm, body = raw.split('---\n', 2)
+        p = dict(re.findall(r'(?m)^(\w+): (.*)$', fm))
+        p['date'] = dates.get(p['slug'], today)
+        if p['date'] > today:
+            continue          # scheduled for later: not built, not in the sitemap
+        faq_at = body.find('### FAQ')
+        faq_txt = body[faq_at + 7:] if faq_at >= 0 else ''
+        body = body[:faq_at] if faq_at >= 0 else body
+        p['faqs'] = [(q.strip(), re.sub(r'\s+', ' ', a.strip())) for q, a in re.findall(r'\*\*(.+?)\*\*\n(.+?)(?=\n\n\*\*|\Z)', faq_txt.strip(), re.S)]
+        p['body'] = body.strip()
+        p['mins'] = max(2, round(len(re.sub(r'[#*|!\[\]()-]', ' ', body).split()) / 200))
+        p['cat_slug'] = CAT_SLUG[p['category']]
+        p['rel'] = f'blog/{p["slug"]}/index.html'
+        p['order'] = int(p['order'])
+        posts.append(p)
+    return sorted(posts, key=lambda p: (p['date'], p['order']))
+
+def _date_nice(d):
+    import datetime
+    return datetime.date.fromisoformat(d).strftime('%d %b %Y').lstrip('0')
+
+def post_card(P, p):
+    img = p['featured']
+    return f'''        <article class="bcard" data-reveal>
+          <a class="bcard__media" href="{P}blog/{p['slug']}/" tabindex="-1" aria-hidden="true"><img src="{P}{img}" alt="" loading="lazy"></a>
+          <div class="bcard__body">
+            <span class="mono bcard__meta">{E(p['category'])} · {p['mins']} min read</span>
+            <h3 class="bcard__title"><a href="{P}blog/{p['slug']}/">{E(p['title'])}</a></h3>
+            <p>{E(p['description'])}</p>
+            <a class="bcard__more mono" href="{P}blog/{p['slug']}/">Read article &rarr;</a>
+          </div>
+        </article>'''
+
+def blog_chips(P, current=None):
+    chips = [f'<a class="chip{" is-current" if current is None else ""}" href="{P}blog/">All</a>'] + [
+        f'<a class="chip{" is-current" if current == s else ""}" href="{P}blog/category/{s}/">{E(n)}</a>' for n, s in BLOG_CATS]
+    return '<nav class="bchips" aria-label="Blog categories">' + ''.join(chips) + '</nav>'
+
+def blog_listing(posts_all, cat=None, pg=1):
+    """One listing page: /blog/, /blog/page/N/, /blog/category/<slug>/ (9 per page)."""
+    sel = [p for p in reversed(posts_all) if cat is None or p['cat_slug'] == cat]
+    pages = max(1, -(-len(sel) // BLOG_PER_PAGE))
+    chunk = sel[(pg - 1) * BLOG_PER_PAGE: pg * BLOG_PER_PAGE]
+    if cat:
+        name = next(n for n, s in BLOG_CATS if s == cat)
+        rel = f'blog/category/{cat}/index.html' if pg == 1 else f'blog/category/{cat}/page/{pg}/index.html'
+        P = '../' * rel.count('/')
+        crumbs_ = [("Blog", P + 'blog/'), (name, None)]
+        title, lead = f'{E(name)} <em>articles.</em>', f'Guides and answers on {E(name.lower())} from the VShark engineering team.'
+        META[rel] = (f'{name} Articles | VShark Solutions Blog', f'Articles on {name.lower()} from VShark Solutions: practical guides for manufacturers in India and the UAE.')
+    else:
+        rel = 'blog/index.html' if pg == 1 else f'blog/page/{pg}/index.html'
+        P = '../' * rel.count('/')
+        crumbs_ = [("Blog", None)]
+        title, lead = 'Notes from the <em>scanning bench.</em>', 'Practical guides on 3D scanning, reverse engineering, inspection and scan-to-CAD, written by the VShark engineering team.'
+        META[rel] = ('3D Scanning & Reverse Engineering Blog | VShark Solutions', 'Practical guides on 3D scanning, reverse engineering, scan to CAD, Scan to BIM, Class A surfacing and 3D inspection from VShark Solutions, India and the UAE.')
+    if pg > 1:
+        title_t, desc_t = META[rel]
+        META[rel] = (f'{title_t.split(" | ")[0]} - Page {pg} | VShark Solutions', desc_t)
+    cards = '\n'.join(post_card(P, p) for p in chunk) or '        <p>No articles in this category yet.</p>'
+    base = f'blog/category/{cat}/' if cat else 'blog/'
+    nav = ''
+    if pages > 1:
+        links = [f'<a class="chip{" is-current" if n == pg else ""}" href="{P}{base}{"" if n == 1 else f"page/{n}/"}">{n}</a>' for n in range(1, pages + 1)]
+        nav = '<nav class="bchips bchips--pages" aria-label="Pages">' + ''.join(links) + '</nav>'
+    body = f'''{page_hero(P, crumbs_, 'Blog', title, lead)}
+    <section class="section blk">
+      {blog_chips(P, cat)}
+      <div class="bgrid">
+{cards}
+      </div>
+      {nav}
+    </section>
+{cta(P)}'''
+    return rel, page(P, rel, 'blog', body)
+
+def blog_post(p, posts_all):
+    rel, P = p['rel'], '../../'
+    META[rel] = (p['title_tag'], p['description'])
+    m = re.match(r'!\[([^\]]*)\]\(([^)]+)\)', p['body'])
+    f_alt = m.group(1) if m and m.group(2) == p['featured'] else p['title']
+    d = _dims(os.path.join(ROOT, p['featured']))
+    OG_POST[rel] = (SITE_URL + p['featured'], d[0], d[1], f_alt)
+    body_html = blog_md(p['body'], P, skip_img=p['featured'])
+    url = SITE_URL + f'blog/{p["slug"]}/'
+    share = ''.join(f'<a class="chip" href="{h}" target="_blank" rel="noopener">{n}</a>' for n, h in [
+        ('LinkedIn', 'https://www.linkedin.com/sharing/share-offsite/?url=' + quote(url, safe='')),
+        ('WhatsApp', 'https://wa.me/?text=' + quote(p['title'] + ' ' + url, safe='')),
+        ('Facebook', 'https://www.facebook.com/sharer/sharer.php?u=' + quote(url, safe='')),
+        ('X', 'https://twitter.com/intent/tweet?url=' + quote(url, safe='') + '&text=' + quote(p['title'], safe=''))])
+    svc = p['service'].strip('/')
+    qs = svc.split('/')[-1] if svc.startswith('services/') else ('' if svc.startswith('products') else svc.split('/')[-1])
+    quote_href = f'{P}contact.html' + (f'?service={qs}' if svc.startswith('services/') else '')
+    related = [q for q in reversed(posts_all) if q['slug'] != p['slug']]
+    related.sort(key=lambda q: q['cat_slug'] != p['cat_slug'])
+    rel_cards = '\n'.join(post_card(P, q) for q in related[:3])
+    body = f'''{page_hero(P, [("Blog", P + 'blog/'), (p['category'], P + f"blog/category/{p['cat_slug']}/"), (p['title'], None)],
+        f"{E(p['category'])} · {_date_nice(p['date'])} · {p['mins']} min read", E(p['title']), E(p['description']), p['featured'], alt=f_alt)}
+    <article class="section blk">
+      <div class="prose prose--post">
+{body_html}
+      </div>
+      <p class="post-byline mono">By VShark Engineering Team · Published {_date_nice(p['date'])}</p>
+      <div class="post-share"><span class="mono">Share</span>{share}</div>
+    </article>
+{faq_section(p['faqs'], 'Common <em>questions.</em>')}
+    <section class="cta-band">
+      <div class="cta-band__inner">
+        <h2 class="h2">Have a part to scan, model or inspect?</h2>
+        <p>Send photos or drawings for a free quote.</p>
+        <div class="cta-band__actions">
+          <a class="btn btn--light magnetic" href="{quote_href}"><span>Get a quote</span>{A}</a>
+          <a class="btn btn--outline-light magnetic" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp us</span></a>
+        </div>
+        <p class="mono">India {E(C['phones'][0]['display'])} · UAE {E(C['phones'][1]['display'])}</p>
+      </div>
+    </section>
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">Keep reading</span><h2 class="h2" data-reveal>Related <em>articles.</em></h2></div></div>
+      <div class="bgrid">
+{rel_cards}
+      </div>
+    </section>'''
+    return rel, page(P, rel, 'blog', body)
+
+def build_blog():
+    posts = load_posts()
+    out = []
+    for p in posts:
+        rel, h = blog_post(p, posts)
+        out.append(write(rel, h))
+    pages = max(1, -(-len(posts) // BLOG_PER_PAGE))
+    for pg in range(1, pages + 1):
+        rel, h = blog_listing(posts, None, pg); out.append(write(rel, h))
+    for _, s in BLOG_CATS:
+        n = len([p for p in posts if p['cat_slug'] == s])
+        if n:
+            for pg in range(1, max(1, -(-n // BLOG_PER_PAGE)) + 1):
+                rel, h = blog_listing(posts, s, pg); out.append(write(rel, h))
+    BLOG_POSTS[:] = posts
+    return out
+
+BLOG_POSTS = []
+
+
+# ---------------------------------------------------------------- Vertex product pages (S16)
+PRODUCT_PAGES = {}   # rel -> front matter, for schema
+PAGES_DIR = os.path.join(ROOT, 'data', 'pages')
+PRODUCT_LD = {
+    'jinuosh-vertex-3d-scanner-india.html': [
+        ('Vertex3D', 'Handheld blue-laser 3D scanner with 26 crossed blue laser lines, up to 0.020 mm accuracy and a 650 x 550 mm scanning field.',
+         'img/products/jinuosh-vertex3d-handheld-blue-laser-3d-scanner-front.webp', '1.07 kg'),
+        ('Vertex3D Pro', 'Handheld blue-laser 3D scanner with 50 crossed blue laser lines, up to 0.020 mm accuracy and a 650 x 550 mm scanning field.',
+         'img/products/vertex3d-pro.png', '1.15 kg')],
+    'vertex-tracker.html': [
+        ('Vertex Tracker', 'Optical-tracking 3D scanning system with up to 0.025 mm accuracy and a 1100 x 800 mm scanning field, for large parts.',
+         'img/products/vertex-tracker.png', None)],
+}
+
+def build_product_pages():
+    out = []
+    for fn in sorted(os.listdir(PAGES_DIR)):
+        raw = open(os.path.join(PAGES_DIR, fn), encoding='utf-8').read()
+        _, fm, body = raw.split('---\n', 2)
+        m = dict(re.findall(r'(?m)^(\w+): (.*)$', fm))
+        rel, P = m['rel'], ''
+        META[rel] = (m['title_tag'], m['description'])
+        PRODUCT_PAGES[rel] = m
+        faq_at = body.find('### FAQ')
+        faq_txt, body = body[faq_at + 7:], body[:faq_at]
+        faqs = [(q.strip(), re.sub(r'\s+', ' ', a.strip())) for q, a in re.findall(r'\*\*(.+?)\*\*\n(.+?)(?=\n\n\*\*|\Z)', faq_txt.strip(), re.S)]
+        hero = page_hero(P, [("Products", P + 'products/index.html'), (re.sub('<[^>]+>', '', m['h1']), None)], m['tag'], m['h1'], E(m['lead']), m['image'], alt=m['image_alt'])
+        html_page = f'''{hero}
+    <article class="section blk">
+      <div class="prose prose--post">
+{blog_md(body, P)}
+      </div>
+    </article>
+{faq_section(faqs, 'Common <em>questions.</em>')}
+    <section class="cta-band">
+      <div class="cta-band__inner">
+        <h2 class="h2">See it scan your part.</h2>
+        <p>Request a quote, a free demo or a free sample scan. Send a photo of your part on WhatsApp.</p>
+        <div class="cta-band__actions">
+          <a class="btn btn--light magnetic" href="{P}contact.html?product={m['product']}"><span>Request a quote</span>{A}</a>
+          <a class="btn btn--outline-light magnetic" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp us</span></a>
+        </div>
+        <p class="mono">India {E(C['phones'][0]['display'])} · UAE {E(C['phones'][1]['display'])}</p>
+      </div>
+    </section>'''
+        out.append(write(rel, page(P, rel, 'products', html_page)))
+    return out
+
+# ---------------------------------------------------------------- final pass (S05/S07 technical SEO)
+LASTMOD_FILE = os.path.join(ROOT, 'data', 'lastmod.json')
+LASTMOD = json.load(open(LASTMOD_FILE, encoding='utf-8')) if os.path.exists(LASTMOD_FILE) else {}
+_DIMS = {}
+IMG_RE = re.compile(r'<img\b[^>]*>')
+
+def _dims(path):
+    if path not in _DIMS:
+        try:
+            from PIL import Image
+            with Image.open(path) as im:
+                _DIMS[path] = im.size
+        except Exception:
+            _DIMS[path] = None
+    return _DIMS[path]
+
+def add_dims(html_text, rel):
+    """Intrinsic width/height on every local <img> (audit F9, layout shift). CSS keeps height:auto, see css/style.css."""
+    base = os.path.dirname(os.path.join(ROOT, rel))
+    def fix(m):
+        tag = m.group(0)
+        if re.search(r'\swidth=', tag):
+            return tag
+        src = re.search(r'\ssrc="([^"]+)"', tag)
+        if not src or src.group(1).startswith(('http', 'data:')):
+            return tag
+        u = src.group(1).split('?')[0]
+        d = _dims(os.path.normpath(os.path.join(ROOT, u.lstrip('/')) if u.startswith('/') else os.path.join(base, u)))
+        if not d:
+            return tag
+        return tag.replace('<img', f'<img width="{d[0]}" height="{d[1]}"', 1)
+    return IMG_RE.sub(fix, html_text)
+
+def extra_ld(rel):
+    """BreadcrumbList on inner pages, Service on service pages, Organization + WebSite on the home page."""
+    blocks = []
+    url = canonical_url(rel)
+    if rel in ('', 'index.html'):
+        S = C['social']
+        blocks.append({'@context': 'https://schema.org', '@type': 'Organization', '@id': SITE_URL + '#organization',
+                       'name': 'VShark Solutions Private Limited', 'alternateName': 'VShark Solutions', 'url': SITE_URL,
+                       'logo': SITE_URL + 'img/vshark-logo.png', 'email': C['email'],
+                       'sameAs': [S['facebook'], S['instagram'], S['linkedin']] + ([S['youtube']] if S.get('youtube') else [])})
+        blocks.append({'@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE_URL + '#website', 'url': SITE_URL,
+                       'name': 'VShark Solutions', 'publisher': {'@id': SITE_URL + '#organization'}, 'inLanguage': 'en'})
+    elif rel in PRODUCT_LD:
+        trail = [('Home', SITE_URL), ('Products', SITE_URL + 'products/'), (META[rel][0].split(' | ')[0], url)]
+        for name, desc, img, wt in PRODUCT_LD[rel]:
+            node = {'@context': 'https://schema.org', '@type': 'Product', 'name': name, 'description': desc, 'image': SITE_URL + img,
+                    'brand': {'@type': 'Brand', 'name': 'JINUOSH'}, 'category': '3D scanner', 'url': url}
+            if wt:
+                node['weight'] = {'@type': 'QuantitativeValue', 'value': float(wt.split()[0]), 'unitCode': 'KGM'}
+            blocks.append(node)
+        blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+                       'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
+    elif rel.startswith('blog/'):
+        post = next((q for q in BLOG_POSTS if q['rel'] == rel), None)
+        trail = [('Home', SITE_URL), ('Blog', SITE_URL + 'blog/')]
+        if post:
+            trail += [(post['category'], SITE_URL + f"blog/category/{post['cat_slug']}/"), (post['title'], url)]
+            blocks.append({'@context': 'https://schema.org', '@type': 'BlogPosting', 'headline': post['title'], 'description': post['description'],
+                           'image': OG_POST[rel][0], 'author': {'@type': 'Organization', 'name': 'VShark Solutions'},
+                           'publisher': {'@id': SITE_URL + '#business'}, 'datePublished': post['date'], 'dateModified': post['date'],
+                           'mainEntityOfPage': url, 'inLanguage': 'en'})
+        elif '/category/' in rel:
+            cs = rel.split('/')[2]
+            trail.append((next(n for n, c in BLOG_CATS if c == cs), url))
+        blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+                       'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
+    else:
+        trail = [('Home', SITE_URL)]
+        folder, _, leaf = rel.rpartition('/')
+        title = META[rel][0].split(' | ')[0].split(' – ')[0]
+        item = (SVC if folder == 'services' else IND if folder == 'industries' else {}).get(leaf[:-5])
+        if folder in ('services', 'industries') and leaf != 'index.html':
+            trail.append((folder.capitalize(), SITE_URL + folder + '/'))
+            trail.append((item['name'] if item else title, url))
+        else:
+            trail.append((title, url))
+        blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+                       'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
+        if folder == 'services' and item:
+            blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'name': item['name'], 'serviceType': item['name'],
+                           'description': META[rel][1], 'url': url, 'provider': {'@id': SITE_URL + '#business'},
+                           'areaServed': [{'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
+    return '<!-- @ld -->' + ''.join('<script type="application/ld+json">' + json.dumps(b, ensure_ascii=False).replace('</', '<\/') + '</script>' for b in blocks) + '<!-- /@ld -->'
+
+def finalize(rels):
+    import datetime
+    today = datetime.date.today().isoformat()
+    for rel in rels:
+        path = os.path.join(ROOT, rel)
+        t = open(path, encoding='utf-8').read()
+        t = re.sub(r'\s*<!-- @ld -->.*?<!-- /@ld -->', '', t, flags=re.S)
+        if rel not in NOINDEX_PAGES:
+            t = t.replace('  <meta name="theme-color"', '  ' + extra_ld(rel) + '\n  <meta name="theme-color"', 1)
+        open(path, 'w', encoding='utf-8', newline='\n').write(t)
+        h = hashlib.sha1(t.encode('utf-8')).hexdigest()
+        if LASTMOD.get(rel, {}).get('hash') != h:
+            LASTMOD[rel] = {'hash': h, 'date': today}
+    json.dump(LASTMOD, open(LASTMOD_FILE, 'w', encoding='utf-8', newline='\n'), indent=1, sort_keys=True)
 
 # ---------------------------------------------------------------- write everything
 def write(rel, content):
     path = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    open(path, 'w', encoding='utf-8').write(content)
+    open(path, 'w', encoding='utf-8', newline='\n').write(content)
     return rel
 
 if __name__ == '__main__':
+    for v in D.get('videos', []):
+        if not v.get('uploadDate'):
+            print(f'  ! video {v["id"]}: no uploadDate in data/site.json (VideoObject is not eligible for Google video results yet)')
     out = [write('services/index.html', services_index()),
            write('industries/index.html', industries_index()),
            write('products/index.html', products_page()),
@@ -944,9 +1701,17 @@ if __name__ == '__main__':
            write('thanks.html', thanks_page()),
            write('about.html', about_page()),
            write('privacy-policy.html', privacy_page()),
+           write('3d-scanning-services-coimbatore.html', coimbatore_page()),
+           write('links.html', links_page()),
            write('404.html', notfound_page())]
     out += [write(f'services/{s["slug"]}.html', service_page(s)) for s in D['services']]
     out += [write(f'industries/{s["slug"]}.html', industry_page(s)) for s in D['industries']]
     build_home()
+    out += build_product_pages()
+    out += build_blog()
+    for rel in out + ['index.html']:
+        add_image_sizes(rel)
+    finalize(out + ['index.html'])
     sitemap_and_robots(out)
-    print(f'built {len(out)} pages + index.html, sitemap.xml, robots.txt')
+    llms_txt()
+    print(f'built {len(out)} pages + index.html, sitemap.xml, robots.txt, llms.txt')
