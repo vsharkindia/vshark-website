@@ -111,9 +111,13 @@ def seo_extra(rel):
         return ''
     u = canonical_url(rel)
     alt = 'VShark Solutions: 3D scanning, reverse engineering and CAD, with the JINUOSH Vertex scanner'
+    img, iw, ih = OG_IMAGE, 1200, 630
+    if rel in OG_POST:
+        img, iw, ih, alt = OG_POST[rel]
+        alt = E(alt)
     return (f'@@  <link rel="canonical" href="{u}">@@  <meta property="og:url" content="{u}">'
-            f'@@  <meta property="og:image" content="{OG_IMAGE}">@@  <meta property="og:image:width" content="1200">'
-            f'@@  <meta property="og:image:height" content="630">@@  <meta property="og:image:alt" content="{alt}">'
+            f'@@  <meta property="og:image" content="{img}">@@  <meta property="og:image:width" content="{iw}">'
+            f'@@  <meta property="og:image:height" content="{ih}">@@  <meta property="og:image:alt" content="{alt}">'
             f'@@  <meta name="twitter:card" content="summary_large_image">').replace('@@', '\n')
 
 def head_meta(rel):
@@ -163,6 +167,7 @@ def header(P, active=''):
       {drop('services', f'{P}services/index.html', 'Services', svc_items, 'All services')}
       {drop('industries', f'{P}industries/index.html', 'Industries', ind_items, 'All industries')}
       {link('portfolio', f'{P}portfolio/index.html', 'Portfolio')}
+      {link('blog', f'{P}blog/', 'Blog')}
       {link('about', f'{P}about.html', 'About')}
       {link('contact', f'{P}contact.html', 'Contact')}
     </nav>
@@ -180,8 +185,9 @@ def header(P, active=''):
       {m(2, f'{P}services/index.html', 'Services')}
       {m(3, f'{P}industries/index.html', 'Industries')}
       {m(4, f'{P}portfolio/index.html', 'Portfolio')}
-      {m(5, f'{P}about.html', 'About')}
-      {m(6, f'{P}contact.html', 'Contact')}
+      {m(5, f'{P}blog/', 'Blog')}
+      {m(6, f'{P}about.html', 'About')}
+      {m(7, f'{P}contact.html', 'Contact')}
     </nav>
     <div class="menu__cta">
       <a class="btn btn--accent" href="{P}contact.html"><span>Get a quote</span>{A}</a>
@@ -226,7 +232,7 @@ def footer(P, msg=WA_DEFAULT):
     <div class="footer__big" aria-hidden="true">VSHARK</div>
     <div class="footer__bottom mono">
       <span>© <span id="year">2026</span> VShark Solutions Private Limited</span>
-      <span><a href="{P}about.html">About</a> · <a href="{P}privacy-policy.html">Privacy Policy</a> · <a href="{P}privacy-policy.html#cookies-and-analytics" data-cookie-settings>Cookie settings</a></span>
+      <span><a href="{P}about.html">About</a> · <a href="{P}blog/">Blog</a> · <a href="{P}privacy-policy.html">Privacy Policy</a> · <a href="{P}privacy-policy.html#cookies-and-analytics" data-cookie-settings>Cookie settings</a></span>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
@@ -1005,6 +1011,8 @@ def write_llms():
     lines += ['', '## Industries'] + [f'- [{x["name"]}]({SITE_URL}industries/{x["slug"]}.html)' for x in D['industries']]
     lines += ['', '## Key pages', f'- [JINUOSH Vertex 3D scanners]({SITE_URL}products/)', f'- [Portfolio]({SITE_URL}portfolio/)',
               f'- [About]({SITE_URL}about.html)', f'- [Contact and quotes]({SITE_URL}contact.html)', '']
+    if BLOG_POSTS:
+        lines[-1:] = ['', '## Blog', f'- [All articles]({SITE_URL}blog/)'] + [f'- [{q["title"]}]({SITE_URL}blog/{q["slug"]}/)' for q in reversed(BLOG_POSTS)] + ['']
     open(os.path.join(ROOT, 'llms.txt'), 'w', encoding='utf-8', newline='\n').write('\n'.join(lines))
 
 # ---------------------------------------------------------------- homepage regions
@@ -1079,6 +1087,243 @@ def build_home():
     s = re.sub(r'(href|src)="((?:css|js|fonts)/[\w.-]+\.(?:css|js))(?:\?v=[\w]+)?"', lambda m: f'{m.group(1)}="{asset(m.group(2), "")}"', s)
     open(p, 'w', encoding='utf-8', newline='\n').write(s)
 
+# ---------------------------------------------------------------- blog (S10 / audit F3, handoff Part F)
+BLOG_DIR = os.path.join(ROOT, 'data', 'blog')
+BLOG_CATS = [('Reverse Engineering', 'reverse-engineering'), ('3D Scanning', '3d-scanning'), ('Inspection & Metrology', 'inspection-metrology'),
+             ('Scan to BIM', 'scan-to-bim'), ('Class A Surfacing', 'class-a-surfacing'), ('3D Printing', '3d-printing'), ('3D Scanners', '3d-scanners')]
+CAT_SLUG = dict(BLOG_CATS)
+BLOG_PER_PAGE = 9
+OG_POST = {}      # rel -> (image url, width, height, alt) for per-post og:image
+
+def blog_href(u, P):
+    """Site-relative paths used in the post text (/services/x, /contact?service=x ...) -> real file paths."""
+    if u.startswith(('http', 'mailto:', 'tel:', '#')):
+        return u
+    path, _, q = u.partition('?')
+    q = '?' + q if q else ''
+    path = path.strip('/')
+    if path == '':
+        return P + 'index.html'
+    if path.startswith(('services/', 'industries/')) and not path.endswith('.html'):
+        return P + path + '.html' + q
+    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore'):
+        return P + path + '.html' + q
+    if path in ('products', 'portfolio', 'services', 'industries', 'blog') or path.startswith('blog/'):
+        return P + path + '/' + q
+    print('  WARNING blog link not mapped:', u)
+    return P + path + q
+
+def blog_inline(t, P):
+    t = E(t)
+    t = re.sub(r'\[([^\]]+)\]\(([^)\s]+)\)', lambda m: f'<a href="{blog_href(html.unescape(m.group(2)), P)}">{m.group(1)}</a>', t)
+    t = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', t)
+    t = re.sub(r'(?<![\w*])\*([^*\n]+?)\*(?![\w*])', r'<em>\1</em>', t)
+    return t
+
+def blog_md(text, P, skip_img=None):
+    """Markdown subset used by the posts: ### / #### headings, paragraphs, lists, tables, images, blockquotes."""
+    out, lines, i = [], text.strip().split('\n'), 0
+    while i < len(lines):
+        l = lines[i]
+        if not l.strip():
+            i += 1
+        elif l.startswith('### '):
+            h = l[4:].strip()
+            out.append(f'<h2 id="{re.sub(r"[^a-z0-9]+", "-", h.lower()).strip("-")}">{blog_inline(h, P)}</h2>'); i += 1
+        elif l.startswith('#### '):
+            out.append(f'<h3>{blog_inline(l[5:].strip(), P)}</h3>'); i += 1
+        elif l.strip() == '---':
+            i += 1
+        elif re.match(r'!\[[^\]]*\]\([^)]+\)\s*$', l.strip()):
+            alt, src = re.match(r'!\[([^\]]*)\]\(([^)]+)\)', l.strip()).groups()
+            if src != skip_img:
+                out.append(f'<figure class="post-fig"><img src="{P}{src}" alt="{E(alt)}" loading="lazy"><figcaption>{E(alt)}</figcaption></figure>')
+            i += 1
+        elif l.startswith('|'):
+            rows = []
+            while i < len(lines) and lines[i].startswith('|'):
+                rows.append([c.strip() for c in lines[i].strip().strip('|').split(' | ')] if ' | ' in lines[i] else [c.strip() for c in lines[i].strip().strip('|').split('|')])
+                i += 1
+            head, body = rows[0], [r for r in rows[1:] if not all(re.fullmatch(r':?-+:?', c) for c in r)]
+            th = ''.join(f'<th>{blog_inline(c, P)}</th>' for c in head)
+            tb = ''.join('<tr>' + ''.join(f'<td>{blog_inline(c, P)}</td>' for c in r) + '</tr>' for r in body)
+            out.append(f'<div class="post-table"><table><thead><tr>{th}</tr></thead><tbody>{tb}</tbody></table></div>')
+        elif re.match(r'(- |\* )', l):
+            items = []
+            while i < len(lines) and re.match(r'(- |\* )', lines[i]):
+                items.append(f'<li>{blog_inline(lines[i][2:], P)}</li>'); i += 1
+            out.append('<ul>' + ''.join(items) + '</ul>')
+        elif re.match(r'\d+\. ', l):
+            items = []
+            while i < len(lines) and re.match(r'\d+\. ', lines[i]):
+                li = re.sub(r'^\d+\. ', '', lines[i])
+                items.append(f'<li>{blog_inline(li, P)}</li>'); i += 1
+            out.append('<ol>' + ''.join(items) + '</ol>')
+        elif l.startswith('> '):
+            q = []
+            while i < len(lines) and lines[i].startswith('>'):
+                q.append(lines[i][1:].strip()); i += 1
+            out.append('<blockquote><p>' + blog_inline(' '.join(q), P) + '</p></blockquote>')
+        else:
+            para = []
+            while i < len(lines) and lines[i].strip() and not re.match(r'(#|\||- |\* |\d+\. |> |!\[|---)', lines[i]):
+                para.append(blog_inline(lines[i].strip(), P)); i += 1
+            out.append('<p>' + ' '.join(para) + '</p>')
+    return '\n'.join(out)
+
+def load_posts():
+    import datetime
+    dates = json.load(open(os.path.join(BLOG_DIR, 'dates.json'), encoding='utf-8'))
+    today = datetime.date.today().isoformat()
+    posts = []
+    for fn in sorted(os.listdir(BLOG_DIR)):
+        if not fn.endswith('.md'):
+            continue
+        raw = open(os.path.join(BLOG_DIR, fn), encoding='utf-8').read()
+        _, fm, body = raw.split('---\n', 2)
+        p = dict(re.findall(r'(?m)^(\w+): (.*)$', fm))
+        p['date'] = dates.get(p['slug'], today)
+        if p['date'] > today:
+            continue          # scheduled for later: not built, not in the sitemap
+        faq_at = body.find('### FAQ')
+        faq_txt = body[faq_at + 7:] if faq_at >= 0 else ''
+        body = body[:faq_at] if faq_at >= 0 else body
+        p['faqs'] = [(q.strip(), re.sub(r'\s+', ' ', a.strip())) for q, a in re.findall(r'\*\*(.+?)\*\*\n(.+?)(?=\n\n\*\*|\Z)', faq_txt.strip(), re.S)]
+        p['body'] = body.strip()
+        p['mins'] = max(2, round(len(re.sub(r'[#*|!\[\]()-]', ' ', body).split()) / 200))
+        p['cat_slug'] = CAT_SLUG[p['category']]
+        p['rel'] = f'blog/{p["slug"]}/index.html'
+        p['order'] = int(p['order'])
+        posts.append(p)
+    return sorted(posts, key=lambda p: (p['date'], p['order']))
+
+def _date_nice(d):
+    import datetime
+    return datetime.date.fromisoformat(d).strftime('%d %b %Y').lstrip('0')
+
+def post_card(P, p):
+    img = p['featured']
+    return f'''        <article class="bcard" data-reveal>
+          <a class="bcard__media" href="{P}blog/{p['slug']}/" tabindex="-1" aria-hidden="true"><img src="{P}{img}" alt="" loading="lazy"></a>
+          <div class="bcard__body">
+            <span class="mono bcard__meta">{E(p['category'])} · {p['mins']} min read</span>
+            <h3 class="bcard__title"><a href="{P}blog/{p['slug']}/">{E(p['title'])}</a></h3>
+            <p>{E(p['description'])}</p>
+            <a class="bcard__more mono" href="{P}blog/{p['slug']}/">Read article &rarr;</a>
+          </div>
+        </article>'''
+
+def blog_chips(P, current=None):
+    chips = [f'<a class="chip{" is-current" if current is None else ""}" href="{P}blog/">All</a>'] + [
+        f'<a class="chip{" is-current" if current == s else ""}" href="{P}blog/category/{s}/">{E(n)}</a>' for n, s in BLOG_CATS]
+    return '<nav class="bchips" aria-label="Blog categories">' + ''.join(chips) + '</nav>'
+
+def blog_listing(posts_all, cat=None, pg=1):
+    """One listing page: /blog/, /blog/page/N/, /blog/category/<slug>/ (9 per page)."""
+    sel = [p for p in reversed(posts_all) if cat is None or p['cat_slug'] == cat]
+    pages = max(1, -(-len(sel) // BLOG_PER_PAGE))
+    chunk = sel[(pg - 1) * BLOG_PER_PAGE: pg * BLOG_PER_PAGE]
+    if cat:
+        name = next(n for n, s in BLOG_CATS if s == cat)
+        rel = f'blog/category/{cat}/index.html' if pg == 1 else f'blog/category/{cat}/page/{pg}/index.html'
+        P = '../' * rel.count('/')
+        crumbs_ = [("Blog", P + 'blog/'), (name, None)]
+        title, lead = f'{E(name)} <em>articles.</em>', f'Guides and answers on {E(name.lower())} from the VShark engineering team.'
+        META[rel] = (f'{name} Articles | VShark Solutions Blog', f'Articles on {name.lower()} from VShark Solutions: practical guides for manufacturers in India and the UAE.')
+    else:
+        rel = 'blog/index.html' if pg == 1 else f'blog/page/{pg}/index.html'
+        P = '../' * rel.count('/')
+        crumbs_ = [("Blog", None)]
+        title, lead = 'Notes from the <em>scanning bench.</em>', 'Practical guides on 3D scanning, reverse engineering, inspection and scan-to-CAD, written by the VShark engineering team.'
+        META[rel] = ('3D Scanning & Reverse Engineering Blog | VShark Solutions', 'Practical guides on 3D scanning, reverse engineering, scan to CAD, Scan to BIM, Class A surfacing and 3D inspection from VShark Solutions, India and the UAE.')
+    if pg > 1:
+        title_t, desc_t = META[rel]
+        META[rel] = (f'{title_t.split(" | ")[0]} - Page {pg} | VShark Solutions', desc_t)
+    cards = '\n'.join(post_card(P, p) for p in chunk) or '        <p>No articles in this category yet.</p>'
+    base = f'blog/category/{cat}/' if cat else 'blog/'
+    nav = ''
+    if pages > 1:
+        links = [f'<a class="chip{" is-current" if n == pg else ""}" href="{P}{base}{"" if n == 1 else f"page/{n}/"}">{n}</a>' for n in range(1, pages + 1)]
+        nav = '<nav class="bchips bchips--pages" aria-label="Pages">' + ''.join(links) + '</nav>'
+    body = f'''{page_hero(P, crumbs_, 'Blog', title, lead)}
+    <section class="section blk">
+      {blog_chips(P, cat)}
+      <div class="bgrid">
+{cards}
+      </div>
+      {nav}
+    </section>
+{cta(P)}'''
+    return rel, page(P, rel, 'blog', body)
+
+def blog_post(p, posts_all):
+    rel, P = p['rel'], '../../'
+    META[rel] = (p['title_tag'], p['description'])
+    m = re.match(r'!\[([^\]]*)\]\(([^)]+)\)', p['body'])
+    f_alt = m.group(1) if m and m.group(2) == p['featured'] else p['title']
+    d = _dims(os.path.join(ROOT, p['featured']))
+    OG_POST[rel] = (SITE_URL + p['featured'], d[0], d[1], f_alt)
+    body_html = blog_md(p['body'], P, skip_img=p['featured'])
+    url = SITE_URL + f'blog/{p["slug"]}/'
+    share = ''.join(f'<a class="chip" href="{h}" target="_blank" rel="noopener">{n}</a>' for n, h in [
+        ('LinkedIn', 'https://www.linkedin.com/sharing/share-offsite/?url=' + quote(url, safe='')),
+        ('WhatsApp', 'https://wa.me/?text=' + quote(p['title'] + ' ' + url, safe='')),
+        ('Facebook', 'https://www.facebook.com/sharer/sharer.php?u=' + quote(url, safe='')),
+        ('X', 'https://twitter.com/intent/tweet?url=' + quote(url, safe='') + '&text=' + quote(p['title'], safe=''))])
+    svc = p['service'].strip('/')
+    qs = svc.split('/')[-1] if svc.startswith('services/') else ('' if svc.startswith('products') else svc.split('/')[-1])
+    quote_href = f'{P}contact.html' + (f'?service={qs}' if svc.startswith('services/') else '')
+    related = [q for q in reversed(posts_all) if q['slug'] != p['slug']]
+    related.sort(key=lambda q: q['cat_slug'] != p['cat_slug'])
+    rel_cards = '\n'.join(post_card(P, q) for q in related[:3])
+    body = f'''{page_hero(P, [("Blog", P + 'blog/'), (p['category'], P + f"blog/category/{p['cat_slug']}/"), (p['title'], None)],
+        f"{E(p['category'])} · {_date_nice(p['date'])} · {p['mins']} min read", E(p['title']), E(p['description']), p['featured'], alt=f_alt)}
+    <article class="section blk">
+      <div class="prose prose--post">
+{body_html}
+      </div>
+      <p class="post-byline mono">By VShark Engineering Team · Published {_date_nice(p['date'])}</p>
+      <div class="post-share"><span class="mono">Share</span>{share}</div>
+    </article>
+{faq_section(p['faqs'], 'Common <em>questions.</em>')}
+    <section class="cta-band">
+      <div class="cta-band__inner">
+        <h2 class="h2">Have a part to scan, model or inspect?</h2>
+        <p>Send photos or drawings for a free quote.</p>
+        <div class="cta-band__actions">
+          <a class="btn btn--light magnetic" href="{quote_href}"><span>Get a quote</span>{A}</a>
+          <a class="btn btn--outline-light magnetic" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp us</span></a>
+        </div>
+        <p class="mono">India {E(C['phones'][0]['display'])} · UAE {E(C['phones'][1]['display'])}</p>
+      </div>
+    </section>
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">Keep reading</span><h2 class="h2" data-reveal>Related <em>articles.</em></h2></div></div>
+      <div class="bgrid">
+{rel_cards}
+      </div>
+    </section>'''
+    return rel, page(P, rel, 'blog', body)
+
+def build_blog():
+    posts = load_posts()
+    out = []
+    for p in posts:
+        rel, h = blog_post(p, posts)
+        out.append(write(rel, h))
+    pages = max(1, -(-len(posts) // BLOG_PER_PAGE))
+    for pg in range(1, pages + 1):
+        rel, h = blog_listing(posts, None, pg); out.append(write(rel, h))
+    for _, s in BLOG_CATS:
+        n = len([p for p in posts if p['cat_slug'] == s])
+        if n:
+            for pg in range(1, max(1, -(-n // BLOG_PER_PAGE)) + 1):
+                rel, h = blog_listing(posts, s, pg); out.append(write(rel, h))
+    BLOG_POSTS[:] = posts
+    return out
+
+BLOG_POSTS = []
+
 # ---------------------------------------------------------------- final pass (S05/S07 technical SEO)
 LASTMOD_FILE = os.path.join(ROOT, 'data', 'lastmod.json')
 LASTMOD = json.load(open(LASTMOD_FILE, encoding='utf-8')) if os.path.exists(LASTMOD_FILE) else {}
@@ -1124,6 +1369,20 @@ def extra_ld(rel):
                        'sameAs': [S['facebook'], S['instagram'], S['linkedin']] + ([S['youtube']] if S.get('youtube') else [])})
         blocks.append({'@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE_URL + '#website', 'url': SITE_URL,
                        'name': 'VShark Solutions', 'publisher': {'@id': SITE_URL + '#organization'}, 'inLanguage': 'en'})
+    elif rel.startswith('blog/'):
+        post = next((q for q in BLOG_POSTS if q['rel'] == rel), None)
+        trail = [('Home', SITE_URL), ('Blog', SITE_URL + 'blog/')]
+        if post:
+            trail += [(post['category'], SITE_URL + f"blog/category/{post['cat_slug']}/"), (post['title'], url)]
+            blocks.append({'@context': 'https://schema.org', '@type': 'BlogPosting', 'headline': post['title'], 'description': post['description'],
+                           'image': OG_POST[rel][0], 'author': {'@type': 'Organization', 'name': 'VShark Solutions'},
+                           'publisher': {'@id': SITE_URL + '#business'}, 'datePublished': post['date'], 'dateModified': post['date'],
+                           'mainEntityOfPage': url, 'inLanguage': 'en'})
+        elif '/category/' in rel:
+            cs = rel.split('/')[2]
+            trail.append((next(n for n, c in BLOG_CATS if c == cs), url))
+        blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+                       'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
     else:
         trail = [('Home', SITE_URL)]
         folder, _, leaf = rel.rpartition('/')
@@ -1179,6 +1438,7 @@ if __name__ == '__main__':
     out += [write(f'services/{s["slug"]}.html', service_page(s)) for s in D['services']]
     out += [write(f'industries/{s["slug"]}.html', industry_page(s)) for s in D['industries']]
     build_home()
+    out += build_blog()
     finalize(out + ['index.html'])
     sitemap_and_robots(out)
     print(f'built {len(out)} pages + index.html, sitemap.xml, robots.txt')

@@ -24,3 +24,16 @@
 - [Portfolio](https://www.vsharksolutions.com/portfolio/)
 - [About](https://www.vsharksolutions.com/about.html)
 - [Contact and quotes](https://www.vsharksolutions.com/contact.html)
+
+## Blog
+- [All articles](https://www.vsharksolutions.com/blog/)
+- [3D Scanning for Jewellery and Heritage Idols: Capturing Fine Detail](https://www.vsharksolutions.com/blog/3d-scanning-jewellery-and-heritage-idols/)
+- [From 3D Scan to 3D Print: Rapid Prototyping From Real Parts](https://www.vsharksolutions.com/blog/from-3d-scan-to-3d-print/)
+- [Reverse Engineering for Mining and Crushing: Liners, Throats and Wear Parts](https://www.vsharksolutions.com/blog/reverse-engineering-crusher-wear-parts/)
+- [How Accurate Is 3D Scanning? Precision, Accuracy and Tolerances Explained](https://www.vsharksolutions.com/blog/how-accurate-is-3d-scanning/)
+- [What Is Class A Surfacing, and Why Do Automotive OEMs Need It?](https://www.vsharksolutions.com/blog/what-is-class-a-surfacing/)
+- [Scan to BIM Explained: Accurate As-Built Models of Plant Rooms and Buildings](https://www.vsharksolutions.com/blog/scan-to-bim-explained/)
+- [Choosing a Handheld 3D Scanner in India: Vertex3D vs Vertex3D Pro vs Vertex Tracker](https://www.vsharksolutions.com/blog/choosing-a-handheld-3d-scanner-india/)
+- [How to Recreate Obsolete Spare Parts When There Are No Drawings](https://www.vsharksolutions.com/blog/reverse-engineering-obsolete-spare-parts/)
+- [3D Scanning vs CMM Inspection: Which Method Fits Your Part?](https://www.vsharksolutions.com/blog/3d-scanning-vs-cmm-inspection/)
+- [What Is Reverse Engineering? From a Worn Part to a Manufacturable CAD Model](https://www.vsharksolutions.com/blog/what-is-reverse-engineering/)
