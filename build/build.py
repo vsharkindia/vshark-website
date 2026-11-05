@@ -48,11 +48,11 @@ wa_link = lambda msg=None: f'https://wa.me/{C["whatsapp"]}?text={quote(WA_DEFAUL
 # ---------------------------------------------------------------- meta (handoff part C)
 META = {
     '': ('3D Scanning & Reverse Engineering Services | VShark Solutions',
-         '3D scanning, reverse engineering, Scan to BIM, Class A surfacing and 3D inspection services in India and the UAE. Authorised JINUOSH Vertex scanner distributor.'),
+         '3D scanning, reverse engineering, Scan to BIM, Class A surfacing and 3D inspection services in India and the UAE. India distributor of JINUOSH Vertex scanners.'),
     '3d-scanning-services-coimbatore.html': ('3D Scanning Services in Coimbatore | VShark Solutions',
          'On-site 3D scanning in Coimbatore for parts, moulds and castings. STL and editable CAD files, reverse engineering and CMM arm inspection. Get a quote.'),
     'products/index.html': ('Vertex 3D Scanners in India | JINUOSH Distributor | VShark',
-         'Buy JINUOSH Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners in India from an authorised distributor. Compare specs, request a quote or book a demo.'),
+         'Buy JINUOSH Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners in India from the India distributor. Compare specs, request a quote or book a demo.'),
     'services/index.html': ('3D Scanning & 3D Design Services | VShark Solutions',
          '3D scanning, reverse engineering, Scan to BIM, Class A surfacing, digital metrology, 3D printing and product rendering for India, the UAE and worldwide.'),
     'services/3d-scanning.html': ('3D Scanning Services in India & UAE | VShark Solutions',
@@ -421,7 +421,7 @@ LIGHTBOX = '''    <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-
     </div>'''
 
 # TODO(handoff A8): add the JINUOSH logo here once their written letter is received
-DIST_BADGE = '<p class="dist-badge" data-in><span class="mono">Authorised distributor</span>JINUOSH Vertex 3D scanners in India</p>'
+DIST_BADGE = '<p class="dist-badge" data-in><span class="mono">India distributor</span>JINUOSH Vertex 3D scanners in India</p>'
 
 def prod_tile(P, p, i, href):
     return f'''    <article class="prod" data-reveal>
@@ -657,6 +657,10 @@ def products_page():
       </div>
       <p class="spec-note muted"><b>Recommended computer:</b> {E(D['productPc'])}. Specifications from the manufacturer and subject to change.</p>
     </section>
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">Full details</span><h2 class="h2" data-reveal>Specifications, what's included <em>and FAQs.</em></h2></div></div>
+      <nav class="bchips" aria-label="Scanner detail pages"><a class="chip" href="{P}jinuosh-vertex-3d-scanner-india.html">Vertex3D and Vertex3D Pro in India</a><a class="chip" href="{P}vertex-tracker.html">Vertex Tracker in India</a><a class="chip" href="{P}blog/choosing-a-handheld-3d-scanner-india/">Buying guide: which Vertex scanner?</a></nav>
+    </section>
 {faq_section(D.get('productFaq', []), 'Buying a scanner: <em>FAQ.</em>')}
 {chr(10).join(dialogs)}
 {cta(P, 'Not sure which scanner fits?', 'Send us your parts and use case — we will recommend a model and can arrange a live demo.', 'Hi VShark, please help me choose a 3D scanner.')}'''
@@ -767,7 +771,7 @@ def about_page():
         {DIST_BADGE.replace(' data-in', '')}
         <div>
           <h2 class="h2">Scanners we <em>use and sell.</em></h2>
-          <p>We are the authorised distributor of JINUOSH Vertex 3D scanners in India: the Vertex3D, Vertex3D Pro and Vertex Tracker. We use these scanners every day in our own service work, so our advice comes from real projects, not brochures. Every scanner we supply is installed at the customer's site, with hands-on training for their team, and comes with a 12-month warranty.</p>
+          <p>We are the India distributor of JINUOSH Vertex 3D scanners in India: the Vertex3D, Vertex3D Pro and Vertex Tracker. We use these scanners every day in our own service work, so our advice comes from real projects, not brochures. Every scanner we supply is installed at the customer's site, with hands-on training for their team, and comes with a 12-month warranty.</p>
           <a class="btn btn--ghost" href="products/index.html"><span>See the scanners</span>{A}</a>
         </div>
       </div>
@@ -1009,7 +1013,7 @@ def write_llms():
              '## Services']
     lines += [f'- [{x["name"]}]({SITE_URL}services/{x["slug"]}.html)' for x in D['services']]
     lines += ['', '## Industries'] + [f'- [{x["name"]}]({SITE_URL}industries/{x["slug"]}.html)' for x in D['industries']]
-    lines += ['', '## Key pages', f'- [JINUOSH Vertex 3D scanners]({SITE_URL}products/)', f'- [Portfolio]({SITE_URL}portfolio/)',
+    lines += ['', '## Key pages', f'- [JINUOSH Vertex 3D scanners]({SITE_URL}products/)', f'- [Vertex3D and Vertex3D Pro in India]({SITE_URL}jinuosh-vertex-3d-scanner-india.html)', f'- [Vertex Tracker in India]({SITE_URL}vertex-tracker.html)', f'- [Portfolio]({SITE_URL}portfolio/)',
               f'- [About]({SITE_URL}about.html)', f'- [Contact and quotes]({SITE_URL}contact.html)', '']
     if BLOG_POSTS:
         lines[-1:] = ['', '## Blog', f'- [All articles]({SITE_URL}blog/)'] + [f'- [{q["title"]}]({SITE_URL}blog/{q["slug"]}/)' for q in reversed(BLOG_POSTS)] + ['']
@@ -1106,7 +1110,7 @@ def blog_href(u, P):
         return P + 'index.html'
     if path.startswith(('services/', 'industries/')) and not path.endswith('.html'):
         return P + path + '.html' + q
-    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore'):
+    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore', 'vertex-tracker', 'jinuosh-vertex-3d-scanner-india'):
         return P + path + '.html' + q
     if path in ('products', 'portfolio', 'services', 'industries', 'blog') or path.startswith('blog/'):
         return P + path + '/' + q
@@ -1159,6 +1163,9 @@ def blog_md(text, P, skip_img=None):
                 li = re.sub(r'^\d+\. ', '', lines[i])
                 items.append(f'<li>{blog_inline(li, P)}</li>'); i += 1
             out.append('<ol>' + ''.join(items) + '</ol>')
+        elif l.startswith('@video '):
+            url, _, vt = l[7:].partition(' | ')
+            out.append(f'<div class="post-video">{video_embed(P, url.strip(), vt.strip())}</div>'); i += 1
         elif l.startswith('> '):
             q = []
             while i < len(lines) and lines[i].startswith('>'):
@@ -1166,7 +1173,7 @@ def blog_md(text, P, skip_img=None):
             out.append('<blockquote><p>' + blog_inline(' '.join(q), P) + '</p></blockquote>')
         else:
             para = []
-            while i < len(lines) and lines[i].strip() and not re.match(r'(#|\||- |\* |\d+\. |> |!\[|---)', lines[i]):
+            while i < len(lines) and lines[i].strip() and not re.match(r'(#|\||- |\* |\d+\. |> |!\[|---|@video)', lines[i]):
                 para.append(blog_inline(lines[i].strip(), P)); i += 1
             out.append('<p>' + ' '.join(para) + '</p>')
     return '\n'.join(out)
@@ -1324,6 +1331,55 @@ def build_blog():
 
 BLOG_POSTS = []
 
+
+# ---------------------------------------------------------------- Vertex product pages (S16)
+PRODUCT_PAGES = {}   # rel -> front matter, for schema
+PAGES_DIR = os.path.join(ROOT, 'data', 'pages')
+PRODUCT_LD = {
+    'jinuosh-vertex-3d-scanner-india.html': [
+        ('Vertex3D', 'Handheld blue-laser 3D scanner with 26 crossed blue laser lines, up to 0.020 mm accuracy and a 650 x 550 mm scanning field.',
+         'img/products/jinuosh-vertex3d-handheld-blue-laser-3d-scanner-front.webp', '1.07 kg'),
+        ('Vertex3D Pro', 'Handheld blue-laser 3D scanner with 50 crossed blue laser lines, up to 0.020 mm accuracy and a 650 x 550 mm scanning field.',
+         'img/products/vertex3d-pro.png', '1.15 kg')],
+    'vertex-tracker.html': [
+        ('Vertex Tracker', 'Optical-tracking 3D scanning system with up to 0.025 mm accuracy and a 1100 x 800 mm scanning field, for large parts.',
+         'img/products/vertex-tracker.png', None)],
+}
+
+def build_product_pages():
+    out = []
+    for fn in sorted(os.listdir(PAGES_DIR)):
+        raw = open(os.path.join(PAGES_DIR, fn), encoding='utf-8').read()
+        _, fm, body = raw.split('---\n', 2)
+        m = dict(re.findall(r'(?m)^(\w+): (.*)$', fm))
+        rel, P = m['rel'], ''
+        META[rel] = (m['title_tag'], m['description'])
+        PRODUCT_PAGES[rel] = m
+        faq_at = body.find('### FAQ')
+        faq_txt, body = body[faq_at + 7:], body[:faq_at]
+        faqs = [(q.strip(), re.sub(r'\s+', ' ', a.strip())) for q, a in re.findall(r'\*\*(.+?)\*\*\n(.+?)(?=\n\n\*\*|\Z)', faq_txt.strip(), re.S)]
+        hero = page_hero(P, [("Products", P + 'products/index.html'), (re.sub('<[^>]+>', '', m['h1']), None)], m['tag'], m['h1'], E(m['lead']), m['image'], alt=m['image_alt'])
+        html_page = f'''{hero}
+    <article class="section blk">
+      <div class="prose prose--post">
+{blog_md(body, P)}
+      </div>
+    </article>
+{faq_section(faqs, 'Common <em>questions.</em>')}
+    <section class="cta-band">
+      <div class="cta-band__inner">
+        <h2 class="h2">See it scan your part.</h2>
+        <p>Request a quote, a free demo or a free sample scan. Send a photo of your part on WhatsApp.</p>
+        <div class="cta-band__actions">
+          <a class="btn btn--light magnetic" href="{P}contact.html?product={m['product']}"><span>Request a quote</span>{A}</a>
+          <a class="btn btn--outline-light magnetic" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp us</span></a>
+        </div>
+        <p class="mono">India {E(C['phones'][0]['display'])} · UAE {E(C['phones'][1]['display'])}</p>
+      </div>
+    </section>'''
+        out.append(write(rel, page(P, rel, 'products', html_page)))
+    return out
+
 # ---------------------------------------------------------------- final pass (S05/S07 technical SEO)
 LASTMOD_FILE = os.path.join(ROOT, 'data', 'lastmod.json')
 LASTMOD = json.load(open(LASTMOD_FILE, encoding='utf-8')) if os.path.exists(LASTMOD_FILE) else {}
@@ -1369,6 +1425,16 @@ def extra_ld(rel):
                        'sameAs': [S['facebook'], S['instagram'], S['linkedin']] + ([S['youtube']] if S.get('youtube') else [])})
         blocks.append({'@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE_URL + '#website', 'url': SITE_URL,
                        'name': 'VShark Solutions', 'publisher': {'@id': SITE_URL + '#organization'}, 'inLanguage': 'en'})
+    elif rel in PRODUCT_LD:
+        trail = [('Home', SITE_URL), ('Products', SITE_URL + 'products/'), (META[rel][0].split(' | ')[0], url)]
+        for name, desc, img, wt in PRODUCT_LD[rel]:
+            node = {'@context': 'https://schema.org', '@type': 'Product', 'name': name, 'description': desc, 'image': SITE_URL + img,
+                    'brand': {'@type': 'Brand', 'name': 'JINUOSH'}, 'category': '3D scanner', 'url': url}
+            if wt:
+                node['weight'] = {'@type': 'QuantitativeValue', 'value': float(wt.split()[0]), 'unitCode': 'KGM'}
+            blocks.append(node)
+        blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+                       'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
     elif rel.startswith('blog/'):
         post = next((q for q in BLOG_POSTS if q['rel'] == rel), None)
         trail = [('Home', SITE_URL), ('Blog', SITE_URL + 'blog/')]
@@ -1438,6 +1504,7 @@ if __name__ == '__main__':
     out += [write(f'services/{s["slug"]}.html', service_page(s)) for s in D['services']]
     out += [write(f'industries/{s["slug"]}.html', industry_page(s)) for s in D['industries']]
     build_home()
+    out += build_product_pages()
     out += build_blog()
     finalize(out + ['index.html'])
     sitemap_and_robots(out)
