@@ -610,3 +610,6 @@ body.is-loading .wa-float { opacity: 0; transform: translateY(20px); }
 /* the decorative "VSHARK" lettering must never cover the footer links */
 .footer__big { pointer-events: none; }
 .footer__bottom { position: relative; z-index: 1; }
+
+/* Intrinsic width/height attributes reserve space; keep natural proportions unless a rule sets a height (S05 F9). */
+:where(img[width][height]) { height: auto; }

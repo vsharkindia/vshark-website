@@ -397,7 +397,7 @@ def xnav(P, items, current, folder, label):
     '''Row of every service / industry at the bottom of a detail page; the current one is highlighted.'''
     links = '\n'.join(
         f'''        <a class="xnav__item{' is-current' if o is current else ''}" href="{P}{folder}/{o['slug']}.html"{' aria-current="page"' if o is current else ''}>
-          <img src="{P}{o.get('tile') or o.get('square') or o['image']}" alt="" loading="lazy"><span><i class="mono">{k+1:02d}</i><b>{E(o['name'])}</b></span>
+          <img src="{P}{o.get('tile') or o.get('square') or o['image']}" alt="{E(o.get('alt') or o['name'])}" loading="lazy"><span><i class="mono">{k+1:02d}</i><b>{E(o['name'])}</b></span>
         </a>''' for k, o in enumerate(items))
     return f'''    <section class="section xnav" aria-label="{label}">
       <div class="xnav__head"><span class="tag mono">{label}</span><a class="xnav__all mono" href="{P}{folder}/index.html">Overview {A}</a></div>
@@ -985,13 +985,12 @@ def notfound_page():
 
 def sitemap_and_robots(pages):
     """sitemap.xml (handoff B6) lists every public page; robots.txt points to it."""
-    today = __import__('datetime').date.today().isoformat()
     skip = {'thanks.html', '404.html'}
     urls = ['index.html'] + [r for r in pages if r not in skip]
     def loc(r):
         return SITE_URL + ('' if r == 'index.html' else r[:-len('index.html')] if r.endswith('/index.html') else r)
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
-        f'  <url><loc>{loc(r)}</loc><lastmod>{today}</lastmod></url>\n' for r in urls) + '</urlset>\n'
+        f'  <url><loc>{loc(r)}</loc><lastmod>{LASTMOD[r]["date"]}</lastmod></url>\n' for r in urls) + '</urlset>\n'
     open(os.path.join(ROOT, 'sitemap.xml'), 'w', encoding='utf-8', newline='\n').write(xml)
     robots = f'User-agent: *\nAllow: /\nDisallow: /build/\nDisallow: /data/\n\nSitemap: {SITE_URL}sitemap.xml\n'
     open(os.path.join(ROOT, 'robots.txt'), 'w', encoding='utf-8', newline='\n').write(robots)
@@ -1080,6 +1079,85 @@ def build_home():
     s = re.sub(r'(href|src)="((?:css|js|fonts)/[\w.-]+\.(?:css|js))(?:\?v=[\w]+)?"', lambda m: f'{m.group(1)}="{asset(m.group(2), "")}"', s)
     open(p, 'w', encoding='utf-8', newline='\n').write(s)
 
+# ---------------------------------------------------------------- final pass (S05/S07 technical SEO)
+LASTMOD_FILE = os.path.join(ROOT, 'data', 'lastmod.json')
+LASTMOD = json.load(open(LASTMOD_FILE, encoding='utf-8')) if os.path.exists(LASTMOD_FILE) else {}
+_DIMS = {}
+IMG_RE = re.compile(r'<img\b[^>]*>')
+
+def _dims(path):
+    if path not in _DIMS:
+        try:
+            from PIL import Image
+            with Image.open(path) as im:
+                _DIMS[path] = im.size
+        except Exception:
+            _DIMS[path] = None
+    return _DIMS[path]
+
+def add_dims(html_text, rel):
+    """Intrinsic width/height on every local <img> (audit F9, layout shift). CSS keeps height:auto, see css/style.css."""
+    base = os.path.dirname(os.path.join(ROOT, rel))
+    def fix(m):
+        tag = m.group(0)
+        if re.search(r'\swidth=', tag):
+            return tag
+        src = re.search(r'\ssrc="([^"]+)"', tag)
+        if not src or src.group(1).startswith(('http', 'data:')):
+            return tag
+        u = src.group(1).split('?')[0]
+        d = _dims(os.path.normpath(os.path.join(ROOT, u.lstrip('/')) if u.startswith('/') else os.path.join(base, u)))
+        if not d:
+            return tag
+        return tag.replace('<img', f'<img width="{d[0]}" height="{d[1]}"', 1)
+    return IMG_RE.sub(fix, html_text)
+
+def extra_ld(rel):
+    """BreadcrumbList on inner pages, Service on service pages, Organization + WebSite on the home page."""
+    blocks = []
+    url = canonical_url(rel)
+    if rel in ('', 'index.html'):
+        S = C['social']
+        blocks.append({'@context': 'https://schema.org', '@type': 'Organization', '@id': SITE_URL + '#organization',
+                       'name': 'VShark Solutions Private Limited', 'alternateName': 'VShark Solutions', 'url': SITE_URL,
+                       'logo': SITE_URL + 'img/vshark-logo.png', 'email': C['email'],
+                       'sameAs': [S['facebook'], S['instagram'], S['linkedin']] + ([S['youtube']] if S.get('youtube') else [])})
+        blocks.append({'@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE_URL + '#website', 'url': SITE_URL,
+                       'name': 'VShark Solutions', 'publisher': {'@id': SITE_URL + '#organization'}, 'inLanguage': 'en'})
+    else:
+        trail = [('Home', SITE_URL)]
+        folder, _, leaf = rel.rpartition('/')
+        title = META[rel][0].split(' | ')[0].split(' – ')[0]
+        item = (SVC if folder == 'services' else IND if folder == 'industries' else {}).get(leaf[:-5])
+        if folder in ('services', 'industries') and leaf != 'index.html':
+            trail.append((folder.capitalize(), SITE_URL + folder + '/'))
+            trail.append((item['name'] if item else title, url))
+        else:
+            trail.append((title, url))
+        blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+                       'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
+        if folder == 'services' and item:
+            blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'name': item['name'], 'serviceType': item['name'],
+                           'description': META[rel][1], 'url': url, 'provider': {'@id': SITE_URL + '#business'},
+                           'areaServed': [{'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
+    return '<!-- @ld -->' + ''.join('<script type="application/ld+json">' + json.dumps(b, ensure_ascii=False).replace('</', '<\/') + '</script>' for b in blocks) + '<!-- /@ld -->'
+
+def finalize(rels):
+    import datetime
+    today = datetime.date.today().isoformat()
+    for rel in rels:
+        path = os.path.join(ROOT, rel)
+        t = open(path, encoding='utf-8').read()
+        t = re.sub(r'\s*<!-- @ld -->.*?<!-- /@ld -->', '', t, flags=re.S)
+        if rel not in NOINDEX_PAGES:
+            t = t.replace('  <meta name="theme-color"', '  ' + extra_ld(rel) + '\n  <meta name="theme-color"', 1)
+        t = add_dims(t, rel)
+        open(path, 'w', encoding='utf-8', newline='\n').write(t)
+        h = hashlib.sha1(t.encode('utf-8')).hexdigest()
+        if LASTMOD.get(rel, {}).get('hash') != h:
+            LASTMOD[rel] = {'hash': h, 'date': today}
+    json.dump(LASTMOD, open(LASTMOD_FILE, 'w', encoding='utf-8', newline='\n'), indent=1, sort_keys=True)
+
 # ---------------------------------------------------------------- write everything
 def write(rel, content):
     path = os.path.join(ROOT, rel)
@@ -1101,5 +1179,6 @@ if __name__ == '__main__':
     out += [write(f'services/{s["slug"]}.html', service_page(s)) for s in D['services']]
     out += [write(f'industries/{s["slug"]}.html', industry_page(s)) for s in D['industries']]
     build_home()
+    finalize(out + ['index.html'])
     sitemap_and_robots(out)
     print(f'built {len(out)} pages + index.html, sitemap.xml, robots.txt')
