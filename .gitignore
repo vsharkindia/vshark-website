@@ -6,3 +6,6 @@ Thumbs.db
 
 # server-only secrets (mail password for the contact form)
 enquiry-config.php
+
+# python bytecode from build/
+__pycache__/

@@ -1,7 +1,7 @@
 <!-- Privacy Policy text from the dev handoff (part H2), written for India's DPDP Act 2023 and the UAE PDPL.
      Have a lawyer review before relying on it. Section 6 describes the cookie banner (js/consent.js).
      Rendered into privacy-policy.html by build/build.py — edit here, then run the build. -->
-Last updated: 25 October 2026
+Last updated: 5 November 2026
 
 VShark Solutions Private Limited ("**VShark**", "**we**", "**us**") respects your privacy. This policy explains what personal data we collect when you use **www.vsharksolutions.com** (the "**Website**") or contact us, why we collect it, and how we protect it.
 
@@ -60,7 +60,9 @@ Some service providers may store data outside India or the UAE. When this happen
 
 **Analytics and advertising cookies — only with your consent.** When you first visit, a banner asks whether you accept analytics and advertising cookies. Only if you click **Accept** do we load:
 - **Google Analytics 4** (Google LLC), to understand how visitors use the Website
-- **Meta Pixel** (Meta Platforms), to measure the results of our advertising on Facebook and Instagram — for example when someone clicks a WhatsApp button or sends an enquiry
+- **Meta Pixel** (Meta Platforms), to measure the results of our advertising on Facebook and Instagram — for example which service or product pages are viewed, and when someone clicks a WhatsApp button or phone number or sends an enquiry
+
+Some pages show videos from our YouTube channel. They use YouTube's privacy-enhanced mode (youtube-nocookie.com), which does not store information about you unless you play the video; once you play it, YouTube's (Google's) privacy policy applies.
 
 If you click **Decline**, these tools are not loaded and the Website works fully. You can change your choice at any time with the **Cookie settings** link at the bottom of every page, and you can also block or delete cookies in your browser settings.
 
