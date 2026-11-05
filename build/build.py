@@ -19,8 +19,9 @@ IND = {i['slug']: i for i in D['industries'] + D.get('filterIndustries', [])}
 C = D['contact']
 
 def ver(path):
+    # line endings are normalised so a Windows checkout (CRLF) gives the same hash as Linux/Netlify (LF)
     with open(os.path.join(ROOT, path), 'rb') as f:
-        return hashlib.md5(f.read()).hexdigest()[:8]
+        return hashlib.md5(f.read().replace(b'\r\n', b'\n')).hexdigest()[:8]
 
 def asset(path, P):
     return f'{P}{path}?v={ver(path)}'
@@ -33,6 +34,9 @@ ICON = {
  'ig': '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8a4 4 0 0 1 3.4 3.4z"/><path d="M17.5 6.5h.01"/></svg>',
  'fb': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
  'in': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>',
+ 'yt': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m9.8 15.5 5.7-3.5-5.7-3.5z"/></svg>',
+ 'shop': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 11.5V20h14v-8.5M10 20v-5h4v5"/></svg>',
+ 'web': '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>',
  'arrow': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
  'down': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
  'specs': '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
@@ -92,32 +96,111 @@ META = {
          'VShark Solutions is a 3D scanning, reverse engineering and 3D design company based in Coimbatore and Dubai, serving clients across India, the UAE and worldwide since 2019.'),
     'privacy-policy.html': ('Privacy Policy | VShark Solutions',
          'How VShark Solutions collects, uses and protects personal data and files shared through our website, WhatsApp and email.'),
+    'links.html': ('VShark Solutions – Links | WhatsApp, Quote, YouTube, Instagram',
+         'All VShark Solutions links in one place: website, WhatsApp chat, quote form, YouTube, Instagram, Facebook and IndiaMART.'),
 }
 SITE_URL = 'https://www.vsharksolutions.com/'
+# social profiles listed in the Organization schema `sameAs` (dev note 2026-10-27, item 2).
+# LinkedIn is left out until VShark sends the company page URL (the current link is a personal profile).
+SAME_AS = ('youtube', 'instagram', 'facebook', 'indiamart')
+
+def page_url(rel):
+    '''Public URL of a page: the same form the sitemap uses (folder index pages end in /).'''
+    if rel in ('', 'index.html'):
+        return SITE_URL
+    return SITE_URL + (rel[:-len('index.html')] if rel.endswith('/index.html') else rel)
+
+def og_image(rel):
+    '''1200×630 share image made by build/make_og.py: img/og/<page>.jpg, or the site default.'''
+    name = 'home' if rel in ('', 'index.html') else rel[:-5].replace('/index', '').replace('/', '-')
+    path = f'img/og/{name}.jpg'
+    return path if os.path.exists(os.path.join(ROOT, path)) else 'img/og/default.jpg'
 
 def head_meta(rel):
     title, desc = META[rel]
-    return (f'<title>{E(title)}</title>\n  <meta name="description" content="{E(desc)}">\n'
-            f'  <meta property="og:type" content="website">\n  <meta property="og:site_name" content="VShark Solutions">\n'
-            f'  <meta property="og:title" content="{E(title)}">\n  <meta property="og:description" content="{E(desc)}">')
+    url, img = page_url(rel), SITE_URL + og_image(rel)
+    tags = [f'<title>{E(title)}</title>',
+            f'<meta name="description" content="{E(desc)}">']
+    if rel not in ('404.html', 'thanks.html'):   # served at many URLs / not for search
+        tags.append(f'<link rel="canonical" href="{url}">')
+    tags += ['<meta property="og:type" content="website">',
+             '<meta property="og:site_name" content="VShark Solutions">',
+             '<meta property="og:locale" content="en_IN">',
+             f'<meta property="og:url" content="{url}">',
+             f'<meta property="og:title" content="{E(title)}">',
+             f'<meta property="og:description" content="{E(desc)}">',
+             f'<meta property="og:image" content="{img}">',
+             '<meta property="og:image:width" content="1200">',
+             '<meta property="og:image:height" content="630">',
+             f'<meta property="og:image:alt" content="{E(title)}">',
+             '<meta name="twitter:card" content="summary_large_image">',
+             f'<meta name="twitter:title" content="{E(title)}">',
+             f'<meta name="twitter:description" content="{E(desc)}">',
+             f'<meta name="twitter:image" content="{img}">']
+    if rel in ('404.html', 'thanks.html'):
+        tags.append('<meta name="robots" content="noindex">')
+    return '\n  '.join(tags)
+
+def ld(obj):
+    return '<script type="application/ld+json">' + json.dumps(obj, ensure_ascii=False).replace('</', '<\\/') + '</script>'
 
 def schema_org():
-    """Organization + LocalBusiness JSON-LD (handoff A7 / B8) — same on every page."""
+    """Organization + LocalBusiness JSON-LD (handoff A7 / B8, dev note 2026-10-27 item 4) — same on every page."""
     S = C['social']
+    country = {'IN': 'India', 'AE': 'United Arab Emirates'}
     org = {
-        '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': SITE_URL + '#business',
-        'name': 'VShark Solutions Private Limited', 'alternateName': 'VShark Solutions', 'url': SITE_URL,
+        '@context': 'https://schema.org', '@type': ['Organization', 'LocalBusiness'], '@id': SITE_URL + '#business',
+        'name': 'VShark Solutions Private Limited', 'legalName': 'VShark Solutions Private Limited',
+        'alternateName': 'VShark Solutions', 'url': SITE_URL,
         'logo': SITE_URL + 'img/vshark-logo.png', 'image': SITE_URL + 'img/vshark-logo.png',
+        'description': META[''][1],
         'email': C['email'], 'telephone': C['phones'][0]['tel'],
         'address': [dict({'@type': 'PostalAddress', 'addressLocality': o['city'], 'addressCountry': o['country']},
                          **({'streetAddress': o['street'], 'addressRegion': o['region'], 'postalCode': o['postcode']} if o.get('street') else {}))
                     for o in C['offices']],
-        'contactPoint': [{'@type': 'ContactPoint', 'telephone': p['tel'], 'contactType': 'sales',
+        'contactPoint': [{'@type': 'ContactPoint', 'telephone': p['tel'], 'email': C['email'], 'contactType': 'sales',
                           'areaServed': 'IN' if p['label'] == 'India' else 'AE'} for p in C['phones']],
-        'areaServed': ['IN', 'AE'], 'foundingDate': '2019',
-        'sameAs': [S['facebook'], S['instagram'], S['linkedin']],
+        'areaServed': [{'@type': 'Country', 'name': country[c]} for c in ('IN', 'AE')],
+        'foundingDate': '2019',
+        'sameAs': [S[k] for k in SAME_AS if S.get(k)],
     }
-    return '<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False).replace('</', '<\\/') + '</script>'
+    return ld(org)
+
+# ---------------------------------------------------------------- YouTube videos (VideoObject, dev note item 4)
+def videos_for(key):
+    return [v for v in D.get('videos', []) if key in v.get('pages', [])]
+
+def video_ld(v):
+    '''VideoObject JSON-LD. Description falls back to the title, and uploadDate is left out,
+    until they are copied from YouTube into data/site.json.'''
+    obj = {'@context': 'https://schema.org', '@type': 'VideoObject', 'name': v['title'],
+           'description': v.get('description') or v['title'],
+           'thumbnailUrl': [f'https://i.ytimg.com/vi/{v["id"]}/maxresdefault.jpg', f'https://i.ytimg.com/vi/{v["id"]}/hqdefault.jpg'],
+           'contentUrl': f'https://www.youtube.com/watch?v={v["id"]}',
+           'embedUrl': f'https://www.youtube.com/embed/{v["id"]}',
+           'publisher': {'@id': SITE_URL + '#business'}}
+    if v.get('uploadDate'):
+        obj['uploadDate'] = v['uploadDate']
+    if v.get('duration'):
+        obj['duration'] = v['duration']
+    return ld(obj)
+
+def video_section(vids, title_html='See it <em>in action.</em>', alt=False):
+    if not vids:
+        return ''
+    cards = '\n'.join(f'''        <figure class="vcard" data-reveal>
+          <div class="vcard__frame"><iframe src="https://www.youtube-nocookie.com/embed/{v['id']}" title="{E(v['title'])}" loading="lazy"
+            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <figcaption>{E(v['title'])}</figcaption>
+          {video_ld(v)}
+        </figure>''' for v in vids)
+    return f'''    <section class="section blk{' blk--alt' if alt else ''}">
+      <div class="sec-head"><div><span class="tag mono">Video</span><h2 class="h2" data-reveal>{title_html}</h2></div>
+        <a class="sec-head__link" href="{C['social']['youtube']}" target="_blank" rel="noopener" data-reveal>YouTube channel {A}</a></div>
+      <div class="vgrid">
+{cards}
+      </div>
+    </section>'''
 
 # ---------------------------------------------------------------- shared chrome
 def header(P, active=''):
@@ -196,8 +279,10 @@ def footer(P, msg=WA_DEFAULT):
         {''.join(f'<span class="footer__addr">{ICON["pin"]}<span><small class="mono">{E(o["label"])}</small> {", ".join(E(l) for l in o["lines"])}</span></span>' for o in C['offices'])}
         <div class="footer__social">
           <a href="{wa_link()}" target="_blank" rel="noopener" aria-label="WhatsApp">{ICON['wa']}</a>
+          <a href="{S['youtube']}" target="_blank" rel="noopener" aria-label="YouTube">{ICON['yt']}</a>
           <a href="{S['instagram']}" target="_blank" rel="noopener" aria-label="Instagram">{ICON['ig']}</a>
           <a href="{S['facebook']}" target="_blank" rel="noopener" aria-label="Facebook">{ICON['fb']}</a>
+          <a href="{S['indiamart']}" target="_blank" rel="noopener" aria-label="IndiaMART">{ICON['shop']}</a>
           <a href="{S['linkedin']}" target="_blank" rel="noopener" aria-label="LinkedIn">{ICON['in']}</a>
         </div>
       </div>
@@ -205,7 +290,7 @@ def footer(P, msg=WA_DEFAULT):
     <div class="footer__big" aria-hidden="true">VSHARK</div>
     <div class="footer__bottom mono">
       <span>© <span id="year">2026</span> VShark Solutions Private Limited</span>
-      <span><a href="{P}about.html">About</a> · <a href="{P}privacy-policy.html">Privacy Policy</a> · <a href="{P}privacy-policy.html#cookies-and-analytics" data-cookie-settings>Cookie settings</a></span>
+      <span><a href="{P}about.html">About</a> · <a href="{P}links.html">Links</a> · <a href="{P}privacy-policy.html">Privacy Policy</a> ·<a href="{P}privacy-policy.html#cookies-and-analytics" data-cookie-settings>Cookie settings</a></span>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
@@ -218,6 +303,7 @@ def footer(P, msg=WA_DEFAULT):
     </div>
     <a class="rail__item rail__btn" href="{wa_link()}" target="_blank" rel="noopener" aria-label="WhatsApp">{ICON['wa']}<span class="rail__label">WhatsApp</span></a>
     <a class="rail__item rail__btn" href="mailto:{C['email']}" aria-label="Email">{ICON['mail']}<span class="rail__label">{C['email']}</span></a>
+    <a class="rail__item rail__btn" href="{S['youtube']}" target="_blank" rel="noopener" aria-label="YouTube">{ICON['yt']}<span class="rail__label">YouTube</span></a>
     <a class="rail__item rail__btn" href="{S['instagram']}" target="_blank" rel="noopener" aria-label="Instagram">{ICON['ig']}<span class="rail__label">Instagram</span></a>
     <a class="rail__item rail__btn" href="{S['facebook']}" target="_blank" rel="noopener" aria-label="Facebook">{ICON['fb']}<span class="rail__label">Facebook</span></a>
     <a class="rail__item rail__btn" href="{S['linkedin']}" target="_blank" rel="noopener" aria-label="LinkedIn">{ICON['in']}<span class="rail__label">LinkedIn</span></a>
@@ -237,8 +323,10 @@ def footer(P, msg=WA_DEFAULT):
   </nav>
   <!-- /@footer -->'''
 
-def page(P, rel, active, body, scripts=(), wa_msg=WA_DEFAULT):
+def page(P, rel, active, body, scripts=(), wa_msg=WA_DEFAULT, view=None):
+    '''view = (content_name, content_category): js/consent.js sends Meta ViewContent + GA4 view_content for it.'''
     js = '\n'.join(f'  <script src="{asset(s, P)}"></script>' for s in ('vendor/gsap.min.js', 'vendor/ScrollTrigger.min.js', 'vendor/lenis.min.js', *scripts, 'js/main.js'))
+    view_attr = f' data-view-content="{E(view[0])}" data-view-category="{E(view[1])}"' if view else ''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -255,7 +343,7 @@ def page(P, rel, active, body, scripts=(), wa_msg=WA_DEFAULT):
   <link rel="stylesheet" href="{asset('css/pages.css', P)}">
   <script src="{asset('js/consent.js', P)}" defer></script>
 </head>
-<body class="inner">
+<body class="inner"{view_attr}>
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
 
   {header(P, active)}
@@ -485,13 +573,14 @@ def service_page(s):
     </section>
 
 {proj_section(P, projects, f'{E(s["name"])} <em>projects.</em>', f'service={s["slug"]}')}
+{video_section(videos_for(s['slug']), f'{E(s["name"])} <em>in action.</em>', alt=True)}
 {prods}
 {faq_section(s.get('faq', []), f'{E(s["name"])} <em>FAQ.</em>')}
 {xnav(P, D['services'], s, 'services', 'All services')}
 {cta(P, msg=f"Hi VShark, I'm interested in {s['name']}.")}
 {LIGHTBOX}'''
     return page(P, f"services/{s['slug']}.html", 'services', body, ('js/portfolio.js',),
-                wa_msg=f"Hi VShark, I'm interested in {s['name']}.")
+                wa_msg=f"Hi VShark, I'm interested in {s['name']}.", view=(s['name'], 'Service'))
 
 def services_index():
     P = '../'
@@ -534,6 +623,7 @@ def industry_page(ind):
       </div>
     </section>
 {proj_section(P, projects, f'{E(ind["name"])} <em>projects.</em>', f'industry={ind["slug"]}')}
+{video_section(videos_for(ind['slug']), alt=True)}
 {xnav(P, D['industries'], ind, 'industries', 'All industries')}
 {cta(P, msg=f"Hi VShark, I work in {ind['name']} and would like to discuss a project.")}
 {LIGHTBOX}'''
@@ -630,11 +720,13 @@ def products_page():
       </div>
       <p class="spec-note muted"><b>Recommended computer:</b> {E(D['productPc'])}. Specifications from the manufacturer and subject to change.</p>
     </section>
+{video_section(videos_for('products'), 'The scanners <em>in action.</em>')}
 {faq_section(D.get('productFaq', []), 'Buying a scanner: <em>FAQ.</em>')}
 {chr(10).join(dialogs)}
 {cta(P, 'Not sure which scanner fits?', 'Send us your parts and use case — we will recommend a model and can arrange a live demo.', 'Hi VShark, please help me choose a 3D scanner.')}'''
     return page(P, 'products/index.html', 'products', body, ('js/products.js',),
-                wa_msg='Hi VShark, I would like a quote or demo for a 3D scanner.')
+                wa_msg='Hi VShark, I would like a quote or demo for a 3D scanner.',
+                view=('Vertex 3D scanners', 'Product'))
 
 def portfolio_page():
     P = '../'
@@ -815,7 +907,7 @@ def contact_page():
             <label class="field field--full field--file"><span>Attach a file (optional, max 8 MB)</span><input type="file" name="attachment" accept=".pdf,.jpg,.jpeg,.png,.stl,.step,.stp,.zip"></label>
           </div>
           <label class="consent"><input type="checkbox" name="consent" value="yes" required>
-            <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank">Privacy Policy</a>.</span></label>
+            <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
           <button class="btn btn--accent magnetic" type="submit"><span>Send enquiry</span>{A}</button>
         </form>
         <aside class="contact__side" data-reveal>
@@ -842,6 +934,133 @@ def notfound_page():
     body = f"""{page_hero(P, [("Page not found", None)], "Error 404", "Page not <em>found.</em>", "The page you are looking for has moved or no longer exists. These are good places to continue:")}
     <section class="section blk"><div class="ind-chips"><div>{chips}</div></div></section>"""
     return page(P, '404.html', '', body)
+
+def links_page():
+    '''/links — bio-link page for Instagram / YouTube / Facebook profiles (dev note 2026-10-27 item 2).'''
+    P = ''
+    S = C['social']
+    ext = ' target="_blank" rel="noopener"'
+    items = [
+        ('wa', 'Chat on WhatsApp', C['phones'][0]['display'], wa_link(), ext + ' data-wa-location="links_page"', ' blink--wa'),
+        ('arrow', 'Get a free quote', 'Send part photos or drawings', 'contact.html', '', ' blink--accent'),
+        ('web', 'Website', 'vsharksolutions.com', 'index.html', '', ''),
+        ('yt', 'YouTube', 'Scanning demos and projects', S['youtube'], ext, ''),
+        ('ig', 'Instagram', '@vshark.solutions', S['instagram'], ext, ''),
+        ('fb', 'Facebook', 'VShark Solutions', S['facebook'], ext, ''),
+        ('shop', 'IndiaMART', 'Buy Vertex 3D scanners', S['indiamart'], ext, ''),
+        ('phone', 'Call India', C['phones'][0]['display'], f'tel:{C["phones"][0]["tel"]}', '', ''),
+        ('phone', 'Call UAE', C['phones'][1]['display'], f'tel:{C["phones"][1]["tel"]}', '', ''),
+        ('mail', 'Email', C['email'], f'mailto:{C["email"]}', '', ''),
+    ]
+    rows = '\n'.join(f'        <a class="blink{cls}" href="{href}"{attrs}><span class="blink__ic">{ICON[ic]}</span><span class="blink__t"><b>{E(t)}</b><small>{E(sub)}</small></span>{A}</a>'
+                     for ic, t, sub, href, attrs, cls in items)
+    body = f'''    <section class="section blk blinks">
+      <div class="blinks__head" data-in>
+        <img class="blinks__logo" src="img/emblem-512.png" alt="VShark Solutions emblem">
+        <h1 class="h2">VShark <em>Solutions</em></h1>
+        <p class="muted">3D scanning, reverse engineering and Vertex 3D scanners · Coimbatore, India &amp; Dubai, UAE</p>
+      </div>
+      <nav class="blinks__list" aria-label="VShark links">
+{rows}
+      </nav>
+    </section>'''
+    return page(P, 'links.html', '', body)
+
+def llms_txt():
+    '''/llms.txt — plain-language summary of the site for AI search tools (llmstxt.org format).'''
+    u = page_url
+    S = C['social']
+    svc = '\n'.join(f'- [{s["name"]}]({u("services/" + s["slug"] + ".html")}): {META["services/" + s["slug"] + ".html"][1]}' for s in D['services'])
+    ind = '\n'.join(f'- [{i["name"]}]({u("industries/" + i["slug"] + ".html")}): {i["line"]}' for i in D['industries'])
+    prod = '\n'.join(f'- [{p["name"]}]({u("products/index.html")}#{p["slug"]}): {p["type"]}. {p["summary"]}' for p in D['products'])
+    phones = ' · '.join(f'{p["display"]} ({p["label"]})' for p in C['phones'])
+    txt = f'''# VShark Solutions
+
+> VShark Solutions Private Limited is a 3D scanning, reverse engineering and 3D design company based in Coimbatore, Tamil Nadu, India, with a presence in Dubai, United Arab Emirates. Since 2019 it has served manufacturers, engineers, builders, jewellers and research labs across India, the UAE and worldwide, and it is the authorised distributor of JINUOSH Vertex 3D scanners in India.
+
+- Locations: Coimbatore, Tamil Nadu, India (head office: {C['offices'][0]['street']}, {C['offices'][0]['city']} {C['offices'][0]['postcode']}) and Dubai, UAE. On-site service across India and the UAE.
+- Contact: {C['email']} · {phones} · WhatsApp +91 95142 48525
+- Free quotes: send part photos, drawings or scan data through {u('contact.html')}
+
+## Services
+
+{svc}
+
+## Products (JINUOSH Vertex 3D scanners, sold, installed and supported in India)
+
+{prod}
+
+## Industries
+
+{ind}
+
+## Key pages
+
+- [Home]({u('')}): overview of services, scanners and industries
+- [About]({u('about.html')}): company background, how we work, locations
+- [Portfolio]({u('portfolio/index.html')}): completed scanning, CAD and inspection projects
+- [Contact]({u('contact.html')}): enquiry form, phone, WhatsApp and office addresses
+
+## Social
+
+- YouTube: {S['youtube']}
+- Instagram: {S['instagram']}
+- Facebook: {S['facebook']}
+- IndiaMART: {S['indiamart']}
+'''
+    open(os.path.join(ROOT, 'llms.txt'), 'w', encoding='utf-8', newline='\n').write(txt)
+
+# ---------------------------------------------------------------- image width/height (prevents layout shift)
+def image_size(path):
+    '''(width, height) of a PNG, JPEG or WebP file, read from its header — no Pillow needed.'''
+    with open(path, 'rb') as f:
+        h = f.read(64)
+        if h[:8] == b'\x89PNG\r\n\x1a\n':
+            return int.from_bytes(h[16:20], 'big'), int.from_bytes(h[20:24], 'big')
+        if h[:4] == b'RIFF' and h[8:12] == b'WEBP':
+            kind = h[12:16]
+            if kind == b'VP8 ':
+                return int.from_bytes(h[26:28], 'little') & 0x3FFF, int.from_bytes(h[28:30], 'little') & 0x3FFF
+            if kind == b'VP8L':
+                b = int.from_bytes(h[21:25], 'little')
+                return (b & 0x3FFF) + 1, ((b >> 14) & 0x3FFF) + 1
+            if kind == b'VP8X':
+                return int.from_bytes(h[24:27], 'little') + 1, int.from_bytes(h[27:30], 'little') + 1
+        if h[:2] == b'\xff\xd8':
+            f.seek(2)
+            while True:
+                m = f.read(4)
+                if len(m) < 4 or m[0] != 0xFF:
+                    return None
+                seg = int.from_bytes(m[2:4], 'big')
+                if 0xC0 <= m[1] <= 0xCF and m[1] not in (0xC4, 0xC8, 0xCC):
+                    d = f.read(5)
+                    return int.from_bytes(d[3:5], 'big'), int.from_bytes(d[1:3], 'big')
+                f.seek(seg - 2, 1)
+    return None
+
+def add_image_sizes(rel):
+    '''Give every local <img> in a built page its intrinsic width/height (CSS keeps height:auto).'''
+    path = os.path.join(ROOT, rel)
+    base = os.path.dirname(path)
+    s = open(path, encoding='utf-8').read()
+    def fix(m):
+        tag = m.group(0)
+        if re.search(r'\swidth=', tag):
+            return tag
+        src = re.search(r'\ssrc="([^"?#]+)', tag)
+        if not src or src.group(1).startswith(('http:', 'https:', 'data:', '//')):
+            return tag
+        f = src.group(1)
+        f = os.path.join(ROOT, f.lstrip('/')) if f.startswith('/') else os.path.normpath(os.path.join(base, f))
+        size = image_size(f) if os.path.exists(f) else None
+        if not size:
+            print(f'  ! {rel}: no size for {src.group(1)}')
+            return tag
+        return tag[:4] + f' width="{size[0]}" height="{size[1]}"' + tag[4:]
+    s2 = re.sub(r'<img\b[^>]*>', fix, s)
+    if s2 != s:
+        open(path, 'w', encoding='utf-8', newline='\n').write(s2)
 
 def sitemap_and_robots(pages):
     """sitemap.xml (handoff B6) lists every public page; robots.txt points to it."""
@@ -926,16 +1145,19 @@ def build_home():
         s = pat.sub(lambda m: content, s)
     # fingerprint local css/js
     s = re.sub(r'(href|src)="((?:css|js|fonts)/[\w.-]+\.(?:css|js))(?:\?v=[\w]+)?"', lambda m: f'{m.group(1)}="{asset(m.group(2), "")}"', s)
-    open(p, 'w', encoding='utf-8').write(s)
+    open(p, 'w', encoding='utf-8', newline='\n').write(s)
 
 # ---------------------------------------------------------------- write everything
 def write(rel, content):
     path = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    open(path, 'w', encoding='utf-8').write(content)
+    open(path, 'w', encoding='utf-8', newline='\n').write(content)
     return rel
 
 if __name__ == '__main__':
+    for v in D.get('videos', []):
+        if not v.get('uploadDate'):
+            print(f'  ! video {v["id"]}: no uploadDate in data/site.json (VideoObject is not eligible for Google video results yet)')
     out = [write('services/index.html', services_index()),
            write('industries/index.html', industries_index()),
            write('products/index.html', products_page()),
@@ -944,9 +1166,13 @@ if __name__ == '__main__':
            write('thanks.html', thanks_page()),
            write('about.html', about_page()),
            write('privacy-policy.html', privacy_page()),
+           write('links.html', links_page()),
            write('404.html', notfound_page())]
     out += [write(f'services/{s["slug"]}.html', service_page(s)) for s in D['services']]
     out += [write(f'industries/{s["slug"]}.html', industry_page(s)) for s in D['industries']]
     build_home()
+    for rel in out + ['index.html']:
+        add_image_sizes(rel)
     sitemap_and_robots(out)
-    print(f'built {len(out)} pages + index.html, sitemap.xml, robots.txt')
+    llms_txt()
+    print(f'built {len(out)} pages + index.html, sitemap.xml, robots.txt, llms.txt')

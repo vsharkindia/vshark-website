@@ -1,0 +1,46 @@
+# VShark Solutions
+
+> VShark Solutions Private Limited is a 3D scanning, reverse engineering and 3D design company based in Coimbatore, Tamil Nadu, India, with a presence in Dubai, United Arab Emirates. Since 2019 it has served manufacturers, engineers, builders, jewellers and research labs across India, the UAE and worldwide, and it is the authorised distributor of JINUOSH Vertex 3D scanners in India.
+
+- Locations: Coimbatore, Tamil Nadu, India (head office: Rajiv Gandhi Nagar, Neelambur, Coimbatore 641062) and Dubai, UAE. On-site service across India and the UAE.
+- Contact: info@vsharksolutions.com · +91 95142 48525 (India) · +971 52 248 6238 (UAE) · WhatsApp +91 95142 48525
+- Free quotes: send part photos, drawings or scan data through https://www.vsharksolutions.com/contact.html
+
+## Services
+
+- [3D Scanning](https://www.vsharksolutions.com/services/3d-scanning.html): Accurate 3D scanning of parts, castings, vehicles and large objects. Get mesh, point cloud or CAD-ready data from Coimbatore and the UAE. Free quote.
+- [Reverse Engineering](https://www.vsharksolutions.com/services/reverse-engineering.html): Turn worn, legacy or undocumented parts into editable, manufacturable CAD (STEP, IGES and other neutral formats). Reverse engineering for India and the UAE.
+- [Scan to BIM](https://www.vsharksolutions.com/services/scan-to-bim.html): We laser-scan plant rooms, piping and buildings, or use your point cloud, and model them as accurate Autodesk Revit BIM for retrofit and facility management.
+- [Class A Surfacing](https://www.vsharksolutions.com/services/class-a-surfacing.html): Class A surfacing for automotive and consumer products: G2/G3-continuous surfaces checked with zebra and curvature analysis, ready for tooling.
+- [Digital Metrology](https://www.vsharksolutions.com/services/digital-metrology.html): Scan-to-CAD deviation colour maps, GD&T checks and first-article inspection reports for castings, moulded and machined parts.
+- [3D Printing](https://www.vsharksolutions.com/services/3d-printing.html): FDM and SLA 3D printing of prototypes, functional parts, scale models and jewellery masters, from your CAD or a 3D scan of an existing part.
+- [Product Rendering](https://www.vsharksolutions.com/services/product-rendering.html): Photorealistic product renders, exploded views and jewellery visuals created from CAD, so you can market a product before it is made.
+
+## Products (JINUOSH Vertex 3D scanners, sold, installed and supported in India)
+
+- [Vertex3D](https://www.vsharksolutions.com/products/#vertex3d): Handheld blue-laser 3D scanner. A fast, lightweight handheld scanner with 26 crossed blue laser lines for everyday industrial scanning.
+- [Vertex3D Pro](https://www.vsharksolutions.com/products/#vertex3d-pro): Handheld blue-laser 3D scanner. 50 crossed blue laser lines and 7.1 million measurements per second for large parts and demanding production work.
+- [Vertex Tracker](https://www.vsharksolutions.com/products/#vertex-tracker): Optical-tracking 3D scanning system. Optical tracking with a 1100 × 800 mm field for large objects up to 8 m — no markers on the part.
+
+## Industries
+
+- [Aerospace](https://www.vsharksolutions.com/industries/aerospace.html): Inspection and reverse engineering of high-precision aircraft components.
+- [Automobile](https://www.vsharksolutions.com/industries/automobile.html): Body surfacing, part digitising and fixture design for vehicles.
+- [Construction](https://www.vsharksolutions.com/industries/construction.html): As-built scanning and BIM models for buildings and sites.
+- [Healthcare](https://www.vsharksolutions.com/industries/healthcare.html): Medical devices and custom-fit parts captured and modelled in 3D.
+- [Education](https://www.vsharksolutions.com/industries/education.html): Scanning and 3D printing support for labs, research and teaching.
+- [Jewellery](https://www.vsharksolutions.com/industries/jewellery.html): Fine-detail scanning and printing for jewellery design and casting.
+
+## Key pages
+
+- [Home](https://www.vsharksolutions.com/): overview of services, scanners and industries
+- [About](https://www.vsharksolutions.com/about.html): company background, how we work, locations
+- [Portfolio](https://www.vsharksolutions.com/portfolio/): completed scanning, CAD and inspection projects
+- [Contact](https://www.vsharksolutions.com/contact.html): enquiry form, phone, WhatsApp and office addresses
+
+## Social
+
+- YouTube: https://www.youtube.com/@VsharkSolutions
+- Instagram: https://www.instagram.com/vshark.solutions/
+- Facebook: https://www.facebook.com/vshark.solutions
+- IndiaMART: https://www.indiamart.com/vsharkengineeringsolutions/
