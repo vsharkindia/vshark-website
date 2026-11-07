@@ -44,6 +44,7 @@
 ## Blog
 
 - [All articles](https://www.vsharksolutions.com/blog/)
+- [3D Scanning vs CMM Inspection: Which Method Fits Your Part?](https://www.vsharksolutions.com/blog/3d-scanning-vs-cmm-inspection/): Compare 3D scanning and CMM inspection by accuracy, speed and cost. See which fits castings, moulded and machined parts, with a Coimbatore service.
 - [3D Scanning for Jewellery and Heritage Idols: Capturing Fine Detail](https://www.vsharksolutions.com/blog/3d-scanning-jewellery-and-heritage-idols/): How 3D scanning captures fine detail in jewellery, temple idols and heritage carvings, for replication, restoration, casting patterns and digital archives in India and the UAE.
 - [From 3D Scan to 3D Print: Rapid Prototyping From Real Parts](https://www.vsharksolutions.com/blog/from-3d-scan-to-3d-print/): How to go from a physical part to a 3D-printed prototype: scanning, CAD, print preparation and choosing a process, for engineers and designers in Coimbatore, India and the UAE.
 - [Reverse Engineering for Mining and Crushing: Liners, Throats and Wear Parts](https://www.vsharksolutions.com/blog/reverse-engineering-crusher-wear-parts/): How 3D scanning and reverse engineering help mines, quarries and cement plants recreate crusher liners, throats and wear parts, and track wear, in India and the Gulf.
@@ -52,7 +53,6 @@
 - [Scan to BIM Explained: Accurate As-Built Models of Plant Rooms and Buildings](https://www.vsharksolutions.com/blog/scan-to-bim-explained/): What Scan to BIM is, how point cloud data becomes an as-built Revit model of plant rooms, piping and buildings, LOD levels, and what to provide. India and UAE.
 - [Choosing a Handheld 3D Scanner in India: Vertex3D vs Vertex3D Pro vs Vertex Tracker](https://www.vsharksolutions.com/blog/choosing-a-handheld-3d-scanner-india/): Compare JINUOSH Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners: accuracy, speed, scan area and best uses. Buying guide from the India distributor.
 - [How to Recreate Obsolete Spare Parts When There Are No Drawings](https://www.vsharksolutions.com/blog/reverse-engineering-obsolete-spare-parts/): No drawings, no supplier? Learn how 3D scanning and reverse engineering recreate obsolete pump, impeller and machine parts as manufacturable CAD, in India and the UAE.
-- [3D Scanning vs CMM Inspection: Which Method Fits Your Part?](https://www.vsharksolutions.com/blog/3d-scanning-vs-cmm-inspection/): Compare 3D scanning and CMM inspection by accuracy, speed, data and cost. See which fits castings, moulded parts and machined parts, with a Coimbatore service.
 - [What Is Reverse Engineering? From a Worn Part to a Manufacturable CAD Model](https://www.vsharksolutions.com/blog/what-is-reverse-engineering/): How reverse engineering turns a physical part into editable CAD: 3D scanning, modelling approaches, deliverables and costs, for manufacturers in India and the UAE.
 
 ## Social
