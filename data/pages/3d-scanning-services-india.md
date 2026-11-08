@@ -95,7 +95,7 @@ We quote per job and do not publish a price list. The main drivers are:
 - the output (a mesh is quicker than a full CAD model),
 - on-site work, travel and accommodation.
 
-Send a photo and a short description and we reply with a written quote.
+Send a photo and a short description and we reply with a written quote. For the full list of what moves a quote, read [3D scanning cost in India: what decides the quote](/3d-scanning-cost-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s17&utm_content=hub-cost).
 
 ### Based in Coimbatore, working across India
 

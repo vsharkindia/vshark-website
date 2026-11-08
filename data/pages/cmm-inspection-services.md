@@ -84,6 +84,7 @@ We inspect at our Coimbatore facility, or travel to your plant in Coimbatore and
 - Based in Coimbatore since December 2019
 - One team for CMM arm inspection, 3D scanning, reverse engineering and CAD
 - We are a distributor of JINUOSH Vertex 3D scanners in India, so we know scanning equipment well ([JINUOSH Vertex 3D scanners](/jinuosh-vertex-3d-scanner-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s18&utm_content=cmm-vertex))
+- Wondering what it will cost? Read [3D scanning cost in India: what decides the quote](/3d-scanning-cost-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s17&utm_content=cmm-cost).
 - Choosing a provider? Read [how to choose a 3D scanning service in Coimbatore](/best-3d-scanning-service-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s18&utm_content=cmm-choose) and [JINUOSH Vertex compared with Creaform, Shining 3D and GOM](/jinuosh-vertex-vs-creaform-shining-3d-gom?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s18&utm_content=cmm-compare)
 
 ### Get a quote
