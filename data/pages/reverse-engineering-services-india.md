@@ -5,8 +5,8 @@ description: Reverse engineering services across India: we 3D scan your part and
 h1: <em>Reverse Engineering</em> Services in India
 tag: ( Service ) — reverse engineering across India
 lead: VShark Solutions Pvt Ltd provides reverse engineering services across India from Coimbatore, Tamil Nadu. We 3D scan your part, rebuild it as an editable STEP CAD model, check the model against the scan and deliver files that open in your own CAD software. We work at our facility or at your plant. Send a photo and a short description of your part for a written quote.
-image: img/services/handheld-3d-scanner-with-laptop-scan-software.webp
-image_alt: Handheld 3D scanner capturing a car part with the live scan shown on a laptop
+image: img/services/3d-scan-data-car-wheel-on-screen.webp
+image_alt: 3D scan data of a car wheel on a computer screen, the mesh used to start reverse engineering
 crumb_label: Services
 crumb_href: services/index.html
 active: services
@@ -84,7 +84,7 @@ Our home base, with a facility for scanning small to medium parts and a team tha
 
 ### Tamil Nadu
 
-We scan and rebuild parts for plants across Tamil Nadu, at our facility or at your site. For Salem, Erode, Madurai, Trichy, Tiruppur and other towns, see reverse engineering services in Tamil Nadu.
+We scan and rebuild parts for plants across Tamil Nadu, at our facility or at your site. For Salem, Erode, Madurai, Trichy, Tiruppur and other towns, see [reverse engineering services in Tamil Nadu](/reverse-engineering-services-tamil-nadu?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s20&utm_content=india-tn).
 
 ### Chennai
 

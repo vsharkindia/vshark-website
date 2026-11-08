@@ -5,8 +5,8 @@ description: 3D scanning services across India: parts, moulds, castings and buil
 h1: <em>3D Scanning</em> Services in India
 tag: ( Service ) — 3D scanning across India
 lead: VShark Solutions Pvt Ltd provides 3D scanning services across India from Coimbatore, Tamil Nadu. We scan parts, moulds, castings, vehicles and buildings at our facility or on site at your plant, and deliver STL meshes, editable STEP CAD models or inspection reports. Send a photo and a short description of your part for a written quote.
-image: img/services/handheld-3d-scanner-with-laptop-scan-software.webp
-image_alt: Handheld 3D scanner capturing a car part with the live scan shown on a laptop
+image: img/products/jinuosh-vertex3d-series-banner-render.webp
+image_alt: JINUOSH Vertex3D Series handheld blue-laser 3D scanner, product render
 crumb_label: Services
 crumb_href: services/index.html
 active: services
@@ -28,7 +28,7 @@ reviewed: 2026-11-08
 - Vehicle parts and body panels
 - Buildings, facades, heritage structures and plant areas
 
-![Handheld 3D scanning of a car wheel arch on a vehicle lift](img/about/handheld-3d-scanning-of-a-car-wheel-arch-on-a-vehicle-lift.webp)
+![3D scan data of a car wheel on a computer screen](img/services/3d-scan-data-car-wheel-on-screen.webp)
 
 ### Our 3D scanning services
 

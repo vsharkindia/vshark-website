@@ -5,8 +5,8 @@ description: No drawing for a worn or obsolete spare part? We 3D scan it, rebuil
 h1: Spare Part With No Drawing: <em>How We Rebuild It</em>
 tag: ( Guide ) — reverse engineering spare parts
 lead: Yes, a spare part with no drawing can be rebuilt. At VShark Solutions Pvt Ltd, Coimbatore, we 3D scan the part, clean the scan into a mesh, rebuild it as an editable STEP CAD model, agree the fit and tolerance with you, and check the finished model against the scan. You receive CAD you can machine, cast or 3D print from. Send a photo of your part for a written quote.
-image: img/services/handheld-3d-scanner-with-laptop-scan-software.webp
-image_alt: Handheld 3D scanner capturing a part with the live scan shown on a laptop
+image: img/portfolio/pump-volute-scan.webp
+image_alt: 3D scan mesh of a pump volute casing, captured to rebuild a part with no drawing
 crumb_label: Reverse engineering
 crumb_href: reverse-engineering-services-india.html
 active: services

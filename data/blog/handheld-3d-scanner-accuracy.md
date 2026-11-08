@@ -60,7 +60,7 @@ A common metrology rule is that the measuring system should be several times mor
 
 This table is a rule of thumb, not a guarantee. The right answer comes from your drawing and part size. For the scan versus CMM choice, read [3D scanning vs CMM inspection](/blog/3d-scanning-vs-cmm-inspection?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s36&utm_content=blog-cmm), or see our [CMM inspection services in Coimbatore](/cmm-inspection-services?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s36&utm_content=cmm-page).
 
-![Handheld blue laser 3D scanner scanning a part in an engineering lab](blog-images/handheld-3d-scanner-accuracy/handheld-blue-laser-3d-scanner-scanning-a-part-in-an-engineering-lab.webp)
+![JINUOSH Vertex3D handheld blue laser 3D scanner, front view](blog-images/handheld-3d-scanner-accuracy/jinuosh-vertex3d-handheld-blue-laser-3d-scanner-front.webp)
 
 ### Which handheld use cases suit which model?
 - **Vertex3D and Vertex3D Pro:** parts up to a few metres, such as castings, mouldings, sheet metal, automotive panels and reverse engineering of a part with no drawing. Use photogrammetry when the part is large.
