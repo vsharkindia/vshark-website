@@ -7,13 +7,29 @@
   "date": "2026-11-08",
   "hash": "c72df800f511e7b16e7fa76d79c081eae4b17cdf"
  },
+ "3d-scanning-services-bengaluru.html": {
+  "date": "2026-11-08",
+  "hash": "067c2f06bf8c63338815069793ddb7817270709f"
+ },
+ "3d-scanning-services-chennai.html": {
+  "date": "2026-11-08",
+  "hash": "9bcc96a9bec9dd20259d054a9d20a205ebdb6415"
+ },
  "3d-scanning-services-coimbatore.html": {
   "date": "2026-11-08",
   "hash": "8fb2cb5c7df3d16875e1a88ff2d86336cfdcc3a0"
  },
+ "3d-scanning-services-hyderabad.html": {
+  "date": "2026-11-08",
+  "hash": "8534d7fcd6852b3ee887496ec8bd33aa80b8d8d7"
+ },
  "3d-scanning-services-india.html": {
   "date": "2026-11-08",
-  "hash": "0cf6967aa2d216e7da5b34a838ed065c5b9494fd"
+  "hash": "d51d1c4f1d8a6fd63a5d67771d00ab659ac41af2"
+ },
+ "3d-scanning-services-pune.html": {
+  "date": "2026-11-08",
+  "hash": "cdbf65b5dff8800e2f96f70c7b38bc609d179269"
  },
  "404.html": {
   "date": "2026-11-08",
@@ -29,19 +45,19 @@
  },
  "best-3d-scanning-service-coimbatore.html": {
   "date": "2026-11-08",
-  "hash": "76442cc5091be3467d25fb0d595932c6e599677c"
+  "hash": "339482ea41613c93cff608be99ed459f58cd7d58"
  },
  "blog/3d-scan-file-formats/index.html": {
   "date": "2026-11-08",
-  "hash": "fbc9a53ae3f031cde2bb0037b04d3bf3983426d3"
+  "hash": "78282bfaafebd0506ac9107227bd8e1545c3f13e"
  },
  "blog/3d-scanning-jewellery-and-heritage-idols/index.html": {
   "date": "2026-11-08",
-  "hash": "bf4b7870c08f5cca593ab07c8a8e67cf0ca15488"
+  "hash": "1dbee002875971f22da413315238252d5d2bd615"
  },
  "blog/3d-scanning-vs-cmm-inspection/index.html": {
   "date": "2026-11-08",
-  "hash": "a6404485b0a02d6678fab792e183456d7b723fe6"
+  "hash": "5c946139dd9668c0caa105ff4514e96cd4935b66"
  },
  "blog/category/3d-printing/index.html": {
   "date": "2026-11-08",
@@ -53,7 +69,7 @@
  },
  "blog/category/3d-scanning/index.html": {
   "date": "2026-11-08",
-  "hash": "a6cc87661a0a443cf990451dc599fe240817280d"
+  "hash": "80cf25dd9b2490ec58a1d83ffa3d706caa1b68a4"
  },
  "blog/category/class-a-surfacing/index.html": {
   "date": "2026-11-08",
@@ -73,27 +89,31 @@
  },
  "blog/choosing-a-handheld-3d-scanner-india/index.html": {
   "date": "2026-11-08",
-  "hash": "e82347bf168743bc8a80a3f387ea5c347595979c"
+  "hash": "aedfb74b1259c8f31f50a31241dd57bba06437e2"
  },
  "blog/from-3d-scan-to-3d-print/index.html": {
   "date": "2026-11-08",
-  "hash": "6e1c673ef9ef41d36254b0d98ff950132b31fd1a"
+  "hash": "084470b8624cbb29347a4ea20bfc9c852505767b"
  },
  "blog/handheld-3d-scanner-accuracy/index.html": {
   "date": "2026-11-08",
-  "hash": "0d799d8b86c8a1046e6aba128fc3c98ff0fb2a21"
+  "hash": "e61800abaf0d302b04f6bfdaed06dfbe130ff456"
  },
  "blog/how-accurate-is-3d-scanning/index.html": {
   "date": "2026-11-08",
-  "hash": "170d3c592a186c975290dc156db8e9a310fc6dbf"
+  "hash": "b7430089009bf85fcff9d1375d9a8c2b6a7c45c7"
+ },
+ "blog/how-to-choose-a-3d-scanner/index.html": {
+  "date": "2026-11-08",
+  "hash": "5c12f183a9b21c7cb6af6bc1e7840b19e996391f"
  },
  "blog/index.html": {
   "date": "2026-11-08",
-  "hash": "450cdd09ea66828167264d93c9b41bb9b0fe3336"
+  "hash": "6569037b5c01d19fc0d7f640d9cf2350550bfc48"
  },
  "blog/page/2/index.html": {
   "date": "2026-11-08",
-  "hash": "6208fa6ea13ed09136cde6d9862c64b7d5218490"
+  "hash": "e6f78f9de0f070db3b843a6347e8b826e9ddf549"
  },
  "blog/reverse-engineering-crusher-wear-parts/index.html": {
   "date": "2026-11-08",
@@ -105,7 +125,7 @@
  },
  "blog/scan-to-bim-explained/index.html": {
   "date": "2026-11-08",
-  "hash": "1a52878e6a7283100b1ed513fe9713f83b27741a"
+  "hash": "c99a68549e3c21b65dddfee1ef09a70869db28d8"
  },
  "blog/scan-to-cad-in-solidworks/index.html": {
   "date": "2026-11-08",
@@ -113,11 +133,11 @@
  },
  "blog/scanning-shiny-reflective-parts/index.html": {
   "date": "2026-11-08",
-  "hash": "4f9a2f2690ddb5f1707d1b7bcedb70fb12dd8b47"
+  "hash": "8886a73511575db991cb024e2edabef2bbbcbe95"
  },
  "blog/what-is-class-a-surfacing/index.html": {
   "date": "2026-11-08",
-  "hash": "b172c46ccfd58be48dd1acf92fb69f660452724d"
+  "hash": "1445ffdfda042a1bf7e1d86d92e6a552efcff3d3"
  },
  "blog/what-is-reverse-engineering/index.html": {
   "date": "2026-11-08",

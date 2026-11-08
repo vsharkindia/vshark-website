@@ -43,6 +43,7 @@
 
 ## Blog
 - [All articles](https://www.vsharksolutions.com/blog/)
+- [How to Choose a 3D Scanner: Handheld Laser, Tracker, Structured Light or a Service](https://www.vsharksolutions.com/blog/how-to-choose-a-3d-scanner/)
 - [What Files Do You Get From a 3D Scan? STL, STEP, IGES, Parasolid and the PDF Report](https://www.vsharksolutions.com/blog/3d-scan-file-formats/)
 - [Scan to CAD in SolidWorks: How a Mesh Becomes an Editable Model](https://www.vsharksolutions.com/blog/scan-to-cad-in-solidworks/)
 - [How to 3D Scan Shiny, Reflective and Dark Parts](https://www.vsharksolutions.com/blog/scanning-shiny-reflective-parts/)
