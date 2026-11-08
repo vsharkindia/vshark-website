@@ -1,7 +1,7 @@
 ---
 rel: reverse-engineering-services-tamil-nadu.html
-title_tag: Reverse Engineering Services in Tamil Nadu | VShark Solutions
-description: Reverse engineering services in Tamil Nadu: we 3D scan your part and rebuild an editable STEP CAD model, at our Coimbatore facility or at your plant. Get a quote.
+title_tag: Reverse Engineering in Tamil Nadu | VShark Solutions
+description: Reverse engineering in Tamil Nadu: we 3D scan your part and rebuild an editable STEP CAD model, at our Coimbatore facility or your plant. Get a quote.
 h1: <em>Reverse Engineering</em> Services in Tamil Nadu
 tag: ( Service ) — reverse engineering across Tamil Nadu
 lead: VShark Solutions Pvt Ltd provides reverse engineering services across Tamil Nadu from Coimbatore. We 3D scan your part, rebuild it as an editable STEP CAD model, check the model against the scan and deliver files that open in your own CAD software. We work at our facility or at your plant. Send a photo and a short description of your part for a written quote.
