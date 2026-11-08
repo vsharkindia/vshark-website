@@ -80,7 +80,7 @@ We are based in Coimbatore, Tamil Nadu. We do not claim an office in the cities 
 
 ### Coimbatore
 
-Our home base, with a facility for scanning small to medium parts and a team that can reach your plant for local jobs. See [reverse engineering and 3D scanning in Coimbatore](/3d-scanning-services-coimbatore).
+Our home base, with a facility for scanning small to medium parts and a team that can reach your plant for local jobs. See [reverse engineering and 3D scanning in Coimbatore](/3d-scanning-services-coimbatore) and [reverse engineering in Coimbatore: where we are, hours and how to work with us](/reverse-engineering-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s49&utm_content=india-hub-coimbatore).
 
 ### Tamil Nadu
 

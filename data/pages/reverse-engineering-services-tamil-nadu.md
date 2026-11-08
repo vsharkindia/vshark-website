@@ -57,6 +57,7 @@ Send the photo first. We confirm which route suits before anything moves.
 - Operating since December 2019, based in Coimbatore, Tamil Nadu.
 - Distributor of JINUOSH Vertex 3D scanners in India.
 - Office hours 9 AM to 7 PM.
+- In Coimbatore? See [reverse engineering in Coimbatore](/reverse-engineering-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s49&utm_content=tn-coimbatore).
 
 [Send a photo and a short description of your part for a quote](/contact?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s20&utm_content=reverse-engineering-services-tamil-nadu) or email info@vsharksolutions.com.
 

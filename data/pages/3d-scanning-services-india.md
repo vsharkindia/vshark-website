@@ -103,7 +103,7 @@ Send a photo and a short description and we reply with a written quote. For the 
 - Distributor of JINUOSH Vertex 3D scanners in India, so we know the equipment we use.
 - One team for scanning, reverse engineering, scan to CAD and inspection.
 - Office hours 9 AM to 7 PM.
-- Based in Coimbatore? See [3D scanning services in Coimbatore](/3d-scanning-services-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-local). Choosing between providers? Read [how to choose a 3D scanning service](/best-3d-scanning-service-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-choose).
+- Based in Coimbatore? See [3D scanning services in Coimbatore](/3d-scanning-services-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-local) and [reverse engineering in Coimbatore](/reverse-engineering-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s49&utm_content=scan-hub-coimbatore). Choosing between providers? Read [how to choose a 3D scanning service](/best-3d-scanning-service-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-choose).
 
 [Send a photo and a short description of your part for a quote](/contact?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=3d-scanning-services-india) or email info@vsharksolutions.com.
 
