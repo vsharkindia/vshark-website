@@ -81,7 +81,7 @@ Accuracy depends on the scanner, the part and the set-up. The JINUOSH Vertex han
 
 ### Industries
 
-Scanning and reverse engineering are used in automotive (see [automotive 3D scanning and reverse engineering in India](/automotive-reverse-engineering-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s31&utm_content=hub-auto)), rail, aerospace, energy, mould and die (see [mould and die 3D scanning and reverse engineering in India](/mould-die-3d-scanning-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s32&utm_content=hub-mould)), and machinery manufacturing (industries listed by the scanner maker for this equipment). Tell us your part and we will say how the job would run.
+Scanning and reverse engineering are used in automotive (see [automotive 3D scanning and reverse engineering in India](/automotive-reverse-engineering-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s31&utm_content=hub-auto)), rail, aerospace, energy, mould and die (see [mould and die 3D scanning and reverse engineering in India](/mould-die-3d-scanning-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s32&utm_content=hub-mould)), and machinery manufacturing (see [casting and foundry 3D scanning and inspection in India](/casting-foundry-3d-scanning-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s33&utm_content=hub-casting) and [industrial machinery 3D scanning and spare parts in India](/industrial-machinery-spare-parts-3d-scanning-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s34&utm_content=hub-machinery)) (industries listed by the scanner maker for this equipment). Tell us your part and we will say how the job would run.
 
 ### What decides the cost of a 3D scan?
 
