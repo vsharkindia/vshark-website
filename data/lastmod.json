@@ -5,7 +5,7 @@
  },
  "3d-scanning-services-india.html": {
   "date": "2026-11-08",
-  "hash": "713e77532c47cf34c648a475c4740d5c3b2a832d"
+  "hash": "f37c116a6cb33c159ef07c28e5103c42760b97f1"
  },
  "404.html": {
   "date": "2026-11-05",
@@ -17,7 +17,7 @@
  },
  "automotive-reverse-engineering-india.html": {
   "date": "2026-11-08",
-  "hash": "d09efab9de726104b55db828a863e05f245d2d93"
+  "hash": "56c6db77add9b85ff78c4744c6bd0bb1624e3d5b"
  },
  "best-3d-scanning-service-coimbatore.html": {
   "date": "2026-11-08",
@@ -25,11 +25,11 @@
  },
  "blog/3d-scanning-jewellery-and-heritage-idols/index.html": {
   "date": "2026-11-08",
-  "hash": "61c32738fbce113bfc4c325a86a60a4ad882fdd1"
+  "hash": "772e361c3e12cb14534ee9bb706e29e257a25d94"
  },
  "blog/3d-scanning-vs-cmm-inspection/index.html": {
   "date": "2026-11-08",
-  "hash": "9af0bd27c05e9099fe6a0a292c01a54bca2fa82b"
+  "hash": "e547eb8756dc46a23cdc487e58fa105ce1103671"
  },
  "blog/category/3d-printing/index.html": {
   "date": "2026-11-05",
@@ -41,7 +41,7 @@
  },
  "blog/category/3d-scanning/index.html": {
   "date": "2026-11-08",
-  "hash": "c9f6b647f30edd9eedeb14fbc98274210cd99458"
+  "hash": "e49eb5e3de90a234e8f45f507f16ad99b0a8f3da"
  },
  "blog/category/class-a-surfacing/index.html": {
   "date": "2026-11-08",
@@ -61,51 +61,55 @@
  },
  "blog/choosing-a-handheld-3d-scanner-india/index.html": {
   "date": "2026-11-08",
-  "hash": "be37d457bd82a0d012e1b96b4fa18be334f519e0"
+  "hash": "b9e9e48498a75ff34416dbd7ee4b9d1d82def7e3"
  },
  "blog/from-3d-scan-to-3d-print/index.html": {
   "date": "2026-11-08",
-  "hash": "dd6abc249b9b9eceac1a894bccae9e0b98ef40e5"
+  "hash": "d33d6e648221e11dd32c828a13f6f5f1776d677a"
  },
  "blog/handheld-3d-scanner-accuracy/index.html": {
   "date": "2026-11-08",
-  "hash": "958098d3b9f865e1c8baed7a0e890fbb364c4e63"
+  "hash": "6f06853da804744522f1be5fcefe174aa36644b3"
  },
  "blog/how-accurate-is-3d-scanning/index.html": {
   "date": "2026-11-08",
-  "hash": "457213acf07deefb55f66f225ac15e56307055e8"
+  "hash": "0f3a9eed7e0ffe37b2d43c3f28a04f8975295746"
  },
  "blog/index.html": {
   "date": "2026-11-08",
-  "hash": "75d5cf4af6cfeff3e93fca79c7f7b9fb8f249e5f"
+  "hash": "cb1af4c7eb4274b32f471620d2bbba7251eda9f5"
  },
  "blog/page/2/index.html": {
   "date": "2026-11-08",
-  "hash": "2fcbbc8163f381886f240beb27584f2834160957"
+  "hash": "4c8ca308da5aaa13de0d5bc602cca8d407678c7e"
  },
  "blog/reverse-engineering-crusher-wear-parts/index.html": {
   "date": "2026-11-08",
-  "hash": "c089127238e94d151c5f33d1b7af1eaf2d5dda9e"
+  "hash": "e13837914ae1c8d61085bd4706401acab4112d65"
  },
  "blog/reverse-engineering-obsolete-spare-parts/index.html": {
   "date": "2026-11-08",
-  "hash": "bf5c543deaa87c7d124899175e315ec41297e1c5"
+  "hash": "376488e9772fcf1da39941fca0a50dd627805c14"
  },
  "blog/scan-to-bim-explained/index.html": {
   "date": "2026-11-08",
-  "hash": "93708037a4969cfd1bc01b6c5473793c77eff395"
+  "hash": "23d8e9842e43e6b1dbaa8d0d5b9d6aa456fb8b3a"
+ },
+ "blog/scanning-shiny-reflective-parts/index.html": {
+  "date": "2026-11-08",
+  "hash": "0d58b2a60f7a2c3338c2399206456a613ef441b8"
  },
  "blog/what-is-class-a-surfacing/index.html": {
   "date": "2026-11-08",
-  "hash": "44c1beb5dcdc6f80a3a0100cb3e9ab49df754ecf"
+  "hash": "64aaca7c26ba3c61659c9a0aba460c00b8f6671a"
  },
  "blog/what-is-reverse-engineering/index.html": {
   "date": "2026-11-08",
-  "hash": "9fdb036293a93819dbea4b2b06f03b9b584fbbf9"
+  "hash": "3517ac25233c021119a263d74945b2024f0b4821"
  },
  "cmm-inspection-services.html": {
   "date": "2026-11-08",
-  "hash": "238a463d6c7dcc62575bb866caf90cbdbed1678c"
+  "hash": "fa402b665aaa322c3c0e869277acc699ed9f0b7c"
  },
  "contact.html": {
   "date": "2026-11-05",
@@ -151,6 +155,10 @@
   "date": "2026-11-08",
   "hash": "3971306128d49b1399b73043a11b089aadb1d82e"
  },
+ "mould-die-3d-scanning-india.html": {
+  "date": "2026-11-08",
+  "hash": "a53d16cd7d42706c450d58764554b3438488e040"
+ },
  "portfolio/index.html": {
   "date": "2026-11-05",
   "hash": "00fa6f1f70921c82935cdf3f0a3b9919475f2beb"
@@ -165,7 +173,7 @@
  },
  "reverse-engineering-services-india.html": {
   "date": "2026-11-08",
-  "hash": "c4dc5154ab05e99bc10e28f2a961e5769a82c717"
+  "hash": "ffa19c229bcbb518684c9d9adafbe4bcbaddab75"
  },
  "reverse-engineering-services-tamil-nadu.html": {
   "date": "2026-11-08",

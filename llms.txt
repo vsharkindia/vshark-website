@@ -29,6 +29,7 @@
 - [Reverse engineering services in India](https://www.vsharksolutions.com/reverse-engineering-services-india.html)
 - [Reverse engineering services in Tamil Nadu](https://www.vsharksolutions.com/reverse-engineering-services-tamil-nadu.html)
 - [Automotive 3D scanning and reverse engineering in India](https://www.vsharksolutions.com/automotive-reverse-engineering-india.html)
+- [Mould and die 3D scanning and reverse engineering in India](https://www.vsharksolutions.com/mould-die-3d-scanning-india.html)
 - [Spare part with no drawing: how we rebuild it](https://www.vsharksolutions.com/spare-part-no-drawing-reverse-engineering.html)
 - [CMM inspection services in Coimbatore](https://www.vsharksolutions.com/cmm-inspection-services.html)
 - [Portfolio](https://www.vsharksolutions.com/portfolio/)
@@ -37,6 +38,7 @@
 
 ## Blog
 - [All articles](https://www.vsharksolutions.com/blog/)
+- [How to 3D Scan Shiny, Reflective and Dark Parts](https://www.vsharksolutions.com/blog/scanning-shiny-reflective-parts/)
 - [Handheld 3D Scanner Accuracy: What the Numbers Mean on a Real Part](https://www.vsharksolutions.com/blog/handheld-3d-scanner-accuracy/)
 - [3D Scanning for Jewellery and Heritage Idols: Capturing Fine Detail](https://www.vsharksolutions.com/blog/3d-scanning-jewellery-and-heritage-idols/)
 - [From 3D Scan to 3D Print: Rapid Prototyping From Real Parts](https://www.vsharksolutions.com/blog/from-3d-scan-to-3d-print/)
