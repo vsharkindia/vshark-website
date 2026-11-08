@@ -749,7 +749,7 @@ def about_page():
     stat_html = ''.join(f'<div class="astat" data-reveal><b>{E(a)}</b><span class="mono">{E(l)}</span></div>' for a, l in stats)
     body = f"""{page_hero(P, [("About", None)], "( 05 ) — About", "We capture reality. <em>Then we engineer it.</em>",
         "VShark Solutions Private Limited is a 3D scanning and engineering design company based in Coimbatore, India, with a presence in Dubai, UAE. Since 2019, we have helped manufacturers, engineers, designers and builders turn physical objects into accurate, usable digital data, and turn digital designs back into real parts.",
-        PH + 'vshark-engineer-3d-scanning-a-car-body-at-a-customer-workshop.webp', alt='VShark engineer 3D scanning a car body at a customer workshop')}
+        PH + 'vshark-engineer-3d-scanning-a-car-boot-floor-with-a-jinuosh-vertex-handheld-scanner.webp', alt='VShark engineer 3D scanning a car boot floor with a JINUOSH Vertex handheld scanner')}
 
     <section class="section blk">
       <p class="lead-lg" data-reveal>Our clients range from automotive and aerospace suppliers to foundries, mining and process plants, construction teams, jewellers and research labs. We have delivered projects for clients in India, the UAE, Saudi Arabia, the USA, the UK, Germany and Canada.</p>
@@ -786,7 +786,7 @@ def about_page():
 
     <section class="section blk">
       <div class="about-split about-split--flip">
-        <figure class="about-fig" data-reveal><img src="{PH}handheld-3d-scanning-of-a-car-wheel-arch-on-a-vehicle-lift.webp" alt="Handheld 3D scanning of a car wheel arch on a vehicle lift" loading="lazy"></figure>
+        <figure class="about-fig" data-reveal><img src="{PH}3d-scan-data-of-a-car-wheel-in-scan-software.webp" alt="3D scan data of a car wheel in scan software, captured with a handheld 3D scanner" loading="lazy"></figure>
         <div>
           <div class="sec-head"><div><span class="tag mono">Why VShark</span><h2 class="h2" data-reveal>Why clients <em>choose us.</em></h2></div></div>
           <div class="feat-grid feat-grid--1">
@@ -912,7 +912,7 @@ def coimbatore_page():
                          'url': SITE_URL + '3d-scanning-services-coimbatore.html'}, ensure_ascii=False).replace('</', '<' + chr(92) + '/')
     body = f"""{page_hero(P, [("Services", "services/index.html"), ("3D scanning in Coimbatore", None)], "( 01 ) — Coimbatore", "3D Scanning Services <em>in Coimbatore.</em>",
         "VShark Solutions Pvt Ltd offers 3D scanning services in Coimbatore, Tamil Nadu. We scan parts, moulds, castings and tooling at our facility or at your plant, then deliver an STL mesh or an editable STEP CAD model.",
-        img + '3d-scanning-services-coimbatore-hero.webp', alt='Handheld 3D scanner with red laser scanning a car wheel arch and suspension')}
+        img + '3d-scanning-services-coimbatore-vertex-hero.webp', alt='VShark engineer scanning a car boot floor with a JINUOSH Vertex handheld 3D scanner')}
 
     <section class="section blk">
       <div class="split">
@@ -922,7 +922,7 @@ def coimbatore_page():
           <div class="feat-grid">
 {scan_html}
           </div>
-          <figure class="svc-fig" data-reveal><img src="{img}handheld-3d-scanner-with-laptop-scan-software.webp" alt="Handheld 3D scanner and laptop showing scan software on a workshop table" loading="lazy"></figure>
+          <figure class="svc-fig" data-reveal><img src="{img}3d-scan-data-of-a-car-wheel-in-scan-software.webp" alt="3D scan data of a car wheel shown in scan software" loading="lazy"></figure>
         </div>
         <aside class="split__side" data-reveal>
           <div class="side-card">
