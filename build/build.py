@@ -659,7 +659,7 @@ def products_page():
     </section>
     <section class="section blk blk--alt">
       <div class="sec-head"><div><span class="tag mono">Full details</span><h2 class="h2" data-reveal>Specifications, what's included <em>and FAQs.</em></h2></div></div>
-      <nav class="bchips" aria-label="Scanner detail pages"><a class="chip" href="{P}jinuosh-vertex-3d-scanner-india.html">Vertex3D and Vertex3D Pro in India</a><a class="chip" href="{P}vertex-tracker.html">Vertex Tracker in India</a><a class="chip" href="{P}blog/choosing-a-handheld-3d-scanner-india/">Buying guide: which Vertex scanner?</a></nav>
+      <nav class="bchips" aria-label="Scanner detail pages"><a class="chip" href="{P}jinuosh-vertex-3d-scanner-india.html">Vertex3D and Vertex3D Pro in India</a><a class="chip" href="{P}vertex-tracker.html">Vertex Tracker in India</a><a class="chip" href="{P}blog/choosing-a-handheld-3d-scanner-india/">Buying guide: which Vertex scanner?</a><a class="chip" href="{P}jinuosh-vertex-vs-creaform-shining-3d-gom.html">Vertex vs Creaform, Shining 3D, GOM</a></nav>
     </section>
 {faq_section(D.get('productFaq', []), 'Buying a scanner: <em>FAQ.</em>')}
 {chr(10).join(dialogs)}
@@ -1013,7 +1013,7 @@ def write_llms():
              '## Services']
     lines += [f'- [{x["name"]}]({SITE_URL}services/{x["slug"]}.html)' for x in D['services']]
     lines += ['', '## Industries'] + [f'- [{x["name"]}]({SITE_URL}industries/{x["slug"]}.html)' for x in D['industries']]
-    lines += ['', '## Key pages', f'- [JINUOSH Vertex 3D scanners]({SITE_URL}products/)', f'- [Vertex3D and Vertex3D Pro in India]({SITE_URL}jinuosh-vertex-3d-scanner-india.html)', f'- [Vertex Tracker in India]({SITE_URL}vertex-tracker.html)', f'- [Portfolio]({SITE_URL}portfolio/)',
+    lines += ['', '## Key pages', f'- [JINUOSH Vertex 3D scanners]({SITE_URL}products/)', f'- [Vertex3D and Vertex3D Pro in India]({SITE_URL}jinuosh-vertex-3d-scanner-india.html)', f'- [Vertex Tracker in India]({SITE_URL}vertex-tracker.html)', f'- [JINUOSH Vertex vs Creaform, Shining 3D, GOM: how to compare]({SITE_URL}jinuosh-vertex-vs-creaform-shining-3d-gom.html)', f'- [Best 3D scanning service in Coimbatore: how to choose]({SITE_URL}best-3d-scanning-service-coimbatore.html)', f'- [Portfolio]({SITE_URL}portfolio/)',
               f'- [About]({SITE_URL}about.html)', f'- [Contact and quotes]({SITE_URL}contact.html)', '']
     if BLOG_POSTS:
         lines[-1:] = ['', '## Blog', f'- [All articles]({SITE_URL}blog/)'] + [f'- [{q["title"]}]({SITE_URL}blog/{q["slug"]}/)' for q in reversed(BLOG_POSTS)] + ['']
@@ -1110,7 +1110,7 @@ def blog_href(u, P):
         return P + 'index.html'
     if path.startswith(('services/', 'industries/')) and not path.endswith('.html'):
         return P + path + '.html' + q
-    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore', 'vertex-tracker', 'jinuosh-vertex-3d-scanner-india'):
+    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore', 'vertex-tracker', 'jinuosh-vertex-3d-scanner-india', 'best-3d-scanning-service-coimbatore', 'jinuosh-vertex-vs-creaform-shining-3d-gom'):
         return P + path + '.html' + q
     if path in ('products', 'portfolio', 'services', 'industries', 'blog') or path.startswith('blog/'):
         return P + path + '/' + q
@@ -1358,7 +1358,7 @@ def build_product_pages():
         faq_at = body.find('### FAQ')
         faq_txt, body = body[faq_at + 7:], body[:faq_at]
         faqs = [(q.strip(), re.sub(r'\s+', ' ', a.strip())) for q, a in re.findall(r'\*\*(.+?)\*\*\n(.+?)(?=\n\n\*\*|\Z)', faq_txt.strip(), re.S)]
-        hero = page_hero(P, [("Products", P + 'products/index.html'), (re.sub('<[^>]+>', '', m['h1']), None)], m['tag'], m['h1'], E(m['lead']), m['image'], alt=m['image_alt'])
+        hero = page_hero(P, [(m.get('crumb_label', 'Products'), P + m.get('crumb_href', 'products/index.html')), (re.sub('<[^>]+>', '', m['h1']), None)], m['tag'], m['h1'], E(m['lead']), m['image'], alt=m['image_alt'])
         html_page = f'''{hero}
     <article class="section blk">
       <div class="prose prose--post">
@@ -1368,16 +1368,16 @@ def build_product_pages():
 {faq_section(faqs, 'Common <em>questions.</em>')}
     <section class="cta-band">
       <div class="cta-band__inner">
-        <h2 class="h2">See it scan your part.</h2>
-        <p>Request a quote, a free demo or a free sample scan. Send a photo of your part on WhatsApp.</p>
+        <h2 class="h2">{m.get('cta_title', 'See it scan your part.')}</h2>
+        <p>{E(m['cta_text']) if 'cta_text' in m else 'Request a quote, a free demo or a free sample scan. Send a photo of your part on WhatsApp.'}</p>
         <div class="cta-band__actions">
-          <a class="btn btn--light magnetic" href="{P}contact.html?product={m['product']}"><span>Request a quote</span>{A}</a>
-          <a class="btn btn--outline-light magnetic" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp us</span></a>
+          <a class="btn btn--light magnetic" href="{P}{html.escape(m['cta_href']) if 'cta_href' in m else 'contact.html?product=' + m['product']}"><span>Request a quote</span>{A}</a>
+          <a class="btn btn--outline-light magnetic" href="{wa_link(m['wa_msg'] if 'wa_msg' in m else WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp us</span></a>
         </div>
         <p class="mono">India {E(C['phones'][0]['display'])} · UAE {E(C['phones'][1]['display'])}</p>
       </div>
     </section>'''
-        out.append(write(rel, page(P, rel, 'products', html_page)))
+        out.append(write(rel, page(P, rel, m.get('active', 'products'), html_page, wa_msg=m['wa_msg'] if 'wa_msg' in m else WA_DEFAULT)))
     return out
 
 # ---------------------------------------------------------------- final pass (S05/S07 technical SEO)
@@ -1433,6 +1433,14 @@ def extra_ld(rel):
             if wt:
                 node['weight'] = {'@type': 'QuantitativeValue', 'value': float(wt.split()[0]), 'unitCode': 'KGM'}
             blocks.append(node)
+        blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+                       'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
+    elif rel in PRODUCT_PAGES and PRODUCT_PAGES[rel].get('service_ld'):
+        pm = PRODUCT_PAGES[rel]
+        trail = [('Home', SITE_URL), (pm['crumb_label'], SITE_URL + pm['crumb_href']), (META[rel][0].split(' | ')[0], url)]
+        blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'serviceType': '3D scanning', 'name': META[rel][0], 'description': META[rel][1],
+                       'url': url, 'provider': {'@id': SITE_URL + '#business'},
+                       'areaServed': [{'@type': 'City', 'name': 'Coimbatore'}, {'@type': 'State', 'name': 'Tamil Nadu'}, {'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
         blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
                        'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
     elif rel.startswith('blog/'):

@@ -69,7 +69,7 @@ Videos from JINUOSH, the scanner manufacturer.
 
 ### Why buy from VShark?
 
-VShark Solutions is a 3D scanning, reverse engineering and CAD company in Coimbatore with a UAE presence. We use scanners on real jobs, so we can show a scan of your own part before you decide. See our [3D scanning services in Coimbatore](/3d-scanning-services-coimbatore) page for the services we run.
+VShark Solutions is a 3D scanning, reverse engineering and CAD company in Coimbatore with a UAE presence. We use scanners on real jobs, so we can show a scan of your own part before you decide. See our [3D scanning services in Coimbatore](/3d-scanning-services-coimbatore) page for the services we run. Shortlisting scanners? Read how to [compare JINUOSH Vertex with Creaform, Shining 3D and GOM](/jinuosh-vertex-vs-creaform-shining-3d-gom).
 
 VShark Solutions Pvt Ltd, Rajiv Gandhi Nagar, Neelambur, Coimbatore 641062, Tamil Nadu, India. Dubai, UAE. +91 95142 48525 (India), +971 52 248 6238 (UAE), info@vsharksolutions.com.
 
