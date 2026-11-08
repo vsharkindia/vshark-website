@@ -126,6 +126,11 @@ def head_meta(rel):
             f'  <meta property="og:type" content="website">\n  <meta property="og:site_name" content="VShark Solutions">\n'
             f'  <meta property="og:title" content="{E(title)}">\n  <meta property="og:description" content="{E(desc)}">' + seo_extra(rel))
 
+def area_served(extra_cities=()):
+    """One areaServed list for Organization/LocalBusiness and every Service node (S58). UAE = service area only, no address/registration claim."""
+    return ([{'@type': 'City', 'name': 'Coimbatore'}] + [{'@type': 'City', 'name': c} for c in extra_cities if c and c != 'Coimbatore']
+            + [{'@type': 'AdministrativeArea', 'name': 'Tamil Nadu'}, {'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}])
+
 def schema_org():
     """Organization + LocalBusiness JSON-LD (handoff A7 / B8) — same on every page."""
     S = C['social']
@@ -139,7 +144,7 @@ def schema_org():
                     for o in C['offices']],
         'contactPoint': [{'@type': 'ContactPoint', 'telephone': p['tel'], 'contactType': 'sales',
                           'areaServed': 'IN' if p['label'] == 'India' else 'AE'} for p in C['phones']],
-        'areaServed': ['IN', 'AE'], 'foundingDate': '2019',
+        'areaServed': area_served(), 'foundingDate': '2019',
         'sameAs': [S['facebook'], S['instagram'], S['linkedin']] + ([S['youtube']] if S.get('youtube') else []),
     }
     return '<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False).replace('</', '<\\/') + '</script>'
@@ -908,7 +913,7 @@ def coimbatore_page():
                          'name': '3D scanning services in Coimbatore',
                          'description': 'On-site and in-house 3D scanning of parts, moulds, castings and tooling, delivered as STL meshes or editable STEP CAD files.',
                          'provider': {'@id': SITE_URL + '#business'},
-                         'areaServed': [{'@type': 'City', 'name': 'Coimbatore'}, {'@type': 'State', 'name': 'Tamil Nadu'}, {'@type': 'Country', 'name': 'India'}],
+                         'areaServed': area_served(),
                          'url': SITE_URL + '3d-scanning-services-coimbatore.html'}, ensure_ascii=False).replace('</', '<' + chr(92) + '/')
     body = f"""{page_hero(P, [("Services", "services/index.html"), ("3D scanning in Coimbatore", None)], "( 01 ) — Coimbatore", "3D Scanning Services <em>in Coimbatore.</em>",
         "VShark Solutions Pvt Ltd offers 3D scanning services in Coimbatore, Tamil Nadu. We scan parts, moulds, castings and tooling at our facility or at your plant, then deliver an STL mesh or an editable STEP CAD model.",
@@ -1447,7 +1452,7 @@ def extra_ld(rel):
         trail = [('Home', SITE_URL), (pm['crumb_label'], SITE_URL + pm['crumb_href']), (META[rel][0].split(' | ')[0], url)]
         blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'serviceType': pm.get('service_type', '3D scanning'), 'name': META[rel][0], 'description': META[rel][1],
                        'url': url, 'provider': {'@id': SITE_URL + '#business'},
-                       'areaServed': [{'@type': 'City', 'name': 'Coimbatore'}, {'@type': 'State', 'name': 'Tamil Nadu'}] + [{'@type': 'City', 'name': c} for c in pm.get('area_cities', '').split('|') if c] + [{'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
+                       'areaServed': area_served(pm.get('area_cities', '').split('|'))})
         blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
                        'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
     elif rel.startswith('blog/'):
@@ -1479,7 +1484,7 @@ def extra_ld(rel):
         if folder == 'services' and item:
             blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'name': item['name'], 'serviceType': item['name'],
                            'description': META[rel][1], 'url': url, 'provider': {'@id': SITE_URL + '#business'},
-                           'areaServed': [{'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
+                           'areaServed': area_served()})
     pmx = PRODUCT_PAGES.get(rel)
     if pmx and pmx.get('reviewed'):
         wp = {'@context': 'https://schema.org', '@type': 'WebPage', 'url': url, 'name': META[rel][0], 'dateModified': pmx['reviewed'].strip()}
