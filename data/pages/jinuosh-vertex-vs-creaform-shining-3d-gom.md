@@ -13,7 +13,7 @@ cta_href: contact.html?product=vertex3d&utm_source=website&utm_medium=seo&utm_ca
 
 *Disclosure: VShark distributes JINUOSH scanners and benefits if you buy one. We do not quote other makers' specifications here; please read those on each maker's own datasheet.*
 
-### JINUOSH Vertex specifications (JINUOSH brochure, received 2026-10-22)
+### JINUOSH Vertex specifications (as published by JINUOSH)
 
 | Spec | Vertex3D | Vertex3D Pro | Vertex Tracker |
 |---|---|---|---|
