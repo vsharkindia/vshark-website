@@ -8,7 +8,7 @@ Reads data/site.json and
   • fingerprints css/js links (?v=<hash>) so browsers always pick up changes.
 Output is plain static HTML committed to the repo; Netlify needs no build step.
 """
-import hashlib, html, json, os, re, sys
+import datetime, hashlib, html, json, os, re, sys
 from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -1346,6 +1346,13 @@ PRODUCT_LD = {
          'img/products/vertex-tracker.png', None)],
 }
 
+def reviewed_p(m):
+    """Optional front-matter key reviewed: YYYY-MM-DD -> visible 'Last reviewed' line."""
+    if not m.get('reviewed'):
+        return ''
+    d = datetime.date.fromisoformat(m['reviewed'].strip())
+    return f'\n        <p class="muted"><small>Last reviewed: <time datetime="{d.isoformat()}">{d.strftime("%B %Y")}</time></small></p>'
+
 def build_product_pages():
     out = []
     for fn in sorted(os.listdir(PAGES_DIR)):
@@ -1362,7 +1369,7 @@ def build_product_pages():
         html_page = f'''{hero}
     <article class="section blk">
       <div class="prose prose--post">
-{blog_md(body, P)}
+{blog_md(body, P)}{reviewed_p(m)}
       </div>
     </article>
 {faq_section(faqs, 'Common <em>questions.</em>')}
@@ -1473,6 +1480,12 @@ def extra_ld(rel):
             blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'name': item['name'], 'serviceType': item['name'],
                            'description': META[rel][1], 'url': url, 'provider': {'@id': SITE_URL + '#business'},
                            'areaServed': [{'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
+    pmx = PRODUCT_PAGES.get(rel)
+    if pmx and pmx.get('reviewed'):
+        wp = {'@context': 'https://schema.org', '@type': 'WebPage', 'url': url, 'name': META[rel][0], 'dateModified': pmx['reviewed'].strip()}
+        if pmx.get('published'):
+            wp['datePublished'] = pmx['published'].strip()
+        blocks.append(wp)
     return '<!-- @ld -->' + ''.join('<script type="application/ld+json">' + json.dumps(b, ensure_ascii=False).replace('</', '<\/') + '</script>' for b in blocks) + '<!-- /@ld -->'
 
 def finalize(rels):

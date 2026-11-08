@@ -17,6 +17,7 @@ wa_msg: Hi VShark, I need reverse engineering in India for:
 service_ld: Reverse engineering services in India
 service_type: Reverse engineering
 area_cities: Chennai|Bengaluru|Kochi|Hyderabad
+reviewed: 2026-11-08
 ---
 ### What reverse engineering is, in one paragraph
 

@@ -9,6 +9,7 @@ image: img/products/jinuosh-vertex3d-series-banner-render.webp
 image_alt: JINUOSH Vertex3D series banner render of the handheld blue-laser 3D scanner
 product: vertex3d
 cta_href: contact.html?product=vertex3d&utm_source=website&utm_medium=seo&utm_campaign=2026-11-s61&utm_content=jinuosh-vertex-vs-creaform-shining-3d-gom
+reviewed: 2026-11-08
 ---
 
 *Disclosure: VShark distributes JINUOSH scanners and benefits if you buy one. We do not quote other makers' specifications here; please read those on each maker's own datasheet.*
