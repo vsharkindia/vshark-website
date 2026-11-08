@@ -3,6 +3,10 @@
   "date": "2026-11-05",
   "hash": "adb9970c6097122df6a2a7faf44653da23dbf949"
  },
+ "3d-scanning-services-india.html": {
+  "date": "2026-11-08",
+  "hash": "92e154f021292e3f1664a63c7a4eced8fc2e46e8"
+ },
  "404.html": {
   "date": "2026-11-05",
   "hash": "65a6bc83153fe9874ef6ba99b0d816b8f8a253ab"
@@ -13,7 +17,7 @@
  },
  "best-3d-scanning-service-coimbatore.html": {
   "date": "2026-11-08",
-  "hash": "64ffe9b7df8e5f94b9136742e5ebb8f9fc7127ff"
+  "hash": "f387efff97483734e742b557253a3bbdc4ce9c03"
  },
  "blog/3d-scanning-jewellery-and-heritage-idols/index.html": {
   "date": "2026-11-05",
@@ -149,7 +153,7 @@
  },
  "reverse-engineering-services-india.html": {
   "date": "2026-11-08",
-  "hash": "fa6442bd53f1b9bf6564d4ffebdc41471fba91da"
+  "hash": "ab832e229f03e1b5e1916a531aa947bbb0c7113d"
  },
  "services/3d-printing.html": {
   "date": "2026-11-05",
@@ -182,6 +186,10 @@
  "services/scan-to-bim.html": {
   "date": "2026-11-05",
   "hash": "aaaf441d02360f68016171b92ca4b730489c1bc4"
+ },
+ "spare-part-no-drawing-reverse-engineering.html": {
+  "date": "2026-11-08",
+  "hash": "e6110cd7993c4e730d202f4955b32e7829daa1e0"
  },
  "thanks.html": {
   "date": "2026-11-05",

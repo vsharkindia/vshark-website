@@ -26,7 +26,7 @@ Reverse engineering turns a physical part into data you can use: a scan of the p
 ### When you need reverse engineering
 
 - The drawing or CAD file is lost, or never existed.
-- The part is obsolete and the supplier will not or cannot make it. See spare part with no drawing: how we rebuild it.
+- The part is obsolete and the supplier will not or cannot make it. See [spare part with no drawing: how we rebuild it](/spare-part-no-drawing-reverse-engineering?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s30&utm_content=re-spare).
 - A mould, die, casting or fixture has no data and needs to be repeated or repaired.
 - A worn or damaged part needs its original shape back.
 - You want to compare a made part with its design, or redesign a part that exists.
@@ -56,7 +56,7 @@ If the part is small you can send it to us. Larger parts, heavy dies and fixed m
 
 ### Industries and parts
 
-The scanner maker lists these industries for this equipment: automotive, rail, aerospace, energy, mould and die, and machinery manufacturing. Typical jobs: spare parts, castings and forgings, moulds and tooling, fixtures and jigs, vehicle parts. No client is named here. Tell us your part and we will say how the job would run. For the scanning side alone, see 3D scanning services in India.
+The scanner maker lists these industries for this equipment: automotive, rail, aerospace, energy, mould and die, and machinery manufacturing. Typical jobs: spare parts, castings and forgings, moulds and tooling, fixtures and jigs, vehicle parts. No client is named here. Tell us your part and we will say how the job would run. For the scanning side alone, see [3D scanning services in India](/3d-scanning-services-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s30&utm_content=re-hub).
 
 ### How accurate is the result?
 

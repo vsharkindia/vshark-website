@@ -35,7 +35,7 @@ reviewed: 2026-11-08
 
 | You have | You need | Typical output |
 |---|---|---|
-| A part with no drawing | [Reverse engineering](/services/reverse-engineering) (scan to CAD); see [reverse engineering services in India](/reverse-engineering-services-india) | Editable STEP CAD |
+| A part with no drawing | [Reverse engineering](/services/reverse-engineering) (scan to CAD); see [reverse engineering services in India](/reverse-engineering-services-india) and [spare part with no drawing](/spare-part-no-drawing-reverse-engineering) | Editable STEP CAD |
 | A made part to check against CAD | Inspection by [3D scanning](/3d-scanning-services-coimbatore) or CMM arm | Deviation colour map and report |
 | A worn part you only need to see or print | [3D scanning](/3d-scanning-services-coimbatore) | STL mesh |
 | A building, plant or large structure | Laser scanning / scan to BIM | Point cloud, Revit model |
