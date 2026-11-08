@@ -37,7 +37,7 @@ reviewed: 2026-11-08
 | 3D scanning of parts | STL or PLY mesh | [3D scanning services in Coimbatore](/3d-scanning-services-coimbatore?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-service-table) |
 | Reverse engineering and scan to CAD | Editable STEP, IGES or Parasolid model | [Reverse engineering services in India](/reverse-engineering-services-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-service-table) |
 | Spare part with no drawing | Editable STEP model, checked against the scan | [Spare part with no drawing: how we rebuild it](/spare-part-no-drawing-reverse-engineering?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-service-table) |
-| Inspection and digital metrology, including portable CMM arm inspection | PDF report with deviation colour map, dimensions and GD&T callouts | [Request a quote](/contact?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-service-table) |
+| Inspection and digital metrology, including portable CMM arm inspection ([CMM inspection services in Coimbatore](/cmm-inspection-services?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-service-cmm)) | PDF report with deviation colour map, dimensions and GD&T callouts | [Request a quote](/contact?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-service-table) |
 | Building and structure scanning | Point cloud (E57, RCP, LAS); Revit modelling on request | [Request a quote](/contact?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-service-table) |
 | 3D printing from your scan | FDM or SLA print of the scanned part | [Request a quote](/contact?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-service-table) |
 
@@ -68,7 +68,7 @@ If the part is small, you can also send it to us. Larger parts, heavy dies and f
 |---|---|
 | Small to medium parts, castings, moulds | Handheld blue-laser scanning |
 | Large parts where overall accuracy matters | Optical-tracking scanning |
-| Dimension checks against a drawing | Portable CMM arm inspection |
+| Dimension checks against a drawing | Portable CMM arm inspection: see [CMM inspection services in Coimbatore](/cmm-inspection-services?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-cmm) |
 | Buildings and large structures | Terrestrial laser scanning |
 
 We pick the method after seeing your part. Shiny or dark surfaces and deep holes can change the method, so tell us what the surface is.
@@ -77,7 +77,7 @@ We pick the method after seeing your part. Shiny or dark surfaces and deep holes
 
 ### How accurate is 3D scanning?
 
-Accuracy depends on the scanner, the part and the set-up. The JINUOSH Vertex handheld blue-laser scanners we distribute are specified by the maker at up to 0.020 mm (Vertex3D and Vertex3D Pro) and 0.025 mm (Vertex Tracker). That is a scanner specification, not a guarantee for every part. We tell you the expected accuracy for your part before we start. See the [JINUOSH Vertex scanners](/jinuosh-vertex-3d-scanner-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-accuracy) or how they compare in [JINUOSH Vertex vs Creaform, Shining 3D and GOM](/jinuosh-vertex-vs-creaform-shining-3d-gom?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-accuracy).
+Accuracy depends on the scanner, the part and the set-up. The JINUOSH Vertex handheld blue-laser scanners we distribute are specified by the maker at up to 0.020 mm (Vertex3D and Vertex3D Pro) and 0.025 mm (Vertex Tracker). That is a scanner specification, not a guarantee for every part. We tell you the expected accuracy for your part before we start. See the [JINUOSH Vertex scanners](/jinuosh-vertex-3d-scanner-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-accuracy) or how they compare in [JINUOSH Vertex vs Creaform, Shining 3D and GOM](/jinuosh-vertex-vs-creaform-shining-3d-gom?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-accuracy). For the numbers by model, read [handheld 3D scanner accuracy](/blog/handheld-3d-scanner-accuracy?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-accuracy-blog).
 
 ### Industries
 

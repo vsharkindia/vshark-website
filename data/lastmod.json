@@ -5,7 +5,7 @@
  },
  "3d-scanning-services-india.html": {
   "date": "2026-11-08",
-  "hash": "92e154f021292e3f1664a63c7a4eced8fc2e46e8"
+  "hash": "478a6d778c09d917c92dcd3acf9a6eac1b7de503"
  },
  "404.html": {
   "date": "2026-11-05",
@@ -17,15 +17,15 @@
  },
  "best-3d-scanning-service-coimbatore.html": {
   "date": "2026-11-08",
-  "hash": "f387efff97483734e742b557253a3bbdc4ce9c03"
+  "hash": "f5327e913532f4015310ec5e739cb804a0321875"
  },
  "blog/3d-scanning-jewellery-and-heritage-idols/index.html": {
-  "date": "2026-11-05",
-  "hash": "ae19bf5ae08642bbad87d7b7f7b8dae0ad881e5c"
+  "date": "2026-11-08",
+  "hash": "f9bbd0530d67713fa3626a220a5bdfa1e58a8025"
  },
  "blog/3d-scanning-vs-cmm-inspection/index.html": {
-  "date": "2026-11-05",
-  "hash": "9e414884eab40fdffa34801edb4af95c6d378f36"
+  "date": "2026-11-08",
+  "hash": "3e9855f56de37da411a8490070a1958b860342b0"
  },
  "blog/category/3d-printing/index.html": {
   "date": "2026-11-05",
@@ -36,8 +36,8 @@
   "hash": "7537656f3bccdabdb0ca544c9e8756465daa8577"
  },
  "blog/category/3d-scanning/index.html": {
-  "date": "2026-11-05",
-  "hash": "b6ebe56d8f5c5a49db4806e59e3896f918ffdeee"
+  "date": "2026-11-08",
+  "hash": "3a86e39466dc41f10f1a0c9c9d6de542efb27f37"
  },
  "blog/category/class-a-surfacing/index.html": {
   "date": "2026-11-05",
@@ -56,44 +56,52 @@
   "hash": "14b686b2648b757270d389804d51fbf5871aa3e2"
  },
  "blog/choosing-a-handheld-3d-scanner-india/index.html": {
-  "date": "2026-11-05",
-  "hash": "534cde19bb7fd5fad06347bcec6c3e674ee1384a"
+  "date": "2026-11-08",
+  "hash": "b16aa6b83ebd62045252303db9e995a20a251fae"
  },
  "blog/from-3d-scan-to-3d-print/index.html": {
-  "date": "2026-11-05",
-  "hash": "4e17e9d001aebc4a9489872ea352c84b928c381d"
+  "date": "2026-11-08",
+  "hash": "22928d6b33bcecd84d75705f322d219e9779410b"
+ },
+ "blog/handheld-3d-scanner-accuracy/index.html": {
+  "date": "2026-11-08",
+  "hash": "a204c3c5d55409cd1b5f968005861301ee675dc0"
  },
  "blog/how-accurate-is-3d-scanning/index.html": {
-  "date": "2026-11-05",
-  "hash": "23c5eef0f655d3e4c43ef959fa09727ced8b95d4"
+  "date": "2026-11-08",
+  "hash": "6f474c225c5725b4bb4daffe0cac9a540bab32c4"
  },
  "blog/index.html": {
-  "date": "2026-11-05",
-  "hash": "17af541fece0219e8ee95aa132cbd597d50a9c8b"
+  "date": "2026-11-08",
+  "hash": "23ecdfda315be47e2e01d12fd57e75ff31d3c737"
  },
  "blog/page/2/index.html": {
-  "date": "2026-11-05",
-  "hash": "d87ca555b0471ba95a844a4590b9258dd4ff230a"
+  "date": "2026-11-08",
+  "hash": "2fcbbc8163f381886f240beb27584f2834160957"
  },
  "blog/reverse-engineering-crusher-wear-parts/index.html": {
-  "date": "2026-11-05",
-  "hash": "0f07921a0ea7eff136a67221c6b18822fcdbc5fb"
+  "date": "2026-11-08",
+  "hash": "0f181af32c5c581c66b3b7f7e1f6aff9210367ad"
  },
  "blog/reverse-engineering-obsolete-spare-parts/index.html": {
-  "date": "2026-11-05",
-  "hash": "6d10b1137a8ac039b6fda7438db5587b7a01998f"
+  "date": "2026-11-08",
+  "hash": "366d5407d60115c939c0e4550a16c499c7c5939a"
  },
  "blog/scan-to-bim-explained/index.html": {
-  "date": "2026-11-05",
-  "hash": "b3afc92024fff5f1548e0ae55ee513f8efd8b57f"
+  "date": "2026-11-08",
+  "hash": "6906160587860ebc14aca5f37539ce44d477b8bf"
  },
  "blog/what-is-class-a-surfacing/index.html": {
-  "date": "2026-11-05",
-  "hash": "db719d82f3dc1b7e214b2307718d47d1e612b8dc"
+  "date": "2026-11-08",
+  "hash": "92999177014e7401bc6edaa45cd91819b9e28eee"
  },
  "blog/what-is-reverse-engineering/index.html": {
-  "date": "2026-11-05",
-  "hash": "95ca37c74a97848bffd36e816d953331f3dade15"
+  "date": "2026-11-08",
+  "hash": "3e083b8c21f5d8f9c80303a22f59d9408858dad2"
+ },
+ "cmm-inspection-services.html": {
+  "date": "2026-11-08",
+  "hash": "88aa9b7547561109f336c3433988494e7b131e3a"
  },
  "contact.html": {
   "date": "2026-11-05",
@@ -153,7 +161,7 @@
  },
  "reverse-engineering-services-india.html": {
   "date": "2026-11-08",
-  "hash": "ab832e229f03e1b5e1916a531aa947bbb0c7113d"
+  "hash": "cdf52107a828bee64fa2f0f35fb1cd3ffa1b2530"
  },
  "services/3d-printing.html": {
   "date": "2026-11-05",
@@ -189,7 +197,7 @@
  },
  "spare-part-no-drawing-reverse-engineering.html": {
   "date": "2026-11-08",
-  "hash": "e6110cd7993c4e730d202f4955b32e7829daa1e0"
+  "hash": "d3dd6480bd462c606d4ea3683c0f5bd5fbac474c"
  },
  "thanks.html": {
   "date": "2026-11-05",

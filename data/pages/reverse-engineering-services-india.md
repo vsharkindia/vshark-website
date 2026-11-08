@@ -60,7 +60,7 @@ The scanner maker lists these industries for this equipment: automotive, rail, a
 
 ### How accurate is the result?
 
-Accuracy depends on the scanner, the part and the set-up. The JINUOSH Vertex handheld scanners we distribute are specified by the maker at up to 0.020 mm (Vertex3D and Vertex3D Pro) and 0.025 mm (Vertex Tracker). That is a scanner specification, not a guarantee for every part. We tell you the expected accuracy for your part before we start. See the [JINUOSH Vertex scanners](/jinuosh-vertex-3d-scanner-india).
+Accuracy depends on the scanner, the part and the set-up. The JINUOSH Vertex handheld scanners we distribute are specified by the maker at up to 0.020 mm (Vertex3D and Vertex3D Pro) and 0.025 mm (Vertex Tracker). That is a scanner specification, not a guarantee for every part. We tell you the expected accuracy for your part before we start. See the [JINUOSH Vertex scanners](/jinuosh-vertex-3d-scanner-india), [handheld 3D scanner accuracy](/blog/handheld-3d-scanner-accuracy?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s30&utm_content=re-accuracy-blog) and our [CMM inspection services in Coimbatore](/cmm-inspection-services?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s30&utm_content=re-cmm) for checking the finished part.
 
 ### What decides the cost of reverse engineering?
 
