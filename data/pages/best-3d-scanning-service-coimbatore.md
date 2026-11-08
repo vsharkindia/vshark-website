@@ -15,6 +15,7 @@ cta_text: Send a photo and a short description of your part and we will quote th
 cta_href: contact.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s61&utm_content=best-3d-scanning-service-coimbatore
 wa_msg: Hi VShark, I need 3D scanning in Coimbatore for: 
 service_ld: 3D scanning service selection guide
+reviewed: 2026-11-08
 ---
 
 *Disclosure: VShark Solutions is one of the providers in this market. The checks below apply to any provider, including us.*
