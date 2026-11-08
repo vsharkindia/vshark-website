@@ -81,7 +81,7 @@ Accuracy depends on the scanner, the part and the set-up. The JINUOSH Vertex han
 
 ### Industries
 
-Scanning and reverse engineering are used in automotive, rail, aerospace, energy, mould and die, and machinery manufacturing (industries listed by the scanner maker for this equipment). Tell us your part and we will say how the job would run.
+Scanning and reverse engineering are used in automotive (see [automotive 3D scanning and reverse engineering in India](/automotive-reverse-engineering-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s31&utm_content=hub-auto)), rail, aerospace, energy, mould and die, and machinery manufacturing (industries listed by the scanner maker for this equipment). Tell us your part and we will say how the job would run.
 
 ### What decides the cost of a 3D scan?
 
