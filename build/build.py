@@ -1013,7 +1013,7 @@ def write_llms():
              '## Services']
     lines += [f'- [{x["name"]}]({SITE_URL}services/{x["slug"]}.html)' for x in D['services']]
     lines += ['', '## Industries'] + [f'- [{x["name"]}]({SITE_URL}industries/{x["slug"]}.html)' for x in D['industries']]
-    lines += ['', '## Key pages', f'- [JINUOSH Vertex 3D scanners]({SITE_URL}products/)', f'- [Vertex3D and Vertex3D Pro in India]({SITE_URL}jinuosh-vertex-3d-scanner-india.html)', f'- [Vertex Tracker in India]({SITE_URL}vertex-tracker.html)', f'- [JINUOSH Vertex vs Creaform, Shining 3D, GOM: how to compare]({SITE_URL}jinuosh-vertex-vs-creaform-shining-3d-gom.html)', f'- [Best 3D scanning service in Coimbatore: how to choose]({SITE_URL}best-3d-scanning-service-coimbatore.html)', f'- [Portfolio]({SITE_URL}portfolio/)',
+    lines += ['', '## Key pages', f'- [JINUOSH Vertex 3D scanners]({SITE_URL}products/)', f'- [Vertex3D and Vertex3D Pro in India]({SITE_URL}jinuosh-vertex-3d-scanner-india.html)', f'- [Vertex Tracker in India]({SITE_URL}vertex-tracker.html)', f'- [JINUOSH Vertex vs Creaform, Shining 3D, GOM: how to compare]({SITE_URL}jinuosh-vertex-vs-creaform-shining-3d-gom.html)', f'- [Best 3D scanning service in Coimbatore: how to choose]({SITE_URL}best-3d-scanning-service-coimbatore.html)', f'- [Reverse engineering services in India]({SITE_URL}reverse-engineering-services-india.html)', f'- [Portfolio]({SITE_URL}portfolio/)',
               f'- [About]({SITE_URL}about.html)', f'- [Contact and quotes]({SITE_URL}contact.html)', '']
     if BLOG_POSTS:
         lines[-1:] = ['', '## Blog', f'- [All articles]({SITE_URL}blog/)'] + [f'- [{q["title"]}]({SITE_URL}blog/{q["slug"]}/)' for q in reversed(BLOG_POSTS)] + ['']
@@ -1110,7 +1110,7 @@ def blog_href(u, P):
         return P + 'index.html'
     if path.startswith(('services/', 'industries/')) and not path.endswith('.html'):
         return P + path + '.html' + q
-    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore', 'vertex-tracker', 'jinuosh-vertex-3d-scanner-india', 'best-3d-scanning-service-coimbatore', 'jinuosh-vertex-vs-creaform-shining-3d-gom'):
+    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore', 'vertex-tracker', 'jinuosh-vertex-3d-scanner-india', 'best-3d-scanning-service-coimbatore', 'jinuosh-vertex-vs-creaform-shining-3d-gom', 'reverse-engineering-services-india'):
         return P + path + '.html' + q
     if path in ('products', 'portfolio', 'services', 'industries', 'blog') or path.startswith('blog/'):
         return P + path + '/' + q
@@ -1438,9 +1438,9 @@ def extra_ld(rel):
     elif rel in PRODUCT_PAGES and PRODUCT_PAGES[rel].get('service_ld'):
         pm = PRODUCT_PAGES[rel]
         trail = [('Home', SITE_URL), (pm['crumb_label'], SITE_URL + pm['crumb_href']), (META[rel][0].split(' | ')[0], url)]
-        blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'serviceType': '3D scanning', 'name': META[rel][0], 'description': META[rel][1],
+        blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'serviceType': pm.get('service_type', '3D scanning'), 'name': META[rel][0], 'description': META[rel][1],
                        'url': url, 'provider': {'@id': SITE_URL + '#business'},
-                       'areaServed': [{'@type': 'City', 'name': 'Coimbatore'}, {'@type': 'State', 'name': 'Tamil Nadu'}, {'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
+                       'areaServed': [{'@type': 'City', 'name': 'Coimbatore'}, {'@type': 'State', 'name': 'Tamil Nadu'}] + [{'@type': 'City', 'name': c} for c in pm.get('area_cities', '').split('|') if c] + [{'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
         blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
                        'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
     elif rel.startswith('blog/'):
