@@ -51,7 +51,7 @@ The steps below are the usual order. Your CAD software may use different menu na
 | Parasolid | Solid-modelling kernel format used by several CAD systems | When your CAD software reads it directly |
 | STL scan (on request) | The mesh of the scan | Records, printing, visualisation, checking against the model |
 
-We deliver STEP, IGES, Parasolid and other neutral formats that open in your CAD software. Native SolidWorks files are not part of the standard delivery. A neutral file carries the shapes and dimensions; it does not carry the original feature tree of another system, so tell us how you plan to edit the model and we will say what you will receive.
+We deliver STEP, IGES, Parasolid and other neutral formats that open in your CAD software. Native SolidWorks files are not part of the standard delivery. A neutral file carries the shapes and dimensions; it does not carry the original feature tree of another system, so tell us how you plan to edit the model and we will say what you will receive. For a plain-language guide to every file you can receive, including the STL mesh and the PDF inspection report, read [what files you get from a 3D scan](/blog/3d-scan-file-formats?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s40&utm_content=blog-file-formats).
 
 ![3D scan data of a car wheel shown on a computer screen](blog-images/scan-to-cad-in-solidworks/3d-scan-data-car-wheel-on-screen.webp)
 

@@ -41,6 +41,7 @@
 
 ## Blog
 - [All articles](https://www.vsharksolutions.com/blog/)
+- [What Files Do You Get From a 3D Scan? STL, STEP, IGES, Parasolid and the PDF Report](https://www.vsharksolutions.com/blog/3d-scan-file-formats/)
 - [Scan to CAD in SolidWorks: How a Mesh Becomes an Editable Model](https://www.vsharksolutions.com/blog/scan-to-cad-in-solidworks/)
 - [How to 3D Scan Shiny, Reflective and Dark Parts](https://www.vsharksolutions.com/blog/scanning-shiny-reflective-parts/)
 - [Handheld 3D Scanner Accuracy: What the Numbers Mean on a Real Part](https://www.vsharksolutions.com/blog/handheld-3d-scanner-accuracy/)

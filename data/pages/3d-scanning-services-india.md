@@ -62,7 +62,7 @@ If the part is small, you can also send it to us. Larger parts, heavy dies and f
 | Deviation colour map and report (PDF, normally in 2 to 3 days) | Comparing a made part against its CAD or a master |
 | Point cloud (E57, RCP, LAS) | Buildings, plant areas, large structures |
 
-Need a printed copy or fit-check of a scanned part? See [3D printing from your 3D scan](/3d-printing-from-scan-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-print). For how a scan becomes an editable model, read [scan to CAD in SolidWorks](/blog/scan-to-cad-in-solidworks?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-scan-cad).
+Need a printed copy or fit-check of a scanned part? See [3D printing from your 3D scan](/3d-printing-from-scan-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-print). For how a scan becomes an editable model, read [scan to CAD in SolidWorks](/blog/scan-to-cad-in-solidworks?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s28&utm_content=hub-scan-cad).  Not sure which file to ask for (STL, STEP, IGES, Parasolid or the PDF report)? Read [what files you get from a 3D scan](/blog/3d-scan-file-formats?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s40&utm_content=hub-files).
 
 ### Which scanning method fits?
 
