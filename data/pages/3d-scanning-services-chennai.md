@@ -50,7 +50,7 @@ Chennai inspection jobs return a PDF with a deviation colour map, dimensions and
 - [CMM arm inspection](/cmm-inspection-services?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=chennai-rel)
 - [Industrial machinery spare parts](/industrial-machinery-spare-parts-3d-scanning-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=chennai-rel)
 
-Serving other cities too: [3D scanning services in Pune](/3d-scanning-services-pune?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=chennai-sibling), [3D scanning services in Hyderabad](/3d-scanning-services-hyderabad?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=chennai-sibling), [3D scanning services in Bengaluru](/3d-scanning-services-bengaluru?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=chennai-sibling).
+Serving other cities too: [3D scanning services in Pune](/3d-scanning-services-pune?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=chennai-sibling), [3D scanning services in Hyderabad](/3d-scanning-services-hyderabad?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=chennai-sibling), [3D scanning services in Bengaluru](/3d-scanning-services-bengaluru?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=chennai-sibling), [3D scanning for the UAE](/3d-scanning-services-uae?utm_source=website&utm_medium=seo&utm_campaign=2026-12-s53&utm_content=chennai-sibling).
 
 ### Why VShark Solutions
 - Scanning, scan to CAD and CMM arm inspection from one team.

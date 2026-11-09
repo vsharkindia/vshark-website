@@ -50,7 +50,7 @@ The report lists a deviation colour map, dimensions and GD&T callouts for the fe
 - [3D scanning vs CMM inspection](/blog/3d-scanning-vs-cmm-inspection?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=bengaluru-rel)
 - [JINUOSH Vertex scanners](/jinuosh-vertex-3d-scanner-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=bengaluru-rel)
 
-Serving other cities too: [3D scanning services in Pune](/3d-scanning-services-pune?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=bengaluru-sibling), [3D scanning services in Chennai](/3d-scanning-services-chennai?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=bengaluru-sibling), [3D scanning services in Hyderabad](/3d-scanning-services-hyderabad?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=bengaluru-sibling).
+Serving other cities too: [3D scanning services in Pune](/3d-scanning-services-pune?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=bengaluru-sibling), [3D scanning services in Chennai](/3d-scanning-services-chennai?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=bengaluru-sibling), [3D scanning services in Hyderabad](/3d-scanning-services-hyderabad?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s51&utm_content=bengaluru-sibling), [3D scanning for the UAE](/3d-scanning-services-uae?utm_source=website&utm_medium=seo&utm_campaign=2026-12-s53&utm_content=bengaluru-sibling).
 
 ### Why VShark Solutions
 - Inspection-first approach: scanning and CMM arm inspection from one team.
