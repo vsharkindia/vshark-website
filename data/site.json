@@ -16,10 +16,11 @@
     "whatsapp": "919514248525",
     "address": "",
     "social": {
+      "youtube": "https://www.youtube.com/@VsharkSolutions",
       "instagram": "https://www.instagram.com/vshark.solutions/",
       "facebook": "https://www.facebook.com/vshark.solutions",
-      "linkedin": "https://www.linkedin.com/company/vshark-solutions-private-limited/",
-      "youtube": "https://www.youtube.com/@VsharkSolutions"
+      "indiamart": "https://www.indiamart.com/vsharkengineeringsolutions/",
+      "linkedin": "https://www.linkedin.com/company/vshark-solutions-private-limited/"
     },
     "offices": [
       {
@@ -520,6 +521,51 @@
       "square": "img/industries/gold-temple-pendant-beside-its-3d-printed-resin-casting-pattern-1x1.webp",
       "portrait": "img/industries/gold-temple-pendant-beside-its-3d-printed-resin-casting-pattern-4x5.webp",
       "alt": "Gold temple pendant beside its 3D printed resin casting pattern"
+    }
+  ],
+  "_videos_note": "YouTube videos embedded on the site (+ VideoObject JSON-LD). Titles are from YouTube. TODO: copy each video's description and upload date (YYYY-MM-DD) from its YouTube page; until uploadDate is filled Google cannot show the video as a rich result. 'pages' = where the video is shown.",
+  "videos": [
+    {
+      "id": "MR2sP_ABjds",
+      "title": "Handheld 3D Scanner: 3 Scan Modes Demo | Vertex3D",
+      "description": "",
+      "uploadDate": "",
+      "pages": ["products"]
+    },
+    {
+      "id": "bdFCre7VjZY",
+      "title": "Handheld 3D Scanner Vertex3D Series | Blue Laser 0.020 mm",
+      "description": "",
+      "uploadDate": "",
+      "pages": ["products"]
+    },
+    {
+      "id": "uGaiIA9qhYQ",
+      "title": "How We 3D Scan a Car Underbody for Reverse Engineering & Inspection",
+      "description": "",
+      "uploadDate": "",
+      "pages": ["3d-scanning", "reverse-engineering", "automobile"]
+    },
+    {
+      "id": "kvoMhdcHr5c",
+      "title": "Industrial 3D Scanning for Reverse Engineering and Inspection | VSHARK Solutions Pvt Ltd",
+      "description": "",
+      "uploadDate": "",
+      "pages": ["3d-scanning", "reverse-engineering"]
+    },
+    {
+      "id": "iebucFAzS-Y",
+      "title": "Metrology 3D Scanning for Reverse Engineering & Inspection | VSHARK",
+      "description": "",
+      "uploadDate": "",
+      "pages": ["digital-metrology"]
+    },
+    {
+      "id": "DSPXyzju0_0",
+      "title": "On-Site 3D Scanning of a Crusher Liner Plate | India & UAE",
+      "description": "",
+      "uploadDate": "",
+      "pages": ["3d-scanning"]
     }
   ],
   "products": [

@@ -5,7 +5,10 @@
    • The choice is remembered in localStorage; "Cookie settings" links
      (data-cookie-settings) reopen the banner to change it.
    • Events: any WhatsApp link click → Pixel "Contact" + GA4 "whatsapp_click";
+     any phone (tel:) link click → Pixel "Contact" + GA4 "call_click";
+     service / product page view (<body data-view-content>) → Pixel "ViewContent" + GA4 "view_content";
      successful enquiry (thanks page reached with ?sent=1) → Pixel "Lead" + GA4 "generate_lead".
+     In GA4, mark generate_lead, whatsapp_click and call_click as key events.
    • Ad attribution: utm_* / fbclid / gclid on the landing URL are kept for the visit
      (sessionStorage) and copied into the enquiry form's hidden fields.
    Debug: add ?analytics_debug=1 to any URL to send GA4 events to DebugView.
@@ -69,22 +72,39 @@
     document.head.appendChild(g);
   }
 
-  function track(pixelEvent, gaEvent, params) {
+  function track(pixelEvent, gaEvent, params, pixelParams) {
     if (!loaded) return;                               // no consent → nothing is sent
-    window.fbq('track', pixelEvent);
+    if (pixelParams) window.fbq('track', pixelEvent, pixelParams); else window.fbq('track', pixelEvent);
     window.gtag('event', gaEvent, params || {});
     log(pixelEvent, gaEvent, params);
   }
 
   /* ---------- events ---------- */
-  // WhatsApp: one listener catches every WhatsApp link on the page (rail, floating button, cards, CTAs…)
+  const linkLocation = (a) => a.dataset.waLocation || (a.closest('.wa-float') && 'floating_button') || (a.closest('.rail') && 'contact_rail')
+    || (a.closest('.mbar') && 'mobile_bar') || (a.closest('.header, .menu') && 'header') || (a.closest('.footer') && 'footer')
+    || (a.closest('.blinks') && 'links_page') || 'page';
+  // one listener catches every WhatsApp and phone link on the page (rail, floating button, cards, CTAs…)
   document.addEventListener('click', (e) => {
-    const a = e.target.closest && e.target.closest('a[href*="wa.me/"], a[href*="api.whatsapp.com"], a[href^="whatsapp:"]');
+    const a = e.target.closest && e.target.closest('a[href*="wa.me/"], a[href*="api.whatsapp.com"], a[href^="whatsapp:"], a[href^="tel:"]');
     if (!a) return;
-    const where = a.dataset.waLocation || (a.closest('.wa-float') && 'floating_button') || (a.closest('.rail') && 'contact_rail')
-      || (a.closest('.mbar') && 'mobile_bar') || (a.closest('.header, .menu') && 'header') || (a.closest('.footer') && 'footer') || 'page';
-    track('Contact', 'whatsapp_click', { link_url: a.href.split('?')[0], link_location: where, page_path: location.pathname });
+    const where = linkLocation(a);
+    if (a.getAttribute('href').startsWith('tel:')) {
+      track('Contact', 'call_click', { link_url: a.getAttribute('href'), link_location: where, page_path: location.pathname }, { content_name: 'phone' });
+    } else {
+      track('Contact', 'whatsapp_click', { link_url: a.href.split('?')[0], link_location: where, page_path: location.pathname }, { content_name: 'whatsapp' });
+    }
   }, true);
+
+  // ViewContent: service and product pages carry <body data-view-content="…" data-view-category="…"> (set by build/build.py)
+  let viewSent = false;
+  function fireViewContent() {
+    const name = document.body && document.body.dataset.viewContent;
+    if (viewSent || !loaded || !name) return;
+    viewSent = true;
+    const category = document.body.dataset.viewCategory || '';
+    track('ViewContent', 'view_content', { content_name: name, content_category: category, page_path: location.pathname },
+      { content_name: name, content_category: category });
+  }
 
   // Lead: only after a successful submission. The form handler redirects successes to thanks.html?sent=1
   // (on the Netlify preview the form posts to /send-enquiry.php, which Netlify answers with the thanks page).
@@ -113,7 +133,7 @@
   /* ---------- banner ---------- */
   function decide(choice) {
     store.set(KEY, choice);
-    if (choice === 'granted') { loadTracking(); fireLead(); }
+    if (choice === 'granted') { loadTracking(); fireViewContent(); fireLead(); }
     else if (loaded) {
       // withdrawn after accepting: reload so no tracker stays active on this page
       location.reload();
@@ -151,7 +171,7 @@
   function init() {
     fillForm();
     const choice = store.get(KEY);
-    if (choice === 'granted') { loadTracking(); fireLead(); }
+    if (choice === 'granted') { loadTracking(); fireViewContent(); fireLead(); }
     else if (choice !== 'denied') showBanner();
     document.addEventListener('click', (e) => {
       if (e.target.closest('[data-cookie-settings]')) { e.preventDefault(); e.stopPropagation(); showBanner(); }
