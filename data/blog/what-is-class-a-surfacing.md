@@ -6,11 +6,11 @@ title_tag: What Is Class A Surfacing? G2/G3 Surfaces Explained | VShark
 description: Class A surfacing explained: G2 and G3 continuity, zebra and curvature analysis, and when car, bike and consumer product designers need Class A surfaces.
 category: Class A Surfacing
 tags: class A surfacing, automotive surfacing, G2 continuity, zebra analysis, industrial design
-featured: blog-images/what-is-class-a-surfacing/class-a-surface-zebra-analysis-of-a-car-fender.webp
+featured: blog-images/what-is-class-a-surfacing/class-a-surface-model-of-a-car-bonnet-16x9.webp
 service: /services/class-a-surfacing
 ---
 
-![Class A surface zebra analysis of a car fender](blog-images/what-is-class-a-surfacing/class-a-surface-zebra-analysis-of-a-car-fender.webp)
+![Class A surface model of a car bonnet](blog-images/what-is-class-a-surfacing/class-a-surface-model-of-a-car-bonnet-16x9.webp)
 
 Look along the side of a well-made car and you'll see reflections flow across the panels in smooth, unbroken lines. Look at a poorly made one and the reflections wobble, kink or jump. That difference is **surface quality**, and in automotive and premium product design it is engineered deliberately through **Class A surfacing**.
 

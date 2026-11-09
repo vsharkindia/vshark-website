@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scan to CAD in SolidWorks: Mesh to Editable Model | VShark</title>
+  <meta name="description" content="How a 3D scan becomes editable CAD in SolidWorks or your CAD software: sections, surfaces, deviation check, STEP or Parasolid, and when a mesh is enough.">
+  <link rel="canonical" href="https://www.vsharksolutions.com/blog/scan-to-cad-in-solidworks/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="VShark Solutions">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:url" content="https://www.vsharksolutions.com/blog/scan-to-cad-in-solidworks/">
+  <meta property="og:title" content="Scan to CAD in SolidWorks: Mesh to Editable Model | VShark">
+  <meta property="og:description" content="How a 3D scan becomes editable CAD in SolidWorks or your CAD software: sections, surfaces, deviation check, STEP or Parasolid, and when a mesh is enough.">
+  <meta property="og:image" content="https://www.vsharksolutions.com/blog-images/scan-to-cad-in-solidworks/reverse-engineered-cad-model-of-a-motorcycle-engine-crankcase.webp">
+  <meta property="og:image:width" content="1069">
+  <meta property="og:image:height" content="730">
+  <meta property="og:image:alt" content="Reverse-engineered CAD model of a motorcycle engine crankcase">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Scan to CAD in SolidWorks: Mesh to Editable Model | VShark">
+  <meta name="twitter:description" content="How a 3D scan becomes editable CAD in SolidWorks or your CAD software: sections, surfaces, deviation check, STEP or Parasolid, and when a mesh is enough.">
+  <meta name="twitter:image" content="https://www.vsharksolutions.com/blog-images/scan-to-cad-in-solidworks/reverse-engineered-cad-model-of-a-motorcycle-engine-crankcase.webp">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Organization", "LocalBusiness"], "@id": "https://www.vsharksolutions.com/#business", "name": "VShark Solutions Private Limited", "legalName": "VShark Solutions Private Limited", "alternateName": "VShark Solutions", "url": "https://www.vsharksolutions.com/", "logo": "https://www.vsharksolutions.com/img/vshark-logo.png", "image": "https://www.vsharksolutions.com/img/vshark-logo.png", "description": "3D scanning, reverse engineering, Scan to BIM, Class A surfacing and 3D inspection services in India and the UAE. India distributor of JINUOSH Vertex scanners.", "email": "info@vsharksolutions.com", "telephone": "+919514248525", "address": [{"@type": "PostalAddress", "addressLocality": "Coimbatore", "addressCountry": "IN", "streetAddress": "Rajiv Gandhi Nagar, Neelambur", "addressRegion": "Tamil Nadu", "postalCode": "641062"}, {"@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE"}], "contactPoint": [{"@type": "ContactPoint", "telephone": "+919514248525", "email": "info@vsharksolutions.com", "contactType": "sales", "areaServed": "IN"}, {"@type": "ContactPoint", "telephone": "+971522486238", "email": "info@vsharksolutions.com", "contactType": "sales", "areaServed": "AE"}], "areaServed": [{"@type": "City", "name": "Coimbatore"}, {"@type": "AdministrativeArea", "name": "Tamil Nadu"}, {"@type": "Country", "name": "India"}, {"@type": "Country", "name": "United Arab Emirates"}], "foundingDate": "2019", "sameAs": ["https://www.youtube.com/@VsharkSolutions", "https://www.instagram.com/vshark.solutions/", "https://www.facebook.com/vshark.solutions", "https://www.linkedin.com/company/vshark-solutions-private-limited/", "https://www.indiamart.com/vsharkengineeringsolutions/"]}</script>
+  <!-- @ld --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Scan to CAD in SolidWorks: How a Mesh Becomes an Editable Model", "description": "How a 3D scan becomes editable CAD in SolidWorks or your CAD software: sections, surfaces, deviation check, STEP or Parasolid, and when a mesh is enough.", "image": "https://www.vsharksolutions.com/blog-images/scan-to-cad-in-solidworks/reverse-engineered-cad-model-of-a-motorcycle-engine-crankcase.webp", "author": {"@type": "Organization", "name": "VShark Solutions"}, "publisher": {"@id": "https://www.vsharksolutions.com/#business"}, "datePublished": "2026-11-08", "dateModified": "2026-11-08", "mainEntityOfPage": "https://www.vsharksolutions.com/blog/scan-to-cad-in-solidworks/", "inLanguage": "en"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.vsharksolutions.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.vsharksolutions.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Reverse Engineering", "item": "https://www.vsharksolutions.com/blog/category/reverse-engineering/"}, {"@type": "ListItem", "position": 4, "name": "Scan to CAD in SolidWorks: How a Mesh Becomes an Editable Model", "item": "https://www.vsharksolutions.com/blog/scan-to-cad-in-solidworks/"}]}</script><!-- /@ld -->
+  <meta name="theme-color" content="#f5f6f8">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32.png">
+  <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../fonts/fonts.css?v=122acbc3">
+  <link rel="stylesheet" href="../../css/style.css?v=b2efb5a9">
+  <link rel="stylesheet" href="../../css/pages.css?v=54bc403e">
+  <script src="../../js/consent.js?v=a8167fa0" defer></script>
+</head>
+<body class="inner">
+  <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__text"></span></div></div>
+
+  <!-- @header -->
+  <header class="header" id="header">
+    <a href="../../index.html" class="header__logo" aria-label="VShark Solutions home">
+      <img width="2186" height="464" src="../../img/vshark-logo.png" alt="VShark Solutions">
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../../products/index.html" class="nav__link">Products</a>
+      <div class="nav__item nav__item--drop"><a href="../../services/index.html" class="nav__link" aria-haspopup="true">Services<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav__drop"><div class="nav__drop-inner"><a href="../../services/3d-scanning.html"><i class="mono">01</i>3D Scanning</a><a href="../../services/reverse-engineering.html"><i class="mono">02</i>Reverse Engineering</a><a href="../../services/scan-to-bim.html"><i class="mono">03</i>Scan to BIM</a><a href="../../services/class-a-surfacing.html"><i class="mono">04</i>Class A Surfacing</a><a href="../../services/digital-metrology.html"><i class="mono">05</i>Digital Metrology</a><a href="../../services/3d-printing.html"><i class="mono">06</i>3D Printing</a><a href="../../services/product-rendering.html"><i class="mono">07</i>Product Rendering</a><a class="nav__drop-all" href="../../services/index.html">All services <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></div>
+      <div class="nav__item nav__item--drop"><a href="../../industries/index.html" class="nav__link" aria-haspopup="true">Industries<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav__drop"><div class="nav__drop-inner"><a href="../../industries/aerospace.html"><i class="mono">01</i>Aerospace</a><a href="../../industries/automobile.html"><i class="mono">02</i>Automobile</a><a href="../../industries/construction.html"><i class="mono">03</i>Construction</a><a href="../../industries/healthcare.html"><i class="mono">04</i>Healthcare</a><a href="../../industries/education.html"><i class="mono">05</i>Education</a><a href="../../industries/jewellery.html"><i class="mono">06</i>Jewellery</a><a class="nav__drop-all" href="../../industries/index.html">All industries <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></div>
+      <a href="../../portfolio/index.html" class="nav__link">Portfolio</a>
+      <a href="../../blog/" class="nav__link is-current">Blog</a>
+      <a href="../../about.html" class="nav__link">About</a>
+      <a href="../../contact.html" class="nav__link">Contact</a>
+    </nav>
+    <div class="header__actions">
+      <a href="https://wa.me/919514248525?text=Hi%20VShark%2C%20I%20need%203D%20scanning%20%2F%20reverse%20engineering%20for%3A%20" class="header__wa" target="_blank" rel="noopener" aria-label="Chat with VShark on WhatsApp" data-wa-location="header"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg></a>
+      <a href="../../contact.html" class="btn btn--sm btn--accent header__cta magnetic"><span>Enquire Now</span></a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu__nav">
+      <a href="../../products/index.html"><i class="mono">01</i>Products</a>
+      <a href="../../services/index.html"><i class="mono">02</i>Services</a>
+      <a href="../../industries/index.html"><i class="mono">03</i>Industries</a>
+      <a href="../../portfolio/index.html"><i class="mono">04</i>Portfolio</a>
+      <a href="../../blog/"><i class="mono">05</i>Blog</a>
+      <a href="../../about.html"><i class="mono">06</i>About</a>
+      <a href="../../contact.html"><i class="mono">07</i>Contact</a>
+    </nav>
+    <div class="menu__cta">
+      <a class="btn btn--accent" href="../../contact.html"><span>Get a quote</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn--ghost" href="https://wa.me/919514248525?text=Hi%20VShark%2C%20I%20need%203D%20scanning%20%2F%20reverse%20engineering%20for%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg><span>WhatsApp</span></a>
+    </div>
+    <div class="menu__foot mono">
+      <a href="mailto:info@vsharksolutions.com">info@vsharksolutions.com</a>
+      <a href="tel:+919514248525">+91 95142 48525 (India)</a><a href="tel:+971522486238">+971 52 248 6238 (UAE)</a>
+    </div>
+  </div>
+  <!-- /@header -->
+
+  <main id="top">
+    <section class="page-hero page-hero--media">
+      <div class="page-hero__text">
+        <div data-in><nav class="crumbs mono" aria-label="Breadcrumb"><a href="../../index.html">Home</a> <i>/</i> <a href="../../blog/">Blog</a> <i>/</i> <a href="../../blog/category/reverse-engineering/">Reverse Engineering</a> <i>/</i> <span>Scan to CAD in SolidWorks: How a Mesh Becomes an Editable Model</span></nav></div>
+        <span class="tag mono" data-in>Reverse Engineering · 8 Nov 2026 · 7 min read</span>
+        <h1 class="page-hero__title" data-in>Scan to CAD in SolidWorks: How a Mesh Becomes an Editable Model</h1>
+        <p class="page-hero__lead" data-in>How a 3D scan becomes editable CAD in SolidWorks or your CAD software: sections, surfaces, deviation check, STEP or Parasolid, and when a mesh is enough.</p>
+      </div>
+      <figure class="page-hero__media" data-in><img width="1069" height="730" src="../../blog-images/scan-to-cad-in-solidworks/reverse-engineered-cad-model-of-a-motorcycle-engine-crankcase.webp" alt="Reverse-engineered CAD model of a motorcycle engine crankcase" loading="eager"><i class="page-hero__slash" aria-hidden="true"></i></figure>
+    </section>
+    <article class="section blk">
+      <div class="prose prose--post">
+<p><em>Last reviewed: November 2026</em></p>
+<p>This article goes deep on the modelling step. For the full reverse engineering overview, read <a href="../../blog/what-is-reverse-engineering/?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=blog-whatis-re">what is reverse engineering</a>.</p>
+<h2 id="what-is-the-difference-between-a-scan-and-a-cad-model">What is the difference between a scan and a CAD model?</h2>
+<p>A scan is a mesh: a very large number of small triangles that copy the surface of the part, including wear, casting texture and damage. You can measure it and compare it, but you cannot easily change a hole diameter, add a fillet or send it to a CNC programmer. A CAD model is built from real faces, sketches and features, so you can edit a dimension and the part updates. Scan to CAD is the work of rebuilding the second from the first.</p>
+<h2 id="how-does-a-scan-become-an-editable-model-in-solidworks">How does a scan become an editable model in SolidWorks?</h2>
+<p>The steps below are the usual order. Your CAD software may use different menu names, and the SolidWorks terms are used here only as a common example.</p>
+<p><strong>1. Check and clean the mesh.</strong> Before any modelling, the scan is checked for holes, noise and double surfaces, and cleaned where needed. A poor mesh gives a poor model, so this step comes first. The scanner exports a mesh such as STL (the Vertex scanners export STL, PLY, ASC and TXT).</p>
+<p><strong>2. Set up the coordinate system.</strong> The mesh is aligned to a sensible origin and axes, usually from the main flat faces, the axes of cylinders or the way the part sits in its assembly. This decides how every later sketch and feature lines up.</p>
+<p><strong>3. Choose the modelling approach.</strong> Different areas of one part can need different treatment:</p>
+<ul><li><strong>Prismatic and machined areas:</strong> planes, cylinders and cones are fitted to the mesh and the model follows design intent, with clean dimensions instead of the scatter of the scan.</li><li><strong>Freeform areas:</strong> smooth surfaces are fitted closely to the scan, &quot;as-is&quot;, for body panels, ergonomic shapes and blades.</li><li><strong>Hybrid:</strong> machined features to design intent and freeform areas surfaced to the scan. Most real parts are hybrid.</li></ul>
+<p><strong>4. Fit sections and primitives to the mesh.</strong> Section sketches are cut through the mesh and used as the basis of the features. Planes, cylinders and other simple shapes are fitted to the matching areas of the scan. In SolidWorks terms, these become the sketches that drive extrudes, revolves and lofts.</p>
+<p><strong>5. Build the features and surfaces.</strong> The features are built in order, much as a designer would model the part from scratch: base shape, holes, ribs, fillets. Freeform areas are surfaced and trimmed together with the solid features. A parametric rebuild keeps the dimensions editable, so you can change a hole size or a wall later. How far a job goes toward fully parametric depends on the part and what you need.</p>
+<p><strong>6. Decide what to correct.</strong> A scan records wear and damage. The engineer decides what is the real design and what is wear, then models the intended shape. This is why a worn spare can be rebuilt as a clean part, and why you tell us the purpose of the part before we start.</p>
+<figure class="post-fig"><img width="1456" height="761" src="../../blog-images/scan-to-cad-in-solidworks/scan-to-cad-overlay-of-a-motorcycle-tubular-frame.webp" alt="Scan to CAD overlay of a motorcycle tubular frame" loading="lazy"><figcaption>Scan to CAD overlay of a motorcycle tubular frame</figcaption></figure>
+<p><strong>7. Run the deviation check.</strong> The finished model is overlaid on the scan and the difference is shown as a colour map with statistics. This shows where the model follows the scan, and where a deliberate correction has moved it away. Areas outside what you expect are fixed and checked again. Where calipers, gauges or CMM values exist, known features are also checked against them.</p>
+<p><strong>8. Deliver the files.</strong> Neutral formats (see the next section), plus the STL scan on request.</p>
+<h2 id="which-file-formats-do-you-get">Which file formats do you get?</h2>
+<div class="post-table"><table><thead><tr><th>Format</th><th>What it is</th><th>When to use it</th></tr></thead><tbody><tr><td>STEP</td><td>Neutral solid and surface model</td><td>The usual choice to open the model in SolidWorks and most other CAD software</td></tr><tr><td>IGES</td><td>Older neutral format, mainly surfaces and curves</td><td>When the receiving software or vendor asks for it</td></tr><tr><td>Parasolid</td><td>Solid-modelling kernel format used by several CAD systems</td><td>When your CAD software reads it directly</td></tr><tr><td>STL scan (on request)</td><td>The mesh of the scan</td><td>Records, printing, visualisation, checking against the model</td></tr></tbody></table></div>
+<p>We deliver STEP, IGES, Parasolid and other neutral formats that open in your CAD software. Native SolidWorks files are not part of the standard delivery. A neutral file carries the shapes and dimensions; it does not carry the original feature tree of another system, so tell us how you plan to edit the model and we will say what you will receive. For a plain-language guide to every file you can receive, including the STL mesh and the PDF inspection report, read <a href="../../blog/3d-scan-file-formats/?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s40&utm_content=blog-file-formats">what files you get from a 3D scan</a>.</p>
+<figure class="post-fig"><img width="1200" height="1600" src="../../blog-images/scan-to-cad-in-solidworks/3d-scan-data-car-wheel-on-screen.webp" alt="3D scan data of a car wheel shown on a computer screen" loading="lazy"><figcaption>3D scan data of a car wheel shown on a computer screen</figcaption></figure>
+<h2 id="scan-to-cad-or-mesh-only-which-do-you-need">Scan to CAD or mesh only: which do you need?</h2>
+<div class="post-table"><table><thead><tr><th>What you want to do</th><th>Mesh only</th><th>Scan to CAD</th></tr></thead><tbody><tr><td>Inspect a part against its nominal CAD</td><td>Yes</td><td>Not needed, but useful if no nominal CAD exists</td></tr><tr><td>Make a visual record or a render</td><td>Yes</td><td>No</td></tr><tr><td>3D print a copy of the part</td><td>Often yes</td><td>Only if you want to change it</td></tr><tr><td>Change dimensions, add features, re-manufacture</td><td>No</td><td>Yes</td></tr><tr><td>Machine, mould or cast the part from a model</td><td>Rarely</td><td>Yes</td></tr><tr><td>Put the part into an assembly or a drawing</td><td>No</td><td>Yes</td></tr><tr><td>Rebuild a worn spare that has no drawing</td><td>No</td><td>Yes</td></tr></tbody></table></div>
+<p>A mesh is faster to produce. A CAD model takes more engineering time but is the only version you can edit. If you are unsure, send the part and tell us what you will do with the file. We will say whether a mesh is enough. Quote on request.</p>
+<h2 id="how-do-we-work-and-what-do-we-need-from-you">How do we work, and what do we need from you?</h2>
+<p>We scan the part with a handheld JINUOSH Vertex scanner, rebuild it in CAD, check the deviation and hand over the files. For the scan itself, see <a href="../../blog/handheld-3d-scanner-accuracy/?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=blog-handheld-accuracy">handheld 3D scanner accuracy</a> and <a href="../../blog/scanning-shiny-reflective-parts/?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=blog-shiny">how to scan shiny and dark parts</a>. To get a useful model, tell us:</p>
+<ul><li>what the model will be used for (manufacture, redesign, assembly, drawing)</li><li>which dimensions or fits matter most</li><li>which CAD software and file format you use</li><li>whether wear or damage should be kept or corrected</li></ul>
+<figure class="post-fig"><img width="600" height="1400" src="../../blog-images/scan-to-cad-in-solidworks/jinuosh-vertex3d-handheld-blue-laser-3d-scanner-front.webp" alt="JINUOSH Vertex3D handheld blue laser 3D scanner, front view" loading="lazy"><figcaption>JINUOSH Vertex3D handheld blue laser 3D scanner, front view</figcaption></figure>
+<h2 id="where-do-we-do-scan-to-cad">Where do we do scan to CAD?</h2>
+<p>VShark Solutions works from Coimbatore, India, and serves clients in the UAE as a service area. We cover <a href="../../3d-scanning-services-india.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=hub-scanning">3D scanning services in India</a>, <a href="../../reverse-engineering-services-india.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=hub-re">reverse engineering services in India</a> and <a href="../../spare-part-no-drawing-reverse-engineering.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=spare-part">how we rebuild a spare part that has no drawing</a>. By industry, see <a href="../../automotive-reverse-engineering-india.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=automotive">automotive reverse engineering</a>, <a href="../../mould-die-3d-scanning-india.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=mould-die">mould and die scanning</a>, <a href="../../casting-foundry-3d-scanning-india.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=casting">casting and foundry scanning</a> and <a href="../../industrial-machinery-spare-parts-3d-scanning-india.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=machinery">industrial machinery spare parts</a>. To check a finished part against its CAD, see our <a href="../../cmm-inspection-services.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=cmm-page">CMM inspection services in Coimbatore</a>. If you only need a print, read <a href="../../blog/from-3d-scan-to-3d-print/?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=blog-print">from 3D scan to 3D print</a>. Scanner enquiries are on the <a href="../../jinuosh-vertex-3d-scanner-india.html?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=vertex-page">JINUOSH Vertex 3D scanner page</a>. VShark is a distributor of JINUOSH.</p>
+      </div>
+      <p class="post-byline mono">By VShark Engineering Team · Published 8 Nov 2026</p>
+      <div class="post-share"><span class="mono">Share</span><a class="chip" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.vsharksolutions.com%2Fblog%2Fscan-to-cad-in-solidworks%2F" target="_blank" rel="noopener">LinkedIn</a><a class="chip" href="https://wa.me/?text=Scan%20to%20CAD%20in%20SolidWorks%3A%20How%20a%20Mesh%20Becomes%20an%20Editable%20Model%20https%3A%2F%2Fwww.vsharksolutions.com%2Fblog%2Fscan-to-cad-in-solidworks%2F" target="_blank" rel="noopener">WhatsApp</a><a class="chip" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.vsharksolutions.com%2Fblog%2Fscan-to-cad-in-solidworks%2F" target="_blank" rel="noopener">Facebook</a><a class="chip" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.vsharksolutions.com%2Fblog%2Fscan-to-cad-in-solidworks%2F&text=Scan%20to%20CAD%20in%20SolidWorks%3A%20How%20a%20Mesh%20Becomes%20an%20Editable%20Model" target="_blank" rel="noopener">X</a></div>
+    </article>
+    <section class="section blk faq" id="faq">
+      <div class="sec-head"><div><span class="tag mono">FAQ</span><h2 class="h2" data-reveal>Common <em>questions.</em></h2></div></div>
+      <div class="faq__list">
+        <details class="faq__item" data-reveal>
+          <summary><span>What is scan to CAD?</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>It is the process of turning a 3D scan, which is a mesh of triangles, into an editable CAD model. The mesh is used as a reference, sections and surfaces are fitted to it, and the part is rebuilt as real faces and features that you can change.</p></div>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span>Can you convert an STL file to a SolidWorks model?</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>Yes, but it is not a one-click conversion. An STL is a mesh, so the part is rebuilt in CAD using the mesh as a reference. We deliver the result as STEP, IGES or Parasolid, which open in SolidWorks and other CAD software.</p></div>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span>Which file formats do you deliver?</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>STEP, IGES, Parasolid and other neutral formats that open in your CAD software. The STL scan is available on request. Native SolidWorks files are not part of the standard delivery.</p></div>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span>Will the CAD model match the scan exactly?</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>Not point for point, and it should not. A model is made of clean faces and the scan contains wear and noise. We overlay the model on the scan and show the deviation as a colour map with statistics, so you can see where it matches and where a correction was made.</p></div>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span>Is the model fully parametric?</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>It depends on the part and what you need. Machined features are rebuilt to design intent so that dimensions can be edited, and freeform areas are surfaced to follow the scan. Tell us how you plan to edit the model.</p></div>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span>When is a mesh enough, so I do not need CAD?</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>For inspection against a nominal CAD, a visual record, a render or often a 3D print, the mesh is enough. You need CAD when you want to edit the part, machine, mould or cast it, or place it in an assembly.</p></div>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span>Can you rebuild a part that has no drawing?</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>Yes. That is a common scan to CAD job. We scan the worn part, rebuild it, and correct the wear where you ask us to. See our page on [rebuilding a spare part with no drawing](/spare-part-no-drawing-reverse-engineering?utm_source=website&amp;utm_medium=seo&amp;utm_campaign=2026-11-s38&amp;utm_content=faq-spare-part).</p></div>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span>Do you offer scan to CAD in the UAE?</span><i aria-hidden="true"></i></summary>
+          <div class="faq__a"><p>Yes, as a service area. VShark Solutions is based in Coimbatore, India. Send a photo of the part and what you need through the [contact page](/contact?service=reverse-engineering&amp;utm_source=website&amp;utm_medium=seo&amp;utm_campaign=2026-11-s38&amp;utm_content=cta) and we will say what is achievable. Quote on request. ### Contact Have a part to rebuild? Send a photo or the scan and say which CAD software you use. [Get a quote](/contact?service=reverse-engineering&amp;utm_source=website&amp;utm_medium=seo&amp;utm_campaign=2026-11-s38&amp;utm_content=cta-end). Email: info@vsharksolutions.com.</p></div>
+        </details>
+      </div>
+      <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is scan to CAD?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It is the process of turning a 3D scan, which is a mesh of triangles, into an editable CAD model. The mesh is used as a reference, sections and surfaces are fitted to it, and the part is rebuilt as real faces and features that you can change."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can you convert an STL file to a SolidWorks model?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, but it is not a one-click conversion. An STL is a mesh, so the part is rebuilt in CAD using the mesh as a reference. We deliver the result as STEP, IGES or Parasolid, which open in SolidWorks and other CAD software."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Which file formats do you deliver?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "STEP, IGES, Parasolid and other neutral formats that open in your CAD software. The STL scan is available on request. Native SolidWorks files are not part of the standard delivery."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Will the CAD model match the scan exactly?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not point for point, and it should not. A model is made of clean faces and the scan contains wear and noise. We overlay the model on the scan and show the deviation as a colour map with statistics, so you can see where it matches and where a correction was made."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is the model fully parametric?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It depends on the part and what you need. Machined features are rebuilt to design intent so that dimensions can be edited, and freeform areas are surfaced to follow the scan. Tell us how you plan to edit the model."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "When is a mesh enough, so I do not need CAD?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "For inspection against a nominal CAD, a visual record, a render or often a 3D print, the mesh is enough. You need CAD when you want to edit the part, machine, mould or cast it, or place it in an assembly."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can you rebuild a part that has no drawing?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. That is a common scan to CAD job. We scan the worn part, rebuild it, and correct the wear where you ask us to. See our page on [rebuilding a spare part with no drawing](/spare-part-no-drawing-reverse-engineering?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=faq-spare-part)."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do you offer scan to CAD in the UAE?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, as a service area. VShark Solutions is based in Coimbatore, India. Send a photo of the part and what you need through the [contact page](/contact?service=reverse-engineering&utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=cta) and we will say what is achievable. Quote on request. ### Contact Have a part to rebuild? Send a photo or the scan and say which CAD software you use. [Get a quote](/contact?service=reverse-engineering&utm_source=website&utm_medium=seo&utm_campaign=2026-11-s38&utm_content=cta-end). Email: info@vsharksolutions.com."
+   }
+  }
+ ]
+}
+      </script>
+    </section>
+    <section class="cta-band">
+      <div class="cta-band__inner">
+        <h2 class="h2">Have a part to scan, model or inspect?</h2>
+        <p>Send photos or drawings for a free quote.</p>
+        <div class="cta-band__actions">
+          <a class="btn btn--light magnetic" href="../../contact.html?service=reverse-engineering"><span>Get a quote</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn--outline-light magnetic" href="https://wa.me/919514248525?text=Hi%20VShark%2C%20I%20need%203D%20scanning%20%2F%20reverse%20engineering%20for%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg><span>WhatsApp us</span></a>
+        </div>
+        <p class="mono">India +91 95142 48525 · UAE +971 52 248 6238</p>
+      </div>
+    </section>
+    <section class="section blk blk--alt">
+      <div class="sec-head"><div><span class="tag mono">Keep reading</span><h2 class="h2" data-reveal>Related <em>articles.</em></h2></div></div>
+      <div class="bgrid">
+        <article class="bcard" data-reveal>
+          <a class="bcard__media" href="../../blog/reverse-engineering-crusher-wear-parts/" tabindex="-1" aria-hidden="true"><img width="1457" height="1339" src="../../blog-images/reverse-engineering-crusher-wear-parts/scan-to-cad-overlay-of-a-crusher-main-throat.webp" alt="" loading="lazy"></a>
+          <div class="bcard__body">
+            <span class="mono bcard__meta">Reverse Engineering · 3 min read</span>
+            <h3 class="bcard__title"><a href="../../blog/reverse-engineering-crusher-wear-parts/">Reverse Engineering for Mining and Crushing: Liners, Throats and Wear Parts</a></h3>
+            <p>How 3D scanning and reverse engineering help mines, quarries and cement plants recreate crusher liners, throats and wear parts, and track wear, in India and the Gulf.</p>
+            <a class="bcard__more mono" href="../../blog/reverse-engineering-crusher-wear-parts/">Read article &rarr;</a>
+          </div>
+        </article>
+        <article class="bcard" data-reveal>
+          <a class="bcard__media" href="../../blog/reverse-engineering-obsolete-spare-parts/" tabindex="-1" aria-hidden="true"><img width="1344" height="815" src="../../blog-images/reverse-engineering-obsolete-spare-parts/3d-scan-of-a-centrifugal-pump-volute-casing.webp" alt="" loading="lazy"></a>
+          <div class="bcard__body">
+            <span class="mono bcard__meta">Reverse Engineering · 4 min read</span>
+            <h3 class="bcard__title"><a href="../../blog/reverse-engineering-obsolete-spare-parts/">How to Recreate Obsolete Spare Parts When There Are No Drawings</a></h3>
+            <p>No drawings, no supplier? Learn how 3D scanning and reverse engineering recreate obsolete pump, impeller and machine parts as manufacturable CAD, in India and the UAE.</p>
+            <a class="bcard__more mono" href="../../blog/reverse-engineering-obsolete-spare-parts/">Read article &rarr;</a>
+          </div>
+        </article>
+        <article class="bcard" data-reveal>
+          <a class="bcard__media" href="../../blog/what-is-reverse-engineering/" tabindex="-1" aria-hidden="true"><img width="1600" height="900" src="../../blog-images/what-is-reverse-engineering/3d-scan-to-cad-reverse-engineering-of-a-motorcycle-tubular-frame.webp" alt="" loading="lazy"></a>
+          <div class="bcard__body">
+            <span class="mono bcard__meta">Reverse Engineering · 4 min read</span>
+            <h3 class="bcard__title"><a href="../../blog/what-is-reverse-engineering/">What Is Reverse Engineering? From a Worn Part to a Manufacturable CAD Model</a></h3>
+            <p>How reverse engineering turns a physical part into editable CAD: 3D scanning, modelling approaches, deliverables and costs, for manufacturers in India and the UAE.</p>
+            <a class="bcard__more mono" href="../../blog/what-is-reverse-engineering/">Read article &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- @footer -->
+  <footer class="footer" id="contact">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img width="2186" height="464" class="footer__logo" src="../../img/vshark-logo.png" alt="VShark Solutions">
+        <p class="muted">Leading the way in advanced technology solutions — state-of-the-art 3D scanning and 3D design services for businesses and individuals.</p>
+      </div>
+      <div class="footer__col">
+        <span class="mono muted">Services</span>
+        <a href="../../services/3d-scanning.html">3D Scanning</a><a href="../../services/reverse-engineering.html">Reverse Engineering</a><a href="../../services/scan-to-bim.html">Scan to BIM</a><a href="../../services/class-a-surfacing.html">Class A Surfacing</a><a href="../../services/digital-metrology.html">Digital Metrology</a><a href="../../services/3d-printing.html">3D Printing</a><a href="../../services/product-rendering.html">Product Rendering</a>
+      </div>
+      <div class="footer__contact">
+        <span class="mono muted">Contact</span>
+        <a href="mailto:info@vsharksolutions.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>info@vsharksolutions.com</a>
+        <a href="tel:+919514248525"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+91 95142 48525 <small class="mono">India</small></a><a href="tel:+971522486238"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+971 52 248 6238 <small class="mono">UAE</small></a>
+        <span class="footer__addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><span><small class="mono">India</small> Rajiv Gandhi Nagar, Neelambur, Coimbatore, Tamil Nadu 641062</span></span><span class="footer__addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><span><small class="mono">UAE</small> Dubai, UAE</span></span>
+        <div class="footer__social">
+          <a href="https://wa.me/919514248525?text=Hi%20VShark%2C%20I%20need%203D%20scanning%20%2F%20reverse%20engineering%20for%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg></a>
+          <a href="https://www.youtube.com/@VsharkSolutions" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m9.8 15.5 5.7-3.5-5.7-3.5z"/></svg></a>
+          <a href="https://www.instagram.com/vshark.solutions/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8a4 4 0 0 1 3.4 3.4z"/><path d="M17.5 6.5h.01"/></svg></a>
+          <a href="https://www.facebook.com/vshark.solutions" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.indiamart.com/vsharkengineeringsolutions/" target="_blank" rel="noopener" aria-label="IndiaMART"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 11.5V20h14v-8.5M10 20v-5h4v5"/></svg></a>
+          <a href="https://www.linkedin.com/company/vshark-solutions-private-limited/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__big" aria-hidden="true">VSHARK</div>
+    <div class="footer__bottom mono">
+      <span>© <span id="year">2026</span> VShark Solutions Private Limited</span>
+      <span><a href="../../about.html">About</a> · <a href="../../blog/">Blog</a> · <a href="../../links.html">Links</a> · <a href="../../privacy-policy.html">Privacy Policy</a> · <a href="../../privacy-policy.html#cookies-and-analytics" data-cookie-settings>Cookie settings</a></span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- CONTACT RAIL — fixed on the right edge -->
+  <aside class="rail" aria-label="Contact VShark">
+    <div class="rail__item rail__item--phone">
+      <button type="button" class="rail__btn" aria-label="Call us" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></button>
+      <div class="rail__flyout"><a href="tel:+919514248525"><small class="mono">India</small>+91 95142 48525</a><a href="tel:+971522486238"><small class="mono">UAE</small>+971 52 248 6238</a></div>
+    </div>
+    <a class="rail__item rail__btn" href="https://wa.me/919514248525?text=Hi%20VShark%2C%20I%20need%203D%20scanning%20%2F%20reverse%20engineering%20for%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg><span class="rail__label">WhatsApp</span></a>
+    <a class="rail__item rail__btn" href="mailto:info@vsharksolutions.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg><span class="rail__label">info@vsharksolutions.com</span></a>
+    <a class="rail__item rail__btn" href="https://www.youtube.com/@VsharkSolutions" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m9.8 15.5 5.7-3.5-5.7-3.5z"/></svg><span class="rail__label">YouTube</span></a>
+    <a class="rail__item rail__btn" href="https://www.instagram.com/vshark.solutions/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8a4 4 0 0 1 3.4 3.4z"/><path d="M17.5 6.5h.01"/></svg><span class="rail__label">Instagram</span></a>
+    <a class="rail__item rail__btn" href="https://www.facebook.com/vshark.solutions" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg><span class="rail__label">Facebook</span></a>
+    <a class="rail__item rail__btn" href="https://www.linkedin.com/company/vshark-solutions-private-limited/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="rail__label">LinkedIn</span></a>
+  </aside>
+
+  <!-- FLOATING WHATSAPP BUTTON — every page, bottom-right -->
+  <a class="wa-float" href="https://wa.me/919514248525?text=Hi%20VShark%2C%20I%20need%203D%20scanning%20%2F%20reverse%20engineering%20for%3A%20" target="_blank" rel="noopener" aria-label="Chat with VShark on WhatsApp" data-wa-location="floating_button"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg></a>
+
+  <!-- MOBILE ACTION BAR — phones only; replaces the rail -->
+  <nav class="mbar" aria-label="Quick contact">
+    <div class="mbar__call">
+      <button type="button" class="mbar__btn" aria-expanded="false" aria-controls="mbarPhones"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>Call</span></button>
+      <div class="mbar__sheet" id="mbarPhones"><a href="tel:+919514248525"><small class="mono">India</small>+91 95142 48525</a><a href="tel:+971522486238"><small class="mono">UAE</small>+971 52 248 6238</a></div>
+    </div>
+    <a class="mbar__btn" href="https://wa.me/919514248525?text=Hi%20VShark%2C%20I%20need%203D%20scanning%20%2F%20reverse%20engineering%20for%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" class="fill" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.6-.3z"/></svg><span>WhatsApp</span></a>
+    <a class="mbar__btn mbar__btn--accent" href="../../contact.html"><span>Get a quote</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </nav>
+  <!-- /@footer -->
+
+  <script src="../../vendor/gsap.min.js?v=47da594c"></script>
+  <script src="../../vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
+  <script src="../../vendor/lenis.min.js?v=79e3a064"></script>
+  <script src="../../js/main.js?v=5bc7d010"></script>
+</body>
+</html>

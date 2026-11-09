@@ -6,13 +6,13 @@ title_tag: Handheld 3D Scanners in India: Vertex Models Compared
 description: Compare JINUOSH Vertex3D, Vertex3D Pro and Vertex Tracker 3D scanners: accuracy, speed, scan area and best uses. Buying guide from the India distributor.
 category: 3D Scanners
 tags: 3D scanner India, handheld 3D scanner, Vertex3D, blue laser scanner, metrology scanner
-featured: blog-images/choosing-a-handheld-3d-scanner-india/handheld-blue-laser-3d-scanner-in-use.webp
+featured: blog-images/choosing-a-handheld-3d-scanner-india/jinuosh-vertex3d-handheld-3d-scanner-in-showroom-render.webp
 service: /products/
 ---
 
 | Note for developers | Also show the three product images from `/img/products/` inline in the comparison section |
 
-![Handheld blue laser 3D scanner in use](blog-images/choosing-a-handheld-3d-scanner-india/handheld-blue-laser-3d-scanner-in-use.webp)
+![JINUOSH Vertex3D handheld blue laser 3D scanner](blog-images/choosing-a-handheld-3d-scanner-india/jinuosh-vertex3d-handheld-3d-scanner-in-showroom-render.webp)
 
 Buying a 3D scanner is a significant investment, and spec sheets can be confusing. As the **Distributor of JINUOSH Vertex 3D scanners in India**, we use these scanners every day in our own service work. Here's a practical guide to choosing the right model.
 
@@ -55,7 +55,7 @@ The Tracker uses an optical tracking system, so the scanner's position is follow
 
 **Choose it if:** inspection is your main use, you measure large parts or many parts a day, and sticking targets on parts slows you down.
 
-![Handheld 3D scanner used in an engineering lab](blog-images/choosing-a-handheld-3d-scanner-india/handheld-3d-scanner-used-in-an-engineering-lab.webp)
+![JINUOSH Vertex3D handheld blue laser 3D scanner, front view](blog-images/choosing-a-handheld-3d-scanner-india/jinuosh-vertex3d-handheld-blue-laser-3d-scanner-front.webp)
 
 ### Don't forget the computer
 3D scanning is demanding on hardware. The manufacturer recommends Windows 10 or later (64-bit), an NVIDIA RTX-class GPU (RTX 4060 or higher) with 8 GB+ VRAM, a recent Intel Core i7 and **32 GB+ RAM**. Budget for a suitable workstation or laptop.

@@ -40,10 +40,34 @@
 - [Vertex3D and Vertex3D Pro in India](https://www.vsharksolutions.com/jinuosh-vertex-3d-scanner-india.html): specifications, what is included, FAQs
 - [Vertex Tracker in India](https://www.vsharksolutions.com/vertex-tracker.html): optical-tracking scanner specifications and FAQs
 - [3D scanning services in Coimbatore](https://www.vsharksolutions.com/3d-scanning-services-coimbatore.html): on-site scanning, reverse engineering and inspection
+- [JINUOSH Vertex vs Creaform, Shining 3D, GOM: how to compare](https://www.vsharksolutions.com/jinuosh-vertex-vs-creaform-shining-3d-gom.html)
+- [Best 3D scanning service in Coimbatore: how to choose](https://www.vsharksolutions.com/best-3d-scanning-service-coimbatore.html)
+- [3D scanning services in India](https://www.vsharksolutions.com/3d-scanning-services-india.html)
+- [3D scanning services in Pune](https://www.vsharksolutions.com/3d-scanning-services-pune.html)
+- [3D scanning services in Chennai](https://www.vsharksolutions.com/3d-scanning-services-chennai.html)
+- [3D scanning services in Hyderabad](https://www.vsharksolutions.com/3d-scanning-services-hyderabad.html)
+- [3D scanning services in Bengaluru](https://www.vsharksolutions.com/3d-scanning-services-bengaluru.html)
+- [3D scanning and reverse engineering for the UAE](https://www.vsharksolutions.com/3d-scanning-services-uae.html)
+- [Reverse engineering services in India](https://www.vsharksolutions.com/reverse-engineering-services-india.html)
+- [Reverse engineering services in Tamil Nadu](https://www.vsharksolutions.com/reverse-engineering-services-tamil-nadu.html)
+- [Reverse engineering in Coimbatore](https://www.vsharksolutions.com/reverse-engineering-coimbatore.html)
+- [Automotive 3D scanning and reverse engineering in India](https://www.vsharksolutions.com/automotive-reverse-engineering-india.html)
+- [Mould and die 3D scanning and reverse engineering in India](https://www.vsharksolutions.com/mould-die-3d-scanning-india.html)
+- [Casting and foundry 3D scanning and inspection in India](https://www.vsharksolutions.com/casting-foundry-3d-scanning-india.html)
+- [Industrial machinery 3D scanning and spare parts in India](https://www.vsharksolutions.com/industrial-machinery-spare-parts-3d-scanning-india.html)
+- [3D printing from your 3D scan in India](https://www.vsharksolutions.com/3d-printing-from-scan-india.html)
+- [3D scanning cost in India: what decides the quote](https://www.vsharksolutions.com/3d-scanning-cost-india.html)
+- [Spare part with no drawing: how we rebuild it](https://www.vsharksolutions.com/spare-part-no-drawing-reverse-engineering.html)
+- [CMM inspection services in Coimbatore](https://www.vsharksolutions.com/cmm-inspection-services.html)
 
 ## Blog
 
 - [All articles](https://www.vsharksolutions.com/blog/)
+- [How to Choose a 3D Scanner: Handheld Laser, Tracker, Structured Light or a Service](https://www.vsharksolutions.com/blog/how-to-choose-a-3d-scanner/): How to choose a 3D scanner in India or the UAE: handheld laser, tracker or structured light, and when a scanning service is the better buy.
+- [What Files Do You Get From a 3D Scan? STL, STEP, IGES, Parasolid and the PDF Report](https://www.vsharksolutions.com/blog/3d-scan-file-formats/): What files you get from a 3D scan: STL mesh, STEP, IGES, Parasolid CAD and the inspection PDF report. What each is for and how to choose, in plain terms.
+- [Scan to CAD in SolidWorks: How a Mesh Becomes an Editable Model](https://www.vsharksolutions.com/blog/scan-to-cad-in-solidworks/): How a 3D scan becomes editable CAD in SolidWorks or your CAD software: sections, surfaces, deviation check, STEP or Parasolid, and when a mesh is enough.
+- [How to 3D Scan Shiny, Reflective and Dark Parts](https://www.vsharksolutions.com/blog/scanning-shiny-reflective-parts/): How to 3D scan shiny, reflective and dark parts: when spray helps, markers, scan angle, scan modes, and what the Vertex3D does and does not solve.
+- [Handheld 3D Scanner Accuracy: What the Numbers Mean on a Real Part](https://www.vsharksolutions.com/blog/handheld-3d-scanner-accuracy/): Handheld 3D scanner accuracy by model: the maker's stated values for Vertex3D, Vertex3D Pro and Vertex Tracker, a worked volumetric example and use cases.
 - [3D Scanning for Jewellery and Heritage Idols: Capturing Fine Detail](https://www.vsharksolutions.com/blog/3d-scanning-jewellery-and-heritage-idols/): How 3D scanning captures fine detail in jewellery, temple idols and heritage carvings, for replication, restoration, casting patterns and digital archives in India and the UAE.
 - [From 3D Scan to 3D Print: Rapid Prototyping From Real Parts](https://www.vsharksolutions.com/blog/from-3d-scan-to-3d-print/): How to go from a physical part to a 3D-printed prototype: scanning, CAD, print preparation and choosing a process, for engineers and designers in Coimbatore, India and the UAE.
 - [Reverse Engineering for Mining and Crushing: Liners, Throats and Wear Parts](https://www.vsharksolutions.com/blog/reverse-engineering-crusher-wear-parts/): How 3D scanning and reverse engineering help mines, quarries and cement plants recreate crusher liners, throats and wear parts, and track wear, in India and the Gulf.

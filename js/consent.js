@@ -5,10 +5,10 @@
    • The choice is remembered in localStorage; "Cookie settings" links
      (data-cookie-settings) reopen the banner to change it.
    • Events: any WhatsApp link click → Pixel "Contact" + GA4 "whatsapp_click";
-     any phone (tel:) link click → Pixel "Contact" + GA4 "phone_click";
+     any phone (tel:) link click → Pixel "Contact" + GA4 "call_click";
      service / product page view (<body data-view-content>) → Pixel "ViewContent" + GA4 "view_content";
      successful enquiry (thanks page reached with ?sent=1) → Pixel "Lead" + GA4 "generate_lead".
-     In GA4, mark generate_lead, whatsapp_click and phone_click as key events.
+     In GA4, mark generate_lead, whatsapp_click and call_click as key events.
    • Ad attribution: utm_* / fbclid / gclid on the landing URL are kept for the visit
      (sessionStorage) and copied into the enquiry form's hidden fields.
    Debug: add ?analytics_debug=1 to any URL to send GA4 events to DebugView.
@@ -89,7 +89,7 @@
     if (!a) return;
     const where = linkLocation(a);
     if (a.getAttribute('href').startsWith('tel:')) {
-      track('Contact', 'phone_click', { link_url: a.getAttribute('href'), link_location: where, page_path: location.pathname }, { content_name: 'phone' });
+      track('Contact', 'call_click', { link_url: a.getAttribute('href'), link_location: where, page_path: location.pathname }, { content_name: 'phone' });
     } else {
       track('Contact', 'whatsapp_click', { link_url: a.href.split('?')[0], link_location: where, page_path: location.pathname }, { content_name: 'whatsapp' });
     }

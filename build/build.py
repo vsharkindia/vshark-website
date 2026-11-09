@@ -8,7 +8,7 @@ Reads data/site.json and
   • fingerprints css/js links (?v=<hash>) so browsers always pick up changes.
 Output is plain static HTML committed to the repo; Netlify needs no build step.
 """
-import hashlib, html, json, os, re, sys
+import datetime, hashlib, html, json, os, re, sys
 from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -157,6 +157,11 @@ def head_meta(rel):
 def ld(obj):
     return '<script type="application/ld+json">' + json.dumps(obj, ensure_ascii=False).replace('</', '<\\/') + '</script>'
 
+def area_served(extra_cities=()):
+    """One areaServed list for Organization/LocalBusiness and every Service node (S58). UAE = service area only, no address/registration claim."""
+    return ([{'@type': 'City', 'name': 'Coimbatore'}] + [{'@type': 'City', 'name': c} for c in extra_cities if c and c != 'Coimbatore']
+            + [{'@type': 'AdministrativeArea', 'name': 'Tamil Nadu'}, {'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}])
+
 def schema_org():
     """Organization + LocalBusiness JSON-LD (handoff A7 / B8, dev note 2026-10-27 item 4) — same on every page."""
     S = C['social']
@@ -173,8 +178,7 @@ def schema_org():
                     for o in C['offices']],
         'contactPoint': [{'@type': 'ContactPoint', 'telephone': p['tel'], 'email': C['email'], 'contactType': 'sales',
                           'areaServed': 'IN' if p['label'] == 'India' else 'AE'} for p in C['phones']],
-        'areaServed': [{'@type': 'Country', 'name': country[c]} for c in ('IN', 'AE')],
-        'foundingDate': '2019',
+        'areaServed': area_served(), 'foundingDate': '2019',
         'sameAs': [S[k] for k in SAME_AS if S.get(k)],
     }
     return ld(org)
@@ -737,7 +741,7 @@ def products_page():
     </section>
     <section class="section blk blk--alt">
       <div class="sec-head"><div><span class="tag mono">Full details</span><h2 class="h2" data-reveal>Specifications, what's included <em>and FAQs.</em></h2></div></div>
-      <nav class="bchips" aria-label="Scanner detail pages"><a class="chip" href="{P}jinuosh-vertex-3d-scanner-india.html">Vertex3D and Vertex3D Pro in India</a><a class="chip" href="{P}vertex-tracker.html">Vertex Tracker in India</a><a class="chip" href="{P}blog/choosing-a-handheld-3d-scanner-india/">Buying guide: which Vertex scanner?</a></nav>
+      <nav class="bchips" aria-label="Scanner detail pages"><a class="chip" href="{P}jinuosh-vertex-3d-scanner-india.html">Vertex3D and Vertex3D Pro in India</a><a class="chip" href="{P}vertex-tracker.html">Vertex Tracker in India</a><a class="chip" href="{P}blog/choosing-a-handheld-3d-scanner-india/">Buying guide: which Vertex scanner?</a><a class="chip" href="{P}jinuosh-vertex-vs-creaform-shining-3d-gom.html">Vertex vs Creaform, Shining 3D, GOM</a></nav>
     </section>
 {video_section(videos_for('products'), 'The scanners <em>in action.</em>')}
 {faq_section(D.get('productFaq', []), 'Buying a scanner: <em>FAQ.</em>')}
@@ -829,7 +833,7 @@ def about_page():
     stat_html = ''.join(f'<div class="astat" data-reveal><b>{E(a)}</b><span class="mono">{E(l)}</span></div>' for a, l in stats)
     body = f"""{page_hero(P, [("About", None)], "( 05 ) — About", "We capture reality. <em>Then we engineer it.</em>",
         "VShark Solutions Private Limited is a 3D scanning and engineering design company based in Coimbatore, India, with a presence in Dubai, UAE. Since 2019, we have helped manufacturers, engineers, designers and builders turn physical objects into accurate, usable digital data, and turn digital designs back into real parts.",
-        PH + 'vshark-engineer-3d-scanning-a-car-body-at-a-customer-workshop.webp', alt='VShark engineer 3D scanning a car body at a customer workshop')}
+        PH + 'vshark-engineer-3d-scanning-a-car-boot-floor-with-a-jinuosh-vertex-handheld-scanner.webp', alt='VShark engineer 3D scanning a car boot floor with a JINUOSH Vertex handheld scanner')}
 
     <section class="section blk">
       <p class="lead-lg" data-reveal>Our clients range from automotive and aerospace suppliers to foundries, mining and process plants, construction teams, jewellers and research labs. We have delivered projects for clients in India, the UAE, Saudi Arabia, the USA, the UK, Germany and Canada.</p>
@@ -866,7 +870,7 @@ def about_page():
 
     <section class="section blk">
       <div class="about-split about-split--flip">
-        <figure class="about-fig" data-reveal><img src="{PH}handheld-3d-scanning-of-a-car-wheel-arch-on-a-vehicle-lift.webp" alt="Handheld 3D scanning of a car wheel arch on a vehicle lift" loading="lazy"></figure>
+        <figure class="about-fig" data-reveal><img src="{PH}3d-scan-data-of-a-car-wheel-in-scan-software.webp" alt="3D scan data of a car wheel in scan software, captured with a handheld 3D scanner" loading="lazy"></figure>
         <div>
           <div class="sec-head"><div><span class="tag mono">Why VShark</span><h2 class="h2" data-reveal>Why clients <em>choose us.</em></h2></div></div>
           <div class="feat-grid feat-grid--1">
@@ -988,11 +992,11 @@ def coimbatore_page():
                          'name': '3D scanning services in Coimbatore',
                          'description': 'On-site and in-house 3D scanning of parts, moulds, castings and tooling, delivered as STL meshes or editable STEP CAD files.',
                          'provider': {'@id': SITE_URL + '#business'},
-                         'areaServed': [{'@type': 'City', 'name': 'Coimbatore'}, {'@type': 'State', 'name': 'Tamil Nadu'}, {'@type': 'Country', 'name': 'India'}],
+                         'areaServed': area_served(),
                          'url': SITE_URL + '3d-scanning-services-coimbatore.html'}, ensure_ascii=False).replace('</', '<' + chr(92) + '/')
     body = f"""{page_hero(P, [("Services", "services/index.html"), ("3D scanning in Coimbatore", None)], "( 01 ) — Coimbatore", "3D Scanning Services <em>in Coimbatore.</em>",
         "VShark Solutions Pvt Ltd offers 3D scanning services in Coimbatore, Tamil Nadu. We scan parts, moulds, castings and tooling at our facility or at your plant, then deliver an STL mesh or an editable STEP CAD model.",
-        img + '3d-scanning-services-coimbatore-hero.webp', alt='Handheld 3D scanner with red laser scanning a car wheel arch and suspension')}
+        img + '3d-scanning-services-coimbatore-vertex-hero.webp', alt='VShark engineer scanning a car boot floor with a JINUOSH Vertex handheld 3D scanner')}
 
     <section class="section blk">
       <div class="split">
@@ -1002,7 +1006,7 @@ def coimbatore_page():
           <div class="feat-grid">
 {scan_html}
           </div>
-          <figure class="svc-fig" data-reveal><img src="{img}handheld-3d-scanner-with-laptop-scan-software.webp" alt="Handheld 3D scanner and laptop showing scan software on a workshop table" loading="lazy"></figure>
+          <figure class="svc-fig" data-reveal><img src="{img}3d-scan-data-of-a-car-wheel-in-scan-software.webp" alt="3D scan data of a car wheel shown in scan software" loading="lazy"></figure>
         </div>
         <aside class="split__side" data-reveal>
           <div class="side-card">
@@ -1141,6 +1145,25 @@ def llms_txt():
 - [Vertex3D and Vertex3D Pro in India]({u('jinuosh-vertex-3d-scanner-india.html')}): specifications, what is included, FAQs
 - [Vertex Tracker in India]({u('vertex-tracker.html')}): optical-tracking scanner specifications and FAQs
 - [3D scanning services in Coimbatore]({u('3d-scanning-services-coimbatore.html')}): on-site scanning, reverse engineering and inspection
+- [JINUOSH Vertex vs Creaform, Shining 3D, GOM: how to compare]({u('jinuosh-vertex-vs-creaform-shining-3d-gom.html')})
+- [Best 3D scanning service in Coimbatore: how to choose]({u('best-3d-scanning-service-coimbatore.html')})
+- [3D scanning services in India]({u('3d-scanning-services-india.html')})
+- [3D scanning services in Pune]({u('3d-scanning-services-pune.html')})
+- [3D scanning services in Chennai]({u('3d-scanning-services-chennai.html')})
+- [3D scanning services in Hyderabad]({u('3d-scanning-services-hyderabad.html')})
+- [3D scanning services in Bengaluru]({u('3d-scanning-services-bengaluru.html')})
+- [3D scanning and reverse engineering for the UAE]({u('3d-scanning-services-uae.html')})
+- [Reverse engineering services in India]({u('reverse-engineering-services-india.html')})
+- [Reverse engineering services in Tamil Nadu]({u('reverse-engineering-services-tamil-nadu.html')})
+- [Reverse engineering in Coimbatore]({u('reverse-engineering-coimbatore.html')})
+- [Automotive 3D scanning and reverse engineering in India]({u('automotive-reverse-engineering-india.html')})
+- [Mould and die 3D scanning and reverse engineering in India]({u('mould-die-3d-scanning-india.html')})
+- [Casting and foundry 3D scanning and inspection in India]({u('casting-foundry-3d-scanning-india.html')})
+- [Industrial machinery 3D scanning and spare parts in India]({u('industrial-machinery-spare-parts-3d-scanning-india.html')})
+- [3D printing from your 3D scan in India]({u('3d-printing-from-scan-india.html')})
+- [3D scanning cost in India: what decides the quote]({u('3d-scanning-cost-india.html')})
+- [Spare part with no drawing: how we rebuild it]({u('spare-part-no-drawing-reverse-engineering.html')})
+- [CMM inspection services in Coimbatore]({u('cmm-inspection-services.html')})
 
 ## Social
 
@@ -1310,7 +1333,7 @@ def blog_href(u, P):
         return P + 'index.html'
     if path.startswith(('services/', 'industries/')) and not path.endswith('.html'):
         return P + path + '.html' + q
-    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore', 'vertex-tracker', 'jinuosh-vertex-3d-scanner-india'):
+    if path in ('contact', 'about', 'privacy-policy', '3d-scanning-services-coimbatore', 'vertex-tracker', 'jinuosh-vertex-3d-scanner-india', 'best-3d-scanning-service-coimbatore', 'jinuosh-vertex-vs-creaform-shining-3d-gom', 'reverse-engineering-services-india', '3d-scanning-services-india', 'spare-part-no-drawing-reverse-engineering', 'cmm-inspection-services', 'reverse-engineering-services-tamil-nadu', 'automotive-reverse-engineering-india', 'mould-die-3d-scanning-india', 'casting-foundry-3d-scanning-india', 'industrial-machinery-spare-parts-3d-scanning-india', '3d-printing-from-scan-india', '3d-scanning-cost-india', 'reverse-engineering-coimbatore', '3d-scanning-services-pune', '3d-scanning-services-chennai', '3d-scanning-services-hyderabad', '3d-scanning-services-bengaluru', '3d-scanning-services-uae'):
         return P + path + '.html' + q
     if path in ('products', 'portfolio', 'services', 'industries', 'blog') or path.startswith('blog/'):
         return P + path + '/' + q
@@ -1546,6 +1569,13 @@ PRODUCT_LD = {
          'img/products/vertex-tracker.png', None)],
 }
 
+def reviewed_p(m):
+    """Optional front-matter key reviewed: YYYY-MM-DD -> visible 'Last reviewed' line."""
+    if not m.get('reviewed'):
+        return ''
+    d = datetime.date.fromisoformat(m['reviewed'].strip())
+    return f'\n        <p class="muted"><small>Last reviewed: <time datetime="{d.isoformat()}">{d.strftime("%B %Y")}</time></small></p>'
+
 def build_product_pages():
     out = []
     for fn in sorted(os.listdir(PAGES_DIR)):
@@ -1558,26 +1588,26 @@ def build_product_pages():
         faq_at = body.find('### FAQ')
         faq_txt, body = body[faq_at + 7:], body[:faq_at]
         faqs = [(q.strip(), re.sub(r'\s+', ' ', a.strip())) for q, a in re.findall(r'\*\*(.+?)\*\*\n(.+?)(?=\n\n\*\*|\Z)', faq_txt.strip(), re.S)]
-        hero = page_hero(P, [("Products", P + 'products/index.html'), (re.sub('<[^>]+>', '', m['h1']), None)], m['tag'], m['h1'], E(m['lead']), m['image'], alt=m['image_alt'])
+        hero = page_hero(P, [(m.get('crumb_label', 'Products'), P + m.get('crumb_href', 'products/index.html')), (re.sub('<[^>]+>', '', m['h1']), None)], m['tag'], m['h1'], E(m['lead']), m['image'], alt=m['image_alt'])
         html_page = f'''{hero}
     <article class="section blk">
       <div class="prose prose--post">
-{blog_md(body, P)}
+{blog_md(body, P)}{reviewed_p(m)}
       </div>
     </article>
 {faq_section(faqs, 'Common <em>questions.</em>')}
     <section class="cta-band">
       <div class="cta-band__inner">
-        <h2 class="h2">See it scan your part.</h2>
-        <p>Request a quote, a free demo or a free sample scan. Send a photo of your part on WhatsApp.</p>
+        <h2 class="h2">{m.get('cta_title', 'See it scan your part.')}</h2>
+        <p>{E(m['cta_text']) if 'cta_text' in m else 'Request a quote, a free demo or a free sample scan. Send a photo of your part on WhatsApp.'}</p>
         <div class="cta-band__actions">
-          <a class="btn btn--light magnetic" href="{P}contact.html?product={m['product']}"><span>Request a quote</span>{A}</a>
-          <a class="btn btn--outline-light magnetic" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp us</span></a>
+          <a class="btn btn--light magnetic" href="{P}{html.escape(m['cta_href']) if 'cta_href' in m else 'contact.html?product=' + m['product']}"><span>Request a quote</span>{A}</a>
+          <a class="btn btn--outline-light magnetic" href="{wa_link(m['wa_msg'] if 'wa_msg' in m else WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span>WhatsApp us</span></a>
         </div>
         <p class="mono">India {E(C['phones'][0]['display'])} · UAE {E(C['phones'][1]['display'])}</p>
       </div>
     </section>'''
-        out.append(write(rel, page(P, rel, 'products', html_page)))
+        out.append(write(rel, page(P, rel, m.get('active', 'products'), html_page, wa_msg=m['wa_msg'] if 'wa_msg' in m else WA_DEFAULT)))
     return out
 
 # ---------------------------------------------------------------- final pass (S05/S07 technical SEO)
@@ -1635,6 +1665,14 @@ def extra_ld(rel):
             blocks.append(node)
         blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
                        'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
+    elif rel in PRODUCT_PAGES and PRODUCT_PAGES[rel].get('service_ld'):
+        pm = PRODUCT_PAGES[rel]
+        trail = [('Home', SITE_URL), (pm['crumb_label'], SITE_URL + pm['crumb_href']), (META[rel][0].split(' | ')[0], url)]
+        blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'serviceType': pm.get('service_type', '3D scanning'), 'name': META[rel][0], 'description': META[rel][1],
+                       'url': url, 'provider': {'@id': SITE_URL + '#business'},
+                       'areaServed': area_served(pm.get('area_cities', '').split('|'))})
+        blocks.append({'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+                       'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(trail)]})
     elif rel.startswith('blog/'):
         post = next((q for q in BLOG_POSTS if q['rel'] == rel), None)
         trail = [('Home', SITE_URL), ('Blog', SITE_URL + 'blog/')]
@@ -1664,7 +1702,13 @@ def extra_ld(rel):
         if folder == 'services' and item:
             blocks.append({'@context': 'https://schema.org', '@type': 'Service', 'name': item['name'], 'serviceType': item['name'],
                            'description': META[rel][1], 'url': url, 'provider': {'@id': SITE_URL + '#business'},
-                           'areaServed': [{'@type': 'Country', 'name': 'India'}, {'@type': 'Country', 'name': 'United Arab Emirates'}]})
+                           'areaServed': area_served()})
+    pmx = PRODUCT_PAGES.get(rel)
+    if pmx and pmx.get('reviewed'):
+        wp = {'@context': 'https://schema.org', '@type': 'WebPage', 'url': url, 'name': META[rel][0], 'dateModified': pmx['reviewed'].strip()}
+        if pmx.get('published'):
+            wp['datePublished'] = pmx['published'].strip()
+        blocks.append(wp)
     return '<!-- @ld -->' + ''.join('<script type="application/ld+json">' + json.dumps(b, ensure_ascii=False).replace('</', '<\/') + '</script>' for b in blocks) + '<!-- /@ld -->'
 
 def finalize(rels):
