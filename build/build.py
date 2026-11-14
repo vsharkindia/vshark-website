@@ -979,17 +979,17 @@ def coimbatore_page():
                ('Deviation colour map and report', 'Compare a made part against its CAD or a master.'),
                ('Measured 2D drawing', 'Shop-floor use and repair.')]
     del_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(d)}</p></div>' for k, (t, d) in enumerate(deliver))
-    rates = [('Scanner-based inspection and scanning', 'Rs 1,500 per hour'),
-             ('Portable CMM arm scanning and inspection', 'Rs 2,500 per hour'),
-             ('CAD design from scan data or sketches', 'Rs 1,000 per hour'),
-             ('Building, facade and heritage structure scanning', 'Rs 3,000 per hour')]
-    rate_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(r)}</p></div>' for k, (t, r) in enumerate(rates))
+    rate_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(r)}</p></div>' for k, (t, r) in enumerate([
+        ('Scanner-based inspection and scanning', 'Quote on request. Tell us the part and scope.'),
+        ('Portable CMM arm scanning and inspection', 'Quote on request. Tell us the part and scope.'),
+        ('CAD design from scan data or sketches', 'Quote on request. Tell us the part and scope.'),
+        ('Building, facade and heritage structure scanning', 'Quote on request. Tell us the part and scope.')]))
     faqs = [
         ('Do you offer 3D scanning in Coimbatore?', 'Yes. VShark Solutions offers 3D scanning in Coimbatore, at our facility or at your plant, and delivers STL meshes or editable CAD files.'),
         ('Can you scan at my factory?', 'Yes. We travel to your plant in Coimbatore and across India. This suits large parts, heavy castings and tooling that cannot be moved.'),
         ('Can you turn a scanned part into editable CAD?', 'Yes. We provide reverse engineering and scan-to-CAD, delivered as STEP files and other neutral formats such as IGES and Parasolid.'),
         ('How long does a 3D scanning job take?', 'Small parts can be scanned in under a day. Larger parts and bigger quantities take more time, and CAD modelling adds time depending on the part. We give a delivery date with the quote.'),
-        ('How much does 3D scanning cost in Coimbatore?', 'The price depends on the part size, surface, accuracy and location, so we quote per job. As of November 2026 our listed rates are Rs 1,500 per hour for scanner-based inspection and scanning, Rs 2,500 per hour for portable CMM arm work, Rs 1,000 per hour for CAD design and Rs 3,000 per hour for building scans. On-site travel and accommodation are charged extra.'),
+        ('How much does 3D scanning cost in Coimbatore?', 'The price depends on the part size, surface, accuracy and location, so we quote per job. Quote on request: tell us the part and the scope (scanning, CMM inspection, CAD, or a site scan) and we send a written quote. On-site travel and accommodation are charged extra.'),
         ('What file formats do you deliver?', 'STL and PLY meshes, and STEP, IGES or Parasolid CAD files. Inspection results come as deviation colour maps and reports.'),
         ('Do you offer CMM inspection in Coimbatore?', 'Yes. We offer CMM arm inspection for dimensional checks against a drawing or CAD model.'),
     ]
@@ -1056,8 +1056,8 @@ def coimbatore_page():
     </section>
 
     <section class="section blk">
-      <div class="sec-head"><div><span class="tag mono">Pricing, as of November 2026</span><h2 class="h2" data-reveal>Quoted per job, <em>rates listed.</em></h2></div></div>
-      <p class="lead-lg" data-reveal>Scanning cost depends on part size, surface, accuracy and location, so we quote per job after seeing the part. Our listed rates for related services in India are below. On-site travel and accommodation are charged extra, and rates can change, so confirm them when you ask for a quote.</p>
+      <div class="sec-head"><div><span class="tag mono">Pricing</span><h2 class="h2" data-reveal>Quoted per job, <em>on request.</em></h2></div></div>
+      <p class="lead-lg" data-reveal>Scanning cost depends on part size, surface, accuracy and location, so we quote per job after seeing the part. Send us the part and the scope and we reply with a written quote. On-site travel and accommodation are charged extra.</p>
       <div class="feat-grid">
 {rate_html}
       </div>
