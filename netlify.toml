@@ -1,19 +1,72 @@
-# PREVIEW SITE ONLY. The live site is hosted by the vendor (Apache/LiteSpeed): see DEPLOY.md and .htaccess.
-# Static site — no build step, serve the repo root as-is.
+# Netlify hosting: preview/staging today, and production-ready (see SELF-HOSTING.md).
+# Apache/LiteSpeed hosts use .htaccess instead; the two files implement the same rules.
+#
+# Build: copy only the public website into dist/ (no notes, sources or server config).
+# The contact form is answered by netlify/functions/enquiry.mjs at /send-enquiry.php.
+# Search engines: dist/_headers adds "noindex" unless ALLOW_INDEXING=1 is set on the site.
 [build]
-  publish = "."
+  command = "python3 build/publish.py"
+  publish = "dist"
 
-# The enquiry form posts to send-enquiry.php on the live server. Here Netlify Forms captures the
-# submission and then sends the visitor to the form's action URL, which we show as the thank-you page.
+[functions]
+  directory = "netlify/functions"
+
+# Pages of the previous (PHP) website -> their new equivalents
 [[redirects]]
-  from = "/send-enquiry.php"
-  to = "/thanks.html"
-  status = 200
-  force = true
+  from = "/index.php"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/about.php"
+  to = "/about"
+  status = 301
+[[redirects]]
+  from = "/contact.php"
+  to = "/contact"
+  status = 301
+[[redirects]]
+  from = "/portfolio.php"
+  to = "/portfolio/"
+  status = 301
+[[redirects]]
+  from = "/3d-scanning.php"
+  to = "/services/3d-scanning"
+  status = 301
+[[redirects]]
+  from = "/3d-printing.php"
+  to = "/services/3d-printing"
+  status = 301
+[[redirects]]
+  from = "/product-development.php"
+  to = "/services/"
+  status = 301
 
-# PREVIEW ONLY: keep the test site out of search engines.
-# Remove this block when the site goes live on vsharksolutions.com.
+# Security and caching headers (same as .htaccess)
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000"
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

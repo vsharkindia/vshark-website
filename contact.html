@@ -89,7 +89,7 @@
     </section>
     <section class="section blk">
       <div class="contact">
-        <form class="cform" id="enquiry" name="enquiry" method="POST" action="send-enquiry.php" data-netlify="true" netlify-honeypot="company_url" enctype="multipart/form-data" data-reveal>
+        <form class="cform" id="enquiry" name="enquiry" method="POST" action="send-enquiry.php" enctype="multipart/form-data" data-reveal>
           <input type="hidden" name="form-name" value="enquiry">
           <!-- ad attribution, filled in by js/consent.js from the landing URL -->
           <input type="hidden" name="utm_source" data-attr><input type="hidden" name="utm_medium" data-attr><input type="hidden" name="utm_campaign" data-attr><input type="hidden" name="utm_content" data-attr><input type="hidden" name="utm_term" data-attr><input type="hidden" name="fbclid" data-attr><input type="hidden" name="gclid" data-attr><input type="hidden" name="landing_page" data-attr><input type="hidden" name="referrer" data-attr>
@@ -102,7 +102,7 @@
             <label class="field field--full"><span>I'm interested in *</span>
               <select name="interest" id="cInterest" required><option value="">Choose a service or product…</option><option value="3D Scanning">3D Scanning</option><option value="Reverse Engineering">Reverse Engineering</option><option value="Scan to BIM">Scan to BIM</option><option value="Class A Surfacing">Class A Surfacing</option><option value="Digital Metrology">Digital Metrology</option><option value="3D Printing">3D Printing</option><option value="Product Rendering">Product Rendering</option><option value="Product: Vertex3D">Buy a scanner — Vertex3D</option><option value="Product: Vertex3D Pro">Buy a scanner — Vertex3D Pro</option><option value="Product: Vertex Tracker">Buy a scanner — Vertex Tracker</option><option value="Other">Something else</option></select></label>
             <label class="field field--full"><span>Project details *</span><textarea name="message" rows="5" required placeholder="Part size, material, quantity, deadline, file formats you need…"></textarea></label>
-            <label class="field field--full field--file"><span>Attach a file (optional, max 8 MB)</span><input type="file" name="attachment" accept=".pdf,.jpg,.jpeg,.png,.stl,.step,.stp,.zip"></label>
+            <label class="field field--full field--file"><span>Attach a file (optional, max 5 MB: drawing, photo, STL, STEP or IGES. Larger files: send via WhatsApp or email)</span><input type="file" name="attachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.heic,.stl,.step,.stp,.igs,.iges,.obj,.ply,.zip"></label>
           </div>
           <label class="consent"><input type="checkbox" name="consent" value="yes" required>
             <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
@@ -187,7 +187,7 @@
   <script src="vendor/gsap.min.js?v=47da594c"></script>
   <script src="vendor/ScrollTrigger.min.js?v=ba1fa78e"></script>
   <script src="vendor/lenis.min.js?v=79e3a064"></script>
-  <script src="js/contact.js?v=25e5e5bb"></script>
+  <script src="js/contact.js?v=b210461f"></script>
   <script src="js/main.js?v=5bc7d010"></script>
 </body>
 </html>

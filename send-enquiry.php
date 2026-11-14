@@ -5,13 +5,13 @@
  * redirects to thanks.html. No external libraries: uses SMTP (recommended) or PHP mail().
  *
  * Settings live in enquiry-config.php on the server (copy enquiry-config.sample.php; never commit it).
- * On the Netlify preview this file is not executed — Netlify Forms handles the form there.
+ * On Netlify this file is not published: netlify/functions/enquiry.mjs answers /send-enquiry.php instead.
  */
 
 declare(strict_types=1);
 
-const MAX_BYTES = 8 * 1024 * 1024;                       // matches the "max 8 MB" on the form
-const ALLOWED_EXT = ['pdf', 'jpg', 'jpeg', 'png', 'stl', 'step', 'stp', 'zip'];
+const MAX_BYTES = 5 * 1024 * 1024;                       // matches the "max 5 MB" on the form (and the Netlify function)
+const ALLOWED_EXT = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'webp', 'heic', 'stl', 'step', 'stp', 'igs', 'iges', 'obj', 'ply', 'zip'];
 
 function back(string $code): void {
     header('Location: /contact.html?error=' . rawurlencode($code) . '#enquiry', true, 303);

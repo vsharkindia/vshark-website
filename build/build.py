@@ -914,7 +914,7 @@ def contact_page():
     body = f'''{page_hero(P, [("Contact", None)], "( 06 ) — Contact", "Let's <em>scan it.</em>", "Tell us about your part, building or idea. We usually reply within one working day.")}
     <section class="section blk">
       <div class="contact">
-        <form class="cform" id="enquiry" name="enquiry" method="POST" action="send-enquiry.php" data-netlify="true" netlify-honeypot="company_url" enctype="multipart/form-data" data-reveal>
+        <form class="cform" id="enquiry" name="enquiry" method="POST" action="send-enquiry.php" enctype="multipart/form-data" data-reveal>
           <input type="hidden" name="form-name" value="enquiry">
           <!-- ad attribution, filled in by js/consent.js from the landing URL -->
           {''.join(f'<input type="hidden" name="{k}" data-attr>' for k in ('utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'landing_page', 'referrer'))}
@@ -927,7 +927,7 @@ def contact_page():
             <label class="field field--full"><span>I'm interested in *</span>
               <select name="interest" id="cInterest" required><option value="">Choose a service or product…</option>{svc_opts}{prod_opts}<option value="Other">Something else</option></select></label>
             <label class="field field--full"><span>Project details *</span><textarea name="message" rows="5" required placeholder="Part size, material, quantity, deadline, file formats you need…"></textarea></label>
-            <label class="field field--full field--file"><span>Attach a file (optional, max 8 MB)</span><input type="file" name="attachment" accept=".pdf,.jpg,.jpeg,.png,.stl,.step,.stp,.zip"></label>
+            <label class="field field--full field--file"><span>Attach a file (optional, max 5 MB: drawing, photo, STL, STEP or IGES. Larger files: send via WhatsApp or email)</span><input type="file" name="attachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.heic,.stl,.step,.stp,.igs,.iges,.obj,.ply,.zip"></label>
           </div>
           <label class="consent"><input type="checkbox" name="consent" value="yes" required>
             <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>

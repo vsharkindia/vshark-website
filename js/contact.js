@@ -19,8 +19,8 @@
   const MSG = {
     missing: 'Please fill in your name, a valid email address, what you are interested in and your project details.',
     consent: 'Please tick the consent box so we can respond to your enquiry.',
-    size: 'The attachment is larger than 8 MB. Please attach a smaller file, or email it to info@vsharksolutions.com.',
-    type: 'That file type can’t be attached. Please use PDF, JPG, PNG, STL, STEP or ZIP.',
+    size: 'The attachment is larger than 5 MB. Please attach a smaller file, or send it by WhatsApp or to info@vsharksolutions.com.',
+    type: 'That file type can’t be attached. Please use PDF, Word, JPG, PNG, WEBP, HEIC, STL, STEP, IGES, OBJ, PLY or ZIP.',
     upload: 'The file didn’t upload completely. Please try again.',
   };
   const note = document.createElement('p');
