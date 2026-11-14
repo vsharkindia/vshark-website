@@ -4,7 +4,7 @@ title_tag: Spare Part With No Drawing? How We Rebuild It | VShark
 description: No drawing for a worn or obsolete spare part? We 3D scan it, rebuild an editable STEP CAD model and check it against the scan. Send a photo for a quote.
 h1: Spare Part With No Drawing: <em>How We Rebuild It</em>
 tag: ( Guide ) — reverse engineering spare parts
-lead: Yes, a spare part with no drawing can be rebuilt. At VShark Solutions Pvt Ltd, Coimbatore, we 3D scan the part, clean the scan into a mesh, rebuild it as an editable STEP CAD model, agree the fit and tolerance with you, and check the finished model against the scan. You receive CAD you can machine, cast or 3D print from. Send a photo of your part for a written quote.
+lead: Spare part not available, no drawing, and the supplier is not responding? You can still get the part made. At VShark Solutions Pvt Ltd, we measure and 3D scan your sample part, rebuild it as an editable STEP CAD model, agree the fit and tolerance with you, and check the finished model against the scan. You get a drawing or CAD that any workshop can machine, cast or 3D print from. Send a photo of the part for a written quote.
 image: img/portfolio/pump-volute-scan.webp
 image_alt: 3D scan mesh of a pump volute casing, captured to rebuild a part with no drawing
 crumb_label: Reverse engineering
@@ -19,15 +19,16 @@ service_type: Reverse engineering
 area_cities: 
 reviewed: 2026-11-08
 ---
-### When this is the right service
+### Spare part not available, no drawing or supplier not responding?
 
-- The OEM is gone, the part is obsolete, or the supplier will not share the drawing.
+- The spare part is not available: the OEM is gone, the part is obsolete or discontinued, the supplier is not responding or will not share the drawing.
+- The machine has no drawing at all and you need a drawing made from the sample part.
 - The part is worn, broken or deformed and you need the original shape back.
 - A casting, forging or moulded part exists but its pattern or tool data is lost.
 - You need a drawing for a machine that has run for years without one.
 - You want a made part compared with the original to see what changed.
 
-### How we rebuild a spare part with no drawing
+### How we make a drawing from your sample part
 
 1. **Brief and part review.** You send a photo, the approximate size, the material if you know it and the job the part does (what it fits into, what loads it takes). If you have the mating part, send it too: it tells us what really matters on the part.
 2. **3D scan.** We scan the part at our Coimbatore facility, or where it stands at your plant. Handheld blue-laser scanning suits small to medium parts, castings and tooling; optical-tracking scanning suits large parts. Shiny or dark surfaces and deep holes can change the method, so tell us the surface.
@@ -40,7 +41,7 @@ What we need from you: a photo, the size, the material and the function of the p
 
 ![Impeller 3D scan overlaid with its rebuilt CAD model to show a spare part recreated without a drawing](img/portfolio/scan-to-cad-overlay-of-a-large-industrial-fan-impeller.webp)
 
-### What you receive
+### What you get: a drawing or CAD of your part
 
 | Deliverable | Use |
 |---|---|
@@ -49,7 +50,7 @@ What we need from you: a photo, the size, the material and the function of the p
 | Deviation colour map and report (PDF) | Shows the CAD matches the scan; dimensions and GD&T callouts on request |
 | 2D drawing (on request) | Shop-floor and supplier use |
 
-### What decides the cost
+### What decides the cost of making a part with no drawing
 
 We quote per job and do not publish a price list. The main drivers are:
 
@@ -61,7 +62,7 @@ We quote per job and do not publish a price list. The main drivers are:
 
 Send a photo and a short description and we reply with a written quote.
 
-### Why scan first
+### Why we scan the part instead of measuring it by hand
 
 A scanner captures the whole surface of the part, including curves and freeform shapes that are hard to measure by hand. The JINUOSH Vertex handheld blue-laser scanners we distribute are specified by the maker at up to 0.020 mm (Vertex3D and Vertex3D Pro) and 0.025 mm (Vertex Tracker). That is a scanner specification, not a guarantee for every part; we tell you the expected accuracy for your part before we start. See the [JINUOSH Vertex scanners](/jinuosh-vertex-3d-scanner-india?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s29&utm_content=spare-why-scan). For the numbers by model, read [handheld 3D scanner accuracy](/blog/handheld-3d-scanner-accuracy?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s29&utm_content=spare-accuracy-blog).
 

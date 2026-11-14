@@ -132,3 +132,21 @@ Inspection reports are normally delivered in 2 to 3 days.
 
 **Do you also sell 3D scanners in India?**
 Yes. We are a distributor of JINUOSH Vertex handheld 3D scanners in India.
+
+**My machine part has no drawing. Who can make a drawing from the sample?**
+We can. We measure and 3D scan your sample part, then make a CAD model and a 2D drawing from it. Send a photo and the size, and we reply with a written quote. See [spare part with no drawing](/spare-part-no-drawing-reverse-engineering?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s89&utm_content=hub-faq-nodrawing).
+
+**The spare part is not available and the supplier is not responding. What can I do?**
+You can have the part rebuilt from the sample you already have. We scan the worn or broken part, rebuild the intended shape as editable CAD and check it against the scan, so any workshop can make it. Fit and tolerance are agreed with you before anything is made.
+
+**Can you copy a part without a drawing?**
+Yes. We do not trace the part by hand. We 3D scan it and rebuild it as CAD, so the dimensions come from the part itself. For a worn part we rebuild the intended shape, not the wear.
+
+**I have a broken part. Can you make a 3D model or STL file from it?**
+Yes. We scan the broken part and deliver an STL or PLY mesh, or an editable STEP CAD model if you need to change or repair the design. If you still have the matching part, send it too, as it shows what the broken one should look like.
+
+**Can you make drawings of our existing plant or machines that have no drawings?**
+Yes. We measure and scan the machine or the plant area where it stands, then give you 3D models and 2D drawings of what exists today. Tell us the machine or area, the size and what the drawings are for, and we reply with a written quote.
+
+**How can I measure a complex part that I cannot measure with a vernier or a gauge?**
+3D scanning captures curves, freeform surfaces and hard-to-reach areas that hand tools miss, and gives you the whole shape as a mesh or CAD model. Send a photo and tell us which dimensions matter most, and we advise the method and quote the job.
