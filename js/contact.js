@@ -20,8 +20,10 @@
     missing: 'Please fill in your name, a valid email address, what you are interested in and your project details.',
     consent: 'Please tick the consent box so we can respond to your enquiry.',
     size: 'The attachment is larger than 3 MB. Please attach a smaller file, or send it by WhatsApp or to info@vsharksolutions.com.',
-    type: 'That file type can’t be attached. Please use PDF, Word, JPG, PNG, WEBP, HEIC, STL, STEP, IGES, OBJ, PLY or ZIP.',
+    type: 'That file can’t be attached. Please use a PDF, Word, JPG, PNG, WEBP, HEIC, STL, STEP, IGES, OBJ, PLY or ZIP file (the content must match its type).',
     upload: 'The file didn’t upload completely. Please try again.',
+    rate: 'We have received several enquiries from your connection in a short time. Please try again in an hour, or message us on WhatsApp.',
+    captcha: 'Please complete the security check above the Send button and try again.',
   };
   const note = document.createElement('p');
   note.className = 'cform__error';

@@ -1,7 +1,7 @@
 <!-- Privacy Policy text from the dev handoff (part H2), written for India's DPDP Act 2023 and the UAE PDPL.
      Have a lawyer review before relying on it. Section 6 describes the cookie banner (js/consent.js).
      Rendered into privacy-policy.html by build/build.py — edit here, then run the build. -->
-Last updated: 5 November 2026
+Last updated: 14 November 2026
 
 VShark Solutions Private Limited ("**VShark**", "**we**", "**us**") respects your privacy. This policy explains what personal data we collect when you use **www.vsharksolutions.com** (the "**Website**") or contact us, why we collect it, and how we protect it.
 
@@ -14,6 +14,7 @@ VShark Solutions Private Limited ("**VShark**", "**we**", "**us**") respects you
 - **Enquiry details:** your name, company, email address, phone or WhatsApp number, the service or product you're interested in, and your project description
 - **Files you upload or send:** drawings, photos, CAD models, scan data or other documents you share with your enquiry, by email or on WhatsApp
 - **Communications:** messages you send us by email, phone or WhatsApp
+- **Enquiry form details:** when you submit the contact form, the enquiry email we receive also records your IP address, the date and time, and how you reached our Website (the page you first landed on, the referring website and any advertising campaign tags in the link, such as utm, fbclid or gclid). We use these to handle your enquiry, to prevent spam and abuse, and to measure our advertising.
 
 **Information collected automatically**
 - **Usage data:** pages visited, time on site, referring website, device and browser type, approximate location (country or city) and IP address

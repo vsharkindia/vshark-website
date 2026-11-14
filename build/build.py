@@ -646,7 +646,7 @@ def industry_page(ind):
 {xnav(P, D['industries'], ind, 'industries', 'All industries')}
 {cta(P, msg=f"Hi VShark, I work in {ind['name']} and would like to discuss a project.")}
 {LIGHTBOX}'''
-    return page(P, f"industries/{ind['slug']}.html", 'industries', body, ('js/portfolio.js',))
+    return page(P, f"industries/{ind['slug']}.html", 'industries', body, ('js/portfolio.js',), view=(ind['name'], 'Industry'))
 
 def video_embed(P, url, title):
     '''YouTube link -> privacy-friendly embed; anything else is treated as a local/hosted video file.'''
@@ -907,6 +907,11 @@ def contact_page():
     phones = ''.join(f'<a class="ccard" href="tel:{p["tel"]}">{ICON["phone"]}<span><small class="mono">{E(p["label"])}</small>{E(p["display"])}</span></a>' for p in C['phones'])
     addr = ''.join(f'<div class="ccard ccard--static">{ICON["pin"]}<span><small class="mono">{E(o["label"])} office</small>{"<br>".join(E(l) for l in o["lines"])}</span></div>' for o in C['offices'])
     mapq = quote(C['map'])
+    # Cloudflare Turnstile (free CAPTCHA): shown only when contact.turnstile_site_key is set in data/site.json;
+    # the matching secret goes in enquiry-config.php on the server ('turnstile' => ['secret' => ...]).
+    ts_key = C.get('turnstile_site_key', '')
+    turnstile = (f'<div class="cf-turnstile" data-sitekey="{E(ts_key)}" data-theme="light"></div>\n          '
+                 '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>\n          ') if ts_key else ''
     gmap = f'''    <section class="section blk cmap" data-reveal>
       <iframe title="Map: VShark Solutions, {E(C['map'])}" src="https://www.google.com/maps?q={mapq}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       <a class="sec-head__link" href="https://www.google.com/maps/search/?api=1&amp;query={mapq}" target="_blank" rel="noopener">Open in Google Maps {A}</a>
@@ -931,7 +936,7 @@ def contact_page():
           </div>
           <label class="consent"><input type="checkbox" name="consent" value="yes" required>
             <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
-          <button class="btn btn--accent magnetic" type="submit"><span>Send enquiry</span>{A}</button>
+          {turnstile}<button class="btn btn--accent magnetic" type="submit"><span>Send enquiry</span>{A}</button>
         </form>
         <aside class="contact__side" data-reveal>
           <a class="ccard ccard--wa" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span><small class="mono">Fastest</small>Chat on WhatsApp</span></a>
@@ -1066,7 +1071,8 @@ def coimbatore_page():
     </section>
     <script type="application/ld+json">{svc_ld}</script>
 {cta(P, msg="Hi VShark, I need 3D scanning in Coimbatore for: ")}"""
-    return page(P, '3d-scanning-services-coimbatore.html', 'services', body, wa_msg="Hi VShark, I need 3D scanning in Coimbatore for: ")
+    return page(P, '3d-scanning-services-coimbatore.html', 'services', body, wa_msg="Hi VShark, I need 3D scanning in Coimbatore for: ",
+                view=('3D Scanning Services in Coimbatore', 'Service'))
 
 
 def notfound_page():
@@ -1607,7 +1613,10 @@ def build_product_pages():
         <p class="mono">India {E(C['phones'][0]['display'])} · UAE {E(C['phones'][1]['display'])}</p>
       </div>
     </section>'''
-        out.append(write(rel, page(P, rel, m.get('active', 'products'), html_page, wa_msg=m['wa_msg'] if 'wa_msg' in m else WA_DEFAULT)))
+        # Meta ViewContent / GA4 view_content: name = page title, category from front matter (view_category) or the section
+        view = (m['title_tag'].split(' | ')[0].strip(),
+                m.get('view_category') or ('Product' if m.get('active', 'products') == 'products' else 'Service'))
+        out.append(write(rel, page(P, rel, m.get('active', 'products'), html_page, wa_msg=m['wa_msg'] if 'wa_msg' in m else WA_DEFAULT, view=view)))
     return out
 
 # ---------------------------------------------------------------- final pass (S05/S07 technical SEO)
