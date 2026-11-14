@@ -927,7 +927,7 @@ def contact_page():
             <label class="field field--full"><span>I'm interested in *</span>
               <select name="interest" id="cInterest" required><option value="">Choose a service or product…</option>{svc_opts}{prod_opts}<option value="Other">Something else</option></select></label>
             <label class="field field--full"><span>Project details *</span><textarea name="message" rows="5" required placeholder="Part size, material, quantity, deadline, file formats you need…"></textarea></label>
-            <label class="field field--full field--file"><span>Attach a file (optional, max 5 MB: drawing, photo, STL, STEP or IGES. Larger files: send via WhatsApp or email)</span><input type="file" name="attachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.heic,.stl,.step,.stp,.igs,.iges,.obj,.ply,.zip"></label>
+            <label class="field field--full field--file"><span>Attach a file (optional, max 3 MB: drawing, photo, STL, STEP or IGES. Larger files: send via WhatsApp or email)</span><input type="file" name="attachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.heic,.stl,.step,.stp,.igs,.iges,.obj,.ply,.zip"></label>
           </div>
           <label class="consent"><input type="checkbox" name="consent" value="yes" required>
             <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>

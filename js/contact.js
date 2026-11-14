@@ -19,7 +19,7 @@
   const MSG = {
     missing: 'Please fill in your name, a valid email address, what you are interested in and your project details.',
     consent: 'Please tick the consent box so we can respond to your enquiry.',
-    size: 'The attachment is larger than 5 MB. Please attach a smaller file, or send it by WhatsApp or to info@vsharksolutions.com.',
+    size: 'The attachment is larger than 3 MB. Please attach a smaller file, or send it by WhatsApp or to info@vsharksolutions.com.',
     type: 'That file type can’t be attached. Please use PDF, Word, JPG, PNG, WEBP, HEIC, STL, STEP, IGES, OBJ, PLY or ZIP.',
     upload: 'The file didn’t upload completely. Please try again.',
   };
@@ -30,18 +30,18 @@
   form.prepend(note);
 })();
 
-/* Contact page: check the attachment before upload. The server limit is 5 MB; a larger request would be
+/* Contact page: check the attachment before upload. The server limit is 3 MB; a larger request would be
    rejected by the host with a bare error page, so stop it here and show the friendly message instead. */
 (function () {
   const form = document.getElementById('enquiry');
   const input = form && form.querySelector('input[type="file"][name="attachment"]');
   if (!input) return;
-  const MAX = 5 * 1024 * 1024;
+  const MAX = 3 * 1024 * 1024;
   const OK = /\.(pdf|docx?|jpe?g|png|webp|heic|stl|step|stp|igs|iges|obj|ply|zip)$/i;
   function check() {
     const f = input.files && input.files[0];
     let msg = '';
-    if (f && f.size > MAX) msg = 'This file is larger than 5 MB. Please attach a smaller file, or send it by WhatsApp or to info@vsharksolutions.com.';
+    if (f && f.size > MAX) msg = 'This file is larger than 3 MB. Please attach a smaller file, or send it by WhatsApp or to info@vsharksolutions.com.';
     else if (f && !OK.test(f.name)) msg = 'That file type can’t be attached. Please use PDF, Word, JPG, PNG, WEBP, HEIC, STL, STEP, IGES, OBJ, PLY or ZIP.';
     input.setCustomValidity(msg);
     return !msg;

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-const MAX_BYTES = 5 * 1024 * 1024;                       // matches the "max 5 MB" on the form (and the Netlify function)
+const MAX_BYTES = 3 * 1024 * 1024;                       // matches the "max 3 MB" on the form (and the Netlify function)
 const ALLOWED_EXT = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'webp', 'heic', 'stl', 'step', 'stp', 'igs', 'iges', 'obj', 'ply', 'zip'];
 
 function back(string $code): void {

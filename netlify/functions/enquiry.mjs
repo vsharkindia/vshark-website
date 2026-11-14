@@ -17,11 +17,12 @@
  * 303 to /contact.html?error=<code>#enquiry on problems, plain /thanks.html for the spam trap.
  */
 
-export const MAX_BYTES = 5 * 1024 * 1024;   // Netlify function requests are capped at ~6 MB in total
+// 3 MB: Graph sendMail takes attachments up to 3 MB in one request. Larger files would need a draft +
+// upload session, which requires Mail.ReadWrite (read access to the mailbox); the app deliberately has Mail.Send only.
+export const MAX_BYTES = 3 * 1024 * 1024;
 export const ALLOWED_EXT = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'webp', 'heic', 'stl', 'step', 'stp', 'igs', 'iges', 'obj', 'ply', 'zip'];
 const ATTR = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'landing_page', 'referrer'];
 const GRAPH = 'https://graph.microsoft.com/v1.0';
-const INLINE_LIMIT = 3 * 1024 * 1024;       // Graph sendMail: larger attachments need an upload session
 
 export const config = { path: '/send-enquiry.php' };
 
@@ -101,22 +102,8 @@ export async function sendViaGraph(e, text) {
   };
   const token = await graphToken();
   const a = e.attachment;
-  if (!a || a.bytes.length <= INLINE_LIMIT) {
-    if (a) message.attachments = [{ '@odata.type': '#microsoft.graph.fileAttachment', name: a.name, contentType: a.type, contentBytes: b64(a.bytes) }];
-    await graph(token, 'POST', `${box}/sendMail`, { message, saveToSentItems: true });
-    return;
-  }
-  // large attachment: draft -> upload session (chunks) -> send
-  const draft = await graph(token, 'POST', `${box}/messages`, message);
-  const session = await graph(token, 'POST', `${box}/messages/${draft.id}/attachments/createUploadSession`,
-    { AttachmentItem: { attachmentType: 'file', name: a.name, size: a.bytes.length, contentType: a.type } });
-  const CHUNK = 320 * 1024 * 10;   // multiple of 320 KiB, under the 4 MB per-request limit
-  for (let start = 0; start < a.bytes.length; start += CHUNK) {
-    const part = a.bytes.subarray(start, Math.min(start + CHUNK, a.bytes.length));
-    const r = await fetch(session.uploadUrl, { method: 'PUT', headers: { 'Content-Length': String(part.length), 'Content-Range': `bytes ${start}-${start + part.length - 1}/${a.bytes.length}` }, body: part });
-    if (!r.ok) throw new Error(`upload chunk ${r.status}: ${(await r.text()).slice(0, 200)}`);
-  }
-  await graph(token, 'POST', `${box}/messages/${draft.id}/send`);
+  if (a) message.attachments = [{ '@odata.type': '#microsoft.graph.fileAttachment', name: a.name, contentType: a.type, contentBytes: b64(a.bytes) }];
+  await graph(token, 'POST', `${box}/sendMail`, { message, saveToSentItems: true });
 }
 
 export default async (req, context) => {

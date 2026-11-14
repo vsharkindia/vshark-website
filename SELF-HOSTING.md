@@ -49,7 +49,7 @@ the production site shows "could not be sent" instead of pretending.
 ## Step 3 — test on Netlify before switching (staging)
 
 - Preview/staging URL: open the pull request, Netlify posts a deploy preview link.
-- Form: send an enquiry with and without an attachment (limit **5 MB**; PDF, Word, JPG, PNG, WEBP, HEIC, STL, STEP, IGES, OBJ, PLY, ZIP).
+- Form: send an enquiry with and without an attachment (limit **3 MB**; PDF, Word, JPG, PNG, WEBP, HEIC, STL, STEP, IGES, OBJ, PLY, ZIP).
   With the `MS_*` settings in place, the email must arrive at `ENQUIRY_TO` with the "Source:" block when the page was opened with `?utm_source=test`.
 - Meta team: GA4 DebugView (`?analytics_debug=1`) and the Lead flow. Pixel events from a non-verified domain may be filtered — final Pixel check after the switch.
 - Speed: PageSpeed Insights on the staging URL vs the live site.
