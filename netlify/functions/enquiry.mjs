@@ -8,6 +8,8 @@
  *   MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET   Entra ID app registration with Mail.Send (application)
  *   ENQUIRY_FROM   mailbox that sends, e.g. info@vsharksolutions.com
  *   ENQUIRY_TO     where enquiries go (comma-separated allowed); defaults to ENQUIRY_FROM
+ *   SITE_URL       optional, e.g. https://www.vsharksolutions.com — when the website itself is hosted elsewhere
+ *                  (Hostinger) and only this form runs on Netlify, redirects go back to that site.
  *   ENQUIRY_MODE   "dry-run" = validate and redirect but do not send (testing only).
  *                  Deploy previews / branch deploys without the MS_* settings run in dry-run automatically.
  *
@@ -24,7 +26,7 @@ const INLINE_LIMIT = 3 * 1024 * 1024;       // Graph sendMail: larger attachment
 export const config = { path: '/send-enquiry.php' };
 
 const env = (k) => (typeof Netlify !== 'undefined' ? Netlify.env.get(k) : process.env[k]) || '';
-const redirect = (loc) => new Response(null, { status: 303, headers: { Location: loc, 'Cache-Control': 'no-store' } });
+const redirect = (loc) => new Response(null, { status: 303, headers: { Location: (env('SITE_URL') || '').replace(/\/$/, '') + loc, 'Cache-Control': 'no-store' } });
 const back = (code) => redirect(`/contact.html?error=${encodeURIComponent(code)}#enquiry`);
 
 function field(fd, k, max = 200) {

@@ -68,9 +68,24 @@ the production site shows "could not be sent" instead of pretending.
 
 After the switch the Hostinger plan can be cancelled (export anything the vendor stored there first).
 
-## Alternative — keep Hostinger, remove the vendor from updates
+## Speed test (14 Nov 2026, from India, mobile, cold cache, median of 3)
+
+| Page | Hostinger (live) loaded | Netlify loaded | Server response Hostinger / Netlify |
+|---|---|---|---|
+| Home | 1.1 s | 2.0 s | 70 / 450 ms |
+| 3D scanning service | 0.8 s | 1.6 s | 70 / 300 ms |
+| Contact | 0.8 s | 2.0 s | 190 / 470 ms |
+| Blog | 1.4 s | 1.7 s | 250 / 560 ms |
+
+Netlify's free network serves India from Singapore, so it is roughly 1.5–2x slower here than Hostinger (India).
+Hence the recommended setup below: **keep Hostinger for hosting, take over deployment and the form.**
+
+## Recommended — keep Hostinger (fast in India), remove the vendor from updates and the form
 
 Ask the vendor for **SFTP (or FTP) access to the web folder** only. Store it as GitHub secrets
 `DEPLOY_HOST`, `DEPLOY_PORT`, `DEPLOY_USER`, `DEPLOY_PASSWORD`, `DEPLOY_PATH`, set the repository variable `AUTO_DEPLOY=true`:
 `.github/workflows/deploy.yml` then uploads every merge to `main`, skipping internal files.
-The form can still use our Microsoft 365 function by posting to the Netlify site, or keep `send-enquiry.php` with an SMTP mailbox.
+The form runs on Netlify (this repository's function) while the pages stay on Hostinger:
+- Netlify site env: the `MS_*` / `ENQUIRY_*` settings plus `SITE_URL=https://www.vsharksolutions.com` (redirects go back to Hostinger).
+- Optional: a `forms.vsharksolutions.com` CNAME to the Netlify site, so the form posts to our own domain.
+- The contact page's form `action` then points to `https://forms.vsharksolutions.com/send-enquiry.php` (one setting in the build).
