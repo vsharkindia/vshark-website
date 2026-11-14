@@ -1,7 +1,8 @@
 """
-Copy only the public website into dist/ (what Netlify publishes).
+Copy only the public website into dist/.
 
-  python build/publish.py
+  python build/publish.py                  # Netlify (form = netlify/functions/enquiry.mjs, headers in _headers)
+  python build/publish.py --target apache  # Hostinger / Apache / LiteSpeed (adds .htaccess + send-enquiry.php)
 
 Everything internal stays out: source data, build scripts, notes (*.md), server-only PHP and
 config, editor/tooling files. The rules mirror the exclude list in .github/workflows/deploy.yml
@@ -23,7 +24,10 @@ SKIP_FILES = ['*.md', '*.py', '*.toml', '*.yml', '*.yaml', '*.csv', '*.code-work
 def skipped(name):
     return any(fnmatch.fnmatch(name, pat) for pat in SKIP_FILES)
 
+APACHE_EXTRA = ['.htaccess', 'send-enquiry.php']   # the server's rules and the form handler (no secrets in either)
+
 def main():
+    apache = '--target' in sys.argv and sys.argv[sys.argv.index('--target') + 1] == 'apache'
     if os.path.isdir(DIST):
         shutil.rmtree(DIST)
     n = size = 0
@@ -39,12 +43,20 @@ def main():
             shutil.copy2(src, dst)
             n += 1
             size += os.path.getsize(src)
-    if os.environ.get('ALLOW_INDEXING') != '1':
-        with open(os.path.join(DIST, '_headers'), 'w', encoding='utf-8') as fh:
-            fh.write('/*\n  X-Robots-Tag: noindex, nofollow\n')
-    print(f'published {n} files ({size / 1e6:.1f} MB) to dist/'
-          + ('' if os.environ.get('ALLOW_INDEXING') == '1' else ' — noindex (staging/preview)'))
-    leaked = [p for p in ('DEPLOY.md', 'build', 'data', 'netlify.toml', 'send-enquiry.php') if os.path.exists(os.path.join(DIST, p))]
+    if apache:
+        # .htaccess itself marks every host except www.vsharksolutions.com as noindex
+        for f in APACHE_EXTRA:
+            shutil.copy2(os.path.join(ROOT, f), os.path.join(DIST, f))
+            n += 1
+        print(f'published {n} files ({size / 1e6:.1f} MB) to dist/ for Apache/LiteSpeed')
+    else:
+        if os.environ.get('ALLOW_INDEXING') != '1':
+            with open(os.path.join(DIST, '_headers'), 'w', encoding='utf-8') as fh:
+                fh.write('/*\n  X-Robots-Tag: noindex, nofollow\n')
+        print(f'published {n} files ({size / 1e6:.1f} MB) to dist/'
+              + ('' if os.environ.get('ALLOW_INDEXING') == '1' else ' — noindex (staging/preview)'))
+    internal = ['DEPLOY.md', 'build', 'data', 'netlify.toml', 'enquiry-config.php', 'enquiry-config.sample.php']
+    leaked = [p for p in internal + ([] if apache else ['send-enquiry.php']) if os.path.exists(os.path.join(DIST, p))]
     if leaked:
         sys.exit(f'internal files leaked into dist/: {leaked}')
 

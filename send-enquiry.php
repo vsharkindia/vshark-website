@@ -2,9 +2,14 @@
 /*
  * VShark Solutions — contact form handler for the production server.
  * Receives the enquiry form from contact.html, emails it (with the optional attachment) and
- * redirects to thanks.html. No external libraries: uses SMTP (recommended) or PHP mail().
+ * redirects to thanks.html. No external libraries. Sends through, in order of preference:
+ *   1. Microsoft 365 (Graph API, app-only)  — 'graph' settings; same app as netlify/functions/enquiry.mjs
+ *   2. SMTP                                 — 'smtp' settings
+ *   3. PHP mail()
  *
- * Settings live in enquiry-config.php on the server (copy enquiry-config.sample.php; never commit it).
+ * Settings live in enquiry-config.php on the server, never in the repository (copy enquiry-config.sample.php).
+ * Preferred location: one folder ABOVE the web root (e.g. domains/<site>/enquiry-config.php), so it can never be
+ * downloaded; next to this file also works (.htaccess denies it).
  * On Netlify this file is not published: netlify/functions/enquiry.mjs answers /send-enquiry.php instead.
  */
 
@@ -31,8 +36,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
-$cfgFile = __DIR__ . '/enquiry-config.php';
-if (!is_file($cfgFile)) {
+$cfgFile = null;
+foreach ([dirname(__DIR__) . '/enquiry-config.php', __DIR__ . '/enquiry-config.php'] as $c) {
+    if (is_file($c)) { $cfgFile = $c; break; }
+}
+if (!$cfgFile) {
     error_log('send-enquiry: enquiry-config.php is missing');
     back('config');
 }
@@ -154,8 +162,47 @@ function smtp_send(array $s, string $from, string $to, string $data): bool {
     return $ok;
 }
 
+/** Microsoft 365 via Graph (client credentials). The app needs Mail.Send only; attachments up to 3 MB. */
+function graph_send(array $g, string $from, array $to, string $subject, string $text, string $replyName, string $replyEmail, ?array $attach): bool {
+    $post = function (string $url, string $body, array $headers): array {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $body, CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 30, CURLOPT_CONNECTTIMEOUT => 10]);
+        $res = curl_exec($ch);
+        $code = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        $err = curl_error($ch);
+        curl_close($ch);
+        return [$code, $res === false ? $err : (string)$res];
+    };
+    [$code, $res] = $post('https://login.microsoftonline.com/' . rawurlencode((string)$g['tenant_id']) . '/oauth2/v2.0/token',
+        http_build_query(['client_id' => $g['client_id'], 'client_secret' => $g['client_secret'],
+            'scope' => 'https://graph.microsoft.com/.default', 'grant_type' => 'client_credentials']),
+        ['Content-Type: application/x-www-form-urlencoded']);
+    $token = $code === 200 ? (json_decode($res, true)['access_token'] ?? '') : '';
+    if ($token === '') { error_log('send-enquiry: Graph token ' . $code . ': ' . substr($res, 0, 300)); return false; }
+    $msg = [
+        'subject' => $subject,
+        'body' => ['contentType' => 'Text', 'content' => $text],
+        'toRecipients' => array_map(fn($a) => ['emailAddress' => ['address' => $a]], $to),
+        'replyTo' => [['emailAddress' => ['address' => $replyEmail, 'name' => $replyName]]],
+    ];
+    if ($attach) {
+        $msg['attachments'] = [['@odata.type' => '#microsoft.graph.fileAttachment', 'name' => $attach['name'],
+            'contentType' => 'application/octet-stream', 'contentBytes' => base64_encode($attach['data'])]];
+    }
+    [$code, $res] = $post('https://graph.microsoft.com/v1.0/users/' . rawurlencode($from) . '/sendMail',
+        json_encode(['message' => $msg, 'saveToSentItems' => true], JSON_UNESCAPED_UNICODE),
+        ['Authorization: Bearer ' . $token, 'Content-Type: application/json']);
+    if ($code !== 202) { error_log('send-enquiry: Graph sendMail ' . $code . ': ' . substr($res, 0, 300)); return false; }
+    return true;
+}
+
+$graph = $cfg['graph'] ?? [];
 $smtp = $cfg['smtp'] ?? [];
-if (!empty($smtp['host'])) {
+if (!empty($graph['client_secret'])) {
+    $recipients = array_values(array_filter(array_map('trim', explode(',', $to))));
+    $sent = graph_send($graph, $from, $recipients, $subject, $text, $name, $email, $attach);
+} elseif (!empty($smtp['host'])) {
     $data = implode("\r\n", array_merge(['To: <' . $to . '>', 'Subject: ' . $enc($subject)], $headers)) . "\r\n\r\n" . $body;
     $sent = smtp_send($smtp, $from, $to, $data);
 } else {
