@@ -3,7 +3,7 @@ slug: from-3d-scan-to-3d-print
 order: 9
 title: From 3D Scan to 3D Print: Rapid Prototyping From Real Parts
 title_tag: From 3D Scan to 3D Print: Rapid Prototyping | VShark
-description: How to go from a physical part to a 3D-printed prototype: scanning, CAD, print preparation and choosing a process, for engineers and designers in Coimbatore, India and the UAE.
+description: How to go from a physical part to a 3D-printed prototype: scanning, CAD, print preparation and process choice, for engineers in Coimbatore, India and the UAE.
 category: 3D Printing
 tags: 3D printing, rapid prototyping, scan to print, prototype, Coimbatore
 featured: blog-images/from-3d-scan-to-3d-print/3d-printed-prototype-of-an-engine-crankcase.webp

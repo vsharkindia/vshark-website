@@ -95,7 +95,7 @@ META = {
     'thanks.html': ('Thank you | VShark Solutions', 'Enquiry received.'),
     '404.html': ('Page not found | VShark Solutions', 'The page you are looking for has moved or does not exist.'),
     'about.html': ('About VShark Solutions – 3D Scanning & Engineering Since 2019',
-         'VShark Solutions is a 3D scanning, reverse engineering and 3D design company based in Coimbatore and Dubai, serving clients across India, the UAE and worldwide since 2019.'),
+         'VShark Solutions is a 3D scanning, reverse engineering and 3D design company in Coimbatore, with on-site scanning across India and the UAE since 2019.'),
     'privacy-policy.html': ('Privacy Policy | VShark Solutions',
          'How VShark Solutions collects, uses and protects personal data and files shared through our website, WhatsApp and email.'),
     'links.html': ('VShark Solutions – Links | WhatsApp, Quote, YouTube, Instagram',
@@ -646,7 +646,7 @@ def industry_page(ind):
 {xnav(P, D['industries'], ind, 'industries', 'All industries')}
 {cta(P, msg=f"Hi VShark, I work in {ind['name']} and would like to discuss a project.")}
 {LIGHTBOX}'''
-    return page(P, f"industries/{ind['slug']}.html", 'industries', body, ('js/portfolio.js',))
+    return page(P, f"industries/{ind['slug']}.html", 'industries', body, ('js/portfolio.js',), view=(ind['name'], 'Industry'))
 
 def video_embed(P, url, title):
     '''YouTube link -> privacy-friendly embed; anything else is treated as a local/hosted video file.'''
@@ -907,6 +907,11 @@ def contact_page():
     phones = ''.join(f'<a class="ccard" href="tel:{p["tel"]}">{ICON["phone"]}<span><small class="mono">{E(p["label"])}</small>{E(p["display"])}</span></a>' for p in C['phones'])
     addr = ''.join(f'<div class="ccard ccard--static">{ICON["pin"]}<span><small class="mono">{E(o["label"])} office</small>{"<br>".join(E(l) for l in o["lines"])}</span></div>' for o in C['offices'])
     mapq = quote(C['map'])
+    # Cloudflare Turnstile (free CAPTCHA): shown only when contact.turnstile_site_key is set in data/site.json;
+    # the matching secret goes in enquiry-config.php on the server ('turnstile' => ['secret' => ...]).
+    ts_key = C.get('turnstile_site_key', '')
+    turnstile = (f'<div class="cf-turnstile" data-sitekey="{E(ts_key)}" data-theme="light"></div>\n          '
+                 '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>\n          ') if ts_key else ''
     gmap = f'''    <section class="section blk cmap" data-reveal>
       <iframe title="Map: VShark Solutions, {E(C['map'])}" src="https://www.google.com/maps?q={mapq}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       <a class="sec-head__link" href="https://www.google.com/maps/search/?api=1&amp;query={mapq}" target="_blank" rel="noopener">Open in Google Maps {A}</a>
@@ -914,7 +919,7 @@ def contact_page():
     body = f'''{page_hero(P, [("Contact", None)], "( 06 ) — Contact", "Let's <em>scan it.</em>", "Tell us about your part, building or idea. We usually reply within one working day.")}
     <section class="section blk">
       <div class="contact">
-        <form class="cform" id="enquiry" name="enquiry" method="POST" action="send-enquiry.php" data-netlify="true" netlify-honeypot="company_url" enctype="multipart/form-data" data-reveal>
+        <form class="cform" id="enquiry" name="enquiry" method="POST" action="send-enquiry.php" enctype="multipart/form-data" data-reveal>
           <input type="hidden" name="form-name" value="enquiry">
           <!-- ad attribution, filled in by js/consent.js from the landing URL -->
           {''.join(f'<input type="hidden" name="{k}" data-attr>' for k in ('utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'landing_page', 'referrer'))}
@@ -927,11 +932,11 @@ def contact_page():
             <label class="field field--full"><span>I'm interested in *</span>
               <select name="interest" id="cInterest" required><option value="">Choose a service or product…</option>{svc_opts}{prod_opts}<option value="Other">Something else</option></select></label>
             <label class="field field--full"><span>Project details *</span><textarea name="message" rows="5" required placeholder="Part size, material, quantity, deadline, file formats you need…"></textarea></label>
-            <label class="field field--full field--file"><span>Attach a file (optional, max 8 MB)</span><input type="file" name="attachment" accept=".pdf,.jpg,.jpeg,.png,.stl,.step,.stp,.zip"></label>
+            <label class="field field--full field--file"><span>Attach a file (optional, max 3 MB: drawing, photo, STL, STEP or IGES. Larger files: send via WhatsApp or email)</span><input type="file" name="attachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.heic,.stl,.step,.stp,.igs,.iges,.obj,.ply,.zip"></label>
           </div>
           <label class="consent"><input type="checkbox" name="consent" value="yes" required>
             <span>I agree to VShark Solutions using my details and any files I share to respond to my enquiry, as described in the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
-          <button class="btn btn--accent magnetic" type="submit"><span>Send enquiry</span>{A}</button>
+          {turnstile}<button class="btn btn--accent magnetic" type="submit"><span>Send enquiry</span>{A}</button>
         </form>
         <aside class="contact__side" data-reveal>
           <a class="ccard ccard--wa" href="{wa_link(WA_DEFAULT)}" target="_blank" rel="noopener">{ICON['wa']}<span><small class="mono">Fastest</small>Chat on WhatsApp</span></a>
@@ -974,17 +979,17 @@ def coimbatore_page():
                ('Deviation colour map and report', 'Compare a made part against its CAD or a master.'),
                ('Measured 2D drawing', 'Shop-floor use and repair.')]
     del_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(d)}</p></div>' for k, (t, d) in enumerate(deliver))
-    rates = [('Scanner-based inspection and scanning', 'Rs 1,500 per hour'),
-             ('Portable CMM arm scanning and inspection', 'Rs 2,500 per hour'),
-             ('CAD design from scan data or sketches', 'Rs 1,000 per hour'),
-             ('Building, facade and heritage structure scanning', 'Rs 3,000 per hour')]
-    rate_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(r)}</p></div>' for k, (t, r) in enumerate(rates))
+    rate_html = '\n'.join(f'          <div class="feat" data-reveal><i class="mono">{k+1:02d}</i><h3>{E(t)}</h3><p>{E(r)}</p></div>' for k, (t, r) in enumerate([
+        ('Scanner-based inspection and scanning', 'Quote on request. Tell us the part and scope.'),
+        ('Portable CMM arm scanning and inspection', 'Quote on request. Tell us the part and scope.'),
+        ('CAD design from scan data or sketches', 'Quote on request. Tell us the part and scope.'),
+        ('Building, facade and heritage structure scanning', 'Quote on request. Tell us the part and scope.')]))
     faqs = [
         ('Do you offer 3D scanning in Coimbatore?', 'Yes. VShark Solutions offers 3D scanning in Coimbatore, at our facility or at your plant, and delivers STL meshes or editable CAD files.'),
         ('Can you scan at my factory?', 'Yes. We travel to your plant in Coimbatore and across India. This suits large parts, heavy castings and tooling that cannot be moved.'),
         ('Can you turn a scanned part into editable CAD?', 'Yes. We provide reverse engineering and scan-to-CAD, delivered as STEP files and other neutral formats such as IGES and Parasolid.'),
         ('How long does a 3D scanning job take?', 'Small parts can be scanned in under a day. Larger parts and bigger quantities take more time, and CAD modelling adds time depending on the part. We give a delivery date with the quote.'),
-        ('How much does 3D scanning cost in Coimbatore?', 'The price depends on the part size, surface, accuracy and location, so we quote per job. As of November 2026 our listed rates are Rs 1,500 per hour for scanner-based inspection and scanning, Rs 2,500 per hour for portable CMM arm work, Rs 1,000 per hour for CAD design and Rs 3,000 per hour for building scans. On-site travel and accommodation are charged extra.'),
+        ('How much does 3D scanning cost in Coimbatore?', 'The price depends on the part size, surface, accuracy and location, so we quote per job. Quote on request: tell us the part and the scope (scanning, CMM inspection, CAD, or a site scan) and we send a written quote. On-site travel and accommodation are charged extra.'),
         ('What file formats do you deliver?', 'STL and PLY meshes, and STEP, IGES or Parasolid CAD files. Inspection results come as deviation colour maps and reports.'),
         ('Do you offer CMM inspection in Coimbatore?', 'Yes. We offer CMM arm inspection for dimensional checks against a drawing or CAD model.'),
     ]
@@ -1051,8 +1056,8 @@ def coimbatore_page():
     </section>
 
     <section class="section blk">
-      <div class="sec-head"><div><span class="tag mono">Pricing, as of November 2026</span><h2 class="h2" data-reveal>Quoted per job, <em>rates listed.</em></h2></div></div>
-      <p class="lead-lg" data-reveal>Scanning cost depends on part size, surface, accuracy and location, so we quote per job after seeing the part. Our listed rates for related services in India are below. On-site travel and accommodation are charged extra, and rates can change, so confirm them when you ask for a quote.</p>
+      <div class="sec-head"><div><span class="tag mono">Pricing</span><h2 class="h2" data-reveal>Quoted per job, <em>on request.</em></h2></div></div>
+      <p class="lead-lg" data-reveal>Scanning cost depends on part size, surface, accuracy and location, so we quote per job after seeing the part. Send us the part and the scope and we reply with a written quote. On-site travel and accommodation are charged extra.</p>
       <div class="feat-grid">
 {rate_html}
       </div>
@@ -1066,7 +1071,8 @@ def coimbatore_page():
     </section>
     <script type="application/ld+json">{svc_ld}</script>
 {cta(P, msg="Hi VShark, I need 3D scanning in Coimbatore for: ")}"""
-    return page(P, '3d-scanning-services-coimbatore.html', 'services', body, wa_msg="Hi VShark, I need 3D scanning in Coimbatore for: ")
+    return page(P, '3d-scanning-services-coimbatore.html', 'services', body, wa_msg="Hi VShark, I need 3D scanning in Coimbatore for: ",
+                view=('3D Scanning Services in Coimbatore', 'Service'))
 
 
 def notfound_page():
@@ -1607,7 +1613,10 @@ def build_product_pages():
         <p class="mono">India {E(C['phones'][0]['display'])} · UAE {E(C['phones'][1]['display'])}</p>
       </div>
     </section>'''
-        out.append(write(rel, page(P, rel, m.get('active', 'products'), html_page, wa_msg=m['wa_msg'] if 'wa_msg' in m else WA_DEFAULT)))
+        # Meta ViewContent / GA4 view_content: name = page title, category from front matter (view_category) or the section
+        view = (m['title_tag'].split(' | ')[0].strip(),
+                m.get('view_category') or ('Product' if m.get('active', 'products') == 'products' else 'Service'))
+        out.append(write(rel, page(P, rel, m.get('active', 'products'), html_page, wa_msg=m['wa_msg'] if 'wa_msg' in m else WA_DEFAULT, view=view)))
     return out
 
 # ---------------------------------------------------------------- final pass (S05/S07 technical SEO)

@@ -10,11 +10,21 @@ AddDefaultCharset UTF-8
   RewriteEngine On
 
   # 1. One canonical address: https://www.vsharksolutions.com
+  #    Other hosts (the vsharksolutions.org test copy) only get http -> https and stay where they are.
+  RewriteCond %{HTTP_HOST} ^(www\.)?vsharksolutions\.com$ [NC]
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !=https
   RewriteRule ^ https://www.vsharksolutions.com%{REQUEST_URI} [L,R=301]
   RewriteCond %{HTTP_HOST} ^vsharksolutions\.com$ [NC]
   RewriteRule ^ https://www.vsharksolutions.com%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTP_HOST} !^(www\.)?vsharksolutions\.com$ [NC]
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Any host other than www.vsharksolutions.com is a test copy: keep it out of search engines (header below)
+  RewriteCond %{HTTP_HOST} !^www\.vsharksolutions\.com$ [NC]
+  RewriteRule ^ - [E=VS_NOINDEX:1]
 
   # 2. Pages of the previous (PHP) website -> their new equivalents
   RewriteRule ^index\.php$ / [L,R=301]
@@ -28,7 +38,6 @@ AddDefaultCharset UTF-8
   # 3. Source and tooling files are not part of the public website
   RewriteRule ^(build|data|collateral|\.github|\.git)(/|$) - [F,L]
   RewriteRule ^([^/]+\.md|README\.txt|netlify\.toml|enquiry-config(\.sample)?\.php)$ - [F,L]
-
   # 4. Clean URLs: /about serves about.html, /services/3d-scanning serves services/3d-scanning.html
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
@@ -50,6 +59,8 @@ AddDefaultCharset UTF-8
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
   Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Robots-Tag "noindex, nofollow" env=VS_NOINDEX
+  Header always set X-Robots-Tag "noindex, nofollow" env=REDIRECT_VS_NOINDEX
   # HTML always revalidates; CSS/JS carry ?v=<hash> so they can be cached for a year
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
