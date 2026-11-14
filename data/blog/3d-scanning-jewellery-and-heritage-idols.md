@@ -3,7 +3,7 @@ slug: 3d-scanning-jewellery-and-heritage-idols
 order: 10
 title: 3D Scanning for Jewellery and Heritage Idols: Capturing Fine Detail
 title_tag: 3D Scanning for Jewellery & Temple Idols | VShark Solutions
-description: How 3D scanning captures fine detail in jewellery, temple idols and heritage carvings, for replication, restoration, casting patterns and digital archives in India and the UAE.
+description: How 3D scanning captures fine detail in jewellery, temple idols and heritage carvings, for replication, restoration and casting patterns in India and the UAE.
 category: 3D Scanning
 tags: jewellery 3D scanning, idol 3D scanning, heritage digitisation, casting pattern, temple jewellery
 featured: blog-images/3d-scanning-jewellery-and-heritage-idols/gold-pendant-and-3d-printed-casting-pattern.webp

@@ -95,7 +95,7 @@ META = {
     'thanks.html': ('Thank you | VShark Solutions', 'Enquiry received.'),
     '404.html': ('Page not found | VShark Solutions', 'The page you are looking for has moved or does not exist.'),
     'about.html': ('About VShark Solutions – 3D Scanning & Engineering Since 2019',
-         'VShark Solutions is a 3D scanning, reverse engineering and 3D design company based in Coimbatore and Dubai, serving clients across India, the UAE and worldwide since 2019.'),
+         'VShark Solutions is a 3D scanning, reverse engineering and 3D design company in Coimbatore, with on-site scanning across India and the UAE since 2019.'),
     'privacy-policy.html': ('Privacy Policy | VShark Solutions',
          'How VShark Solutions collects, uses and protects personal data and files shared through our website, WhatsApp and email.'),
     'links.html': ('VShark Solutions – Links | WhatsApp, Quote, YouTube, Instagram',
