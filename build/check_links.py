@@ -5,7 +5,7 @@ from urllib.parse import urlsplit, unquote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 pages = [p for p in glob.glob(os.path.join(ROOT, '**', '*.html'), recursive=True)
-         if not any(x in p for x in ('node_modules', '.git', os.sep + 'build' + os.sep))]
+         if not any(x in p for x in ('node_modules', '.git', os.sep + 'build' + os.sep, os.sep + 'dist' + os.sep))]
 ids = {}
 for p in pages:
     ids[os.path.normpath(p)] = set(re.findall(r'\sid="([^"]+)"', open(p, encoding='utf-8').read()))

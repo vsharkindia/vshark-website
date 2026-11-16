@@ -2,16 +2,21 @@
 /*
  * VShark Solutions — contact form handler for the production server.
  * Receives the enquiry form from contact.html, emails it (with the optional attachment) and
- * redirects to thanks.html. No external libraries: uses SMTP (recommended) or PHP mail().
+ * redirects to thanks.html. No external libraries. Sends through, in order of preference:
+ *   1. Microsoft 365 (Graph API, app-only)  — 'graph' settings; same app as netlify/functions/enquiry.mjs
+ *   2. SMTP                                 — 'smtp' settings
+ *   3. PHP mail()
  *
- * Settings live in enquiry-config.php on the server (copy enquiry-config.sample.php; never commit it).
- * On the Netlify preview this file is not executed — Netlify Forms handles the form there.
+ * Settings live in enquiry-config.php on the server, never in the repository (copy enquiry-config.sample.php).
+ * Preferred location: one folder ABOVE the web root (e.g. domains/<site>/enquiry-config.php), so it can never be
+ * downloaded; next to this file also works (.htaccess denies it).
+ * On Netlify this file is not published: netlify/functions/enquiry.mjs answers /send-enquiry.php instead.
  */
 
 declare(strict_types=1);
 
-const MAX_BYTES = 8 * 1024 * 1024;                       // matches the "max 8 MB" on the form
-const ALLOWED_EXT = ['pdf', 'jpg', 'jpeg', 'png', 'stl', 'step', 'stp', 'zip'];
+const MAX_BYTES = 3 * 1024 * 1024;                       // matches the "max 3 MB" on the form (and the Netlify function)
+const ALLOWED_EXT = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'webp', 'heic', 'stl', 'step', 'stp', 'igs', 'iges', 'obj', 'ply', 'zip'];
 
 function back(string $code): void {
     header('Location: /contact.html?error=' . rawurlencode($code) . '#enquiry', true, 303);
@@ -26,13 +31,80 @@ function one_line(string $v): string {                    // header-injection gu
     return trim(preg_replace('/[\r\n]+/', ' ', $v) ?? '');
 }
 
+/** Private folder for rate-limit counters and saved enquiries: next to enquiry-config.php, outside the web root. */
+function data_dir(string $sub): ?string {
+    $d = dirname(__DIR__) . '/enquiry-data/' . $sub;
+    if (!is_dir($d) && !@mkdir($d, 0700, true)) { error_log("send-enquiry: cannot create $d"); return null; }
+    return $d;
+}
+
+/** Per-visitor limit: at most $perHour submissions per hour and $perDay per day from one IP address. */
+function rate_limited(string $ip, int $perHour = 5, int $perDay = 20): bool {
+    $dir = data_dir('ratelimit');
+    if (!$dir || $ip === '') return false;                // never block real visitors because of a server problem
+    $file = $dir . '/' . hash('sha256', $ip);              // no plain IP addresses on disk
+    $now = time();
+    $fp = @fopen($file, 'c+');
+    if (!$fp) return false;
+    flock($fp, LOCK_EX);
+    $times = array_filter(array_map('intval', explode(',', (string)stream_get_contents($fp))), fn($t) => $t > $now - 86400);
+    $lastHour = count(array_filter($times, fn($t) => $t > $now - 3600));
+    $blocked = $lastHour >= $perHour || count($times) >= $perDay;
+    if (!$blocked) $times[] = $now;
+    ftruncate($fp, 0); rewind($fp); fwrite($fp, implode(',', $times));
+    flock($fp, LOCK_UN); fclose($fp);
+    if (mt_rand(1, 50) === 1) {                            // occasional clean-up of old counters
+        foreach (glob($dir . '/*') ?: [] as $old) if (filemtime($old) < $now - 86400) @unlink($old);
+    }
+    return $blocked;
+}
+
+/** Cloudflare Turnstile (free CAPTCHA). Active only when 'turnstile' => ['secret' => …] is set in the config. */
+function turnstile_ok(array $t, string $ip): bool {
+    if (empty($t['secret'])) return true;
+    $token = (string)($_POST['cf-turnstile-response'] ?? '');
+    if ($token === '') return false;
+    $ch = curl_init('https://challenges.cloudflare.com/turnstile/v0/siteverify');
+    curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10,
+        CURLOPT_POSTFIELDS => http_build_query(['secret' => $t['secret'], 'response' => $token, 'remoteip' => $ip])]);
+    $res = json_decode((string)curl_exec($ch), true);
+    curl_close($ch);
+    if (empty($res['success'])) error_log('send-enquiry: Turnstile failed: ' . implode(',', (array)($res['error-codes'] ?? ['no response'])));
+    return !empty($res['success']);
+}
+
+/** Does the file content match its extension? Blocks programs and scripts renamed to an allowed extension. */
+function content_ok(string $ext, string $data): bool {
+    $head = substr($data, 0, 4096);
+    foreach (["MZ", "\x7FELF", "#!", "\xCA\xFE\xBA\xBE", "\xFE\xED\xFA"] as $bad) if (strncmp($head, $bad, strlen($bad)) === 0) return false;
+    if (preg_match('/<\?php|<script\b|<html\b|<svg\b/i', $head)) return false;
+    $text = !preg_match('/[\x00-\x08\x0E-\x1F]/', $head);  // plain text (no control bytes)
+    switch ($ext) {
+        case 'pdf':  return strncmp($head, '%PDF-', 5) === 0;
+        case 'png':  return strncmp($head, "\x89PNG\r\n\x1A\n", 8) === 0;
+        case 'jpg': case 'jpeg': return strncmp($head, "\xFF\xD8\xFF", 3) === 0;
+        case 'webp': return strncmp($head, 'RIFF', 4) === 0 && substr($head, 8, 4) === 'WEBP';
+        case 'heic': return substr($head, 4, 4) === 'ftyp';
+        case 'zip': case 'docx': return strncmp($head, "PK\x03\x04", 4) === 0 || strncmp($head, "PK\x05\x06", 4) === 0;
+        case 'doc':  return strncmp($head, "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1", 8) === 0;
+        case 'step': case 'stp': return stripos(ltrim($head), 'ISO-10303-21') === 0;
+        case 'ply':  return strncmp($head, 'ply', 3) === 0;
+        case 'igs': case 'iges': case 'obj': return $text;
+        case 'stl':  return true;                          // ASCII ("solid …") or binary (any 80-byte header)
+    }
+    return false;
+}
+
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Location: /contact.html', true, 303);
     exit;
 }
 
-$cfgFile = __DIR__ . '/enquiry-config.php';
-if (!is_file($cfgFile)) {
+$cfgFile = null;
+foreach ([dirname(__DIR__) . '/enquiry-config.php', __DIR__ . '/enquiry-config.php'] as $c) {
+    if (is_file($c)) { $cfgFile = $c; break; }
+}
+if (!$cfgFile) {
     error_log('send-enquiry: enquiry-config.php is missing');
     back('config');
 }
@@ -55,6 +127,10 @@ $consent  = field('consent', 10);
 if ($name === '' || $interest === '' || $message === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) back('missing');
 if ($consent !== 'yes') back('consent');
 
+$ip = (string)($_SERVER['REMOTE_ADDR'] ?? '');         // the visitor's address (Hostinger's CDN passes it through)
+if (!turnstile_ok($cfg['turnstile'] ?? [], $ip)) back('captcha');
+if (rate_limited($ip)) { error_log('send-enquiry: rate limit hit'); back('rate'); }
+
 // Optional attachment
 $attach = null;
 if (!empty($_FILES['attachment']) && ($_FILES['attachment']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
@@ -66,6 +142,7 @@ if (!empty($_FILES['attachment']) && ($_FILES['attachment']['error'] ?? UPLOAD_E
     if (!in_array($ext, ALLOWED_EXT, true)) back('type');
     $safeName = preg_replace('/[^A-Za-z0-9._-]+/', '_', $orig) ?: ('attachment.' . $ext);
     $attach = ['name' => $safeName, 'data' => (string)file_get_contents($f['tmp_name'])];
+    if (!content_ok($ext, $attach['data'])) { error_log("send-enquiry: content does not match .$ext"); back('type'); }
 }
 
 // ---------------------------------------------------------------- build the email
@@ -154,15 +231,71 @@ function smtp_send(array $s, string $from, string $to, string $data): bool {
     return $ok;
 }
 
+/** Microsoft 365 via Graph (client credentials). The app needs Mail.Send only; attachments up to 3 MB. */
+function graph_send(array $g, string $from, array $to, string $subject, string $text, string $replyName, string $replyEmail, ?array $attach): bool {
+    $post = function (string $url, string $body, array $headers): array {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $body, CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 30, CURLOPT_CONNECTTIMEOUT => 10]);
+        $res = curl_exec($ch);
+        $code = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        $err = curl_error($ch);
+        curl_close($ch);
+        return [$code, $res === false ? $err : (string)$res];
+    };
+    [$code, $res] = $post('https://login.microsoftonline.com/' . rawurlencode((string)$g['tenant_id']) . '/oauth2/v2.0/token',
+        http_build_query(['client_id' => $g['client_id'], 'client_secret' => $g['client_secret'],
+            'scope' => 'https://graph.microsoft.com/.default', 'grant_type' => 'client_credentials']),
+        ['Content-Type: application/x-www-form-urlencoded']);
+    $token = $code === 200 ? (json_decode($res, true)['access_token'] ?? '') : '';
+    if ($token === '') { error_log('send-enquiry: Graph token ' . $code . ': ' . substr($res, 0, 300)); return false; }
+    $msg = [
+        'subject' => $subject,
+        'body' => ['contentType' => 'Text', 'content' => $text],
+        'toRecipients' => array_map(fn($a) => ['emailAddress' => ['address' => $a]], $to),
+        'replyTo' => [['emailAddress' => ['address' => $replyEmail, 'name' => $replyName]]],
+    ];
+    if ($attach) {
+        $msg['attachments'] = [['@odata.type' => '#microsoft.graph.fileAttachment', 'name' => $attach['name'],
+            'contentType' => 'application/octet-stream', 'contentBytes' => base64_encode($attach['data'])]];
+    }
+    [$code, $res] = $post('https://graph.microsoft.com/v1.0/users/' . rawurlencode($from) . '/sendMail',
+        json_encode(['message' => $msg, 'saveToSentItems' => true], JSON_UNESCAPED_UNICODE),
+        ['Authorization: Bearer ' . $token, 'Content-Type: application/json']);
+    if ($code !== 202) { error_log('send-enquiry: Graph sendMail ' . $code . ': ' . substr($res, 0, 300)); return false; }
+    return true;
+}
+
+$graph = $cfg['graph'] ?? [];
 $smtp = $cfg['smtp'] ?? [];
-if (!empty($smtp['host'])) {
+if (!empty($graph['client_secret'])) {
+    $recipients = array_values(array_filter(array_map('trim', explode(',', $to))));
+    $sent = graph_send($graph, $from, $recipients, $subject, $text, $name, $email, $attach);
+} elseif (!empty($smtp['host'])) {
     $data = implode("\r\n", array_merge(['To: <' . $to . '>', 'Subject: ' . $enc($subject)], $headers)) . "\r\n\r\n" . $body;
     $sent = smtp_send($smtp, $from, $to, $data);
 } else {
     $sent = mail($to, $enc($subject), $body, implode("\r\n", $headers), '-f' . $from);
 }
 
-if (!$sent) back('send');
+if (!$sent) {
+    // Never lose an enquiry: keep it on the server (outside the web root) and send a short notice to info@ by PHP mail().
+    $dir = data_dir('unsent/' . gmdate('Ymd-His') . '-' . bin2hex(random_bytes(4)));
+    $saved = $dir && file_put_contents($dir . '/enquiry.txt', "Subject: $subject\r\n\r\n$text") !== false;
+    if ($saved && $attach) file_put_contents($dir . '/' . $attach['name'], $attach['data']);
+    error_log('send-enquiry: email failed, enquiry ' . ($saved ? "saved in $dir" : 'COULD NOT BE SAVED'));
+    if ($saved) {
+        @mail($to, $enc('Website enquiry NOT delivered by Microsoft 365: ' . $interest . ' — ' . $name),
+            "The website could not email this enquiry through Microsoft 365. It is saved on the Hostinger server in\r\n"
+            . str_replace(dirname(__DIR__, 3), '~', $dir) . "\r\n(File Manager, one folder above public_html: enquiry-data/unsent).\r\n\r\n"
+            . "Please check the contact form settings (client secret expired?).\r\n\r\n" . $text,
+            implode("\r\n", ['MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . $email]));
+        // The enquiry is safe, so the visitor gets the normal thank-you page (and the conversion counts).
+        header('Location: /thanks.html?sent=1', true, 303);
+        exit;
+    }
+    back('send');
+}
 // ?sent=1 marks a real submission: the thanks page fires the Lead / generate_lead conversion only then
 header('Location: /thanks.html?sent=1', true, 303);
 exit;
