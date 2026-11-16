@@ -172,8 +172,8 @@
   "hash": "9f977ec643a54c0059b075e381a1321cf40f70dd"
  },
  "industries/automobile.html": {
-  "date": "2026-11-14",
-  "hash": "ed0da93b8342712042100269b0256c30788daa79"
+  "date": "2026-11-16",
+  "hash": "04c63222aece2b328448abac9d1e29a994e0d0c0"
  },
  "industries/construction.html": {
   "date": "2026-11-14",
@@ -220,8 +220,8 @@
   "hash": "9ed1eb29c1672535aef47fcf0c88489a928d05e1"
  },
  "products/index.html": {
-  "date": "2026-11-09",
-  "hash": "ba7f0bc2a7beca8f927c97b10fd11072f352b9ee"
+  "date": "2026-11-16",
+  "hash": "8e2e1f97e3be1b9407b78eafe76a25dbe6dde189"
  },
  "reverse-engineering-coimbatore.html": {
   "date": "2026-11-14",
@@ -240,16 +240,16 @@
   "hash": "7ce95ff71e1bb7400e3708ed5db002467b7b7231"
  },
  "services/3d-scanning.html": {
-  "date": "2026-11-09",
-  "hash": "613f5e40f323c45d2a439510a092215d540b92bc"
+  "date": "2026-11-16",
+  "hash": "d902516c4ec7a46e87c6acd54af36218e83c3112"
  },
  "services/class-a-surfacing.html": {
   "date": "2026-11-09",
   "hash": "2d2d6a146b8aa1900761ec8af152986f55571d31"
  },
  "services/digital-metrology.html": {
-  "date": "2026-11-09",
-  "hash": "d0d59d7335500018345dac2fe1f4fe69d4c7ea01"
+  "date": "2026-11-16",
+  "hash": "dcc8dc502323fa959d87740955d9bf8b2c52509c"
  },
  "services/index.html": {
   "date": "2026-11-09",
@@ -260,8 +260,8 @@
   "hash": "a73642203a8148402093d35a45c6a01718c766d2"
  },
  "services/reverse-engineering.html": {
-  "date": "2026-11-09",
-  "hash": "0a9452c52bcc922f58122b93fd50450dac1a3f58"
+  "date": "2026-11-16",
+  "hash": "3fe279da93551080fc0517738b53042abdf17cfa"
  },
  "services/scan-to-bim.html": {
   "date": "2026-11-09",
