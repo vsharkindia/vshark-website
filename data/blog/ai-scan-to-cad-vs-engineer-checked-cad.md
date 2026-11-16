@@ -1,6 +1,5 @@
 ---
 slug: ai-scan-to-cad-vs-engineer-checked-cad
-draft: true
 order: 20
 title: AI scan-to-CAD vs engineer-checked CAD: what changes for a part you must manufacture
 title_tag: AI Scan-to-CAD vs Engineer-Checked CAD | VShark
