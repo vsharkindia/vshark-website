@@ -1412,6 +1412,8 @@ def load_posts():
         raw = open(os.path.join(BLOG_DIR, fn), encoding='utf-8').read()
         _, fm, body = raw.split('---\n', 2)
         p = dict(re.findall(r'(?m)^(\w+): (.*)$', fm))
+        if p.get('draft', '').strip() == 'true':
+            continue          # draft: not built, not in the sitemap (remove the draft line when ready)
         p['date'] = dates.get(p['slug'], today)
         if p['date'] > today:
             continue          # scheduled for later: not built, not in the sitemap
