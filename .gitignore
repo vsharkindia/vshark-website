@@ -9,3 +9,6 @@ enquiry-config.php
 
 # python bytecode from build/
 __pycache__/
+dist/
+.netlify/
+node_modules/
