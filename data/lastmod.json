@@ -211,6 +211,10 @@
   "date": "2026-11-14",
   "hash": "1f2dc2d2b186019ebe2e9573d4298378c43e2e94"
  },
+ "overseas-scan-to-cad.html": {
+  "date": "2026-11-16",
+  "hash": "333af9c2e7cc2a50ac25cea70573f8da7a00b596"
+ },
  "portfolio/index.html": {
   "date": "2026-11-09",
   "hash": "7392dc57c2896c7afd2a0427d4aaa7a9f048fac8"
@@ -228,8 +232,8 @@
   "hash": "d4f508316be03ecf102b94cf322ef18b2fb1f0cd"
  },
  "reverse-engineering-services-india.html": {
-  "date": "2026-11-14",
-  "hash": "d27d1488cd8b2c94aeca53f2d06a533012ac2cad"
+  "date": "2026-11-16",
+  "hash": "972dd2d3f7cdf6fe87913f75a09aba1ce89c6a20"
  },
  "reverse-engineering-services-tamil-nadu.html": {
   "date": "2026-11-14",

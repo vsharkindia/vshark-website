@@ -112,6 +112,8 @@ Based elsewhere in India or in the UAE? Send the photo; the UAE is a service are
 - Office hours 9 AM to 7 PM.
 - Choosing between providers? Read [how to choose a 3D scanning service](/best-3d-scanning-service-coimbatore). Service overview: [reverse engineering](/services/reverse-engineering).
 
+Already own a 3D scanner? See [scan to CAD for scanner owners](/overseas-scan-to-cad?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s65&utm_content=hub-re-s65).
+
 [Send a photo and a short description of your part for a quote](/contact?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s30&utm_content=reverse-engineering-services-india) or email info@vsharksolutions.com.
 
 ### FAQ
