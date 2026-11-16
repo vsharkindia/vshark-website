@@ -32,7 +32,7 @@ Copy this into an email. Short answers are fine; "not known" is a valid answer a
 | 6 | Tolerances and deviation target | The tolerance on the critical features, and the average and worst-case deviation you accept between the model and the scan. | Neither side can say whether the model passes. |
 | 7 | Material and process | Cast, machined, moulded, printed or fabricated? Raw or finished surface? Wall thickness, draft, shrink allowance. | Casting draft is modelled as tilt, or a single-sided scan gets a wall thickness that is a guess. |
 | 8 | Mating parts | Your CAD or drawings of the parts it fits to, or at least their key dimensions. | We take mating dimensions from the scan instead of your authority, and fit checks fail. |
-| 9 | Deliverables and software | STEP as the base, plus IGES or Parasolid if needed, and the software that opens it (for example SolidWorks or Fusion). Say if you also want the STL, a deviation report PDF, or a script. Neutral formats open in these tools; native files are not supplied as standard. | You get a format your system reads badly. |
+| 9 | Deliverables and software | STEP as the base, plus IGES or Parasolid if needed, and the software that opens it (for example SolidWorks or Fusion). Say if you also want the STL, a deviation report PDF, or a script. Neutral formats open in these tools. | You get a format your system reads badly. |
 | 10 | NDA, IP and deadline | Whether an NDA is needed (say so before sending data), who owns the finished model, the date you need it, and how many revision rounds you expect. | Data waits until paperwork is agreed, and the date slips. |
 
 ### How should I send the scan data?
@@ -65,7 +65,7 @@ Yes, but not with one click. The mesh is used as a reference and the part is reb
 The full-resolution scan, units and one known dimension, a datum description, the purpose of the model, the features that must be exact, tolerances, material and process, mating parts, the formats you want and any NDA. A photo of the real part helps.
 
 **What file formats do you deliver?**
-STEP as the base, with IGES, Parasolid and other neutral formats on request. These open in SolidWorks, Fusion and other CAD software. Native files of one CAD system are not supplied as standard.
+STEP as the base, with IGES, Parasolid and other neutral formats on request. These open in SolidWorks, Fusion and other CAD software.
 
 **How accurate will the CAD be against my scan?**
 It depends on the scan noise, the surface and the process. We agree a deviation target for the critical features and the rest of the part before starting, and check the model against your scan.
@@ -74,7 +74,7 @@ It depends on the scan noise, the surface and the process. We agree a deviation 
 It is best if you do. Mating dimensions from your CAD or drawing are more reliable than dimensions measured from a scan.
 
 **Can you sign an NDA before I send the data?**
-Tell us in your brief that you need one.
+Yes, we can sign your NDA. Tell us before you send data.
 
 **Where are you based?**
 We scan and model from India and the UAE and work with clients abroad. Send a photo or the file and your brief through the [contact page](/contact?service=reverse-engineering&utm_source=website&utm_medium=seo&utm_campaign=2026-11-s66&utm_content=cta) and we will reply with a quote.
