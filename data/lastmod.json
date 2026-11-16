@@ -25,7 +25,7 @@
  },
  "3d-scanning-services-india.html": {
   "date": "2026-11-16",
-  "hash": "4f988a154f8b1d9bfceffba1c944f006eada7769"
+  "hash": "6747a3f7e3a557e21f328dda73eacfa33bfb246a"
  },
  "3d-scanning-services-pune.html": {
   "date": "2026-11-14",
@@ -42,6 +42,10 @@
  "about.html": {
   "date": "2026-11-14",
   "hash": "22b9f3e61c49adb96192a9ba8c211f6b7dd0ccfd"
+ },
+ "accessory-fitment-cad-from-scanned-vehicle.html": {
+  "date": "2026-11-16",
+  "hash": "1783ccfea38dd9c4b641ef97f35d59f38e6d506e"
  },
  "automotive-reverse-engineering-india.html": {
   "date": "2026-11-14",
@@ -207,6 +211,10 @@
   "date": "2026-11-09",
   "hash": "720fdb1732f4bc26aa26bd36015b00cc859f9cc3"
  },
+ "machine-plant-drawings-from-existing-parts.html": {
+  "date": "2026-11-16",
+  "hash": "b297621b0dc5213c35b52f93699fa06935034a81"
+ },
  "mould-die-3d-scanning-india.html": {
   "date": "2026-11-14",
   "hash": "1f2dc2d2b186019ebe2e9573d4298378c43e2e94"
@@ -234,6 +242,10 @@
  "reverse-engineering-services-tamil-nadu.html": {
   "date": "2026-11-14",
   "hash": "d9ce693fcc62521884a49e1462883589f9a5c497"
+ },
+ "sample-or-broken-part-to-cad-model.html": {
+  "date": "2026-11-16",
+  "hash": "6d428283e750df48769add3fdd57aae1ce5e7f0b"
  },
  "services/3d-printing.html": {
   "date": "2026-11-09",
@@ -278,5 +290,9 @@
  "vertex-tracker.html": {
   "date": "2026-11-14",
   "hash": "820ac3df0083dc8bc5aeece2e1c7bd464e71bd96"
+ },
+ "wrap-ppf-pattern-from-scan.html": {
+  "date": "2026-11-16",
+  "hash": "77cb0b26784cf02ee30636986994cc34b241f036"
  }
 }
