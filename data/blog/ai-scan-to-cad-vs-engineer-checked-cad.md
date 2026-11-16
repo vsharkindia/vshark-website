@@ -7,13 +7,13 @@ title_tag: AI Scan-to-CAD vs Engineer-Checked CAD | VShark
 description: Automated scan-to-CAD is getting faster. Here is what a human check still adds for parts that must fit, mate and be made. India and UAE.
 category: Reverse Engineering
 tags: scan to CAD, AI scan to CAD, engineer-checked CAD, STL to STEP, deviation check, reverse engineering
-featured: blog-images/ai-scan-to-cad-vs-engineer-checked-cad/scan-to-cad-mesh-vs-editable-cad-comparison.jpg
+featured: blog-images/ai-scan-to-cad-vs-engineer-checked-cad/scan-to-cad-mesh-vs-editable-cad-comparison.webp
 service: /services/reverse-engineering
 ---
 
 Engineer-checked scan-to-CAD means a person rebuilds the features and compares the model back to the scan; automatic output alone may not fit or machine correctly. Some tools aim to automate parts of scan-to-CAD, but a model made automatically still has to be checked against the scan and against how the part will be made and fitted. The check rebuilds features as a person would design them, compares the model to the scan, and delivers STEP, IGES or Parasolid. For a decorative or one-off model, automatic output may be enough; for a spare part that must fit a real machine, the check is what protects you.
 
-![Scan-to-CAD comparison of a triangle mesh and an editable CAD model of a machined part](blog-images/ai-scan-to-cad-vs-engineer-checked-cad/scan-to-cad-mesh-vs-editable-cad-comparison.jpg)
+![Scan mesh and editable CAD model of a cast housing shown side by side](blog-images/ai-scan-to-cad-vs-engineer-checked-cad/scan-to-cad-mesh-vs-editable-cad-comparison.webp)
 
 Last reviewed: November 2026
 
@@ -41,8 +41,8 @@ These are questions worth asking of any scan-to-CAD provider, ours included. Eac
 - **Scan noise, gaps or shiny-surface errors are carried into the model.** If the scan has holes or false points, a model built on it inherits them. See [how to scan shiny and reflective parts](/blog/scanning-shiny-reflective-parts).
 - **The datum or orientation is wrong.** If the part is not aligned to a sensible origin and axes, it may not sit correctly in the assembly.
 
-![Illustration of a worn cast part scan with a worn bore marked for an intended-size decision](blog-images/ai-scan-to-cad-vs-engineer-checked-cad/worn-part-scan-intended-size-decision.jpg)
-*Illustration generated with AI to show the idea; it is not a photo of our work.*
+![3D scan of a cast liner housing with an incomplete edge area circled for an intended-shape decision](blog-images/ai-scan-to-cad-vs-engineer-checked-cad/worn-part-scan-intended-size-decision.webp)
+*Real scan render from our portfolio. The circled edge is where a scan is incomplete, so the intended shape has to be agreed; it is not shown as a worn part.*
 
 ### What does an engineer-checked rebuild include?
 The steps below are the usual order. The detail of each step depends on the part. For a longer walk-through of the modelling stage, see [how a mesh becomes an editable model](/blog/scan-to-cad-in-solidworks).
@@ -51,14 +51,15 @@ The steps below are the usual order. The detail of each step depends on the part
 2. **Fit features to the scan.** Planes, cylinders and section sketches are fitted to the matching areas of the mesh, so dimensions come from clean geometry rather than the scatter of the scan.
 3. **Decide the intended size where the part is worn.** An engineer separates real design from wear and agrees with you what the intended size or shape should be. We state what we measured, and we do not guess silently.
 4. **Rebuild the features.** The model is built much as a designer would build the part from scratch: base shape, holes, ribs, fillets. Freeform areas are surfaced to follow the scan.
-5. **Compare the model to the scan.** The finished model is overlaid on the scan and the difference is shown as a deviation colour map. Areas that look wrong are corrected and checked again.
+5. **Compare the model to the scan.** The finished model is overlaid on the scan and the differences are checked. A deviation colour map is available on request. Areas that look wrong are corrected and checked again.
 6. **Deliver the files.** STEP, IGES or Parasolid, which open in common CAD software, and the STL scan on request. Native files are not offered.
 
 Fit and tolerance are agreed for each part with you before the work starts. We do not promise a single figure for every job.
 
-![Deviation colour map of a CAD model against its scan, green showing areas within tolerance](blog-images/ai-scan-to-cad-vs-engineer-checked-cad/scan-to-cad-overlay-deviation-colour-map.jpg)
+![Overlay of scan and CAD: grey scan mesh over the blue CAD model of a safety helmet shell](blog-images/ai-scan-to-cad-vs-engineer-checked-cad/scan-to-cad-overlay-of-a-safety-helmet-shell-and-cad-model.webp)
+*Overlay of scan and CAD for a safety helmet shell: grey is the scan mesh, blue is the CAD model. This is a plain overlay, not a colour deviation map.*
 
-![Five-step diagram: align scan, fit features, rebuild model, check deviation, deliver STEP](blog-images/ai-scan-to-cad-vs-engineer-checked-cad/engineer-checked-scan-to-cad-steps-diagram.png)
+![Five-step diagram: align scan, fit features, rebuild model, check deviation, deliver STEP](blog-images/ai-scan-to-cad-vs-engineer-checked-cad/engineer-checked-scan-to-cad-steps-diagram.webp)
 
 ### How do automatic output and engineer-checked CAD compare?
 Neither is "better" in general. They suit different jobs.
@@ -68,7 +69,7 @@ Neither is "better" in general. They suit different jobs.
 | Editable features | May be limited, depending on the tool and the part | Rebuilt as sketches, holes and extrusions you can edit |
 | Worn areas | Copied from the scan unless someone intervenes | Decided with you: keep the wear or restore the intended shape |
 | Fit to mating parts | Needs to be checked by a person before use | Checked against the parts it mates with |
-| Deviation check | Not always included | Model compared back to the scan, shown as a colour map |
+| Deviation check | Not always included | Model compared back to the scan; colour map available on request |
 | Best for | Visualisation, concept work, printing, one-off decorative models | Parts to be machined, moulded, cast or fitted to a machine |
 | Main risk | A model that looks right but does not fit or machine | More engineering time before delivery |
 
@@ -105,7 +106,7 @@ An STL is a mesh of triangles that records shape only; a CAD model has editable 
 Often a clean mesh is enough for printing; CAD is needed when you want to change dimensions or manufacture by machining or casting.
 
 **How do you check a scan-to-CAD model is accurate?**
-The finished model is compared back to the scan and shown as a deviation colour map, so differences are visible, and the fit and tolerance are agreed per part.
+The finished model is compared back to the scan, so differences are visible, and a deviation colour map is available on request. The fit and tolerance are agreed per part.
 
 **What do I get when the original part is worn or broken?**
 We state the shape and dimensions we measured and agree with you what the intended size should be; we do not guess silently. Material is not identified or certified unless agreed.
