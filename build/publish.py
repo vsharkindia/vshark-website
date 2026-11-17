@@ -3,6 +3,9 @@ Copy only the public website into dist/.
 
   python build/publish.py                  # Netlify (form = netlify/functions/enquiry.mjs, headers in _headers)
   python build/publish.py --target apache  # Hostinger / Apache / LiteSpeed (adds .htaccess + send-enquiry.php)
+  python build/publish.py --target apache --form-action https://vsharksolutions.org/send-enquiry.php
+                                           # pages for a server we don't control: the contact form posts to our own
+                                           # handler (which sends the visitor back), and no PHP is included
 
 Everything internal stays out: source data, build scripts, notes (*.md), server-only PHP and
 config, editor/tooling files. The rules mirror the exclude list in .github/workflows/deploy.yml
@@ -43,11 +46,21 @@ def main():
             shutil.copy2(src, dst)
             n += 1
             size += os.path.getsize(src)
+    form_action = sys.argv[sys.argv.index('--form-action') + 1] if '--form-action' in sys.argv else ''
     if apache:
         # .htaccess itself marks every host except www.vsharksolutions.com as noindex
         for f in APACHE_EXTRA:
+            if f.endswith('.php') and form_action:
+                continue                                   # the form is handled elsewhere
             shutil.copy2(os.path.join(ROOT, f), os.path.join(DIST, f))
             n += 1
+    if form_action:
+        cp = os.path.join(DIST, 'contact.html')
+        t = open(cp, encoding='utf-8').read()
+        if 'action="send-enquiry.php"' not in t:
+            sys.exit('contact.html: form action not found')
+        open(cp, 'w', encoding='utf-8', newline='\n').write(t.replace('action="send-enquiry.php"', f'action="{form_action}"'))
+        print(f'contact form posts to {form_action}')
         print(f'published {n} files ({size / 1e6:.1f} MB) to dist/ for Apache/LiteSpeed')
     else:
         if os.environ.get('ALLOW_INDEXING') != '1':
@@ -56,7 +69,7 @@ def main():
         print(f'published {n} files ({size / 1e6:.1f} MB) to dist/'
               + ('' if os.environ.get('ALLOW_INDEXING') == '1' else ' — noindex (staging/preview)'))
     internal = ['DEPLOY.md', 'build', 'data', 'netlify.toml', 'enquiry-config.php', 'enquiry-config.sample.php']
-    leaked = [p for p in internal + ([] if apache else ['send-enquiry.php']) if os.path.exists(os.path.join(DIST, p))]
+    leaked = [p for p in internal + ([] if apache and not form_action else ['send-enquiry.php']) if os.path.exists(os.path.join(DIST, p))]
     if leaked:
         sys.exit(f'internal files leaked into dist/: {leaked}')
 

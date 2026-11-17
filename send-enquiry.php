@@ -18,9 +18,23 @@ declare(strict_types=1);
 const MAX_BYTES = 3 * 1024 * 1024;                       // matches the "max 3 MB" on the form (and the Netlify function)
 const ALLOWED_EXT = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'webp', 'heic', 'stl', 'step', 'stp', 'igs', 'iges', 'obj', 'ply', 'zip'];
 
-function back(string $code): void {
-    header('Location: /contact.html?error=' . rawurlencode($code) . '#enquiry', true, 303);
+/** When the form is posted from another of our sites (e.g. the pages on the vendor's server post here),
+    send the visitor back to that site. Only these origins are trusted. */
+const RETURN_ORIGINS = ['https://www.vsharksolutions.com', 'https://vsharksolutions.com', 'https://vsharksolutions.org', 'https://www.vsharksolutions.org'];
+function site(): string {
+    $o = rtrim((string)($_SERVER['HTTP_ORIGIN'] ?? ''), '/');
+    if ($o === '' && !empty($_SERVER['HTTP_REFERER'])) {
+        $p = parse_url((string)$_SERVER['HTTP_REFERER']);
+        $o = isset($p['scheme'], $p['host']) ? $p['scheme'] . '://' . $p['host'] : '';
+    }
+    return in_array($o, RETURN_ORIGINS, true) && $o !== 'https://' . ($_SERVER['HTTP_HOST'] ?? '') ? $o : '';
+}
+function go(string $path): void {
+    header('Location: ' . site() . $path, true, 303);
     exit;
+}
+function back(string $code): void {
+    go('/contact.html?error=' . rawurlencode($code) . '#enquiry');
 }
 function field(string $k, int $max = 200): string {
     $v = trim((string)($_POST[$k] ?? ''));
@@ -96,8 +110,7 @@ function content_ok(string $ext, string $data): bool {
 }
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-    header('Location: /contact.html', true, 303);
-    exit;
+    go('/contact.html');
 }
 
 $cfgFile = null;
@@ -112,8 +125,7 @@ $cfg = require $cfgFile;
 
 // Spam trap: real visitors never see this field. Pretend success so bots learn nothing.
 if (field('company_url') !== '') {
-    header('Location: /thanks.html', true, 303);
-    exit;
+    go('/thanks.html');
 }
 
 $name     = one_line(field('name', 120));
@@ -291,11 +303,9 @@ if (!$sent) {
             . "Please check the contact form settings (client secret expired?).\r\n\r\n" . $text,
             implode("\r\n", ['MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . $email]));
         // The enquiry is safe, so the visitor gets the normal thank-you page (and the conversion counts).
-        header('Location: /thanks.html?sent=1', true, 303);
-        exit;
+        go('/thanks.html?sent=1');
     }
     back('send');
 }
 // ?sent=1 marks a real submission: the thanks page fires the Lead / generate_lead conversion only then
-header('Location: /thanks.html?sent=1', true, 303);
-exit;
+go('/thanks.html?sent=1');
