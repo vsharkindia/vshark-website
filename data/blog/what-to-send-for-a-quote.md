@@ -10,6 +10,10 @@ featured: blog-images/what-to-send-for-a-quote/quote-checklist-photos-size-mater
 service: /services/reverse-engineering
 ---
 
+![Checklist of what to send for a 3D scanning quote: photos, size, material, purpose and quantity](blog-images/what-to-send-for-a-quote/quote-checklist-photos-size-material-purpose.webp)
+
+To get a real quote for 3D scanning, reverse engineering or scan-to-CAD, send us six things: photos of the part from every side with something for scale, its approximate size, the material if you know it, what the part is used for, what you want at the end (CAD model, drawing, mesh or made part), and how many you need by when. You do not need a drawing, a scan file or technical words. A clear set of photos on your phone and a few lines of text is enough for us to reply in writing with a quote, or to tell you the one thing we still need. We work in India and the UAE.
+
 ![3D scan data of a car wheel on a computer screen, the result of a part sent for scanning](blog-images/what-to-send-for-a-quote/3d-scan-data-car-wheel-on-screen.webp)
 
 Last reviewed: November 2026
@@ -35,8 +39,6 @@ Anyone with a physical part and no clear next step: an owner with an old part an
 
 ### What if I have a scan file already?
 Send the file as exported from your scanner, with the units, and do not reduce it first. Then send the same photos and notes above. The file tells us the shape; the notes tell us the purpose. Which formats suit which job is explained in [3D scan file formats](/blog/3d-scan-file-formats?utm_source=website&utm_medium=seo&utm_campaign=2026-11-s93&utm_content=body-formats).
-
-![Checklist of what to send for a 3D scanning quote: photos, size, material, purpose and quantity](blog-images/what-to-send-for-a-quote/quote-checklist-photos-size-material-purpose.webp)
 
 ### How do I photograph a part so we can use the photos?
 - Six views are the minimum: top, bottom, front, back, left, right. Add close-ups of holes, threads, ribs and any marking.
