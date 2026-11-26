@@ -60,8 +60,8 @@
   "hash": "3dcf6e3225ee5b7a72894b903dfefbda31944ced"
  },
  "blog/3d-scanning-vs-cmm-inspection/index.html": {
-  "date": "2026-11-16",
-  "hash": "2ed9348d62ff70965ea321bf8a0e0ee45cbf0427"
+  "date": "2026-11-27",
+  "hash": "dd466a603e1af30cf860f25aafc72594ec989245"
  },
  "blog/category/3d-printing/index.html": {
   "date": "2026-11-14",
@@ -80,8 +80,8 @@
   "hash": "295abe355b5f0797170d942b579d7fe3794fcb03"
  },
  "blog/category/inspection-metrology/index.html": {
-  "date": "2026-11-09",
-  "hash": "e526865f6e46ba06b935d6399f4bd08898e2c474"
+  "date": "2026-11-27",
+  "hash": "bf9c6f17e64dd64310157f2f0939762d8f638385"
  },
  "blog/category/reverse-engineering/index.html": {
   "date": "2026-11-09",
@@ -92,12 +92,12 @@
   "hash": "e3437efe9969bd0189a41ae85afe3b5b63c7a62f"
  },
  "blog/choosing-a-handheld-3d-scanner-india/index.html": {
-  "date": "2026-11-16",
-  "hash": "4c3ed6038b7a6e8b619c9796343984edf3b79298"
+  "date": "2026-11-27",
+  "hash": "d0a6fc985617e797085272c262346a871f163bc9"
  },
  "blog/from-3d-scan-to-3d-print/index.html": {
-  "date": "2026-11-16",
-  "hash": "298122f0fd223f37b9905e9dff5781723260ef36"
+  "date": "2026-11-27",
+  "hash": "bef40bb662e2e98bfd3af3ca33232f91cb17fd0e"
  },
  "blog/handheld-3d-scanner-accuracy/index.html": {
   "date": "2026-11-16",
@@ -112,12 +112,16 @@
   "hash": "14f5d42670aecf0c87073fb5ce16a1b5812297e3"
  },
  "blog/index.html": {
-  "date": "2026-11-16",
-  "hash": "2d64c1219610db4defe740ce83b6615ea2167976"
+  "date": "2026-11-27",
+  "hash": "92635bd60bb267a7bea9c7b01a9f60845e6773d4"
+ },
+ "blog/ndt-vs-3d-inspection-crack-detection/index.html": {
+  "date": "2026-11-27",
+  "hash": "7af8a71c5878df9108b2fe74576b89ef3dd65dc2"
  },
  "blog/page/2/index.html": {
-  "date": "2026-11-09",
-  "hash": "536aedac47e25fa94c7cf288a5ef1cfff46089bc"
+  "date": "2026-11-27",
+  "hash": "511cc632aa3242cf9c2cef041311ee4b3c0c810e"
  },
  "blog/reverse-engineering-crusher-wear-parts/index.html": {
   "date": "2026-11-09",
@@ -128,8 +132,8 @@
   "hash": "16c8cac6284a63131f75c4d025a6ed9abce12aa0"
  },
  "blog/scan-to-bim-explained/index.html": {
-  "date": "2026-11-16",
-  "hash": "494ba9ec39eba8930ed9e525c12e7e490c4f9b17"
+  "date": "2026-11-27",
+  "hash": "f61d98a53554794022ad903c60ccc371d856bd09"
  },
  "blog/scan-to-cad-in-solidworks/index.html": {
   "date": "2026-11-09",
@@ -140,8 +144,8 @@
   "hash": "5d9cdecd5506e7e42a5e1af3cef6d952e2d8df0b"
  },
  "blog/what-is-class-a-surfacing/index.html": {
-  "date": "2026-11-16",
-  "hash": "01f5a990427008c6729fa03107ef64db37dffcba"
+  "date": "2026-11-27",
+  "hash": "b2672edd17a45fc4db4c19f1af7c1d9c30e9807c"
  },
  "blog/what-is-reverse-engineering/index.html": {
   "date": "2026-11-09",
