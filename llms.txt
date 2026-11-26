@@ -63,6 +63,7 @@
 ## Blog
 
 - [All articles](https://www.vsharksolutions.com/blog/)
+- [Do You Do NDT or Crack Detection? What 3D Inspection Can and Cannot Find](https://www.vsharksolutions.com/blog/ndt-vs-3d-inspection-crack-detection/): Do you do NDT or crack detection? 3D scanning and CMM check shape and size, not internal cracks. See what each method finds and when you need NDT.
 - [How to 3D Scan Shiny and Reflective Parts](https://www.vsharksolutions.com/blog/scanning-shiny-reflective-parts/): How to 3D scan shiny and reflective parts: scan angle, reflective markers, scan modes, when spray helps, and what the Vertex3D does and does not solve.
 - [How to Choose a 3D Scanner: Handheld Laser, Tracker, Structured Light or a Service](https://www.vsharksolutions.com/blog/how-to-choose-a-3d-scanner/): How to choose a 3D scanner in India or the UAE: handheld laser, tracker or structured light, and when a scanning service is the better buy.
 - [What Files Do You Get From a 3D Scan? STL, STEP, IGES, Parasolid and the PDF Report](https://www.vsharksolutions.com/blog/3d-scan-file-formats/): What files you get from a 3D scan: STL mesh, STEP, IGES, Parasolid CAD and the inspection PDF report. What each is for and how to choose, in plain terms.
